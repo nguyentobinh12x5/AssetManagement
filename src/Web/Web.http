@@ -1,0 +1,134 @@
+﻿# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@Web_HostAddress = https://localhost:5001
+@AuthCookieName = .AspNetCore.Identity.Application
+@AuthCookieValue = CfDJ8HHPs5O04J1DtbcDrKVXDWpc_EfqCPP9bfXyzABDJD-z6v3HsitXnkpXrb-1SgecVDRBUD0Kfp-JiIdcg3suuG16vdCCL1x3ZLMW-DBOlDfjoZQwh7ZIUwii3pIV_FwJ1jQEobn1vqGhPD7IGj1TYVz3tI7HFC011t2uJT8Ehkm9onPpfam49nypHW1ZbuOAjOaQrVsW2sYgfpkWBVH_t5SvTNmDVlOdn-oY7T6gbM_dcrXaD--snLn4NhkFVmcAzu7SiWDLEfYbOPixaibXJcHM7u6Xzu0E_I4CXIwvG_6ntnnWv10X5OdlKscuUF_3hqCa17zldBPBhKGS3_q-nO23tAk7lfZZ8Vw1lr_y3vigT2ZDxrK87_ndIeeIVzJJDXewWsLZHbqQGuCWZqL1uZegjgZF8qnM_JKm4HO5ygGLF6Iy-qghd1_BGs_dTMyd4KRIlVyo3ZgWMGwYF31Vi4640owH7zDbb7moha5mPZWYZOHgm152NHr4prTTz3obD1CY9Hx-Yw_c24RCKUZm-uIrcY5KDvFx3JPLAuOl9PINrVfSNaz7R_jkCL7FvHxb5lBDVfvLNdP2tBWOVgwazLKKGPrts_ZY8B3r-cqWW79Z-aCIiEjwZp-2eqepexpeFnIBSVKAFv4SCdFQC96WKMjksjnWjeKJ6QfmAF_8tVXxydefaRAl2X8odGA-Uto3OKukfECuMkE6J6SrMQgR5fcaQjhZQAzkaNrr5BauvZcdWhhQTzG-mIRSOnTgZWvaLgmy-Stm0ATbCXtdjdxrX2Kqr4v6d3ZqITaLo54T0WeR8Fay6R-PMvtFOYPQBYJNr36BaXbnJjxscbnE6F6xTaAtrbI8-AaFW5CBcFfGUNPV
+
+# GET Identity Account Login
+# Get the @RequestVerificationToken necessary for logging in.
+GET {{Web_HostAddress}}/Identity/Account/Login
+
+###
+
+# GET Identity Account Logout
+# Logout and clear cookie
+GET {{Web_HostAddress}}/Identity/Account/Logout
+
+###
+
+# POST Identity Account Login
+# Get the @AuthCookieValue necessary for authenticating requests.
+@Email=administrator@localhost
+@Password=Administrator1!
+@RequestVerificationToken=CfDJ8HHPs5O04J1DtbcDrKVXDWov8JnmUe32rYCluNFg222ttgKyRAMQwqMrlkWEOpt9Awc9WtbzIx-7gE7Xc9rZvARMCLTL3D9Xy4BJ2j-5DR4jzxJDbOeCN21E4HNUJWz7UPw06BOTXOj_fo_iQNxwKkK6WPUXsTCifuD5VFQpLeYQa9ejl3obk8fHVDPR-nvQcA
+POST {{Web_HostAddress}}/Identity/Account/Login
+Content-Type: application/x-www-form-urlencoded
+
+Input.Email={{Email}}&Input.Password={{Password}}&__RequestVerificationToken={{RequestVerificationToken}}
+
+###
+
+# GET WeatherForecast
+GET {{Web_HostAddress}}/api/WeatherForecasts
+#Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+###
+
+# GET TodoLists
+GET {{Web_HostAddress}}/api/TodoLists
+#Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+
+###
+
+#GET TodoList
+GET {{Web_HostAddress}}/api/TodoLists/1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+
+###
+
+# POST TodoLists
+POST {{Web_HostAddress}}/api/TodoLists
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+// CreateTodoListCommand
+{
+  "Title": "Backlog"
+}
+
+###
+
+# PUT TodoLists
+PUT {{Web_HostAddress}}/api/TodoLists/1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+// UpdateTodoListCommand
+{
+  "Id": 1,
+  "Title": "Product Backlog"
+}
+
+###
+
+# DELETE TodoLists
+DELETE {{Web_HostAddress}}/api/TodoLists/1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+
+###
+
+# GET TodoItems
+@PageNumber = 1
+@PageSize = 10
+GET {{Web_HostAddress}}/api/TodoItems?ListId=1&PageNumber={{PageNumber}}&PageSize={{PageSize}}
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+
+###
+
+# POST TodoItems
+POST {{Web_HostAddress}}/api/TodoItems
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+// CreateTodoItemCommand
+{
+  "ListId": 1,
+  "Title": "Eat a burrito 🌯"
+}
+
+###
+
+#PUT TodoItems UpdateItemDetails
+PUT {{Web_HostAddress}}/api/TodoItems/UpdateItemDetails?Id=1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+// UpdateTodoItemDetailCommand
+{
+  "Id": 1,
+  "ListId": 1,
+  "Priority": 3,
+  "Note": "This is a good idea!"
+}
+
+###
+
+# PUT TodoItems
+PUT {{Web_HostAddress}}/api/TodoItems/1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+// UpdateTodoItemCommand
+{
+  "Id": 1,
+  "Title": "Eat a yummy burrito 🌯",
+  "Done": true
+}
+
+###
+
+# DELETE TodoItem
+DELETE {{Web_HostAddress}}/api/TodoItems/1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+
+###

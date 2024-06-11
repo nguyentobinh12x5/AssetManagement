@@ -1,0 +1,6 @@
+{
+    "production": true,
+    "endpoint": {
+        "apiBaseUrl": "https://assetmanagement-net-b7-1-qc.azurewebsites.net"
+    }
+}

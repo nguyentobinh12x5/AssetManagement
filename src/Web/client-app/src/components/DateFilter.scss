@@ -1,0 +1,24 @@
+.date-filter {
+    cursor: pointer;
+    height: 34px;
+
+    .date-icon {
+        display: inline-block;
+        margin-left: -2px;
+        border: 2px solid #bebebe !important;
+        border-radius: 0px .25rem .25rem 0px;
+        padding: 0 5px !important;
+        pointer-events: none;
+        height: 34px;
+    }
+    .react-datepicker-wrapper{ 
+        cursor: pointer;    
+        border: 2px solid rgb(190,190,190);
+        border-radius: 5px 0 0 5px;
+        height: 34px;
+        input{
+            cursor: pointer;
+            height: 30px;
+        }
+    } 
+}

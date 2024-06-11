@@ -1,0 +1,120 @@
+# .NET Core Web App to Windows on Azure
+# Build a .NET Core Web App and deploy it to Azure as a Windows Web App.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- none
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: 'Rookie-B7-Service-Connection'
+
+  # Web App name
+  webAppName: 'assetmanagement-net-b7-1'
+  
+  # Environment
+  environment: 'QC'
+
+  # Agent VM image name
+  vmImageName: 'windows-latest'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+  # Build Configuration
+  buildConfiguration: 'Release'
+
+  # Build Projects
+  buildProjects: "./src/Web/Web.csproj"
+
+  # Test Projects
+  testProjects: "./AssetManagement.sln"
+  
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '22.0.0'
+
+    - task: UseDotNet@2
+      inputs:
+        version: '8.0.204'
+        
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: 'restore'
+        publishWebProjects: true
+        projects: $(buildProjects)
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: 'build'
+        projects: $(buildProjects)
+        arguments: --configuration $(buildConfiguration)
+
+    # - task: DotNetCoreCLI@2
+    #   displayName: Test
+    #   inputs:
+    #     command: "test"
+    #     projects: $(testProjects)
+    #     publishTestResults: false
+    #     arguments: '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+
+    # - task: reportgenerator@4
+    #   displayName: Generate Test Report
+    #   inputs:
+    #     reports: '$(Build.SourcesDirectory)/**/*.cobertura.xml'
+    #     targetdir: '$(Build.SourcesDirectory)/CoverageResults'
+    #     assemblyfilters: '-*Tests*'
+
+    # - task: PublishCodeCoverageResults@1
+    #   displayName: 'Publish Code Coverage'
+    #   inputs:
+    #     codeCoverageTool: Cobertura
+    #     summaryFileLocation: '$(Build.SourcesDirectory)/CoverageResults/Cobertura.xml'
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+        zipAfterPublish: true
+
+    - publish: $(Build.ArtifactStagingDirectory)
+      artifact: drop
+
+    - publish: $(System.DefaultWorkingDirectory)/pipeline/environments
+      artifact: config
+
+- template: deploy-template.yaml
+  parameters:
+    environment: development
+    azureSubscriptionName: $(azureSubscription)
+    azureResourceGroup: 'RookieBatch7'
+    azureAppServiceName: "assetmanagement-net-b7-1-dev"
+    stageConfig:
+      dependsOn:
+        - Build
+
+- template: deploy-template.yaml
+  parameters:
+    environment: testing
+    azureSubscriptionName: $(azureSubscription)
+    azureResourceGroup: 'RookieBatch7'
+    azureAppServiceName: "assetmanagement-net-b7-1-qc"
+    stageConfig:
+      dependsOn:
+        - deploy_development

@@ -1,0 +1,68 @@
+parameters:
+- name: environment
+  type: string
+- name: azureSubscriptionName
+  type: string
+- name: azureResourceGroup
+  type: string
+- name: azureAppServiceName
+  type: string
+- name: stageConfig
+  type: object
+
+stages:
+- stage: 'deploy_${{ parameters.environment }}'
+  displayName: 'Deploy to ${{ parameters.environment }} environment'
+  ${{ insert }}: ${{ parameters.stageConfig }}
+  condition: succeeded()
+
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    environment: ${{ parameters.environment }}
+    pool:
+      vmImage: $(vmImageName)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: ExtractFiles@1
+            inputs:
+              archiveFilePatterns: '$(Pipeline.Workspace)/drop/Web.zip'
+              destinationFolder: $(Pipeline.Workspace)/deploy/$(Build.BuildId)
+              cleanDestinationFolder: true
+
+          - task: replacetokens@5
+            inputs:
+              rootDirectory: '$(Pipeline.Workspace)/deploy/$(Build.BuildId)/wwwroot/static/js/'
+              targetFiles: '*.js'
+              encoding: 'auto'
+              tokenPattern: 'octopus'
+              writeBOM: true
+              actionOnMissing: 'warn'
+              keepToken: true
+              actionOnNoFiles: 'fail'
+              enableTransforms: false
+              variableFiles: '$(Pipeline.Workspace)/config/${{ parameters.environment }}.json'
+              enableRecursion: false
+              useLegacyPattern: false
+              enableTelemetry: true
+
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: '$(Pipeline.Workspace)/deploy/$(Build.BuildId)'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Pipeline.Workspace)/dist/${{ parameters.environment }}-$(Build.BuildId).zip'
+              replaceExistingArchive: true
+
+          - task: AzureRMWebAppDeployment@4
+            displayName: "Deploy Azure Web App"
+            inputs:
+              ConnectionType: "AzureRM"
+              ConnectedServiceName: "${{ parameters.azureSubscriptionName }}"
+              WebAppName:  "${{ parameters.azureAppServiceName }}"
+              WebAppKind: webApp
+              Package: '$(Pipeline.Workspace)/dist/${{ parameters.environment }}-$(Build.BuildId).zip'
+              DeploymentType: "webDeploy"
+              
