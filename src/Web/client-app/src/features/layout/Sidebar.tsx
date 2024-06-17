@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { HOME_LINK, TODO_ITEM_LINK } from "../../constants/pages";
+import { HOME_LINK, TODO_ITEM_LINK, MANAGE_USER_LINK } from "../../constants/pages";
 
 const Sidebar = () => {
     return (
@@ -12,6 +12,9 @@ const Sidebar = () => {
           <NavLink className="navItem intro-x" to={TODO_ITEM_LINK}>
             <button className="btnCustom">Todo Items</button>
           </NavLink>
+          <NavLink className="navItem intro-x" to={MANAGE_USER_LINK}>
+            <button className="btnCustom">Manage User</button>
+          </NavLink>          
         </div>
     )
 }

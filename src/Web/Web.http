@@ -80,7 +80,9 @@ Cookie: {{AuthCookieName}}={{AuthCookieValue}}
 # GET TodoItems
 @PageNumber = 1
 @PageSize = 10
-GET {{Web_HostAddress}}/api/TodoItems?ListId=1&PageNumber={{PageNumber}}&PageSize={{PageSize}}
+@SortColumnName = id
+@SortColumnDirection = Ascending
+GET {{Web_HostAddress}}/api/TodoItems?ListId=1&PageNumber={{PageNumber}}&PageSize={{PageSize}}&SortColumnName={{SortColumnName}}&SortColumnDirection={{SortColumnDirection}}
 Cookie: {{AuthCookieName}}={{AuthCookieValue}}
 
 ###
