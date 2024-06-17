@@ -1,4 +1,5 @@
 
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -21,11 +22,20 @@ public class Auth : EndpointGroupBase
     public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest loginRequest, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies, [FromServices] IServiceProvider sp)
     {
         var signInManager = sp.GetRequiredService<SignInManager<ApplicationUser>>();
+        var identityService = sp.GetRequiredService<IIdentityService>();
 
         var useCookieScheme = (useCookies == true) || (useSessionCookies == true);
         var isPersistent = (useCookies == true) && (useSessionCookies != true);
         signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
 
+        // Validate is user disabled
+        var isUserDisabled = await identityService.IsUserDisabledAsync(loginRequest.Email);
+        if (isUserDisabled)
+        {
+            return TypedResults.Problem("Your account is disabled. Please contact with IT Team", statusCode: StatusCodes.Status400BadRequest);
+        }
+
+        // Login user
         var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, isPersistent, lockoutOnFailure: true);
 
         if (result.RequiresTwoFactor)
