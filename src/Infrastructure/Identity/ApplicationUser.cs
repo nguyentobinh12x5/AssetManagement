@@ -15,5 +15,4 @@ public class ApplicationUser : IdentityUser, ISoftDeletable
     public DateTime JoinDate { get; set; }
     public bool MustChangePassword { get; set; } = true;
     public bool IsDelete { get; set; }
-    
 }
