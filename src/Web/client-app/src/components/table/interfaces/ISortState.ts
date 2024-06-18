@@ -1,4 +1,4 @@
 export default interface ISortState {
-    name: string,
-    orderBy: string
+  name: string;
+  orderBy: string;
 }
