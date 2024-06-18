@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 
 using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
 
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -157,4 +158,71 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         await _httpClient.PostAsJsonAsync("/api/auth/change-password-first-time", resetPasswordCommand);
     }
 
+
+    [Fact, TestPriority(6)]
+    public async Task ChangePassword_ShouldReturnNoContent_OnSuccessfulChange()
+    {
+        // Arrange
+        var currentPassword = "Administrator1!";
+        var newPassword = "NewPassword123!";
+
+        var updatePasswordCommand = new UpdatePasswordCommand(currentPassword, newPassword);
+
+        var loginRequest = new LoginRequest
+        {
+            Email = "administrator@localhost",
+            Password = currentPassword
+        };
+        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/auth/change-password", updatePasswordCommand);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+        // Clean up: Resetting password back to original
+        var resetPasswordCommand = new UpdatePasswordCommand(newPassword, currentPassword);
+        var resetResponse = await _httpClient.PostAsJsonAsync("/api/auth/change-password", resetPasswordCommand);
+        Assert.Equal(HttpStatusCode.NoContent, resetResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task ChangePassword_ShouldReturnUnauthorized_WhenNotLoggedIn()
+    {
+        // Arrange
+        var updatePasswordCommand = new UpdatePasswordCommand("Administrator1!", "NewPassword123!");
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/auth/change-password", updatePasswordCommand);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task ChangePassword_ShouldReturnBadRequest_WhenIncorrectPassword()
+    {
+        // Arrange
+        var currentPassword = "IncorrectPassword";
+        var newPassword = "NewPassword123!";
+
+        var updatePasswordCommand = new UpdatePasswordCommand(currentPassword, newPassword);
+
+        var loginRequest = new LoginRequest
+        {
+            Email = "administrator@localhost",
+            Password = "Administrator1!"
+        };
+        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/auth/change-password", updatePasswordCommand);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        var problemDetails = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+        Assert.NotNull(problemDetails);
+        Assert.Equal("Password is incorrect", problemDetails.Detail);
+    }
 }
