@@ -18,7 +18,7 @@ public class Auth : EndpointGroupBase
         app.MapGroup(this)
             .RequireAuthorization()
             .AllowAnonymous()
-            .MapPost(ChangePassword, "change-password");
+            .MapPost(ChangePassword, "change-password")
             .MapPost(Login, "login");
 
     }
