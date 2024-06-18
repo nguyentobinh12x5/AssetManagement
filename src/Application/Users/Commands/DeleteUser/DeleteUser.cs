@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Common;
 using AssetManagement.Domain.Events;
@@ -22,10 +23,10 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
 
 	public async Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
 	{
-		var entity = await _identityService.DeleteUserAsync(request.Id);
+		var result = await _identityService.DeleteUserAsync(request.Id);
 
-		Guard.Against.NotFound(request.Id, entity);
-
+		Guard.Against.EnsureSucceedResult(result, "Delete user failure!");
+		
 		await _context.SaveChangesAsync(cancellationToken);
 	}
 
