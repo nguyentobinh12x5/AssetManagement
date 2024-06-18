@@ -24,7 +24,7 @@ const ConfirmModal: React.FC<Props> = ({
             aria-labelledby='login-modal'
             centered
         >
-            <Modal.Header closeButton>
+            <Modal.Header className="custom-header">
                 <Modal.Title id='login-modal'>
                     {title}
                 </Modal.Title>

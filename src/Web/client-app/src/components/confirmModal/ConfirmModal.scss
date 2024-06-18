@@ -1,0 +1,31 @@
+.modal-header.custom-header {
+    background-color: #f1f1f1;
+    color:rgba(207, 35, 56, 1); 
+}
+
+.modal-header.custom-header .modal-title {
+    color: rgba(207, 35, 56, 1); 
+}
+.modal-body-content {
+    align-items: flex-start; 
+    padding-left: 10px; 
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    margin-right: 10px;
+}
+
+.modal-buttons button.btn-danger {
+    background-color: rgba(207, 35, 56, 1);
+    border-color: rgba(207, 35, 56, 1);
+}
+
+#login-modal {
+    padding-left: 10px; 
+}
