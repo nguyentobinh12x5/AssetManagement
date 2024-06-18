@@ -58,6 +58,26 @@
         }
       }
     },
+    "/api/Auth/manage/info": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "GetUserInfo",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [
@@ -770,6 +790,24 @@
           "twoFactorRecoveryCode": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "UserInfoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "isEmailConfirmed": {
+            "type": "boolean"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

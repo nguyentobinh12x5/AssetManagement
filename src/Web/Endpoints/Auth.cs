@@ -1,5 +1,7 @@
 
+using System.Security.Claims;
 using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -15,7 +17,8 @@ public class Auth : EndpointGroupBase
     {
         app.MapGroup(this)
             .AllowAnonymous()
-            .MapPost(Login, "login");
+            .MapPost(Login, "login")
+            .MapGet(GetUserInfo, "manage/info");
 
     }
 
@@ -23,6 +26,8 @@ public class Auth : EndpointGroupBase
     {
         var signInManager = sp.GetRequiredService<SignInManager<ApplicationUser>>();
         var identityService = sp.GetRequiredService<IIdentityService>();
+        // var user = sp.GetRequiredService<UserManager<ApplicationUser>>();
+        // user.GetRolesAsync()
 
         var useCookieScheme = (useCookies == true) || (useSessionCookies == true);
         var isPersistent = (useCookies == true) && (useSessionCookies != true);
@@ -57,5 +62,10 @@ public class Auth : EndpointGroupBase
 
         // The signInManager already produced the needed response in the form of a cookie or bearer token.
         return TypedResults.Empty;
+    }
+
+    public async Task<UserInfoDto> GetUserInfo(ISender sender, [AsParameters] GetCurrentUserInfoQuery query)
+    {
+        return await sender.Send(query);
     }
 }

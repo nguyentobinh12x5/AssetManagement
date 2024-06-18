@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -100,8 +101,22 @@ public class IdentityService : IIdentityService
 
     public async Task<bool> IsUserDisabledAsync(string email)
     {
-       var user = await _userManager.FindByEmailAsync(email);
+        var user = await _userManager.FindByEmailAsync(email);
 
-        return  user != null && user.IsDelete;
+        return user != null && user.IsDelete;
+    }
+
+    public async Task<UserInfoDto> GetCurrentUserInfo(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        var roles = await _userManager.GetRolesAsync(user);
+        return new UserInfoDto
+        {
+            Email = user.Email!,
+            IsEmailConfirmed = user.EmailConfirmed,
+            Roles = roles
+        };
     }
 }

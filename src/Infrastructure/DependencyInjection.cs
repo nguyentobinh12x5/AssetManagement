@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,8 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
+
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
