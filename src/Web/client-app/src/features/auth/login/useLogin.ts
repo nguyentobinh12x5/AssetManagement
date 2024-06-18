@@ -16,23 +16,20 @@ export interface ILoginForm extends Yup.InferType<typeof LoginSchema> {}
 const useLogin = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {isAuthenticated} = useAppState(state => state.auth)
+  const { isAuthenticated } = useAppState((state) => state.auth);
   const initialValues: ILoginForm = { email: '', password: '' };
 
   const handleSubmit = (
     values: ILoginForm,
     actions: FormikHelpers<ILoginForm>
   ) => {
-    dispatch(login(values))
+    dispatch(login(values));
     actions.setSubmitting(false);
   };
 
   useEffect(() => {
-    if(isAuthenticated)
-        navigate("/")
-  },[isAuthenticated, navigate])
-
- 
+    if (isAuthenticated) navigate('/');
+  }, [isAuthenticated, navigate]);
 
   return { initialValues, handleSubmit, LoginSchema };
 };

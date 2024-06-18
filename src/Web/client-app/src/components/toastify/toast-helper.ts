@@ -1,6 +1,6 @@
 // src/toastHelper.ts
 
-import { ToastContextType } from "./ToastContext";
+import { ToastContextType } from './ToastContext';
 
 let toast: ToastContextType['toast'];
 
@@ -8,7 +8,18 @@ export const setToast = (toastInstance: ToastContextType['toast']) => {
   toast = toastInstance;
 };
 
-export const showToast = (content: string, variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark') => {
+export const showToast = (
+  content: string,
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark'
+) => {
   if (toast) {
     toast(content, variant);
   }
@@ -21,8 +32,8 @@ export const showSuccessToast = (content: string) => {
 };
 
 export const showErrorToast = (content: string) => {
-    console.log("Show Toast")
-    console.log(toast)
+  console.log('Show Toast');
+  console.log(toast);
   if (toast) {
     toast.error(content);
   }

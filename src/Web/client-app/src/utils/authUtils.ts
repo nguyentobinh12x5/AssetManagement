@@ -1,4 +1,3 @@
-export function isAdminUser(user?: any)
-{
-    return user && user.roles.includes("Administrator")
+export function isAdminUser(user?: any) {
+  return user && user.roles.includes('Administrator');
 }
