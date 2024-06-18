@@ -136,4 +136,11 @@ public class IdentityService : IIdentityService
         return Result.Success();
     }
 
+
+    public async Task<bool> IsUserDisabledAsync(string email)
+    {
+       var user = await _userManager.FindByEmailAsync(email);
+
+        return  user != null && user.IsDelete;
+    }
 }

@@ -17,5 +17,8 @@ public interface IIdentityService
     Task<Result> DeleteUserAsync(string userId);
 
     Task<bool> CheckCurrentPassword(string currentPassword);
+
     Task<Result> ChangePasswordAsync(string currentPassword, string newPassword);
+
+    Task<bool> IsUserDisabledAsync(string email);
 }
