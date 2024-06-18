@@ -1,5 +1,6 @@
-using AssetManagement.Infrastructure.Identity;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Infrastructure.Identity;
+
 using AutoMapper;
 
 public class ApplicationUserProfile : Profile

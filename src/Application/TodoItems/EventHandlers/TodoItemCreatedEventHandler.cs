@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Domain.Events;
+
 using Microsoft.Extensions.Logging;
 
 namespace AssetManagement.Application.TodoItems.EventHandlers;

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+
 using AssetManagement.Application.Common.Behaviours;
 
 namespace Microsoft.Extensions.DependencyInjection;

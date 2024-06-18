@@ -1,13 +1,15 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+﻿using System.Reflection;
+
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Constants;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Data.Interceptors;
 using AssetManagement.Infrastructure.Identity;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -39,8 +41,10 @@ public static class DependencyInjection
             //.AddDefaultIdentity<ApplicationUser>()
             //#IdentitySpaApiRoute
             .AddIdentityApiEndpoints<ApplicationUser>()
+            .AddSignInManager<SignInManager>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
         services.AddSingleton(TimeProvider.System);
         services.AddTransient<IIdentityService, IdentityService>();
