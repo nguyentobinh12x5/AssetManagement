@@ -5,16 +5,14 @@ import { IUserQuery } from '../interfaces/IUserQuery';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IUser } from '../interfaces/IUser';
 
-export function getTodoItems(
-    todoQuery: ITodoQuery
-): Promise<AxiosResponse<IPagedModel<ITodoItem>>> {
+export function getUsers(
+    userQuery: IUserQuery
+): Promise<AxiosResponse<IPagedModel<IUser>>> {
     return RequestService.axios.get(
-        `${ENDPOINTS.TODOITEM}?` +
-        `ListId=${todoQuery.listId}` +
-        `&PageNumber=${todoQuery.pageNumber}` +
-        `&PageSize=${todoQuery.pageSize}` +
-        `&SortColumnName=${todoQuery.sortColumnName}` +
-        `&SortColumnDirection=${todoQuery.sortColumnDirection}`
-
+        `${ENDPOINTS.USER}?` +
+        `&PageNumber=${userQuery.pageNumber}` +
+        `&PageSize=${userQuery.pageSize}` +
+        `&SortColumnName=${userQuery.sortColumnName}` +
+        `&SortColumnDirection=${userQuery.sortColumnDirection}`
     );
 }

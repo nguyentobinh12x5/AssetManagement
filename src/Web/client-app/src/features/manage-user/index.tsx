@@ -3,14 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 
 import { MANAGE_USER_LIST } from "./constants/user-pages";
 
-const ListTodoItems = lazy(() => import("./list"));
+const ListUsers = lazy(() => import("./list"));
 
-const TodoItems = () => {
+const Users = () => {
     return (
         <Routes>
-            <Route path={MANAGE_USER_LIST} element={< ListTodoItems />} />
+            <Route path={MANAGE_USER_LIST} element={< ListUsers />} />
         </Routes>
     )
 }
 
-export default TodoItems;
+export default Users;

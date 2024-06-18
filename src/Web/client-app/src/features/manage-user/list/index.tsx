@@ -1,9 +1,9 @@
 import UserTable from "./UserTable";
-import useUserList from "./useTodoItemList";
+import useUserList from "./useUsersList";
 
-const ListTodoItems = () => {
+const ListUsers = () => {
     const { 
-        defaultIPagedTodoItemModel,
+        defaultIPagedUserModel,
         hasSortColumn,
         users,
 
@@ -13,7 +13,7 @@ const ListTodoItems = () => {
 
     return (
         <UserTable
-            users={users ?? defaultIPagedTodoItemModel}
+            users={users ?? defaultIPagedUserModel}
             sortState={{ 
                 name: hasSortColumn.sortColumn, 
                 orderBy: hasSortColumn.sortOrder}}
@@ -23,4 +23,4 @@ const ListTodoItems = () => {
     )
 }
 
-export default ListTodoItems;
+export default ListUsers;

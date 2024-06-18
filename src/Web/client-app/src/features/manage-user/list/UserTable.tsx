@@ -25,9 +25,9 @@ const UserTable: React.FC<UserTableProps> = ({
     
     const columns: IColumnOption[] = [
         { name: 'Staff Code', value: 'StaffCode' },
-        { name: 'Full Name', value: 'FullName' },
+        { name: 'Full Name', value: 'FirstName' },
         { name: 'Username', value: 'UserName' },
-        { name: 'Joined Date', value: 'JoinedDate' },
+        { name: 'Joined Date', value: 'JoinDate' },
         { name: 'Type', value: 'Type' }
     ]
 
@@ -49,7 +49,7 @@ const UserTable: React.FC<UserTableProps> = ({
                     <td>{data.staffCode}</td>
                     <td>{data.fullName}</td>
                     <td>{data.userName}</td>
-                    <td>{data.joinDate.toDateString()}</td>
+                    <td>{new Date(data.joinDate.toString()).toDateString()}</td>
                     <td>{data.type}</td>
                 </tr>
             ))}

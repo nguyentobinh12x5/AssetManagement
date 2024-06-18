@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { IUser } from "../interfaces/IUser";
 import { IUserQuery } from "../interfaces/IUserQuery";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import { getTodoItems, setTodoItems } from "../reducers/todo-item-slice";
 import useAppPaging from "../../../hooks/paging/useAppPaging";
 import useAppSort from "../../../hooks/paging/useAppSort";
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from "../constants/user-sort";
 import { IPagedModel } from "../../../interfaces/IPagedModel";
 import { APP_DEFAULT_PAGE_SIZE, ASCENDING } from "../../../constants/paging";
+import { getUsers } from "../reducers/user-slice";
 
-const defaultIPagedTodoItemModel: IPagedModel<IUser> = {
+const defaultIPagedUserModel: IPagedModel<IUser> = {
     items: [],
     pageNumber: 1,
     totalPages: 1,
@@ -24,16 +24,16 @@ const useUserList = () => {
         sortColumnName: string,
         sortColumnDirection: string
     ) => {
-        setTodoQuery({
-            ...hasTodoQuery,
+        setUserQuery({
+            ...hasUserQuery,
             sortColumnName,
             sortColumnDirection
         });
     }
 
     const updateMainPagingState = (page: number) => {
-        setTodoQuery({
-            ...hasTodoQuery,
+        setUserQuery({
+            ...hasUserQuery,
             pageNumber: page
         });
     }
@@ -48,24 +48,24 @@ const useUserList = () => {
 
     // Main State
     const dispatch = useAppDispatch();
-    const { users } = useAppState((state) => state.);
+    const { users } = useAppState((state) => state.users);
 
-    const defaultTodoQuery: IUserQuery = {        
+    const defaultUserQuery: IUserQuery = {        
         pageNumber: hasPaging.page,
         pageSize: APP_DEFAULT_PAGE_SIZE,
         sortColumnName: hasSortColumn.sortColumn,
         sortColumnDirection: hasSortColumn.sortOrder
     };
 
-    const [ hasTodoQuery, setTodoQuery ] = useState(defaultTodoQuery);
+    const [ hasUserQuery, setUserQuery ] = useState(defaultUserQuery);
 
     //Fetch Data
     useEffect(() => {
-        dispatch(getTodoItems(hasTodoQuery))
-    }, [hasTodoQuery])
+        dispatch(getUsers(hasUserQuery))
+    }, [hasUserQuery])
 
     return {
-        defaultIPagedTodoItemModel,
+        defaultIPagedUserModel,
         hasSortColumn,
         users,
 

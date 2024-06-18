@@ -1,16 +1,16 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, put } from 'redux-saga/effects';
 import { IUserQuery } from "../interfaces/IUserQuery";
-import { setTodoItems } from "../reducers/todo-item-slice";
-import { getTodoItems } from "./requests";
+import { setUsers } from "../reducers/user-slice";
+import { getUsers } from "./requests";
 
 
-export function* handleGetTodoItems(action: PayloadAction<IUserQuery>) {
+export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
     const userQuery = action.payload;
 
     try {
-        const { data } = yield call(getTodoItems, userQuery);
-        yield put(setTodoItems(data));
+        const { data } = yield call(getUsers, userQuery);
+        yield put(setUsers(data));
     }
     catch (error: any) {
         const msg = error.response.data;
