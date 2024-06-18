@@ -82,5 +82,52 @@ namespace AssetManagement.Application.UnitTests.Users.Commands
 			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
 			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
 		}
+
+		[Test]
+		public async Task Handle_DeleteUserFails_ThrowsArgumentException()
+		{
+			// Arrange
+			var userId = "existing-user-id";
+			var command = new DeleteUserCommand(userId);
+			var expectedResult = Result.Failure(new[] { "Delete user failed due to reason" });
+
+			_identityServiceMock.Setup(x => x.DeleteUserAsync(userId))
+				.ReturnsAsync(expectedResult);
+
+			// Act
+			Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
+
+			// Assert
+			await act.Should().ThrowAsync<ArgumentException>()
+				.WithMessage("Delete user failure!");
+
+			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
+			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+		}
+
+
+		[Test]
+		public async Task Handle_SaveChangesAsyncThrowsException_ThrowsException()
+		{
+			// Arrange
+			var userId = "existing-user-id";
+			var command = new DeleteUserCommand(userId);
+			var expectedResult = Result.Success();
+
+			_identityServiceMock.Setup(x => x.DeleteUserAsync(userId))
+				.ReturnsAsync(expectedResult);
+
+			_contextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
+				.ThrowsAsync(new Exception("Simulated SaveChangesAsync Exception"));
+
+			// Act and Assert
+			Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
+
+			await act.Should().ThrowAsync<Exception>()
+				.WithMessage("Simulated SaveChangesAsync Exception");
+
+			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
+			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+		}
 	}
 }
