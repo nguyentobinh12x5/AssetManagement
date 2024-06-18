@@ -1,4 +1,5 @@
-﻿using AssetManagement.Application.Common.Models;
+﻿using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Application.Common.Models;
 
 namespace AssetManagement.Application.Common.Interfaces;
 
@@ -17,8 +18,12 @@ public interface IIdentityService
     Task<Result> DeleteUserAsync(string userId);
 
     Task<bool> CheckCurrentPassword(string currentPassword);
+    Task<bool> IsSameOldPassword(string newPassword);
+    Task<Result> ChangePasswordFirstTimeAsync(string newPassword);
 
     Task<Result> ChangePasswordAsync(string currentPassword, string newPassword);
 
     Task<bool> IsUserDisabledAsync(string email);
+
+    Task<UserInfoDto> GetCurrentUserInfo(string userId);
 }

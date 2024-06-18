@@ -18,6 +18,8 @@ public class CustomExceptionHandler : IExceptionHandler
                 { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
                 { typeof(IncorrectPasswordException), HandleIncorrectPasswordValidation },
+                { typeof(BadRequestException), HandleBadRequestException },
+
             };
     }
 
@@ -93,6 +95,20 @@ public class CustomExceptionHandler : IExceptionHandler
             Status = StatusCodes.Status400BadRequest,
             Title = "Incorrect Password",
             Detail = exception.Message
+        });
+    }
+
+    private async Task HandleBadRequestException(HttpContext httpContext, Exception ex)
+    {
+        var exception = (BadRequestException)ex;
+
+        httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+        await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
+        {
+            Status = StatusCodes.Status400BadRequest,
+            Detail = exception.Message,
+            Title = "Bad input"
         });
     }
 }

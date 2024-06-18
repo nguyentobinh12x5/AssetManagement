@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import SuspenseLoading from "../components/SuspenseLoading";
 import { AUTH, HOME, TODO_ITEM } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const Home = lazy(() => import("../features/home"));
 const TodoItems = lazy(() => import("../features/todo-item"));
@@ -23,9 +24,9 @@ const AppRoutes = () => {
         <Route
           path={TODO_ITEM}
           element={
-            <PublicRoute>
+            <PrivateRoute>
               <TodoItems />
-            </PublicRoute>
+            </PrivateRoute>
           }
         />
         <Route

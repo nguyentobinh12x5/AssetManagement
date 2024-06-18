@@ -29,7 +29,7 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
 
   return (
     <div className="form-group mb-3 row">
-      <label className="col-4 col-form-label d-flex">
+      <label className="col-4 col-form-label d-flex text-nowrap">
         {label}
         {isrequired && <div className="invalid ml-1">*</div>}
       </label>
