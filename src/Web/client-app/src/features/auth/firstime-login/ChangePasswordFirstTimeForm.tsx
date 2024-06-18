@@ -12,7 +12,7 @@ interface Props {
   ) => void;
 }
 
-const ChangePasswordFirstimeForm: React.FC<Props> = ({
+const ChangePasswordFirstTimeForm: React.FC<Props> = ({
   formInitialValues,
   handleChangePassword,
 }) => {
@@ -46,4 +46,4 @@ const ChangePasswordFirstimeForm: React.FC<Props> = ({
   );
 };
 
-export default ChangePasswordFirstimeForm;
+export default ChangePasswordFirstTimeForm;

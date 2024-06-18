@@ -1,5 +1,5 @@
 import useFirstTimeLogin from "./useFirstTimeLogin";
-import ChangePasswordFirstimeForm from "./ChangePasswordFirstimeForm";
+import ChangePasswordFirstimeForm from "./ChangePasswordFirstTimeForm";
 
 const FirtimeLoginChangePassword = () => {
   const { initialValues, handleSubmit } = useFirstTimeLogin();
