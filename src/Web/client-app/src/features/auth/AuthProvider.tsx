@@ -1,23 +1,31 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useAppDispatch, useAppState } from "../../redux/redux-hooks";
 import { getUserInfo } from "./reducers/auth-slice";
+import SuspenseLoading from "../../components/SuspenseLoading";
+import FirtimeLoginChangePassword from "./firstime-login";
 
 interface Props {
   children: React.ReactNode;
 }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-  const { isAuthenticated } = useAppState((state) => state.auth);
+  const { isAuthenticated, user, isLoading } = useAppState(
+    (state) => state.auth
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const checkAuthSession = () => {
       dispatch(getUserInfo());
     };
-
-    checkAuthSession();
-  }, [dispatch, isAuthenticated]);
-  return <>{children}</>;
+    if (!user) checkAuthSession();
+  }, [dispatch, isAuthenticated, user]);
+  return (
+    <Suspense>
+      {user && user.mustChangePassword && <FirtimeLoginChangePassword />}
+      {children}
+    </Suspense>
+  );
 };
 
 export default AuthProvider;

@@ -803,6 +803,9 @@
           "isEmailConfirmed": {
             "type": "boolean"
           },
+          "mustChangePassword": {
+            "type": "boolean"
+          },
           "roles": {
             "type": "array",
             "items": {

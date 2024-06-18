@@ -116,7 +116,8 @@ public class IdentityService : IIdentityService
         {
             Email = user.Email!,
             IsEmailConfirmed = user.EmailConfirmed,
-            Roles = roles
+            Roles = roles,
+            MustChangePassword = user.MustChangePassword,
         };
     }
 }

@@ -7,5 +7,6 @@ public sealed class UserInfoDto
 
     public required string Email { get; init; }
     public required bool IsEmailConfirmed { get; init; }
+    public required bool MustChangePassword { get; init; }
     public IList<string> Roles { get; init; } = new List<string>();
 }

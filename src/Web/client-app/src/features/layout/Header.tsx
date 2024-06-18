@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
-  console.log(user);
   const HeaderTitle = isAuthenticated ? "Home" : "Online Asset Management";
+
   return (
     <div className="header align-items-center font-weight-bold">
       <div className="container-lg-min container-fluid d-flex justify-content-between ">
