@@ -1,9 +1,11 @@
 
 using System.Security.Claims;
+
 using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
 using AssetManagement.Infrastructure.Identity;
+
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;

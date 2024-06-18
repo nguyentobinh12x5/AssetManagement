@@ -1,9 +1,11 @@
 using System.Data.Common;
+
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
+
 using Microsoft.AspNetCore.Hosting.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -13,6 +15,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using Web.IntegrationTests.Mocks;
 
 namespace Web.IntegrationTests.Helpers;

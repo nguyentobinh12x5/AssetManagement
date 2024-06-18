@@ -1,7 +1,9 @@
-﻿using Azure.Identity;
-using AssetManagement.Application.Common.Interfaces;
+﻿using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Web.Services;
+
+using Azure.Identity;
+
 using Microsoft.AspNetCore.Mvc;
 
 

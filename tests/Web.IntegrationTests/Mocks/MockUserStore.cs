@@ -1,4 +1,5 @@
 using AssetManagement.Infrastructure.Identity;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace Web.IntegrationTests.Mocks;

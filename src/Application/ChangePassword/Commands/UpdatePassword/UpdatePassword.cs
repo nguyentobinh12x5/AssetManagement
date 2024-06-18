@@ -1,10 +1,12 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Security;
 using AssetManagement.Domain.Entities;
 using AssetManagement.Domain.Events;
+
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
 

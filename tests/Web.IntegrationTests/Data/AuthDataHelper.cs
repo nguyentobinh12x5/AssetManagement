@@ -1,14 +1,16 @@
 using AssetManagement.Domain.Constants;
 using AssetManagement.Infrastructure.Identity;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+
 using Web.IntegrationTests.Helpers;
 
 namespace Web.IntegrationTests.Data;
 
 public static class AuthDataHelper
 {
-    private static ApplicationUser DisabledUser = new ApplicationUser
+    private static readonly ApplicationUser DisabledUser = new ApplicationUser
     {
         UserName = "disabledAdmin@localhost",
         Email = "disabledAdmin@localhost",
@@ -18,7 +20,7 @@ public static class AuthDataHelper
         Location = "HCM",
         IsDelete = true
     };
-    private static string Password = "Administrator1!";
+    private static readonly string Password = "Administrator1!";
 
     public static async Task CreateSampleData(
         TestWebApplicationFactory<Program> factory

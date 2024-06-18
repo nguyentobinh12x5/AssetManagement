@@ -2,14 +2,19 @@
 
 using System.Net;
 using System.Net.Http.Json;
+
 using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+
 using Web.IntegrationTests.Data;
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;
+
 using Xunit;
+
 using Assert = Xunit.Assert;
 
 namespace Web.IntegrationTests.Endpoints;

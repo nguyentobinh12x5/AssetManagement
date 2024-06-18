@@ -1,9 +1,12 @@
 using System.Security.Claims;
+
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+
 using AutoMapper;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
