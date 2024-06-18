@@ -1,0 +1,37 @@
+# Ignore artifacts:
+build
+coverage
+dist
+node_modules
+*.log
+
+# Ignore minified files:
+*.min.js
+*.min.css
+
+# Ignore generated files:
+package-lock.json
+yarn.lock
+
+# Ignore environment and config files:
+.env
+.env.*.local
+
+# Ignore specific directories:
+public
+static
+tmp
+
+# Ignore all HTML files:
+*.html
+
+# Ignore specific files:
+src/ignored-file.js
+
+# Ignore specific patterns:
+**/__snapshots__/**
+**/__tests__/**
+**/*.snap
+
+aspnetcore-https.js
+aspnetcore-react.js

@@ -97,4 +97,11 @@ public class IdentityService : IIdentityService
         await _userManager.AddClaimAsync(user,
                             new Claim(ClaimTypes.GivenName, user.UserName ?? string.Empty));
     }
+
+    public async Task<bool> IsUserDisabledAsync(string email)
+    {
+       var user = await _userManager.FindByEmailAsync(email);
+
+        return  user != null && user.IsDelete;
+    }
 }

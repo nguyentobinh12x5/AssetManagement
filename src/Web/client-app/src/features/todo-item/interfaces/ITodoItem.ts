@@ -1,6 +1,6 @@
 export interface ITodoItem {
-    id: number;
-    listId: number;
-    title: string;
-    done: boolean;
+  id: number;
+  listId: number;
+  title: string;
+  done: boolean;
 }

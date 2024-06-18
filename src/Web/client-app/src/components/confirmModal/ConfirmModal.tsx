@@ -1,20 +1,20 @@
-import React, { Fragment } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import React, { Fragment } from "react";
+import Modal from "react-bootstrap/Modal";
 
 interface Props {
-    title: string,
-    isShow: boolean,
-    onHide?: (() => void),
-    children: React.ReactNode,
-    dialogClassName?: string
+  title: string;
+  isShow: boolean;
+  onHide?: () => void;
+  children: React.ReactNode;
+  dialogClassName?: string;
 }
 
 const ConfirmModal: React.FC<Props> = ({
-    title,
-    isShow,
-    onHide,
-    children,
-    dialogClassName = ""
+  title,
+  isShow,
+  onHide,
+  children,
+  dialogClassName = "",
 }) => {
     return (
         <Modal
