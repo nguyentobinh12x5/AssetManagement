@@ -26,8 +26,8 @@ const RadioButtonField: React.FC<InputFieldProps> = (props) => {
   };
 
   return (
-    <div className="form-group">
-      <label className="d-flex">
+    <div className="form-group row">
+      <label className="d-flex col-4 col-form-label">
         {label}
         {required && <div className="invalid ml-1">*</div>}
       </label>
