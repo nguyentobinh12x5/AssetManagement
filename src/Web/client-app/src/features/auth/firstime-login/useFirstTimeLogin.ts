@@ -1,6 +1,7 @@
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../redux/redux-hooks';
+import { changePasswordFirstTime } from '../reducers/auth-slice';
 
 const ChangePasswordFirstimeSchema = Yup.object().shape({
   newPassword: Yup.string().required('Required'),
@@ -16,11 +17,11 @@ const useFirstTimeLogin = () => {
     values: IChangePasswordFirstTime,
     actions: FormikHelpers<IChangePasswordFirstTime>
   ) => {
-    // dispatch(login(values));
+    dispatch(changePasswordFirstTime(values));
     actions.setSubmitting(false);
   };
 
-  return { initialValues, handleSubmit };
+  return { initialValues, handleSubmit, ChangePasswordFirstimeSchema };
 };
 
 export default useFirstTimeLogin;

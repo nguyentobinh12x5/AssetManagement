@@ -137,6 +137,54 @@ public class IdentityService : IIdentityService
         return Result.Success();
     }
 
+    public async Task<Result> ChangePasswordFirstTimeAsync(string newPassword)
+    {
+        var userId = _currentUser.Id;
+        Guard.Against.NullOrWhiteSpace(userId);
+
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+        if (!result.Succeeded)
+        {
+            var errors = result.Errors.Select(e => e.Description).ToList();
+            return Result.Failure(errors);
+        }
+
+        // Update the MustChangePassword field
+        user.MustChangePassword = false;
+        var updateResult = await _userManager.UpdateAsync(user);
+
+        if (!updateResult.Succeeded)
+        {
+            var errors = updateResult.Errors.Select(e => e.Description).ToList();
+            return Result.Failure(errors);
+        }
+
+        return Result.Success();
+    }
+
+    public async Task<bool> IsSameOldPassword(string newPassword)
+    {
+        var userId = _currentUser.Id;
+
+        Guard.Against.NullOrWhiteSpace(userId);
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        // Check if the new password is the same as the current password
+        var isCurrentPassword = await _userManager.CheckPasswordAsync(user, newPassword);
+        if (isCurrentPassword)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
     public async Task<bool> IsUserDisabledAsync(string email)
     {

@@ -2,7 +2,8 @@ import useFirstTimeLogin from "./useFirstTimeLogin";
 import ChangePasswordFirstimeForm from "./ChangePasswordFirstTimeForm";
 
 const FirtimeLoginChangePassword = () => {
-  const { initialValues, handleSubmit } = useFirstTimeLogin();
+  const { initialValues, handleSubmit, ChangePasswordFirstimeSchema } =
+    useFirstTimeLogin();
 
   return (
     <div className="firstime-login-wrapper">
@@ -13,6 +14,7 @@ const FirtimeLoginChangePassword = () => {
         <ChangePasswordFirstimeForm
           formInitialValues={initialValues}
           handleChangePassword={handleSubmit}
+          validationSchema={ChangePasswordFirstimeSchema}
         />
       </div>
     </div>

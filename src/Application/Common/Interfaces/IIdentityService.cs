@@ -18,6 +18,8 @@ public interface IIdentityService
     Task<Result> DeleteUserAsync(string userId);
 
     Task<bool> CheckCurrentPassword(string currentPassword);
+    Task<bool> IsSameOldPassword(string newPassword);
+    Task<Result> ChangePasswordFirstTimeAsync(string newPassword);
 
     Task<Result> ChangePasswordAsync(string currentPassword, string newPassword);
 

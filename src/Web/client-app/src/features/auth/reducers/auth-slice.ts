@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILoginCommand } from '../interfaces/ILoginCommand';
 import { getCookie } from '../../../utils/cookiesUtils';
+import { IChangePasswordFirstTimeCommand } from '../interfaces/IChangePasswordFirstTimeCommand';
 
 interface AuthState {
   isLoading: boolean;
@@ -27,6 +28,10 @@ const AuthSlice = createSlice({
       ...state,
       isLoading: true,
     }),
+    changePasswordFirstTime: (state: AuthState, action: PayloadAction<IChangePasswordFirstTimeCommand>) => ({
+      ...state,
+      isLoading: true
+    }),
 
     // Set state
     setUser: (state: AuthState, action: PayloadAction) => ({
@@ -45,12 +50,20 @@ const AuthSlice = createSlice({
       isLoading: false,
       loginError: action.payload,
     }),
+    changePasswordFirstTimeSuccess: (state: AuthState) => ({
+      ...state,
+      isLoading: false,
+      user: {
+        ...state.user,
+        mustChangePassword: false
+      }
+    }),
     setLogout: () => initialState,
   },
   extraReducers(builder) {},
 });
 
-export const { login, setAuth, loginFail, setUser, getUserInfo, setLogout } =
+export const { login, setAuth, loginFail, setUser, getUserInfo, setLogout, changePasswordFirstTime, changePasswordFirstTimeSuccess } =
   AuthSlice.actions;
 
 export default AuthSlice.reducer;

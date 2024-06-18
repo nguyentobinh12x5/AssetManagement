@@ -9,16 +9,14 @@ interface Props {
 }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-  const { isAuthenticated, user, isLoading } = useAppState(
-    (state) => state.auth
-  );
+  const { isAuthenticated, user } = useAppState((state) => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const checkAuthSession = () => {
       dispatch(getUserInfo());
     };
-    if (!user) checkAuthSession();
+    if (!user && isAuthenticated) checkAuthSession();
   }, [dispatch, isAuthenticated, user]);
   return (
     <Suspense>

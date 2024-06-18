@@ -1,12 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
-import { getUserInfo, login } from './requests';
-import { loginFail, setAuth, setLogout, setUser } from '../reducers/auth-slice';
+import { changePasswordFirstTime, getUserInfo, login } from './requests';
+import { changePasswordFirstTimeSuccess, loginFail, setAuth, setLogout, setUser } from '../reducers/auth-slice';
 import { ILoginCommand } from '../interfaces/ILoginCommand';
 import {
   showErrorToast,
   showSuccessToast,
 } from '../../../components/toastify/toast-helper';
+import { IChangePasswordFirstTimeCommand } from '../interfaces/IChangePasswordFirstTimeCommand';
 
 export function* handleLogin(action: PayloadAction<ILoginCommand>) {
   const loginCommand = action.payload;
@@ -29,5 +30,34 @@ export function* handleGetUserInfo() {
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(setLogout());
+  }
+}
+
+
+export function* handleChangePasswordFirstTime(action : PayloadAction<IChangePasswordFirstTimeCommand>)
+{
+  try {
+    yield call(changePasswordFirstTime, action.payload);
+    yield put(changePasswordFirstTimeSuccess())
+  } catch (error :any) {
+    const errorResponse = error.response.data;
+    if(errorResponse.errors)
+      {
+        const keys = Object.keys(errorResponse.errors);
+        console.log(keys)
+        for(let key of keys)
+          {
+            const messages = errorResponse.errors[key];
+            if(messages && messages.length > 0)
+              {
+                for(let errorMsg of messages)
+                  {
+                    yield showErrorToast(errorMsg);
+                  }
+              }
+            
+          }
+      }
+    else if (errorResponse.detail) yield showErrorToast(errorResponse.detail);
   }
 }

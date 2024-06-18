@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
+using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
+using AssetManagement.Application.Common.Models;
 
 namespace AssetManagement.Web.Endpoints;
 
@@ -20,15 +22,18 @@ public class Auth : EndpointGroupBase
             .RequireAuthorization()
             .AllowAnonymous()
             .MapPost(ChangePassword, "change-password")
+            .MapPost(ChangePasswordFirstTime, "change-password-first-time")
             .MapPost(Login, "login")
             .MapGet(GetUserInfo, "manage/info");
-
     }
 
     public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login([FromBody] LoginRequest loginRequest, [FromQuery] bool? useCookies, [FromQuery] bool? useSessionCookies, [FromServices] IServiceProvider sp)
     {
         var signInManager = sp.GetRequiredService<SignInManager<ApplicationUser>>();
         var identityService = sp.GetRequiredService<IIdentityService>();
+        // var userService = sp.GetRequiredService<UserManager<ApplicationUser>>();
+
+
         // var user = sp.GetRequiredService<UserManager<ApplicationUser>>();
         // user.GetRolesAsync()
 
@@ -36,12 +41,7 @@ public class Auth : EndpointGroupBase
         var isPersistent = (useCookies == true) && (useSessionCookies != true);
         signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
 
-        // Validate is user disabled
-        var isUserDisabled = await identityService.IsUserDisabledAsync(loginRequest.Email);
-        if (isUserDisabled)
-        {
-            return TypedResults.Problem("Your account is disabled. Please contact with IT Team", statusCode: StatusCodes.Status400BadRequest);
-        }
+
 
         // Login user
         var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, isPersistent, lockoutOnFailure: true);
@@ -63,6 +63,13 @@ public class Auth : EndpointGroupBase
             return TypedResults.Problem("Username or password is incorrect. Please try again", statusCode: StatusCodes.Status400BadRequest);
         }
 
+        // Validate is user disabled
+        var isUserDisabled = await identityService.IsUserDisabledAsync(loginRequest.Email);
+        if (isUserDisabled)
+        {
+            return TypedResults.Problem("Your account is disabled. Please contact with IT Team", statusCode: StatusCodes.Status400BadRequest);
+        }
+
         // The signInManager already produced the needed response in the form of a cookie or bearer token.
         return TypedResults.Empty;
     }
@@ -81,6 +88,12 @@ public class Auth : EndpointGroupBase
             throw new UnauthorizedAccessException();
         }
 
+        await sender.Send(command);
+        return Results.NoContent();
+    }
+
+    public async Task<IResult> ChangePasswordFirstTime(ISender sender, [FromBody] ChangePasswordFirstTimeCommand command)
+    {
         await sender.Send(command);
         return Results.NoContent();
     }

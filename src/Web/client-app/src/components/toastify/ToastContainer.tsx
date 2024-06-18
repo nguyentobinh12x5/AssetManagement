@@ -9,7 +9,11 @@ const ToastContainer: React.FC = () => {
   const { toasts, removeToast } = useToast();
 
   return (
-    <BootstrapToastContainer position="top-end" className="p-3">
+    <BootstrapToastContainer
+      position="top-end"
+      className="p-3"
+      style={{ zIndex: 9999 }}
+    >
       {toasts.map((toast) => (
         <Toast
           key={toast.id}

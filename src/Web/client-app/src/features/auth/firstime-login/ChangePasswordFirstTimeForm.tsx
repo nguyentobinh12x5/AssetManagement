@@ -10,14 +10,20 @@ interface Props {
     values: IChangePasswordFirstTime,
     actions: FormikHelpers<IChangePasswordFirstTime>
   ) => void;
+  validationSchema: any;
 }
 
 const ChangePasswordFirstTimeForm: React.FC<Props> = ({
   formInitialValues,
   handleChangePassword,
+  validationSchema,
 }) => {
   return (
-    <Formik initialValues={formInitialValues} onSubmit={handleChangePassword}>
+    <Formik
+      initialValues={formInitialValues}
+      onSubmit={handleChangePassword}
+      validationSchema={validationSchema}
+    >
       {({ isValid, dirty }) => (
         <Form>
           <div className="form-header">
