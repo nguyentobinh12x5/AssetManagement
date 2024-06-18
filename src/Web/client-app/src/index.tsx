@@ -1,20 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from "./reportWebVitals";
 import NProgress from "nprogress";
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import AppRoutes from './routes';
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import AppRoutes from "./routes";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import './styles/index.scss';
-import './styles/App.scss';
+import "./styles/index.scss";
+import "./styles/App.scss";
 
 NProgress.configure({ minimum: 1 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>

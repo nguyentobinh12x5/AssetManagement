@@ -6,15 +6,14 @@ import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { ITodoItem } from '../interfaces/ITodoItem';
 
 export function getTodoItems(
-    todoQuery: ITodoQuery
+  todoQuery: ITodoQuery
 ): Promise<AxiosResponse<IPagedModel<ITodoItem>>> {
-    return RequestService.axios.get(
-        `${ENDPOINTS.TODOITEM}?` +
-        `ListId=${todoQuery.listId}` +
-        `&PageNumber=${todoQuery.pageNumber}` +
-        `&PageSize=${todoQuery.pageSize}` +
-        `&SortColumnName=${todoQuery.sortColumnName}` +
-        `&SortColumnDirection=${todoQuery.sortColumnDirection}`
-
-    );
+  return RequestService.axios.get(
+    `${ENDPOINTS.TODOITEM}?` +
+      `ListId=${todoQuery.listId}` +
+      `&PageNumber=${todoQuery.pageNumber}` +
+      `&PageSize=${todoQuery.pageSize}` +
+      `&SortColumnName=${todoQuery.sortColumnName}` +
+      `&SortColumnDirection=${todoQuery.sortColumnDirection}`
+  );
 }

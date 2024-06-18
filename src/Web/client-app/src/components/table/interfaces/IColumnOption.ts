@@ -1,4 +1,4 @@
 export default interface IColumnOption {
-    name: string,
-    value: string
+  name: string;
+  value: string;
 }
