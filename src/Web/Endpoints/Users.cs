@@ -10,6 +10,7 @@ public class Users : EndpointGroupBase
         app.MapGroup(this)
             //.RequireAuthorization()
             .AllowAnonymous()
+            .MapGet(GetUser, "{id}")
             .MapPut(UpdateUser, "{id}");
     }
     
@@ -18,5 +19,11 @@ public class Users : EndpointGroupBase
         if (id != command.Id) return Results.BadRequest();
         await sender.Send(command);
         return Results.NoContent();
+    }
+    
+    public async Task<IResult> GetUser(ISender sender, string id)
+    {
+        var result = await sender.Send(new GetUserQuery { Id = id });
+        return Results.Ok(result);
     }
 }
