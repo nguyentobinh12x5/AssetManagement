@@ -8,8 +8,6 @@
 @import "../features/auth/login/LoginForm.scss";
 @import "../features/auth/firstime-login/ChangePasswordFirstimeForm.scss";
 
-
-
 :root {
   --primary-grey: #ced4da;
   --primary-grey-200: rgba(239, 241, 245, 1);
@@ -84,7 +82,7 @@ body {
 .form-body {
   border: 1px solid var(--primary-grey);
   border-radius: 4px;
-  padding: 1.5rem 2.5rem ;
+  padding: 1.5rem 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -97,6 +95,5 @@ body {
 
   button {
     align-self: flex-end;
-}
-
+  }
 }
