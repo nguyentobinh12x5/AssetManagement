@@ -9,50 +9,50 @@ import Table from "../../../components/table/Table";
 import { DEFAULT_TODO_ITEM_SORT_COLUMN } from "../constants/todo-item-sort";
 
 type TodoItemTableProps = {
-    todoItems: IPagedModel<ITodoItem>,
-    handleSort: (value: string) => void,
-    handlePaging: (page: number) => void,
-    sortState: ISortState
-}
+  todoItems: IPagedModel<ITodoItem>;
+  handleSort: (value: string) => void;
+  handlePaging: (page: number) => void;
+  sortState: ISortState;
+};
 
 const TodoItemTable: React.FC<TodoItemTableProps> = ({
-    todoItems,
-    sortState,
-    handleSort,
-    handlePaging
+  todoItems,
+  sortState,
+  handleSort,
+  handlePaging,
 }) => {
-    const { items, pageNumber, totalPages } = todoItems;
-    
-    const columns: IColumnOption[] = [
-        { name: 'Id', value: 'Id' },
-        { name: 'List Id', value: 'ListId' },
-        { name: 'Title', value: 'Title' },
-        { name: 'Done', value: 'Done' }
-    ]
+  const { items, pageNumber, totalPages } = todoItems;
 
-    const pagination: IPagination = {
-        currentPage: pageNumber,
-        totalPage: totalPages,
-        handleChange: handlePaging
-    }
+  const columns: IColumnOption[] = [
+    { name: "Id", value: "Id" },
+    { name: "List Id", value: "ListId" },
+    { name: "Title", value: "Title" },
+    { name: "Done", value: "Done" },
+  ];
 
-    return (
-        <Table
-            columns={columns}
-            sortState={sortState}
-            handleSort={handleSort}
-            pagination={pagination}
-        >
-            {items?.map((data) => (
-                <tr key={data.id}>
-                    <td>{data.id}</td>
-                    <td>{data.listId}</td>
-                    <td>{data.title}</td>
-                    <td>{data.done}</td>
-                </tr>
-            ))}
-        </Table>
-    )
-}
+  const pagination: IPagination = {
+    currentPage: pageNumber,
+    totalPage: totalPages,
+    handleChange: handlePaging,
+  };
+
+  return (
+    <Table
+      columns={columns}
+      sortState={sortState}
+      handleSort={handleSort}
+      pagination={pagination}
+    >
+      {items?.map((data) => (
+        <tr key={data.id}>
+          <td>{data.id}</td>
+          <td>{data.listId}</td>
+          <td>{data.title}</td>
+          <td>{data.done}</td>
+        </tr>
+      ))}
+    </Table>
+  );
+};
 
 export default TodoItemTable;

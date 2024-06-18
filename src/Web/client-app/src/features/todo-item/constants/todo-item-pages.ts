@@ -1,1 +1,1 @@
-export const TODO_ITEM_LIST = "*";
+export const TODO_ITEM_LIST = '*';

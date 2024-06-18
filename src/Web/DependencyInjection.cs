@@ -32,6 +32,7 @@ public static class DependencyInjection
                 policy =>
                 {
                     policy.WithOrigins("https://localhost:44447")
+                            .AllowCredentials()
                           .AllowAnyHeader()
                           .AllowAnyMethod(); //allowedCors ?? string.Empty
                 });

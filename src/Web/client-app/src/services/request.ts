@@ -3,16 +3,15 @@ import ENDPOINTS from '../constants/endpoints';
 import { APP_CONFIG } from '../constants/appConfig';
 
 const config: AxiosRequestConfig = {
-    baseURL: APP_CONFIG.API_BASE_URL
-}
+  baseURL: APP_CONFIG.API_BASE_URL,
+};
 
 class RequestService {
-    public axios: AxiosInstance;
+  public axios: AxiosInstance;
 
-    constructor () {
-        this.axios = axios.create(config);
-    }
-
+  constructor() {
+    this.axios = axios.create(config);
+  }
 }
 
 export default new RequestService();

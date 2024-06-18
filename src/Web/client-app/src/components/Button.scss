@@ -1,0 +1,17 @@
+.primary-btn,
+.primary-btn:active {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.primary-btn {
+  &:hover {
+    border-color: rgba(207, 35, 56, 0.8);
+    background-color: rgba(207, 35, 56, 0.8);
+  }
+
+  &:disabled {
+    border-color: rgba(207, 35, 56, 0.6);
+    background-color: rgba(207, 35, 56, 0.6);
+  }
+}
