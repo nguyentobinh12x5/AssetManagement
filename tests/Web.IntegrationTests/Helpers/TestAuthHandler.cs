@@ -34,5 +34,7 @@ public class TestAuthHandler : AuthenticationHandler<TestAuthenticationSchemeOpt
 
         return Task.FromResult(result);
     }
+
+
 }
 

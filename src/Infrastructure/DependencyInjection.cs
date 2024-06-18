@@ -39,8 +39,10 @@ public static class DependencyInjection
             //.AddDefaultIdentity<ApplicationUser>()
             //#IdentitySpaApiRoute
             .AddIdentityApiEndpoints<ApplicationUser>()
+            .AddSignInManager<SignInManager>()
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
         services.AddSingleton(TimeProvider.System);
         services.AddTransient<IIdentityService, IdentityService>();
