@@ -1,7 +1,12 @@
+using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 using System.Security.Claims;
 using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Queries.GetUsers;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +33,7 @@ public class IdentityService : IIdentityService
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
         _mapper = mapper;
+
     }
 
     public async Task Logout()
@@ -96,6 +102,28 @@ public class IdentityService : IIdentityService
     {
         await _userManager.AddClaimAsync(user,
                             new Claim(ClaimTypes.GivenName, user.UserName ?? string.Empty));
+    }
+
+    public async Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
+    {
+        var users = await _userManager.Users
+            .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)            
+            .PaginatedListAsync(query.PageNumber, query.PageSize);
+
+        var userBriefDtos = new List<UserBriefDto>();
+
+        foreach (var user in users.Items)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var userBriefDto = _mapper.Map<UserBriefDto>(user);
+            userBriefDto.Type = roles.FirstOrDefault(); 
+            userBriefDto.FullName = $"{user.LastName} {user.FirstName}";
+
+            userBriefDtos.Add(userBriefDto);
+        }
+
+        return new PaginatedList<UserBriefDto>(userBriefDtos, users.TotalCount, query.PageNumber, query.PageSize);
     }
 
     public async Task<bool> IsUserDisabledAsync(string email)

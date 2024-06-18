@@ -1,4 +1,5 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+﻿using System.Reflection;
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Constants;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Data.Interceptors;
@@ -18,6 +19,8 @@ public static class DependencyInjection
 
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
 
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, SoftDeleteInterceptor>();
