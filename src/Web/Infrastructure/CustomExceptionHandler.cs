@@ -17,6 +17,7 @@ public class CustomExceptionHandler : IExceptionHandler
                 { typeof(NotFoundException), HandleNotFoundException },
                 { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
+                { typeof(IncorrectPasswordException), HandleIncorrectPasswordValidation },
             };
     }
 
@@ -78,6 +79,20 @@ public class CustomExceptionHandler : IExceptionHandler
         {
             Status = StatusCodes.Status403Forbidden,
             Title = "Forbidden"
+        });
+    }
+
+    private async Task HandleIncorrectPasswordValidation(HttpContext httpContext, Exception ex)
+    {
+        var exception = (IncorrectPasswordException)ex;
+
+        httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+        await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
+        {
+            Status = StatusCodes.Status400BadRequest,
+            Title = "Incorrect Password",
+            Detail = exception.Message
         });
     }
 }
