@@ -1,6 +1,8 @@
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { useAppState } from "../../redux/redux-hooks";
 import { Link } from "react-router-dom";
+import ChangePasswordForm from "../auth/changepassword/ChangePasswordForm";
+import { useState } from "react";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
@@ -19,11 +21,6 @@ const Header = () => {
           </Link>
         )}
       </div>
-
-      <ChangePasswordForm
-        show={showChangePasswordModal}
-        onHide={handleCloseChangePasswordModal}
-      />
     </div>
   );
 };
@@ -32,6 +29,13 @@ export default Header;
 
 const UserDropdown = (props: any) => {
   const { user } = props;
+
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
+
+  const handleShowChangePasswordModal = () => setShowChangePasswordModal(true);
+  const handleCloseChangePasswordModal = () =>
+    setShowChangePasswordModal(false);
+
   return (
     <>
       <Dropdown data-bs-theme="dark" align={"end"}>
@@ -47,8 +51,14 @@ const UserDropdown = (props: any) => {
           <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
           <Dropdown.Divider /> */}
           <Dropdown.Item href="#/action-4">Logout</Dropdown.Item>
+          <Dropdown.Item onClick={handleShowChangePasswordModal}>Change Password</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+
+      <ChangePasswordForm
+        show={showChangePasswordModal}
+        onHide={handleCloseChangePasswordModal}
+      />
     </>
   );
 };
