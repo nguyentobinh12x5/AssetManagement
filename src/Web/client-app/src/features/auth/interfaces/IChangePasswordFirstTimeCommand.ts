@@ -1,4 +1,3 @@
-export interface IChangePasswordFirstTimeCommand
-{
-    newPassword: string;
+export interface IChangePasswordFirstTimeCommand {
+  newPassword: string;
 }

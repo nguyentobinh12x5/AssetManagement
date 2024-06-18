@@ -10,14 +10,13 @@ export function login(
   return RequestService.axios.post(ENDPOINTS.AUTHORIZE, loginCommand, {
     params: {
       useCookies: loginCommand.useCookies ?? true,
-    }
+    },
   });
 }
 
 export function getUserInfo() {
   return RequestService.axios.get(ENDPOINTS.USER_INFO);
 }
-
 
 export function changePasswordFirstTime(
   command: IChangePasswordFirstTimeCommand

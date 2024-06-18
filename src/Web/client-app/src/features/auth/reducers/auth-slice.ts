@@ -28,9 +28,12 @@ const AuthSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-    changePasswordFirstTime: (state: AuthState, action: PayloadAction<IChangePasswordFirstTimeCommand>) => ({
+    changePasswordFirstTime: (
+      state: AuthState,
+      action: PayloadAction<IChangePasswordFirstTimeCommand>
+    ) => ({
       ...state,
-      isLoading: true
+      isLoading: true,
     }),
 
     // Set state
@@ -55,15 +58,23 @@ const AuthSlice = createSlice({
       isLoading: false,
       user: {
         ...state.user,
-        mustChangePassword: false
-      }
+        mustChangePassword: false,
+      },
     }),
     setLogout: () => initialState,
   },
   extraReducers(builder) {},
 });
 
-export const { login, setAuth, loginFail, setUser, getUserInfo, setLogout, changePasswordFirstTime, changePasswordFirstTimeSuccess } =
-  AuthSlice.actions;
+export const {
+  login,
+  setAuth,
+  loginFail,
+  setUser,
+  getUserInfo,
+  setLogout,
+  changePasswordFirstTime,
+  changePasswordFirstTimeSuccess,
+} = AuthSlice.actions;
 
 export default AuthSlice.reducer;
