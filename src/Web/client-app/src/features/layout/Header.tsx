@@ -51,7 +51,9 @@ const UserDropdown = (props: any) => {
           <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
           <Dropdown.Divider /> */}
           <Dropdown.Item href="#/action-4">Logout</Dropdown.Item>
-          <Dropdown.Item onClick={handleShowChangePasswordModal}>Change Password</Dropdown.Item>
+          <Dropdown.Item onClick={handleShowChangePasswordModal}>
+            Change Password
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 

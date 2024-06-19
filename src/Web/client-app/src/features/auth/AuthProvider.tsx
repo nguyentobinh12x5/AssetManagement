@@ -9,15 +9,15 @@ interface Props {
 }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-  const { isAuthenticated, user } = useAppState((state) => state.auth);
+  const { user } = useAppState((state) => state.auth);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const checkAuthSession = () => {
       dispatch(getUserInfo());
     };
-    if (!user && isAuthenticated) checkAuthSession();
-  }, [dispatch, isAuthenticated, user]);
+    if (!user) checkAuthSession();
+  }, [dispatch, user]);
   return (
     <Suspense>
       {user && user.mustChangePassword && <FirtimeLoginChangePassword />}

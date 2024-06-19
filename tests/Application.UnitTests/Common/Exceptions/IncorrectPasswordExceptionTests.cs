@@ -1,14 +1,14 @@
-﻿using AssetManagement.Application.Common.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using AssetManagement.Application.Common.Exceptions;
 
 using FluentAssertions;
 
 using FluentValidation.Results;
 
 using NUnit.Framework;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AssetManagement.Application.UnitTests.Common.Exceptions
 {

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+
 using FluentAssertions;
 
 using NUnit.Framework;
 
-namespace AssetManagement.Application.Auth.Queries.GetCurrentUserInfo.Tests;
+namespace AssetManagement.Application.UnitTests.Auth.Queries.GetCurrentUserInfo;
 public class UserInfoDtoTests
 {
     [Test]
