@@ -1,4 +1,5 @@
-﻿using AssetManagement.Application.Users.Commands.UpdateUser;
+﻿using AssetManagement.Application.Users.Commands.Create;
+using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 
 namespace AssetManagement.Web.Endpoints;
@@ -11,9 +12,13 @@ public class Users : EndpointGroupBase
             //.RequireAuthorization()
             .AllowAnonymous()
             .MapGet(GetUser, "{id}")
-            .MapPut(UpdateUser, "{id}");
+            .MapPut(UpdateUser, "{id}")
+            .MapPost(CreateUser);
     }
-    
+    public Task<string> CreateUser(ISender sender, CreateUserCommand command)
+    {
+        return sender.Send(command);
+    }
     public async Task<IResult> UpdateUser(ISender sender, string id, UpdateUserCommand command)
     {
         if (id != command.Id) return Results.BadRequest();
