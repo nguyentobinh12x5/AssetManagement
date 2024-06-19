@@ -5,21 +5,23 @@ import TextField from "../../../components/formInputs/TextField";
 import DateField from "../../../components/formInputs/DateField";
 import RadioButtonField from "../../../components/formInputs/RadioButtonField";
 import SelectField from "../../../components/formInputs/SelectField";
+import { GenderOptions } from "../constants/gender-user";
+import { TypeOptions } from "../constants/type-user";
+import { useNavigate } from "react-router-dom";
 const UseForm = () => {
-  const { initialValues, handleSubmit, UserSchema } = useUserForm();
-  const genderOptions = [
-    { id: 1, label: "Male", value: "Male" },
-    { id: 2, label: "Female", value: "Female" },
-  ];
-  const typeOptions = [
-    { value: "Admin", label: "Admin" },
-    { value: "Staff", label: "Staff" },
-  ];
+  const { user, isLoading, handleSubmit, UserSchema } = useUserForm();
+  const navigate = useNavigate();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={user}
       onSubmit={handleSubmit}
       validationSchema={UserSchema}
+      enableReinitialize
     >
       {({ isValid, dirty }) => (
         <Form>
@@ -58,7 +60,7 @@ const UseForm = () => {
               name="gender"
               label="Gender"
               required
-              options={genderOptions}
+              options={GenderOptions}
               checked
             />
           </div>
@@ -75,7 +77,7 @@ const UseForm = () => {
               id="type"
               label="Type"
               name="type"
-              options={typeOptions}
+              options={TypeOptions}
               required
             />
           </div>
@@ -90,9 +92,7 @@ const UseForm = () => {
             <Button
               type="button"
               className="btn btn-secondary"
-              onClick={() => {
-                console.log("Cancel");
-              }}
+              onClick={() => navigate("/user")}
             >
               Cancel
             </Button>
