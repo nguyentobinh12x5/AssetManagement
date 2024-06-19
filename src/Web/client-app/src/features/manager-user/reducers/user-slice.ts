@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IUser } from '../interfaces/IUser';
+import { IUser, IUserDetail } from '../interfaces/IUser';
 
 interface UserState {
     isLoading: boolean;
-    users?: IUser[];
+    users?: IUserDetail[];
     status?: number;
     user?: any;
     error?: string | null;
@@ -30,7 +30,7 @@ const UserSlice = createSlice({
             error: null,
             succeed: false,
         }),
-        setUserById: (state: UserState, action: PayloadAction<IUser>) => ({
+        setUserById: (state: UserState, action: PayloadAction<IUserDetail>) => ({
             ...state,
             user: action.payload,
             isLoading: false,
