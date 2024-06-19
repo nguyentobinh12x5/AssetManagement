@@ -109,12 +109,12 @@ stages:
       dependsOn:
         - Build
 
-# - template: deploy-template.yaml
-#   parameters:
-#     environment: testing
-#     azureSubscriptionName: $(azureSubscription)
-#     azureResourceGroup: 'RookieBatch7'
-#     azureAppServiceName: "assetmanagement-net-b7-1-qc"
-#     stageConfig:
-#       dependsOn:
-#         - deploy_development
+- template: deploy-template.yaml
+  parameters:
+    environment: testing
+    azureSubscriptionName: $(azureSubscription)
+    azureResourceGroup: 'RookieBatch7'
+    azureAppServiceName: "assetmanagement-net-b7-1-qc"
+    stageConfig:
+      dependsOn:
+        - deploy_development
