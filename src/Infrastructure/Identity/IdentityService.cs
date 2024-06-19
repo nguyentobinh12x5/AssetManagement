@@ -10,6 +10,7 @@ using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersByType;
 using AssetManagement.Infrastructure.Data;
 
 using AutoMapper;
@@ -162,11 +163,9 @@ public class IdentityService : IIdentityService
 
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
-        var users = await InitialGetUserBriefAsync(query);
+        var users = await InitialGetUserBriefAsync(query.SortColumnName, query.SortColumnDirection);
 
-        //var test = users.FirstOrDefault()?.UserRoles?.FirstOrDefault()?.Role.Name;
-
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users);
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "Default");
 
         if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
             userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
@@ -184,7 +183,7 @@ public class IdentityService : IIdentityService
 
     // Handles the case where User's role was chosen to be sorted
     // in which case won't be able to since it's not of User's prop
-    private async Task<List<UserBriefDto>> GetUserBriefDtosWithRoleAsync(List<ApplicationUser> users)
+    private async Task<List<UserBriefDto>> GetUserBriefDtosWithRoleAsync(List<ApplicationUser> users, string typeName )
     {
         var userBriefDtos = new List<UserBriefDto>();
 
@@ -203,28 +202,35 @@ public class IdentityService : IIdentityService
             var userBriefDto = _mapper.Map<UserBriefDto>(user);
 
             var userRole = userRoles.FirstOrDefault(ur => ur.UserId == user.Id);
-            userBriefDto.Type = userRole?.RoleName;
+            
+            userBriefDto.Type = userRole?.RoleName ?? "Default";
 
             userBriefDto.FullName = $"{user.FirstName} {user.LastName} ";
 
             userBriefDtos.Add(userBriefDto);
         }
 
+        if (!typeName.Equals("Default", StringComparison.OrdinalIgnoreCase))
+            userBriefDtos = userBriefDtos
+                .Where(u => u.Type.Equals(typeName, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
         return userBriefDtos;
     }
 
-    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(GetUsersQuery query)
+
+    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync( string columnName, string columnDirection)
     {
-        if (!query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+        if (!columnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
         {
             return await _userManager.Users
-                .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)
+                .OrderByDynamic(columnName, columnDirection)
                 .ToListAsync();
         }
         else
         {
             return await _userManager.Users
-                .OrderByDynamic("StaffCode", query.SortColumnDirection)
+                .OrderByDynamic("StaffCode", columnDirection)
                 .ToListAsync();
         }
     }
@@ -340,4 +346,24 @@ public class IdentityService : IIdentityService
             MustChangePassword = user.MustChangePassword,
         };
     }
+    public async Task<PaginatedList<UserBriefDto>> GetUsersByTypeAsync(GetUsersByTypeQuery query)
+    {
+        var users = await InitialGetUserBriefAsync(query.SortColumnName, query.SortColumnDirection);
+
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Type);
+
+        if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+            userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
+
+        return new PaginatedList<UserBriefDto>(
+            userBriefDtos
+                .Skip((query.PageNumber - 1) * query.PageSize)
+                .Take(query.PageSize)
+                .ToList(),
+            userBriefDtos.Count,
+            query.PageNumber,
+            query.PageSize
+        );
+    }
+
 }

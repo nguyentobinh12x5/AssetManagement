@@ -43,4 +43,5 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
 
         return users;
     }
+
 }

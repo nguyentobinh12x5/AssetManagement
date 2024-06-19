@@ -28,6 +28,11 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
+    public Task<PaginatedList<UserBriefDto>> GetUsersByTypeAsync(GetUsersByTypeQuery query)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<bool> CheckCurrentPassword(string currentPassword)
     {
         throw new NotImplementedException();
@@ -39,6 +44,11 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<Result> DeleteUserAsync(string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
         throw new NotImplementedException();
     }

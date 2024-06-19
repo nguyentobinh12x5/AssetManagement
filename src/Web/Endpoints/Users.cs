@@ -3,6 +3,7 @@ using AssetManagement.Application.Users.Commands.DeleteUser;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersByType;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,16 @@ public class Users : EndpointGroupBase
             .MapGet(GetUser, "{id}")
             .MapPut(UpdateUser, "{id}")
             .MapGet(GetUserList)
-            .MapDelete(DeleteUser, "{id}");
+            .MapDelete(DeleteUser, "{id}")
+            .MapGet("type",GetUserByType);
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
+    {
+        return sender.Send(query);
+    }
+    
+    public Task<PaginatedList<UserBriefDto>> GetUserByType(ISender sender, [AsParameters] GetUsersByTypeQuery query)
     {
         return sender.Send(query);
     }
