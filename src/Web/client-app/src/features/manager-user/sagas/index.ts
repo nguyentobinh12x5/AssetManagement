@@ -1,6 +1,16 @@
 import { takeLatest } from 'redux-saga/effects';
-import { editUser, getUserById, getUsers, deleteUser } from '../reducers/user-slice';
-import { handleDeleteUser, handleEditUser, handleGetUserById, handleGetUsers } from './handles';
+import {
+  editUser,
+  getUserById,
+  getUsers,
+  deleteUser,
+} from '../reducers/user-slice';
+import {
+  handleDeleteUser,
+  handleEditUser,
+  handleGetUserById,
+  handleGetUsers,
+} from './handles';
 
 export default function* userSagas() {
   yield takeLatest(editUser.type, handleEditUser);

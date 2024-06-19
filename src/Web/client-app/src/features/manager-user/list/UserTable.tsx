@@ -31,7 +31,7 @@ const UserTable: React.FC<UserTableProps> = ({
     { name: "Username", value: "UserName", disable: true },
     { name: "Joined Date", value: "JoinDate" },
     { name: "Type", value: "Type" },
-    { name: "Action", value: "", disable: true }
+    { name: "Action", value: "", disable: true },
   ];
 
   const navigate = useNavigate();

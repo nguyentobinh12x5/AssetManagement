@@ -144,7 +144,7 @@ public class IdentityService : IIdentityService
 
         Guard.Against.NotFound(userId, user);
 
-        return await DeleteUserAsync(user);   
+        return await DeleteUserAsync(user);
     }
 
     public async Task<Result> DeleteUserAsync(ApplicationUser user)

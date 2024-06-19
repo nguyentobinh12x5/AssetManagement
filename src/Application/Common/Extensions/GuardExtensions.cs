@@ -1,22 +1,24 @@
-﻿using Ardalis.GuardClauses;
+﻿using System;
+
+using Ardalis.GuardClauses;
+
 using AssetManagement.Application.Common.Models;
-using System;
 
 namespace AssetManagement.Application.Common.Extensions
 {
-	public static class GuardExtensions
-	{
-		public static void EnsureSucceedResult<T>(this IGuardClause guard, T entity, string message)
-		{
-			if (entity == null)
-			{
-				throw new ArgumentException(message);
-			}
+    public static class GuardExtensions
+    {
+        public static void EnsureSucceedResult<T>(this IGuardClause guard, T entity, string message)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentException(message);
+            }
 
-			if (entity is Result result && !result.Succeeded)
-			{
-				throw new ArgumentException(message);
-			}
-		}
-	}
+            if (entity is Result result && !result.Succeeded)
+            {
+                throw new ArgumentException(message);
+            }
+        }
+    }
 }

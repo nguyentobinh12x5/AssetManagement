@@ -1,23 +1,24 @@
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.DeleteUser;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Users.Commands.DeleteUser;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManagement.Web.Endpoints;
 
 public class Users : EndpointGroupBase
 {
-	public override void Map(WebApplication app)
-	{
-		app.MapGroup(this)
-			.AllowAnonymous()
+    public override void Map(WebApplication app)
+    {
+        app.MapGroup(this)
+            .AllowAnonymous()
             .MapGet(GetUser, "{id}")
             .MapPut(UpdateUser, "{id}")
-			.MapGet(GetUserList)
-			.MapDelete(DeleteUser, "{id}");
-	}
+            .MapGet(GetUserList)
+            .MapDelete(DeleteUser, "{id}");
+    }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
     {
@@ -37,9 +38,9 @@ public class Users : EndpointGroupBase
         return Results.NoContent();
     }
 
-	public async Task<IResult> DeleteUser(ISender sender, string id)
-	{
-		await sender.Send(new DeleteUserCommand(id));
-		return Results.NoContent();
-	}
+    public async Task<IResult> DeleteUser(ISender sender, string id)
+    {
+        await sender.Send(new DeleteUserCommand(id));
+        return Results.NoContent();
+    }
 }

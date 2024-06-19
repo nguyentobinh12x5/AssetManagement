@@ -30,4 +30,3 @@ export function getUsers(
 export function deleteUserRequest(userId: string) {
   return RequestService.axios.delete(`${ENDPOINTS.DELETE_USER}/${userId}`);
 }
-

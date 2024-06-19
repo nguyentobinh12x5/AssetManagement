@@ -56,9 +56,9 @@ export function* handleGetUserById(action: PayloadAction<string>) {
 // Handle delete user action
 export function* handleDeleteUser(action: PayloadAction<string>) {
   try {
-      yield call(deleteUserRequest, action.payload);
-      yield put(setDeleteStatus(false));
+    yield call(deleteUserRequest, action.payload);
+    yield put(setDeleteStatus(false));
   } catch (error: any) {
-      yield put(setDeleteStatus(false));
+    yield put(setDeleteStatus(false));
   }
 }

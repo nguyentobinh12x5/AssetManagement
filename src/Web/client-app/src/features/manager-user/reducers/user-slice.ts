@@ -28,11 +28,11 @@ const initialState: UserState = {
     totalPages: 1,
     totalCount: 0,
     hasPreviousPage: false,
-    hasNextpage: false
+    hasNextpage: false,
   },
   error: null,
   succeed: false,
-  isDeleting: false
+  isDeleting: false,
 };
 
 const UserSlice = createSlice({
@@ -103,13 +103,13 @@ const UserSlice = createSlice({
     deleteUser: (state, action: PayloadAction<string>) => {
       state.isDeleting = true;
       const userId = action.payload;
-      const user = state.users?.items.find(user => user.id === userId);
+      const user = state.users?.items.find((user) => user.id === userId);
       if (user) {
-          user.isDelete = true;
+        user.isDelete = true;
       }
     },
     setDeleteStatus: (state, action: PayloadAction<boolean>) => {
-        state.isDeleting = action.payload;
+      state.isDeleting = action.payload;
     },
   },
 });
@@ -124,7 +124,7 @@ export const {
   updateUser,
   updateUserError,
   deleteUser,
-  setDeleteStatus
+  setDeleteStatus,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;
