@@ -45,6 +45,7 @@ const AppRoutes = () => {
             </PublicRoute>
           }
         />
+        <Route path={"*"} element={<div>Notfound</div>} />
       </Routes>
     </SuspenseLoading>
   );

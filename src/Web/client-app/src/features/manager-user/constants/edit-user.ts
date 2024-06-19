@@ -1,1 +1,1 @@
-﻿export const EDIT_USER = 'edit';
+﻿export const EDIT_USER = 'edit/:userId';

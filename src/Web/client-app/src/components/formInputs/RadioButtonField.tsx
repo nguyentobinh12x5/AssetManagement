@@ -31,7 +31,7 @@ const RadioButtonField: React.FC<InputFieldProps> = (props) => {
         {label}
         {required && <div className="invalid ml-1">*</div>}
       </label>
-      <div className="radio-btn-container">
+      <div className="radio-btn-container col">
         {options.map(({ id, label, value: optionValue }) => (
           <div className={`form-check ${display()}`} key={id}>
             <input
@@ -40,7 +40,7 @@ const RadioButtonField: React.FC<InputFieldProps> = (props) => {
               type="radio"
               name={name}
               value={optionValue}
-              checked={value == optionValue}
+              checked={value === optionValue}
               onChange={handleChange}
             ></input>
             <label className={`form-check-label ml-1`} htmlFor={id.toString()}>

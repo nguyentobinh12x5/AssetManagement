@@ -23,7 +23,8 @@ const DateField: React.FC<inputFieldProps> = (props) => {
       setError("required");
       setValue(undefined);
     } else {
-      setValue(date);
+      const formattedDate = date.toISOString();
+      setValue(formattedDate);
     }
   };
 

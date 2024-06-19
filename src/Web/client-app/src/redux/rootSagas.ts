@@ -1,3 +1,3 @@
 import todoItemSagas from '../features/todo-item/sagas';
-
-export default [todoItemSagas];
+import userSagas from '../features/manager-user/sagas';
+export default [todoItemSagas, userSagas];

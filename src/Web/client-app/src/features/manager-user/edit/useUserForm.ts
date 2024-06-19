@@ -1,33 +1,47 @@
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
+import { editUser, getUserById } from '../reducers/user-slice';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const UserSchema = Yup.object().shape({
   firstName: Yup.string().required('Required'),
   lastName: Yup.string().required('Required'),
-  dateOfBirth: Yup.date().required('Required'),
-  joinDate: Yup.date().required('Required'),
+  dateOfBirth: Yup.string().required('Required'),
+  joinDate: Yup.string().required('Required'),
   type: Yup.string().required('Required'),
   gender: Yup.string().required('Required'),
 });
-export interface UserType extends Yup.InferType<typeof UserSchema> {}
+export interface IUserForm extends Yup.InferType<typeof UserSchema> {}
 
 const useUserForm = () => {
-  const initialValues: UserType = {
-    firstName: '',
-    lastName: '',
-    gender: '',
-    dateOfBirth: new Date(),
-    joinDate: new Date(),
-    type: '',
-  };
+  const { userId } = useParams<{ userId: string }>();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { user, isLoading, succeed } = useAppState((state) => state.users);
 
-  const handleSubmit = (values: UserType, actions: FormikHelpers<UserType>) => {
-    console.log({ values, actions });
-    alert(JSON.stringify(values, null, 2));
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUserById(userId));
+    }
+  }, [userId]);
+
+  const handleSubmit = (
+    values: IUserForm,
+    actions: FormikHelpers<IUserForm>
+  ) => {
+    dispatch(editUser(values));
     actions.setSubmitting(false);
   };
 
-  return { initialValues, handleSubmit, UserSchema };
+  useEffect(() => {
+    if (succeed) {
+      navigate('/user');
+    }
+  }, [succeed, navigate]);
+
+  return { user, isLoading, handleSubmit, UserSchema };
 };
 
 export default useUserForm;
