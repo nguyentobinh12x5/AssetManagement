@@ -322,27 +322,6 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
-    //public async Task<List<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
-    //{
-    //    var usersQuery = _userManager.Users.AsQueryable();
-
-    //    if (!string.IsNullOrWhiteSpace(query.FullName))
-    //    {
-    //        var fullNameLower = query.FullName.ToLower();
-    //        usersQuery = usersQuery.Where(u => EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{fullNameLower}%"));
-    //    }
-
-    //    if (!string.IsNullOrWhiteSpace(query.StaffCode))
-    //    {
-    //        var staffCodeLower = query.StaffCode.ToLower();
-    //        usersQuery = usersQuery.Where(u => u.StaffCode.ToLower().Contains(staffCodeLower));
-    //    }
-
-    //    var users = await usersQuery.ToListAsync();
-    //    var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
-
-    //    return userBriefDtos;
-    //}
     public async Task<List<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
         var usersQuery = _userManager.Users.AsQueryable();
