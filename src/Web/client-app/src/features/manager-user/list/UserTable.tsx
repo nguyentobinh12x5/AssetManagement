@@ -2,14 +2,11 @@ import React from "react";
 import IColumnOption from "../../../components/table/interfaces/IColumnOption";
 import IPagination from "../../../components/table/interfaces/IPagination";
 import ISortState from "../../../components/table/interfaces/ISortState";
-import { ASCENDING } from "../../../constants/paging";
 import { IPagedModel } from "../../../interfaces/IPagedModel";
-import { IUser } from "../interfaces/IUser";
+import { IBriefUser } from "../interfaces/IBriefUser";
 import Table from "../../../components/table/Table";
-import { DEFAULT_MANAGE_USER_SORT_COLUMN } from "../constants/user-sort";
-
 type UserTableProps = {
-  users: IPagedModel<IUser>;
+  users: IPagedModel<IBriefUser>;
   handleSort: (value: string) => void;
   handlePaging: (page: number) => void;
   sortState: ISortState;
@@ -49,8 +46,9 @@ const UserTable: React.FC<UserTableProps> = ({
           <td>{data.staffCode}</td>
           <td>{data.fullName}</td>
           <td>{data.userName}</td>
-          <td>{new Date(data.joinDate.toString()).toDateString()}</td>
+          <td>{data.joinDate.toString()}</td>
           <td>{data.type}</td>
+          <td>Edit</td>
         </tr>
       ))}
     </Table>

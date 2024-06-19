@@ -1,6 +1,8 @@
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Queries.GetUser;
+using AssetManagement.Application.Users.Queries.GetUsers;
 
 namespace Web.IntegrationTests.Mocks;
 
@@ -17,6 +19,11 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<Result> ChangePasswordFirstTimeAsync(string newPassword)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
         throw new NotImplementedException();
     }
@@ -42,6 +49,21 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<string?> GetUserNameAsync(string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<UserDto> GetUserWithRoleAsync(string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result> UpdateUserAsync(UserDto userDto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result> UpdateUserToRoleAsync(string userId, string currentRole, string newRole)
     {
         throw new NotImplementedException();
     }

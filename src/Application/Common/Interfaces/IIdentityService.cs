@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-﻿using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.Users.Commands.UpdateUser;
-using AssetManagement.Application.Users.Queries.GetUser;
-=======
-using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Queries.GetUser;
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Users.Queries.GetUsers;
->>>>>>> refs/remotes/origin/features/viewuser
-
 namespace AssetManagement.Application.Common.Interfaces;
 
 public interface IIdentityService

@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { IUser } from '../interfaces/IUser';
 import { IUserQuery } from '../interfaces/IUserQuery';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
-import { APP_DEFAULT_PAGE_SIZE, ASCENDING } from '../../../constants/paging';
+import { APP_DEFAULT_PAGE_SIZE } from '../../../constants/paging';
 import { getUsers } from '../reducers/user-slice';
+import { IBriefUser } from "../interfaces/IBriefUser";
 
-const defaultIPagedUserModel: IPagedModel<IUser> = {
+const defaultIPagedUserModel: IPagedModel<IBriefUser> = {
   items: [],
   pageNumber: 1,
   totalPages: 1,

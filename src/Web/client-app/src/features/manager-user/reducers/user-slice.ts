@@ -1,9 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IUser } from '../interfaces/IUser';
+import { IPagedModel } from "../../../interfaces/IPagedModel";
+import { IUserQuery } from "../interfaces/IUserQuery";
+import { IBriefUser } from "../interfaces/IBriefUser";
 
 interface UserState {
   isLoading: boolean;
-  users?: IUser[];
+  users?: IPagedModel<IBriefUser>;
   status?: number;
   user?: any;
   error?: string | null;
@@ -21,6 +24,13 @@ const UserSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
+    getUsers: (
+      state: UserState,
+      action: PayloadAction<IUserQuery>
+    ): UserState => ({
+      ...state,
+      isLoading: true,
+    }),
     getUserById: (
       state: UserState,
       action: PayloadAction<string>
@@ -36,6 +46,16 @@ const UserSlice = createSlice({
       isLoading: false,
       error: null,
     }),
+    setUsers: (
+      state: UserState,
+      action: PayloadAction<IPagedModel<IBriefUser>>
+    ) => {
+      const users = action.payload;
+      return {
+        ...state,
+        users: users
+      };
+    },
     setUserByIdError: (state: UserState, action: PayloadAction<string>) => ({
       ...state,
       isLoading: false,
@@ -68,6 +88,8 @@ const UserSlice = createSlice({
 });
 
 export const {
+  getUsers, 
+  setUsers,
   getUserById,
   setUserById,
   setUserByIdError,
