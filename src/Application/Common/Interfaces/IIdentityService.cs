@@ -36,4 +36,5 @@ public interface IIdentityService
     Task<bool> IsUserDisabledAsync(string email);
 
     Task<UserInfoDto> GetCurrentUserInfo(string userId);
+
 }

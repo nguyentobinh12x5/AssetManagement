@@ -1,4 +1,4 @@
-﻿using AssetManagement.Domain.Common;
+using AssetManagement.Domain.Common;
 using AssetManagement.Domain.Enums;
 
 using Microsoft.AspNetCore.Identity;

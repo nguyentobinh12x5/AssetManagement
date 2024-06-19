@@ -13,6 +13,7 @@ export function editUser(user: IUser): Promise<AxiosResponse<IUser>> {
 export function getUserById(userId: string): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.get(`${ENDPOINTS.USER}/${userId}`);
 }
+
 export function getUsers(
   userQuery: IUserQuery
 ): Promise<AxiosResponse<IPagedModel<IBriefUser>>> {
@@ -24,3 +25,9 @@ export function getUsers(
       `&SortColumnDirection=${userQuery.sortColumnDirection}`
   );
 }
+
+// Function to delete a user by ID
+export function deleteUserRequest(userId: string) {
+  return RequestService.axios.delete(`${ENDPOINTS.DELETE_USER}/${userId}`);
+}
+

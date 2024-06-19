@@ -4,20 +4,35 @@ import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IUserQuery } from '../interfaces/IUserQuery';
 import { IBriefUser } from '../interfaces/IBriefUser';
 
+interface User {
+  id: string;
+  isDelete: boolean;
+}
+// ??? Ask Tam why he made separate User interface from IBriefUser
+
 interface UserState {
   isLoading: boolean;
-  users?: IPagedModel<IBriefUser>;
+  users?: IPagedModel<IBriefUser & User>;
   status?: number;
   user?: any;
   error?: string | null;
   succeed: boolean;
+  isDeleting: boolean;
 }
 
 const initialState: UserState = {
   isLoading: false,
-  user: null,
+  user: {
+    items: [],
+    pageNumber: 1,
+    totalPages: 1,
+    totalCount: 0,
+    hasPreviousPage: false,
+    hasNextpage: false
+  },
   error: null,
   succeed: false,
+  isDeleting: false
 };
 
 const UserSlice = createSlice({
@@ -48,7 +63,8 @@ const UserSlice = createSlice({
     }),
     setUsers: (
       state: UserState,
-      action: PayloadAction<IPagedModel<IBriefUser>>
+      action: PayloadAction<IPagedModel<IBriefUser & User>>
+      // ??? Ask Tam why he made separate User interface from IBriefUser
     ) => {
       const users = action.payload;
       return {
@@ -84,6 +100,17 @@ const UserSlice = createSlice({
       succeed: false,
       error: action.payload,
     }),
+    deleteUser: (state, action: PayloadAction<string>) => {
+      state.isDeleting = true;
+      const userId = action.payload;
+      const user = state.users?.items.find(user => user.id === userId);
+      if (user) {
+          user.isDelete = true;
+      }
+    },
+    setDeleteStatus: (state, action: PayloadAction<boolean>) => {
+        state.isDeleting = action.payload;
+    },
   },
 });
 
@@ -96,6 +123,8 @@ export const {
   editUser,
   updateUser,
   updateUserError,
+  deleteUser,
+  setDeleteStatus
 } = UserSlice.actions;
 
 export default UserSlice.reducer;

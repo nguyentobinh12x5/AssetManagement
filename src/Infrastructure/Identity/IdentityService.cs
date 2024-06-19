@@ -142,7 +142,9 @@ public class IdentityService : IIdentityService
     {
         var user = await _userManager.FindByIdAsync(userId);
 
-        return user != null ? await DeleteUserAsync(user) : Result.Success();
+        Guard.Against.NotFound(userId, user);
+
+        return await DeleteUserAsync(user);   
     }
 
     public async Task<Result> DeleteUserAsync(ApplicationUser user)

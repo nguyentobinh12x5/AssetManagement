@@ -4,3 +4,8 @@
 
 /.vs
 /AssetManagement.sln.DotSettings.user
+
+AssetManagement.sln
+AssetManagement.sln.DotSettings.user
+.vs/*
+.fake

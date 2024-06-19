@@ -2,6 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
 import { IUser } from '../interfaces/IUser';
 import {
+  setDeleteStatus,
   setUserById,
   setUserByIdError,
   setUsers,
@@ -9,6 +10,7 @@ import {
   updateUserError,
 } from '../reducers/user-slice';
 import {
+  deleteUserRequest,
   editUser as editUserRequest,
   getUserById as getUserByIdRequest,
   getUsers,
@@ -48,5 +50,15 @@ export function* handleGetUserById(action: PayloadAction<string>) {
       yield (window.location.href = '/notfound');
     }
     yield put(setUserByIdError(errorResponse.detail));
+  }
+}
+
+// Handle delete user action
+export function* handleDeleteUser(action: PayloadAction<string>) {
+  try {
+      yield call(deleteUserRequest, action.payload);
+      yield put(setDeleteStatus(false));
+  } catch (error: any) {
+      yield put(setDeleteStatus(false));
   }
 }

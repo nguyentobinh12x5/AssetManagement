@@ -8,6 +8,7 @@ import Table from "../../../components/table/Table";
 import ButtonIcon from "../../../components/ButtonIcon";
 import { useNavigate } from "react-router-dom";
 import { PencilFill } from "react-bootstrap-icons";
+import ConfirmDisable from "../components/ConfirmDisable";
 
 type UserTableProps = {
   users: IPagedModel<IBriefUser>;
@@ -27,9 +28,10 @@ const UserTable: React.FC<UserTableProps> = ({
   const columns: IColumnOption[] = [
     { name: "Staff Code", value: "StaffCode" },
     { name: "Full Name", value: "FirstName" },
-    { name: "Username", value: "UserName" },
+    { name: "Username", value: "UserName", disable: true },
     { name: "Joined Date", value: "JoinDate" },
     { name: "Type", value: "Type" },
+    { name: "Action", value: "", disable: true }
   ];
 
   const navigate = useNavigate();
@@ -58,13 +60,17 @@ const UserTable: React.FC<UserTableProps> = ({
           <td>{data.userName}</td>
           <td>{data.joinDate.toString()}</td>
           <td>{data.type}</td>
-          <td>
-            <ButtonIcon
-              onClick={() => handleEditClick(data.id)}
-              disable={false}
-            >
-              <PencilFill></PencilFill>
-            </ButtonIcon>
+          <td className="text-center">
+            <div className="d-flex justify-content-center align-items-center gap-2">
+              <ButtonIcon
+                onClick={() => handleEditClick(data.id)}
+                disable={false}
+              >
+                <PencilFill></PencilFill>
+              </ButtonIcon>
+
+              <ConfirmDisable userId={data.id}></ConfirmDisable>
+            </div>
           </td>
         </tr>
       ))}
