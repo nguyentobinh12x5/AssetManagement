@@ -444,7 +444,7 @@
         "tags": [
           "Users"
         ],
-        "operationId": "GetUserList",
+        "operationId": "GetApiUsers",
         "parameters": [
           {
             "name": "PageNumber",
@@ -566,6 +566,40 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PaginatedListOfUserBriefDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/search": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "GetApiUsersSearch",
+        "parameters": [
+          {
+            "name": "SearchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserBriefDto"
+                  }
                 }
               }
             }
