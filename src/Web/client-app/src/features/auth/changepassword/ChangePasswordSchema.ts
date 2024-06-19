@@ -7,7 +7,7 @@ export const ChangePasswordSchema = Yup.object().shape({
     .min(6, 'Password must be at least 6 characters long')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-      'Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character'
+      'Password must be at least 6 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character.'
     ),
 });
 
