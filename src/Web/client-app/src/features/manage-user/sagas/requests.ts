@@ -6,13 +6,13 @@ import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IUser } from '../interfaces/IUser';
 
 export function getUsers(
-    userQuery: IUserQuery
+  userQuery: IUserQuery
 ): Promise<AxiosResponse<IPagedModel<IUser>>> {
-    return RequestService.axios.get(
-        `${ENDPOINTS.USER}?` +
-        `&PageNumber=${userQuery.pageNumber}` +
-        `&PageSize=${userQuery.pageSize}` +
-        `&SortColumnName=${userQuery.sortColumnName}` +
-        `&SortColumnDirection=${userQuery.sortColumnDirection}`
-    );
+  return RequestService.axios.get(
+    `${ENDPOINTS.USER}?` +
+      `&PageNumber=${userQuery.pageNumber}` +
+      `&PageSize=${userQuery.pageSize}` +
+      `&SortColumnName=${userQuery.sortColumnName}` +
+      `&SortColumnDirection=${userQuery.sortColumnDirection}`
+  );
 }

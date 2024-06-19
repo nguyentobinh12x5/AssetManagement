@@ -42,7 +42,7 @@ const AppRoutes = () => {
           path={MANAGE_USER}
           element={
             <PublicRoute>
-              <Users/>
+              <Users />
             </PublicRoute>
           }
         />

@@ -9,52 +9,52 @@ import Table from "../../../components/table/Table";
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from "../constants/user-sort";
 
 type UserTableProps = {
-    users: IPagedModel<IUser>,
-    handleSort: (value: string) => void,
-    handlePaging: (page: number) => void,
-    sortState: ISortState
-}
+  users: IPagedModel<IUser>;
+  handleSort: (value: string) => void;
+  handlePaging: (page: number) => void;
+  sortState: ISortState;
+};
 
 const UserTable: React.FC<UserTableProps> = ({
-    users,
-    sortState,
-    handleSort,
-    handlePaging
+  users,
+  sortState,
+  handleSort,
+  handlePaging,
 }) => {
-    const { items, pageNumber, totalPages } = users;
-    
-    const columns: IColumnOption[] = [
-        { name: 'Staff Code', value: 'StaffCode' },
-        { name: 'Full Name', value: 'FirstName' },
-        { name: 'Username', value: 'UserName' },
-        { name: 'Joined Date', value: 'JoinDate' },
-        { name: 'Type', value: 'Type' }
-    ]
+  const { items, pageNumber, totalPages } = users;
 
-    const pagination: IPagination = {
-        currentPage: pageNumber,
-        totalPage: totalPages,
-        handleChange: handlePaging
-    }
+  const columns: IColumnOption[] = [
+    { name: "Staff Code", value: "StaffCode" },
+    { name: "Full Name", value: "FirstName" },
+    { name: "Username", value: "UserName" },
+    { name: "Joined Date", value: "JoinDate" },
+    { name: "Type", value: "Type" },
+  ];
 
-    return (
-        <Table
-            columns={columns}
-            sortState={sortState}
-            handleSort={handleSort}
-            pagination={pagination}
-        >
-            {items?.map((data) => (
-                <tr key={data.id}>
-                    <td>{data.staffCode}</td>
-                    <td>{data.fullName}</td>
-                    <td>{data.userName}</td>
-                    <td>{new Date(data.joinDate.toString()).toDateString()}</td>
-                    <td>{data.type}</td>
-                </tr>
-            ))}
-        </Table>
-    )
-}
+  const pagination: IPagination = {
+    currentPage: pageNumber,
+    totalPage: totalPages,
+    handleChange: handlePaging,
+  };
+
+  return (
+    <Table
+      columns={columns}
+      sortState={sortState}
+      handleSort={handleSort}
+      pagination={pagination}
+    >
+      {items?.map((data) => (
+        <tr key={data.id}>
+          <td>{data.staffCode}</td>
+          <td>{data.fullName}</td>
+          <td>{data.userName}</td>
+          <td>{new Date(data.joinDate.toString()).toDateString()}</td>
+          <td>{data.type}</td>
+        </tr>
+      ))}
+    </Table>
+  );
+};
 
 export default UserTable;
