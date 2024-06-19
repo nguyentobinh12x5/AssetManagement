@@ -8,12 +8,13 @@ import SelectField from "../../../components/formInputs/SelectField";
 import { GenderOptions } from "../constants/gender-user";
 import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../../components/Loading";
 const UseForm = () => {
   const { user, isLoading, handleSubmit, UserSchema } = useUserForm();
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading/>
   }
 
   return (
