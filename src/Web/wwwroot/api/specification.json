@@ -1156,7 +1156,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "role": {
+          "type": {
             "type": "string"
           }
         }
