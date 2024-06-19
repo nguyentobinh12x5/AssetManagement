@@ -10,7 +10,8 @@ namespace AssetManagement.Application.Common.Extensions
     {
         public static string GeneratePassword(this string username, DateTime dateOfBirth)
         {
-            return $"{char.ToUpper(username[0])}{username[1..]}@{dateOfBirth:ddMMyyyy}";
+            string trimmedUsername = username.Trim();
+            return $"{char.ToUpper(trimmedUsername[0])}{trimmedUsername[1..]}@{dateOfBirth:ddMMyyyy}";
         }
     }
 }
