@@ -11,7 +11,7 @@ namespace AssetManagement.Application.Users.Commands.Create
         public CreateUserValidat()
         {
             RuleFor(x => x.FirstName)
-                .Matches("^[a-zA-Z]+$")
+                .Matches(@"^[\p{L} ]+$")
                 .WithMessage("The First Name field allows only alphabetical characters. Please remove any numbers, special characters, or spaces");
 
             RuleFor(x => x.LastName)
