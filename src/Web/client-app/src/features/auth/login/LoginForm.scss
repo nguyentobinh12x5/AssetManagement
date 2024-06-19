@@ -1,0 +1,22 @@
+.login-form-header {
+  text-align: center;
+  padding: 0.5rem 3.5rem;
+  border: 1px solid var(--primary-grey);
+  border-radius: 4px;
+  background-color: var(--primary-grey-200);
+}
+
+.login-form-wrapper {
+  border: 1px solid var(--primary-grey);
+  border-radius: 4px;
+  padding: 1.5rem 3.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+  background-color: rgba(250, 252, 252, 1);
+
+  .form-group {
+    width: 100%;
+  }
+}

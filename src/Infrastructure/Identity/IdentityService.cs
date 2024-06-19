@@ -1,7 +1,12 @@
 using System.Security.Claims;
+
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+
 using AutoMapper;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,19 +20,22 @@ public class IdentityService : IIdentityService
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
     private readonly IMapper _mapper;
+    private readonly IUser _currentUser;
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
         IAuthorizationService authorizationService,
-        IMapper mapper)
+        IMapper mapper,
+        IUser currentUser)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
         _mapper = mapper;
+        _currentUser = currentUser;
     }
 
     public async Task Logout()
@@ -96,5 +104,110 @@ public class IdentityService : IIdentityService
     {
         await _userManager.AddClaimAsync(user,
                             new Claim(ClaimTypes.GivenName, user.UserName ?? string.Empty));
+    }
+
+    public async Task<bool> CheckCurrentPassword(string currentPassword)
+    {
+        var userId = _currentUser.Id!;
+
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        var isCurrentPasswordValid = await _userManager.CheckPasswordAsync(user, currentPassword);
+        if (!isCurrentPasswordValid)
+        {
+            throw new IncorrectPasswordException();
+        }
+
+        return true;
+    }
+
+    public async Task<Result> ChangePasswordAsync(string currentPassword, string newPassword)
+    {
+        var userId = _currentUser.Id!;
+
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+
+        if (!result.Succeeded)
+        {
+            var errors = result.Errors.Select(e => e.Description).ToList();
+            return Result.Failure(errors);
+        }
+
+        return Result.Success();
+    }
+
+    public async Task<Result> ChangePasswordFirstTimeAsync(string newPassword)
+    {
+        var userId = _currentUser.Id;
+        Guard.Against.NullOrWhiteSpace(userId);
+
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+        if (!result.Succeeded)
+        {
+            var errors = result.Errors.Select(e => e.Description).ToList();
+            return Result.Failure(errors);
+        }
+
+        // Update the MustChangePassword field
+        user.MustChangePassword = false;
+        var updateResult = await _userManager.UpdateAsync(user);
+
+        if (!updateResult.Succeeded)
+        {
+            var errors = updateResult.Errors.Select(e => e.Description).ToList();
+            return Result.Failure(errors);
+        }
+
+        return Result.Success();
+    }
+
+    public async Task<bool> IsSameOldPassword(string newPassword)
+    {
+        var userId = _currentUser.Id;
+
+        Guard.Against.NullOrWhiteSpace(userId);
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        // Check if the new password is the same as the current password
+        var isCurrentPassword = await _userManager.CheckPasswordAsync(user, newPassword);
+        if (isCurrentPassword)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public async Task<bool> IsUserDisabledAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        return user != null && user.IsDelete;
+    }
+
+    public async Task<UserInfoDto> GetCurrentUserInfo(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        Guard.Against.NotFound(userId, user);
+
+        var roles = await _userManager.GetRolesAsync(user);
+        return new UserInfoDto
+        {
+            Email = user.Email!,
+            IsEmailConfirmed = user.EmailConfirmed,
+            Roles = roles,
+            MustChangePassword = user.MustChangePassword,
+        };
     }
 }

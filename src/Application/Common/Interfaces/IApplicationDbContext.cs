@@ -1,4 +1,5 @@
 ﻿using System.Dynamic;
+
 using AssetManagement.Domain.Entities;
 
 namespace AssetManagement.Application.Common.Interfaces;
@@ -9,7 +10,7 @@ public interface IApplicationDbContext
 
     DbSet<TodoItem> TodoItems { get; }
 
-    DbSet<TEntity> Set<TEntity>() where TEntity: class;
+    DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

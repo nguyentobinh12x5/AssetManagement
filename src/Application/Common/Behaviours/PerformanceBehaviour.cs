@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
+
 using AssetManagement.Application.Common.Interfaces;
+
 using Microsoft.Extensions.Logging;
 
 namespace AssetManagement.Application.Common.Behaviours;
