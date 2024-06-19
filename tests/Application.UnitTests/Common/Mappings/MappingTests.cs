@@ -1,11 +1,14 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
-using AutoMapper;
+
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using AssetManagement.Application.TodoLists.Queries.GetTodos;
 using AssetManagement.Domain.Entities;
+
+using AutoMapper;
+
 using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Common.Mappings;
@@ -17,7 +20,7 @@ public class MappingTests
 
     public MappingTests()
     {
-        _configuration = new MapperConfiguration(config => 
+        _configuration = new MapperConfiguration(config =>
             config.AddMaps(Assembly.GetAssembly(typeof(IApplicationDbContext))));
 
         _mapper = _configuration.CreateMapper();

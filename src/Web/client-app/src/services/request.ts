@@ -4,6 +4,7 @@ import { APP_CONFIG } from '../constants/appConfig';
 
 const config: AxiosRequestConfig = {
   baseURL: APP_CONFIG.API_BASE_URL,
+  withCredentials: true,
 };
 
 class RequestService {

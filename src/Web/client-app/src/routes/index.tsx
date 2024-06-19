@@ -24,9 +24,9 @@ const AppRoutes = () => {
         <Route
           path={TODO_ITEM}
           element={
-            <PublicRoute>
+            <PrivateRoute>
               <TodoItems />
-            </PublicRoute>
+            </PrivateRoute>
           }
         />
         <Route
