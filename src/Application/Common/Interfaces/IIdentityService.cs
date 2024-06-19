@@ -1,6 +1,7 @@
-﻿using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Models;
-
+using AssetManagement.Application.Users.Queries.GetUser;
+using AssetManagement.Application.Users.Queries.GetUsers;
 namespace AssetManagement.Application.Common.Interfaces;
 
 public interface IIdentityService
@@ -9,6 +10,12 @@ public interface IIdentityService
 
     Task<string?> GetUserNameAsync(string userId);
 
+    Task<UserDto> GetUserWithRoleAsync(string userId);
+
+    Task<Result> UpdateUserAsync(UserDto userDto);
+
+    Task<Result> UpdateUserToRoleAsync(string userId, string currentRole, string newRole);
+
     Task<bool> IsInRoleAsync(string userId, string role);
 
     Task<bool> AuthorizeAsync(string userId, string policyName);
@@ -16,6 +23,9 @@ public interface IIdentityService
     Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password);
 
     Task<Result> DeleteUserAsync(string userId);
+
+    Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query);
+
 
     Task<bool> CheckCurrentPassword(string currentPassword);
     Task<bool> IsSameOldPassword(string newPassword);

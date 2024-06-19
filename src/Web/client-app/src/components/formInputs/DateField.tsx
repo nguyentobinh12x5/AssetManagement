@@ -23,13 +23,14 @@ const DateField: React.FC<inputFieldProps> = (props) => {
       setError("required");
       setValue(undefined);
     } else {
-      setValue(date);
+      const formattedDate = date.toISOString();
+      setValue(formattedDate);
     }
   };
 
   return (
     <>
-      <div className="form-group">
+      <div className="form-group row">
         <label className="col-4 d-flex form-label">
           {label}
           {required && <div className="invalid ml-1">*</div>}

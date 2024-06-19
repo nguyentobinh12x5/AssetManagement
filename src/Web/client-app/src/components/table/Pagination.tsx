@@ -57,6 +57,7 @@ const Pagination: React.FC<IPagination> = ({
     ) : (
       [...Array(nextItems - prevItems + 1).keys()].map((i) => (
         <Paging.Item
+          key={i}
           active={i + prevItems == currentPage}
           onClick={() => handleChange(i + prevItems)}
         >
