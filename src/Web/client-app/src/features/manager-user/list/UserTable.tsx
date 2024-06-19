@@ -5,6 +5,11 @@ import ISortState from "../../../components/table/interfaces/ISortState";
 import { IPagedModel } from "../../../interfaces/IPagedModel";
 import { IBriefUser } from "../interfaces/IBriefUser";
 import Table from "../../../components/table/Table";
+import ButtonIcon from "../../../components/ButtonIcon";
+import { useNavigate } from "react-router-dom";
+import { PencilFill } from "react-bootstrap-icons";
+
+
 type UserTableProps = {
   users: IPagedModel<IBriefUser>;
   handleSort: (value: string) => void;
@@ -28,6 +33,12 @@ const UserTable: React.FC<UserTableProps> = ({
     { name: "Type", value: "Type" },
   ];
 
+  const navigate = useNavigate();
+
+  const handleEditClick = (userId: string) => {
+    navigate(`edit/${userId}`);
+  };
+  
   const pagination: IPagination = {
     currentPage: pageNumber,
     totalPage: totalPages,
@@ -48,7 +59,14 @@ const UserTable: React.FC<UserTableProps> = ({
           <td>{data.userName}</td>
           <td>{data.joinDate.toString()}</td>
           <td>{data.type}</td>
-          <td>Edit</td>
+          <td>
+            <ButtonIcon
+              onClick={() => handleEditClick(data.id)}
+              disable={false}
+            >
+              <PencilFill></PencilFill>
+            </ButtonIcon>
+          </td>
         </tr>
       ))}
     </Table>
