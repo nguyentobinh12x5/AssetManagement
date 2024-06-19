@@ -9,7 +9,9 @@ using AssetManagement.Domain.Common;
 using AssetManagement.Domain.Events;
 
 namespace AssetManagement.Application.Users.Commands.DeleteUser;
+
 public record DeleteUserCommand(string Id) : IRequest;
+
 public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
 {
 	private readonly IIdentityService _identityService;

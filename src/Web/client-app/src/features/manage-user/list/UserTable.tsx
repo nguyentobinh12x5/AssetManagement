@@ -7,6 +7,7 @@ import { IPagedModel } from "../../../interfaces/IPagedModel";
 import { IUser } from "../interfaces/IUser";
 import Table from "../../../components/table/Table";
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from "../constants/user-sort";
+import ConfirmDisable from "./ConfirmDisable";
 
 type UserTableProps = {
     users: IPagedModel<IUser>,
@@ -51,6 +52,7 @@ const UserTable: React.FC<UserTableProps> = ({
                     <td>{data.userName}</td>
                     <td>{new Date(data.joinDate.toString()).toDateString()}</td>
                     <td>{data.type}</td>
+                    <td><ConfirmDisable userId={data.id}></ConfirmDisable></td>
                 </tr>
             ))}
         </Table>

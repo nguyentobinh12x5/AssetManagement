@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { APP_CONFIG } from '../../../constants/appConfig';
+import { useDispatch } from 'react-redux';
 import ConfirmModal from '../../../components/confirmModal/ConfirmModal';
+import ButtonIcon from '../../../components/ButtonIcon';
+import { XCircle } from 'react-bootstrap-icons';
+import { deleteUser } from '../reducers/user-slice'; 
 
-const ConfirmDisable = () => {
+const ConfirmDisable = ({ userId }: { userId: string }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const dispatch = useDispatch();
 
     const handleShowModal = () => {
         setIsModalOpen(true);
@@ -14,19 +18,20 @@ const ConfirmDisable = () => {
     };
 
     const handleDisableUser = () => {
-        setIsModalOpen(false)
-    }
+        dispatch(deleteUser(userId)); 
+        setIsModalOpen(false); 
+    };
 
     return (
         <div className="container m-auto p-5">
-
-            <button onClick={handleShowModal}>Open Modal</button>
-
+            <ButtonIcon onClick={handleShowModal}>
+                <XCircle color='red' />
+            </ButtonIcon>
+            
             <ConfirmModal
                 title="Are you sure?"
                 isShow={isModalOpen}
                 onHide={handleCloseModal}
-                // dialogClassName="custom-modal"
             >
                 <div className="modal-body-content">
                     <p>Do you want to disable this user?</p>
@@ -35,7 +40,6 @@ const ConfirmDisable = () => {
                         <button className="btn btn-light btn-outline-secondary" onClick={handleCloseModal}>Cancel</button>
                     </div>
                 </div>
-                
             </ConfirmModal>
         </div>
     );

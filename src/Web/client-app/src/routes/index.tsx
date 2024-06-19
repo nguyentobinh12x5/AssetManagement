@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import SuspenseLoading from "../components/SuspenseLoading";
-import { HOME,AUTH, MANAGE_USER, TODO_ITEM } from "../constants/pages";
+import { HOME, AUTH, MANAGE_USER, TODO_ITEM } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 
 const Home = lazy(() => import("../features/home"));
@@ -17,7 +17,7 @@ const AppRoutes = () => {
                     path={HOME}
                     element={
                         <PublicRoute>
-                            <Home/>
+                            <Home />
                         </PublicRoute>
                     }
                 />
@@ -25,7 +25,7 @@ const AppRoutes = () => {
                     path={TODO_ITEM}
                     element={
                         <PublicRoute>
-                            <TodoItems/>
+                            <TodoItems />
                         </PublicRoute>
                     }
                 />
@@ -33,22 +33,21 @@ const AppRoutes = () => {
                     path={MANAGE_USER}
                     element={
                         <PublicRoute>
-                            <Users/>
+                            <Users />
+                        </PublicRoute>
+                    }
+                />
+                <Route
+                    path={AUTH}
+                    element={
+                        <PublicRoute showSidebar={false}>
+                            <Auth />
                         </PublicRoute>
                     }
                 />
             </Routes>
-            <Route
-                path={AUTH}
-                element={
-                    <PublicRoute showSidebar={false}>
-                        <Auth />
-                    </PublicRoute>
-                }
-            />
-        </Routes>
         </SuspenseLoading>
-    )
-}
+    );
+};
 
 export default AppRoutes;
