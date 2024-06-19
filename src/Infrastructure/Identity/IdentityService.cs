@@ -183,7 +183,7 @@ public class IdentityService : IIdentityService
 
     // Handles the case where User's role was chosen to be sorted
     // in which case won't be able to since it's not of User's prop
-    private async Task<List<UserBriefDto>> GetUserBriefDtosWithRoleAsync(List<ApplicationUser> users, string typeName )
+    private async Task<List<UserBriefDto>> GetUserBriefDtosWithRoleAsync(List<ApplicationUser> users, string typeName)
     {
         var userBriefDtos = new List<UserBriefDto>();
 
@@ -202,7 +202,7 @@ public class IdentityService : IIdentityService
             var userBriefDto = _mapper.Map<UserBriefDto>(user);
 
             var userRole = userRoles.FirstOrDefault(ur => ur.UserId == user.Id);
-            
+
             userBriefDto.Type = userRole?.RoleName ?? "Default";
 
             userBriefDto.FullName = $"{user.FirstName} {user.LastName} ";
@@ -219,7 +219,7 @@ public class IdentityService : IIdentityService
     }
 
 
-    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync( string columnName, string columnDirection)
+    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(string columnName, string columnDirection)
     {
         if (!columnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
         {

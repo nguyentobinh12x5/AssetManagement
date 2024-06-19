@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Common.Models;
-using AssetManagement.Domain.Constants;
 using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Domain.Constants;
 
 namespace AssetManagement.Application.Users.Queries.GetUsersByType;
 
@@ -17,7 +17,7 @@ public record GetUsersByTypeQuery : IRequest<PaginatedList<UserBriefDto>>
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
-    public required string Type { get; init; } 
+    public required string Type { get; init; }
 }
 
 public class GetUsersByTypeQueryHandler : IRequestHandler<GetUsersByTypeQuery, PaginatedList<UserBriefDto>>
@@ -36,6 +36,3 @@ public class GetUsersByTypeQueryHandler : IRequestHandler<GetUsersByTypeQuery, P
         return users;
     }
 }
-
-
-

@@ -19,14 +19,14 @@ public class Users : EndpointGroupBase
             .MapPut(UpdateUser, "{id}")
             .MapGet(GetUserList)
             .MapDelete(DeleteUser, "{id}")
-            .MapGet("type",GetUserByType);
+            .MapGet("type", GetUserByType);
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
     {
         return sender.Send(query);
     }
-    
+
     public Task<PaginatedList<UserBriefDto>> GetUserByType(ISender sender, [AsParameters] GetUsersByTypeQuery query)
     {
         return sender.Send(query);
