@@ -28,14 +28,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
     }
     public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        //var entity = new ApplicationUser
-        //{
-        //    ListId = request.ListId,
-        //    Title = request.Title,
-        //    Done = false
-        //};
-        //entity.AddDomainEvent(new TodoItemCreatedEvent(entity));
-        //_context.TodoItems.Add(entity);
         var user = new UserDTOs
         {
             FirstName = request.FirstName,
@@ -46,10 +38,10 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
             DateOfBirth = request.DateOfBirth,
             Role = request.Type,
         };
-        var result = _identityService.CreateUserAsync(user);
+        var newUser = _identityService.CreateUserAsync(user);
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return result.Result.UserId;
+        return newUser.Result.StaffCode;
     }
 }
