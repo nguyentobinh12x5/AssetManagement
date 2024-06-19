@@ -1,7 +1,9 @@
-﻿using Azure.Identity;
-using AssetManagement.Application.Common.Interfaces;
+﻿using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Web.Services;
+
+using Azure.Identity;
+
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -32,6 +34,7 @@ public static class DependencyInjection
                 policy =>
                 {
                     policy.WithOrigins("https://localhost:44447")
+                            .AllowCredentials()
                           .AllowAnyHeader()
                           .AllowAnyMethod(); //allowedCors ?? string.Empty
                 });

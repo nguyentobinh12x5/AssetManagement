@@ -10,9 +10,9 @@ public class PaginatedList<T>
     public int TotalCount { get; }
 
     public PaginatedList(
-        IReadOnlyCollection<T> items, 
-        int count, 
-        int pageNumber, 
+        IReadOnlyCollection<T> items,
+        int count,
+        int pageNumber,
         int pageSize)
     {
         PageNumber = pageNumber;
@@ -23,8 +23,8 @@ public class PaginatedList<T>
 
     [JsonConstructor]
     public PaginatedList(
-        IReadOnlyCollection<T> items, 
-        int pageNumber, 
+        IReadOnlyCollection<T> items,
+        int pageNumber,
         int totalPages,
         int totalCount,
         bool hasPreviousPage,

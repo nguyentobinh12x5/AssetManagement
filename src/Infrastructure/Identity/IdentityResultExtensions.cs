@@ -1,4 +1,5 @@
 ﻿using AssetManagement.Application.Common.Models;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace AssetManagement.Infrastructure.Identity;

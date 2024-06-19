@@ -6,6 +6,128 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/Auth/change-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "ChangePassword",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePasswordCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/Auth/change-password-first-time": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "ChangePasswordFirstTime",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordFirstTimeCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "Login",
+        "parameters": [
+          {
+            "name": "useCookies",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "useSessionCookies",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "loginRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessTokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/manage/info": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "GetUserInfo",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [
@@ -682,6 +804,87 @@
   },
   "components": {
     "schemas": {
+      "UpdatePasswordCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "currentPassword": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "ChangePasswordFirstTimeCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "AccessTokenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tokenType": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "twoFactorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "twoFactorRecoveryCode": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "UserInfoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "isEmailConfirmed": {
+            "type": "boolean"
+          },
+          "mustChangePassword": {
+            "type": "boolean"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",
         "additionalProperties": false,
@@ -994,45 +1197,6 @@
           },
           "password": {
             "type": "string"
-          }
-        }
-      },
-      "AccessTokenResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "tokenType": {
-            "type": "string"
-          },
-          "accessToken": {
-            "type": "string"
-          },
-          "expiresIn": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "refreshToken": {
-            "type": "string"
-          }
-        }
-      },
-      "LoginRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "twoFactorCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "twoFactorRecoveryCode": {
-            "type": "string",
-            "nullable": true
           }
         }
       },

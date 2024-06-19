@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import NProgress from 'nprogress';
+import React, { useEffect } from "react";
+import NProgress from "nprogress";
 
 const InlineLoader = () => {
   useEffect(() => {
