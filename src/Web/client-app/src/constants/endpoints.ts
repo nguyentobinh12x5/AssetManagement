@@ -4,6 +4,7 @@ const ENDPOINTS = {
   CHANGE_PWD_FIRST_TIME: 'api/Auth/change-password-first-time',
 
   TODOITEM: 'api/TodoItems',
+  CHANGE_PASSWORD: '/api/Auth/change-password',
 };
 
 export default ENDPOINTS;
