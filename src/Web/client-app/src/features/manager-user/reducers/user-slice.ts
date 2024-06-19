@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IUser } from '../interfaces/IUser';
-import { IPagedModel } from "../../../interfaces/IPagedModel";
-import { IUserQuery } from "../interfaces/IUserQuery";
-import { IBriefUser } from "../interfaces/IBriefUser";
+import { IPagedModel } from '../../../interfaces/IPagedModel';
+import { IUserQuery } from '../interfaces/IUserQuery';
+import { IBriefUser } from '../interfaces/IBriefUser';
 
 interface UserState {
   isLoading: boolean;
@@ -53,7 +53,7 @@ const UserSlice = createSlice({
       const users = action.payload;
       return {
         ...state,
-        users: users
+        users: users,
       };
     },
     setUserByIdError: (state: UserState, action: PayloadAction<string>) => ({
@@ -88,7 +88,7 @@ const UserSlice = createSlice({
 });
 
 export const {
-  getUsers, 
+  getUsers,
   setUsers,
   getUserById,
   setUserById,

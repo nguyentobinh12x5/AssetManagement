@@ -77,39 +77,39 @@ public class IdentityService : IIdentityService
     public async Task<UserDto> GetUserWithRoleAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
-        
+
         Guard.Against.NotFound(userId, user);
-        
+
         var roles = await _userManager.GetRolesAsync(user);
         var role = roles.FirstOrDefault() ?? string.Empty;
-        
+
         var userDto = _mapper.Map<UserDto>(user);
         userDto.Type = role;
-        
+
         return userDto;
     }
 
     public async Task<Result> UpdateUserAsync(UserDto userDto)
     {
         var user = await _userManager.FindByIdAsync(userDto.Id);
-        
+
         Guard.Against.NotFound(userDto.Id, user);
-        
+
         _mapper.Map(userDto, user);
-        
+
         var result = await _userManager.UpdateAsync(user);
-        
+
         return result.ToApplicationResult();
     }
 
     public async Task<Result> UpdateUserToRoleAsync(string userId, string currentRole, string newRole)
     {
         var user = await _userManager.FindByIdAsync(userId);
-        
+
         Guard.Against.NotFound(userId, user);
-        
+
         await _userManager.RemoveFromRoleAsync(user, currentRole);
-        
+
         var result = await _userManager.AddToRoleAsync(user, newRole);
 
         return result.ToApplicationResult();

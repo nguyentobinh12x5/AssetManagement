@@ -9,7 +9,6 @@ import ButtonIcon from "../../../components/ButtonIcon";
 import { useNavigate } from "react-router-dom";
 import { PencilFill } from "react-bootstrap-icons";
 
-
 type UserTableProps = {
   users: IPagedModel<IBriefUser>;
   handleSort: (value: string) => void;
@@ -38,7 +37,7 @@ const UserTable: React.FC<UserTableProps> = ({
   const handleEditClick = (userId: string) => {
     navigate(`edit/${userId}`);
   };
-  
+
   const pagination: IPagination = {
     currentPage: pageNumber,
     totalPage: totalPages,

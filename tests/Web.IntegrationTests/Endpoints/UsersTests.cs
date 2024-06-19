@@ -1,14 +1,19 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Infrastructure.Identity;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using Assert = Xunit.Assert;
+
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;
+
+using Xunit;
+
+using Assert = Xunit.Assert;
 
 namespace Web.IntegrationTests.Endpoints
 {
@@ -40,7 +45,7 @@ namespace Web.IntegrationTests.Endpoints
             var response = await _httpClient.GetAsync($"/api/Users/{user!.Id}");
 
             // Assert
-            response.EnsureSuccessStatusCode(); 
+            response.EnsureSuccessStatusCode();
             var userDto = await response.Content.ReadFromJsonAsync<UserDto>();
 
             Assert.NotNull(userDto);
@@ -72,7 +77,7 @@ namespace Web.IntegrationTests.Endpoints
 
             var user = await userManager.FindByEmailAsync("user1@test.com");
             Assert.NotNull(user);
-            
+
             var updateUserRequest = new UpdateUserCommand()
             {
                 Id = user.Id,
@@ -83,10 +88,10 @@ namespace Web.IntegrationTests.Endpoints
                 Gender = AssetManagement.Domain.Enums.Gender.Female,
                 Type = "Staff",
             };
-            
+
             //Act
             await _httpClient.PutAsJsonAsync($"/api/Users/{user.Id}", updateUserRequest);
-            
+
             //Assert
             var userDto = await _httpClient.GetFromJsonAsync<UserDto>($"/api/Users/{user.Id}");
 
@@ -119,12 +124,12 @@ namespace Web.IntegrationTests.Endpoints
                 Gender = AssetManagement.Domain.Enums.Gender.Female,
                 Type = "Staff",
             };
-            
+
             //Act
             var response = await _httpClient.PutAsJsonAsync($"/api/Users/{user.Id}", updateUserRequest);
-            
+
             //Assert
-            
+
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 

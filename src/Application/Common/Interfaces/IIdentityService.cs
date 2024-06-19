@@ -1,6 +1,6 @@
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUser;
-using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Users.Queries.GetUsers;
 namespace AssetManagement.Application.Common.Interfaces;
 
@@ -9,11 +9,11 @@ public interface IIdentityService
     Task Logout();
 
     Task<string?> GetUserNameAsync(string userId);
-    
+
     Task<UserDto> GetUserWithRoleAsync(string userId);
-    
+
     Task<Result> UpdateUserAsync(UserDto userDto);
-    
+
     Task<Result> UpdateUserToRoleAsync(string userId, string currentRole, string newRole);
 
     Task<bool> IsInRoleAsync(string userId, string role);

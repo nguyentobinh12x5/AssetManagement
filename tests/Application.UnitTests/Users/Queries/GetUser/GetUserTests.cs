@@ -1,9 +1,13 @@
 ﻿using Ardalis.GuardClauses;
+
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Domain.Enums;
+
 using FluentAssertions;
+
 using Moq;
+
 using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Users.Queries;
@@ -20,7 +24,7 @@ public class GetUsersQueryHandlerTests
         _identityServiceMock = new Mock<IIdentityService>();
         _handler = new GetUsersQueryHandler(_identityServiceMock.Object);
     }
-    
+
     [Test]
     public async Task Handle_UserExists_ReturnsUser()
     {
@@ -36,7 +40,7 @@ public class GetUsersQueryHandlerTests
             Gender = Gender.Male,
             Type = "TestRole"
         };
-        
+
         _identityServiceMock.Setup(x => x.GetUserWithRoleAsync(userId))
             .ReturnsAsync(user);
 
