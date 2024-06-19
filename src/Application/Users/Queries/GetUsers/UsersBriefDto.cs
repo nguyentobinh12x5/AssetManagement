@@ -13,6 +13,6 @@ public class UserBriefDto
 
     public DateTime JoinDate { get; init; }
 
-    public string? Type { get; set;} 
+    public string? Type { get; set; }
 
 }

@@ -1,4 +1,5 @@
-AssetManagement.sln
-AssetManagement.sln.DotSettings.user
-.vs/*
-.fake
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs

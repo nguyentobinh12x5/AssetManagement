@@ -12,7 +12,7 @@ public class Users : EndpointGroupBase
             .MapGet(GetUserList);
     }
 
-    public Task<PaginatedList<UserBriefDto>> GetUserList (ISender sender, [AsParameters] GetUsersQuery query)
+    public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
     {
         return sender.Send(query);
     }
