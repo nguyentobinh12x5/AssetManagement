@@ -8,7 +8,9 @@ const Home = () => {
     <div className="container m-auto p-5">
       <h1>Welcome to Asset Management {APP_CONFIG.ENVIRONMENT}</h1>
       <p>Test Dev ENV</p>
-      <p>Welcome {isAdminUser(user) ? "Admin" : "Staff"}</p>
+      <p>
+        Welcome {!user ? "Anonymous" : isAdminUser(user) ? "Admin" : "Staff"}
+      </p>
     </div>
   );
 };

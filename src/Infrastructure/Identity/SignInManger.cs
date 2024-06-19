@@ -21,12 +21,24 @@ public class SignInManager : SignInManager<ApplicationUser>
             return SignInResult.Failed; // Or return SignInResult.NotFound if preferred
         }
 
-        if (user.IsDelete)
+        // Continue with the regular password sign-in
+        return await PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
+    }
+
+    public override async Task<SignInResult> PasswordSignInAsync(ApplicationUser user, string password, bool isPersistent, bool lockoutOnFailure)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+
+        var attempt = await CheckPasswordSignInAsync(user, password, lockoutOnFailure);
+        if (attempt.Succeeded)
         {
-            return SignInResult.LockedOut; // Or another custom result for disabled users
+            if (user.IsDelete)
+            {
+                return SignInResult.LockedOut; // Or another custom result for disabled users
+            }
+            return await SignInOrTwoFactorAsync(user, isPersistent);
         }
 
-        // Continue with the regular password sign-in
-        return await base.PasswordSignInAsync(userName, password, isPersistent, lockoutOnFailure);
+        return attempt;
     }
 }
