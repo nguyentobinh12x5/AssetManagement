@@ -15,7 +15,7 @@ public record CreateUserCommand : IRequest<string>
     public DateTime DateOfBirth { get; init; } = DateTime.UtcNow;
     public Gender Gender { get; init; } = Gender.Male;
     public DateTime JoinDate { get; init; }
-    public string Role { get; init; } = null!;
+    public string Type { get; init; } = null!;
 }
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, string>
 {
@@ -44,7 +44,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
             Gender = request.Gender,
             JoinDate = request.JoinDate,
             DateOfBirth = request.DateOfBirth,
-            Role = request.Role,
+            Role = request.Type,
         };
         var result = _identityService.CreateUserAsync(user);
 
