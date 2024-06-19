@@ -46,7 +46,7 @@ public class IdentityService : IIdentityService
         return user?.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(UserDTOs user)
+    public async Task<(Result Result, string StaffCode)> CreateUserAsync(UserDTOs user)
     {
         var id = _userManager.Users.Select(e => e.StaffCode).ToList();
 

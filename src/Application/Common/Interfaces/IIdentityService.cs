@@ -21,7 +21,7 @@ public interface IIdentityService
 
     Task<bool> AuthorizeAsync(string userId, string policyName);
 
-    Task<(Result Result, string UserId)> CreateUserAsync(UserDTOs user);
+    Task<(Result Result, string StaffCode)> CreateUserAsync(UserDTOs user);
 
     Task<Result> DeleteUserAsync(string userId);
     Task<bool> IsUserDisabledAsync(string email);
