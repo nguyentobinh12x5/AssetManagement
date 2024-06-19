@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace AssetManagement.Application.Common.Extensions
 {
@@ -10,17 +10,15 @@ namespace AssetManagement.Application.Common.Extensions
     {
         public static string GenerateUsername(this IEnumerable<string?> existingUsernames, string firstName, string lastName)
         {
-            string FirstName = firstName.ToLowerInvariant();
+            string normalizedFirstName = NormalizeAndRemoveDiacritics(firstName).ToLowerInvariant();
+            string normalizedLastName = NormalizeAndRemoveDiacritics(lastName);
 
-            string[] lastNameParts = lastName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string[] lastNameParts = normalizedLastName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string lastNameInitials = string.Concat(lastNameParts.Select(part => part[..1].ToLowerInvariant()));
 
-            string LastName = string.Concat(lastNameParts.Select(part => part[..1].ToLowerInvariant()));
-
-
-            string baseUsername = $"{firstName}{LastName}";
+            string baseUsername = $"{normalizedFirstName}{lastNameInitials}";
 
             int suffix = 0;
-
             string newUsername = baseUsername;
 
             while (existingUsernames.Contains(newUsername))
@@ -30,6 +28,23 @@ namespace AssetManagement.Application.Common.Extensions
             }
 
             return newUsername;
+        }
+
+        private static string NormalizeAndRemoveDiacritics(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+
+            string normalized = text.Normalize(NormalizationForm.FormD);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char c in normalized)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                    sb.Append(c);
+            }
+
+            return sb.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }
