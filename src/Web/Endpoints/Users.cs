@@ -1,6 +1,7 @@
 ﻿using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Application.Users.Commands.DeleteUser;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManagement.Web.Endpoints;
 

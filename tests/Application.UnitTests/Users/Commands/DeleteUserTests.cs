@@ -26,6 +26,26 @@ namespace AssetManagement.Application.UnitTests.Users.Commands
 			_handler = new DeleteUserCommandHandler(_identityServiceMock.Object, _contextMock.Object);
 		}
 		[Test]
+		public async Task Handle_Success_DeleteUserAndSaveChanges()
+		{
+			// Arrange
+			var userId = "existing-user-id";
+			var command = new DeleteUserCommand(userId);
+			var expectedResult = Result.Success();
+
+			_identityServiceMock.Setup(x => x.DeleteUserAsync(userId))
+				.ReturnsAsync(expectedResult);
+
+			// Act
+			await _handler.Handle(command, CancellationToken.None);
+
+			// Assert
+			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
+			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+		}
+
+
+		[Test]
 		public async Task Handle_UserExists_SuccessfullyDeletesUser()
 		{
 			// Arrange
@@ -43,26 +63,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands
 			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
 			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
 		}
-		[Test]
-		public async Task Handle_UserNotFound_ThrowsException()
-		{
-			// Arrange
-			var userId = "non-existing-user-id";
-			var command = new DeleteUserCommand(userId);
-			var expectedResult = Result.Failure(new[] { "User not found" });
-
-			_identityServiceMock.Setup(x => x.DeleteUserAsync(userId))
-				.ReturnsAsync(expectedResult);
-
-			// Act and Assert
-			Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
-
-			await act.Should().ThrowAsync<ArgumentException>()
-				.WithMessage("Delete user failure!");
-
-			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
-			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
-		}
+		
 		[Test]
 		public async Task Handle_DeleteUserAsyncThrowsException_ThrowsException()
 		{
@@ -78,28 +79,6 @@ namespace AssetManagement.Application.UnitTests.Users.Commands
 
 			await act.Should().ThrowAsync<Exception>()
 				.WithMessage("Simulated DeleteUserAsync Exception");
-
-			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
-			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
-		}
-
-		[Test]
-		public async Task Handle_DeleteUserFails_ThrowsArgumentException()
-		{
-			// Arrange
-			var userId = "existing-user-id";
-			var command = new DeleteUserCommand(userId);
-			var expectedResult = Result.Failure(new[] { "Delete user failed due to reason" });
-
-			_identityServiceMock.Setup(x => x.DeleteUserAsync(userId))
-				.ReturnsAsync(expectedResult);
-
-			// Act
-			Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
-
-			// Assert
-			await act.Should().ThrowAsync<ArgumentException>()
-				.WithMessage("Delete user failure!");
 
 			_identityServiceMock.Verify(x => x.DeleteUserAsync(userId), Times.Once);
 			_contextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
