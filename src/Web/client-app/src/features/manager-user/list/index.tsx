@@ -4,6 +4,7 @@ import SearchBox from "../components/SearchBox";
 import UserTable from "./UserTable";
 import useUserList from "./useUsersList";
 import { useNavigate } from "react-router-dom";
+import "./UserList.scss";
 
 const ListUsers = () => {
   const {
@@ -23,20 +24,24 @@ const ListUsers = () => {
   };
 
   return (
-    <div>
-      <div className="">
-        <Row className="mb-3">
-          <Col md={2}>
-            <FilterByRole handleFilterByType={handleFilterByType} />
-          </Col>
-          <Col md={3}>
-            <SearchBox handleFilterBySearchTerm={handleSearch} />
-          </Col>
-          <Col md={3}>
-            <Button onClick={() => handleCreateUser()}>Create new user</Button>
-          </Col>
-        </Row>
-      </div>
+    <div className="user-list">
+      <p className="title">User list</p>
+
+      <Row className="mb-3">
+        <Col md={2}>
+          <FilterByRole handleFilterByType={handleFilterByType} />
+        </Col>
+
+        <Col md={{ span: 4, offset: 4 }} className="ml-auto">
+          <SearchBox handleFilterBySearchTerm={handleSearch} />
+        </Col>
+        
+        <Col md={2}>
+          <Button variant="danger" onClick={handleCreateUser}>
+            Create new user
+          </Button>
+        </Col>
+      </Row>
 
       <UserTable
         users={users}

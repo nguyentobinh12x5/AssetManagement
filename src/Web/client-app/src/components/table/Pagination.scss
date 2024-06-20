@@ -1,0 +1,15 @@
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff !important;
+  border-color: #fff !important;
+  background-color: rgba(207, 35, 56, 0.8) !important;
+}
+
+.page-item .page-link {
+  color: rgba(207, 35, 56, 0.8) !important;
+}
+
+.page-item.disabled .page-link{
+  background-color: #fff;
+  color: grey !important;
+}

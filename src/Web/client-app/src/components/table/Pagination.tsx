@@ -2,6 +2,7 @@ import React from "react";
 import IPagination from "./interfaces/IPagination";
 import Paging from "react-bootstrap/Pagination";
 import usePagination from "./usePagination";
+import "./Pagination.scss"
 
 const Pagination: React.FC<IPagination> = ({
   currentPage = 1,
@@ -29,9 +30,12 @@ const Pagination: React.FC<IPagination> = ({
   const renderPrevBtn = () => {
     return (
       <Paging.Prev
+        
         disabled={setDisabledPrevBtn()}
         onClick={() => handleChange(currentPage - 1)}
-      />
+      >
+        Previous
+      </Paging.Prev>
     );
   };
 
@@ -89,7 +93,9 @@ const Pagination: React.FC<IPagination> = ({
       <Paging.Next
         disabled={setDisabledNextBtn()}
         onClick={() => handleChange(currentPage + 1)}
-      />
+      >
+        Next
+      </Paging.Next>
     );
   };
 
@@ -105,8 +111,8 @@ const Pagination: React.FC<IPagination> = ({
   return totalPage < 1 ? (
     <></>
   ) : (
-    <Paging className="d-flex justify-content-end">
-      {renderFirstBtn()}
+    <Paging className="d-flex justify-content-end" >
+      {/* {renderFirstBtn()} */}
       {renderPrevBtn()}
       {renderFirstPage()}
       {renderPrevEllipsis(currentPage)}
@@ -116,7 +122,7 @@ const Pagination: React.FC<IPagination> = ({
       {renderNextEllipsis(currentPage, totalPage)}
       {renderTotalPage(currentPage, totalPage)}
       {renderNextPage()}
-      {renderLastPage()}
+      {/* {renderLastPage()} */}
     </Paging>
   );
 };

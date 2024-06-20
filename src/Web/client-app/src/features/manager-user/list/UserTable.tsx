@@ -75,7 +75,7 @@ const UserTable: React.FC<UserTableProps> = ({
             <td>{data.staffCode}</td>
             <td>{data.fullName}</td>
             <td>{data.userName}</td>
-            <td>{data.joinDate.toString()}</td>
+            <td>{new Date(data.joinDate.toString()).toLocaleDateString()}</td>
             <td>{data.type}</td>
             <div className="text-center d-flex justify-content-center align-items-center gap-2">
               <div onClick={(e) => e.stopPropagation()}>
