@@ -26,7 +26,7 @@ const LoginForm = () => {
                 id="email"
                 label="Username"
                 name="email"
-                type="email"
+                type="text"
                 required
               />
 
@@ -37,7 +37,7 @@ const LoginForm = () => {
                 isrequired
               />
               <Button type="submit" disabled={!(isValid && dirty)}>
-                Submit
+                Login
               </Button>
             </div>
           </Form>

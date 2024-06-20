@@ -7,7 +7,7 @@ import changePasswordReducer from '../features/auth/changepassword/reducers/chan
 export default {
   counter: counterReducer,
   todoItems: todoItemsReducer,
-  users: usersReducer,
   auth: authReducer,
   changePassword: changePasswordReducer,
+  users: usersReducer,
 };

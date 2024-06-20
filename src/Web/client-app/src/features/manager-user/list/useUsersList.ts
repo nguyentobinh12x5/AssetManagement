@@ -59,18 +59,24 @@ const useUserList = () => {
   const handleSearch = (searchTerm: string) => {
     setFilterType('');
     setSearchTerm(searchTerm.trim());
+    dispatch(
+      setUserQuery({
+        ...userQuery,
+        pageNumber: 1,
+      })
+    );
   };
 
   // Fetch Data
   useEffect(() => {
     const fetchData = () => {
-      // if (filterType && !searchTerm) {
-      //   dispatch(getUsersByType({ ...userQuery, type: filterType }));
-      // } else if (searchTerm && !filterType) {
-      //   dispatch(getUsersBySearchTerm({ ...userQuery, searchTerm }));
-      // } else {
-      dispatch(getUsers(userQuery));
-      // }
+      if (filterType && !searchTerm) {
+        dispatch(getUsersByType({ ...userQuery, type: filterType }));
+      } else if (searchTerm && !filterType) {
+        dispatch(getUsersBySearchTerm({ ...userQuery, searchTerm }));
+      } else {
+        dispatch(getUsers(userQuery));
+      }
     };
 
     fetchData();

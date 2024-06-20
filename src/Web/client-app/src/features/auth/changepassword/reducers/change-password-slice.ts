@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { IChangePasswordCommand } from '../../interfaces/IChangePasswordCommand';
 
 interface ChangePasswordState {
   isLoading: boolean;
@@ -16,11 +17,7 @@ const ChangePasswordSlice = createSlice({
   reducers: {
     changePasswordRequest: (
       state: ChangePasswordState,
-      action: PayloadAction<{
-        values: { currentPassword: string; newPassword: string };
-        actions: any;
-        setApiError: any;
-      }>
+      action: PayloadAction<IChangePasswordCommand>
     ) => ({
       ...state,
       isLoading: true,

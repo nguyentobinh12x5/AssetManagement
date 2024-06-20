@@ -42,7 +42,11 @@ const ChangePasswordFirstTimeForm: React.FC<Props> = ({
               label="New password"
               name="newPassword"
             />
-            <Button type="submit" disabled={!(isValid && dirty)}>
+            <Button
+              id="changePasswordFirstTimeBtn"
+              type="submit"
+              disabled={!(isValid && dirty)}
+            >
               Save
             </Button>
           </div>

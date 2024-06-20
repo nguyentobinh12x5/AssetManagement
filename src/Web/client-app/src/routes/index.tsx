@@ -5,7 +5,6 @@ import { AUTH, USER, HOME, TODO_ITEM } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 const Home = lazy(() => import("../features/home"));
-const TodoItems = lazy(() => import("../features/todo-item"));
 const Auth = lazy(() => import("../features/auth"));
 const Users = lazy(() => import("../features/manager-user"));
 
@@ -22,19 +21,11 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path={TODO_ITEM}
-          element={
-            <PrivateRoute>
-              <TodoItems />
-            </PrivateRoute>
-          }
-        />
-        <Route
           path={USER}
           element={
-            <PublicRoute>
+            <PrivateRoute>
               <Users />
-            </PublicRoute>
+            </PrivateRoute>
           }
         />
         <Route

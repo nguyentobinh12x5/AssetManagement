@@ -1,1 +1,1 @@
-export const MANAGE_USER_LIST = '*';
+export const MANAGE_USER_LIST = '/';

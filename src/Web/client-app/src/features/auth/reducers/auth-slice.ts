@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILoginCommand } from '../interfaces/ILoginCommand';
-import { getCookie } from '../../../utils/cookiesUtils';
 import { IChangePasswordFirstTimeCommand } from '../interfaces/IChangePasswordFirstTimeCommand';
 
 interface AuthState {
@@ -12,7 +11,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   isLoading: false,
-  isAuthenticated: getCookie('.AspNetCore.Identity.Application') ? true : false,
+  isAuthenticated: false,
 };
 
 const AuthSlice = createSlice({
@@ -34,6 +33,10 @@ const AuthSlice = createSlice({
     ) => ({
       ...state,
       isLoading: true,
+    }),
+    logout: (state: AuthState) => ({
+      ...state,
+      isLoading: false,
     }),
 
     // Set state
@@ -70,6 +73,7 @@ export const {
   login,
   setAuth,
   loginFail,
+  logout,
   setUser,
   getUserInfo,
   setLogout,

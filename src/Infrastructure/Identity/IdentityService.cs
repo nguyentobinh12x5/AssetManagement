@@ -47,6 +47,7 @@ public class IdentityService : IIdentityService
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
         _mapper = mapper;
+        _currentUser = currentUser;
         _applicationDbContext = applicationDbContext;
 
         _currentUser = currentUser;
@@ -253,13 +254,6 @@ public class IdentityService : IIdentityService
         }
     }
 
-    private List<UserBriefDto> FinalGetUserBriefAsync(List<UserBriefDto> userBriefDto, string orderDirection)
-    {
-        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
-            userBriefDto.OrderByDescending(u => u.Type).ToList() :
-            userBriefDto.OrderBy(u => u.Type).ToList();
-    }
-
     public async Task<bool> CheckCurrentPassword(string currentPassword)
     {
         var userId = _currentUser.Id!;
@@ -342,6 +336,27 @@ public class IdentityService : IIdentityService
         return false;
     }
 
+
+    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(GetUsersQuery query)
+    {    
+        if( !query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase)){ 
+            return await _userManager.Users                
+                .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)            
+                .ToListAsync();
+        }
+        else{
+            return await _userManager.Users
+                .OrderByDynamic("StaffCode", query.SortColumnDirection)
+                .ToListAsync();
+        }
+    }
+
+    private List<UserBriefDto> FinalGetUserBriefAsync(List<UserBriefDto> userBriefDto, string orderDirection)
+    {
+        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ? 
+            userBriefDto.OrderByDescending( u => u.Type ).ToList():
+            userBriefDto.OrderBy( u => u.Type ).ToList();
+    }
 
     public async Task<bool> IsUserDisabledAsync(string email)
     {
