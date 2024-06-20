@@ -30,6 +30,7 @@ const useChangePassword = () => {
     actions: FormikHelpers<ChangePasswordType>
   ) => {
     dispatch(changePasswordRequest({ values, actions, setApiError }));
+    actions.setSubmitting(false);
   };
 
   const resetState = useCallback(() => {
