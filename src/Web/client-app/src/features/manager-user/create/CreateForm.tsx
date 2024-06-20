@@ -8,15 +8,10 @@ import SelectField from "../../../components/formInputs/SelectField";
 import { GenderOptions } from "../constants/gender-user";
 import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
 import "./CreateForm.scss"
 const CreateForm = () => {
-    const { user, isLoading, handleSubmit, UserSchema } = useUserForm();
+    const { user, handleSubmit, UserSchema } = useUserForm();
     const navigate = useNavigate();
-
-    if (isLoading) {
-        return <Loading />
-    }
 
     return (
         <Formik
