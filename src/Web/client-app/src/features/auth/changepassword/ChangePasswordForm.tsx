@@ -31,16 +31,16 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
   }, [show, resetState]);
 
   return (
-    <Modal show={show} centered>
+    <Modal show={show} centered className={ success ? "changepassword-form-success-wrapper" : "" }>
       <div className="changepassword-form-header">
         <h3 className="primaryColor fw-bold fs-5">Change password</h3>
       </div>
       <Modal.Body className="p-0">
         {success ? (
-          <div className="text-center p-3">
+          <div className="changepassword-form-wrapper">
             <div>Your password has been changed successfully!</div>
             <div className="d-flex mt-3 justify-content-end">
-              <Button className="btn-light btn-outline-dark" style={{ marginRight: '4.5rem', marginTop: '1rem' }} onClick={onHide}>
+              <Button className="btn-light btn-outline-dark" onClick={onHide}>
                 Close
               </Button>
             </div>
