@@ -95,7 +95,7 @@ const useUserList = () => {
     hasSortColumn,
     users,
     isLoading,
-    
+
     handleSort,
     handlePaging,
     handleFilterByType,
