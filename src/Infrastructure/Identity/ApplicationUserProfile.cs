@@ -11,7 +11,11 @@ public class ApplicationUserProfile : Profile
     public ApplicationUserProfile()
     {
         CreateMap<ApplicationUser, UserDto>().ReverseMap(); ;
-        CreateMap<ApplicationUser, UserBriefDto>();
+        CreateMap<ApplicationUser, UserBriefDto>()
+            .ForMember(
+                dest => dest.FullName,
+                opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}")
+            );
         CreateMap<UserInfoDto, ApplicationUser>();
     }
 }
