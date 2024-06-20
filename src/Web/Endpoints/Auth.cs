@@ -2,6 +2,7 @@
 using System.Security.Claims;
 
 using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
+using AssetManagement.Application.Auth.Commands.Logout;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
 using AssetManagement.Infrastructure.Identity;
@@ -24,7 +25,8 @@ public class Auth : EndpointGroupBase
             .MapPost(ChangePassword, "change-password")
             .MapPost(ChangePasswordFirstTime, "change-password-first-time")
             .MapPost(Login, "login")
-            .MapGet(GetUserInfo, "manage/info");
+            .MapGet(GetUserInfo, "manage/info")
+            .MapPost(Logout, "logout");
     }
 
     public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login(
@@ -88,6 +90,12 @@ public class Auth : EndpointGroupBase
     public async Task<IResult> ChangePasswordFirstTime(ISender sender, [FromBody] ChangePasswordFirstTimeCommand command)
     {
         await sender.Send(command);
+        return Results.NoContent();
+    }
+
+    public async Task<IResult> Logout(ISender sender)
+    {
+        await sender.Send(new LogoutCommand());
         return Results.NoContent();
     }
 }

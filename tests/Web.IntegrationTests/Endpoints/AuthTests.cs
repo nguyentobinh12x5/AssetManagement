@@ -20,7 +20,7 @@ using Assert = Xunit.Assert;
 
 namespace Web.IntegrationTests.Endpoints;
 
-[Collection("Sequential"), TestCaseOrderer("TestOrderExamples.TestCaseOrdering.TestPriorityOrderer", "TestOrderExamples")]
+[Collection("Sequential")]
 public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
 {
     private readonly TestWebApplicationFactory<Program> _factory;
@@ -33,7 +33,7 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
     }
 
-    [Fact, TestPriority(1)]
+    [Fact]
     public async Task Login_ShouldReturnEmpty_WhenValidLoginRequest()
     {
         // Arrange
@@ -52,7 +52,7 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Empty(content);
     }
 
-    [Fact, TestPriority(2)]
+    [Fact]
     public async Task Login_ShouldReturnProperMessage_OnInvalidCredentials()
     {
         // Arrange
@@ -72,7 +72,7 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("Username or password is incorrect. Please try again", problemDetails.Detail);
     }
 
-    [Fact, TestPriority(3)]
+    [Fact]
     public async Task Login_ShouldReturnProperMessage_OnUserDisabled()
     {
         // Arrange
@@ -93,7 +93,7 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("Your account is disabled. Please contact with IT Team", problemDetails.Detail);
     }
 
-    [Fact, TestPriority(4)]
+    [Fact]
     public async Task GetUserInfo_ShouldReturnUserInfo()
     {
         // Arrange
@@ -113,7 +113,7 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(userInfo);
     }
 
-    [Fact, TestPriority(5)]
+    [Fact]
     public async Task ChangePasswordFirstTime_ShouldReturnBadRequest_OnInputOldPassword()
     {
         // Arrange
@@ -159,7 +159,7 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
     }
 
 
-    [Fact, TestPriority(6)]
+    [Fact]
     public async Task ChangePassword_ShouldReturnNoContent_OnSuccessfulChange()
     {
         // Arrange
