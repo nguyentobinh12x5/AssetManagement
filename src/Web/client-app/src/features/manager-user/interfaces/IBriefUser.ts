@@ -3,6 +3,6 @@
   staffCode: string;
   fullName: string;
   userName: string;
-  joinDate: string;
+  joinDate: Date;
   type: string;
 }

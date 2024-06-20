@@ -21,8 +21,7 @@ const CreateForm = () => {
             enableReinitialize
         >
             {({ isValid, dirty }) => (
-                <Form className="user-form">
-                    
+                <Form>
                     <div className="mb-3">
                         <TextField
                             id="firstName"

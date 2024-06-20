@@ -75,7 +75,7 @@ const UserSlice = createSlice({
       const updatedUser: IBriefUser = {
         ...existingUser,
         fullName: `${action.payload.firstName} ${action.payload.lastName}`,
-        joinDate: action.payload.joinDate,
+        joinDate: new Date(action.payload.joinDate),
       };
       
       const updatedUsers = state.users?.items.filter(
