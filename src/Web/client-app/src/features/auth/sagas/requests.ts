@@ -23,3 +23,7 @@ export function changePasswordFirstTime(
 ): Promise<AxiosResponse<void>> {
   return RequestService.axios.post(ENDPOINTS.CHANGE_PWD_FIRST_TIME, command);
 }
+
+export function logout(): Promise<AxiosResponse<void>> {
+  return RequestService.axios.post(ENDPOINTS.LOGOUT);
+}
