@@ -338,13 +338,15 @@ public class IdentityService : IIdentityService
 
 
     private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(GetUsersQuery query)
-    {    
-        if( !query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase)){ 
-            return await _userManager.Users                
-                .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)            
+    {
+        if (!query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+        {
+            return await _userManager.Users
+                .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)
                 .ToListAsync();
         }
-        else{
+        else
+        {
             return await _userManager.Users
                 .OrderByDynamic("StaffCode", query.SortColumnDirection)
                 .ToListAsync();
@@ -353,9 +355,9 @@ public class IdentityService : IIdentityService
 
     private List<UserBriefDto> FinalGetUserBriefAsync(List<UserBriefDto> userBriefDto, string orderDirection)
     {
-        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ? 
-            userBriefDto.OrderByDescending( u => u.Type ).ToList():
-            userBriefDto.OrderBy( u => u.Type ).ToList();
+        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
+            userBriefDto.OrderByDescending(u => u.Type).ToList() :
+            userBriefDto.OrderBy(u => u.Type).ToList();
     }
 
     public async Task<bool> IsUserDisabledAsync(string email)

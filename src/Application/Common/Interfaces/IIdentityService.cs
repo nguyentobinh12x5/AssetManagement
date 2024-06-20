@@ -39,7 +39,7 @@ public interface IIdentityService
 
     Task<Result> ChangePasswordAsync(string currentPassword, string newPassword);
 
-    
+
 
     Task<bool> IsUserDisabledAsync(string email);
 
