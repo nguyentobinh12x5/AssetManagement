@@ -9,7 +9,9 @@ import { IUserQuery } from '../interfaces/IUserQuery';
 export function editUser(user: IUser): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.put(`${ENDPOINTS.USER}/${user.id}`, user);
 }
-
+export function CreateUser(user: IUser): Promise<AxiosResponse<IUser>> {
+    return RequestService.axios.post(`${ENDPOINTS.USER}`, user);
+}
 export function getUserById(userId: string): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.get(`${ENDPOINTS.USER}/${userId}`);
 }

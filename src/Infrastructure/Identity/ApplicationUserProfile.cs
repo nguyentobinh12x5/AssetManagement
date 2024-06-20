@@ -1,4 +1,5 @@
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
 
@@ -13,5 +14,6 @@ public class ApplicationUserProfile : Profile
         CreateMap<ApplicationUser, UserDto>().ReverseMap(); ;
         CreateMap<ApplicationUser, UserBriefDto>();
         CreateMap<UserInfoDto, ApplicationUser>();
+        CreateMap<ApplicationUser, UserDTOs>();
     }
 }

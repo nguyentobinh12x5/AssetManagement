@@ -1,4 +1,5 @@
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
@@ -10,10 +11,12 @@ public class Users : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
+            //.RequireAuthorization()
             .AllowAnonymous()
+            .MapGet(GetUserList)
             .MapGet(GetUser, "{id}")
             .MapPut(UpdateUser, "{id}")
-            .MapGet(GetUserList);
+            .MapPost(CreateUser);
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
@@ -27,6 +30,11 @@ public class Users : EndpointGroupBase
         return Results.Ok(result);
     }
 
+    public Task<string> CreateUser(ISender sender, CreateUserCommand command)
+    {
+        return sender.Send(command);
+    }
+    
     public async Task<IResult> UpdateUser(ISender sender, string id, UpdateUserCommand command)
     {
         if (id != command.Id) return Results.BadRequest();

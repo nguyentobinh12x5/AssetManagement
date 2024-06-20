@@ -4,9 +4,11 @@ using System.Security.Claims;
 
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Exceptions;
+using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
@@ -62,18 +64,40 @@ public class IdentityService : IIdentityService
         return user?.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public async Task<(Result Result, string StaffCode)> CreateUserAsync(UserDTOs user)
     {
-        var user = new ApplicationUser
+        var id = _userManager.Users.Select(e => e.StaffCode).ToList();
+
+        var userName = _userManager.Users.Select(e => e.UserName).ToList();
+
+        //var httpContexts = _httpContextAccessor.HttpContext;
+
+        //var location = httpContexts.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Locality)?.Value;
+
+        var newUser = new ApplicationUser
         {
             UserName = userName,
             Email = userName
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            IsDelete = false,
+            DateOfBirth = user.DateOfBirth,
+            JoinDate = user.JoinDate,
+            StaffCode = id.GenerateNewStaffCode(),
+            Id = Guid.NewGuid().ToString(),
+            UserName = userName.GenerateUsername(user.FirstName, user.LastName),
+            Location = "HCM"
         };
+        var password = newUser.UserName.GeneratePassword(user.DateOfBirth);
 
-        var result = await _userManager.CreateAsync(user, password);
-
-        return (result.ToApplicationResult(), user.Id);
+        var result = await _userManager.CreateAsync(newUser, password);
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(newUser, user.Role);
+        }
+        return (result.ToApplicationResult(), newUser.StaffCode);
     }
+
     public async Task<UserDto> GetUserWithRoleAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -319,23 +343,8 @@ public class IdentityService : IIdentityService
 
     public async Task<bool> IsUserDisabledAsync(string email)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+       var user = await _userManager.FindByEmailAsync(email);
 
-        return user != null && user.IsDelete;
-    }
-
-    public async Task<UserInfoDto> GetCurrentUserInfo(string userId)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        Guard.Against.NotFound(userId, user);
-
-        var roles = await _userManager.GetRolesAsync(user);
-        return new UserInfoDto
-        {
-            Email = user.Email!,
-            IsEmailConfirmed = user.EmailConfirmed,
-            Roles = roles,
-            MustChangePassword = user.MustChangePassword,
-        };
+        return  user != null && user.IsDelete;
     }
 }
