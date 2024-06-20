@@ -1,6 +1,8 @@
 ﻿using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Domain.Enums;
+
 using FluentValidation.TestHelper;
+
 using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Users.Commands.UpdateUser;

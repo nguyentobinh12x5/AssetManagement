@@ -14,7 +14,7 @@ const UseForm = () => {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <Loading/>
+    return <Loading />;
   }
 
   return (

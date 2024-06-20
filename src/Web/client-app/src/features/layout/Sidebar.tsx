@@ -1,9 +1,5 @@
 import { NavLink } from "react-router-dom";
-import {
-  HOME_LINK,
-  TODO_ITEM_LINK,
-  USER_LINK,
-} from "../../constants/pages";
+import { HOME_LINK, TODO_ITEM_LINK, USER_LINK } from "../../constants/pages";
 import { useAppState } from "../../redux/redux-hooks";
 import { isAdminUser } from "../../utils/authUtils";
 

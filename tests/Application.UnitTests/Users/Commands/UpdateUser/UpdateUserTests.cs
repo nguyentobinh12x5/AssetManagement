@@ -1,11 +1,15 @@
 ﻿using Ardalis.GuardClauses;
+
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Domain.Enums;
+
 using FluentAssertions;
+
 using Moq;
+
 using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Users.Commands.UpdateUser;
@@ -25,7 +29,7 @@ public class GetUpdateUserTests
             _identityServiceMock.Object
         );
     }
-    
+
     [Test]
     public async Task Handle_UserExistsAndUpdateSuccess_ReturnsResult()
     {
@@ -51,7 +55,7 @@ public class GetUpdateUserTests
             JoinDate = new DateTime(2020, 1, 1),
             Type = "NewRole"
         };
-        
+
         var result = Result.Success();
         _identityServiceMock.Setup(x => x.GetUserWithRoleAsync(userId))
             .ReturnsAsync(user);
@@ -73,12 +77,12 @@ public class GetUpdateUserTests
             u.LastName == "NewLastName" &&
             u.DateOfBirth == new DateTime(2000, 1, 1) &&
             u.Gender == Gender.Male &&
-            u.JoinDate == new DateTime(2020, 1, 1) 
+            u.JoinDate == new DateTime(2020, 1, 1)
         )), Times.Once);
         _identityServiceMock.Verify(x => x.UpdateUserToRoleAsync(userId, "OldRole", "NewRole"), Times.Once);
         _identityServiceMock.Verify(x => x.GetUserWithRoleAsync(userId), Times.Once);
     }
-    
+
     [Test]
     public async Task Handle_UserDoesNotExist_ThrowsNotFoundException()
     {
@@ -100,7 +104,7 @@ public class GetUpdateUserTests
 
         // Act
         Func<Task> act = async () => await _handler.Handle(updateCommand, CancellationToken.None);
-         
+
         //Assert
         await act.Should().ThrowAsync<NotFoundException>()
             .WithMessage($"Queried object {userId} was not found, Key: {userId}");
@@ -142,7 +146,7 @@ public class GetUpdateUserTests
 
         // Act
         Func<Task> act = async () => await _handler.Handle(updateCommand, CancellationToken.None);
-        
+
         //Assert
         await act.Should().ThrowAsync<Exception>();
 

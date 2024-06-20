@@ -30,7 +30,7 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
         RuleFor(v => v.Type)
             .NotEmpty()
             .MaximumLength(256);
-        
+
     }
-    
+
 }

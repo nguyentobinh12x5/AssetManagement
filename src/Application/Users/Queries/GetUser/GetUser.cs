@@ -21,7 +21,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUserQuery, UserDto>
     public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
         var user = await _identityService.GetUserWithRoleAsync(request.Id);
-        
+
         return user;
     }
 }

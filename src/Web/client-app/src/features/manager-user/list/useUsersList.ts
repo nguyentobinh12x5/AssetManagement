@@ -7,7 +7,7 @@ import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { APP_DEFAULT_PAGE_SIZE } from '../../../constants/paging';
 import { getUsers } from '../reducers/user-slice';
-import { IBriefUser } from "../interfaces/IBriefUser";
+import { IBriefUser } from '../interfaces/IBriefUser';
 
 const defaultIPagedUserModel: IPagedModel<IBriefUser> = {
   items: [],

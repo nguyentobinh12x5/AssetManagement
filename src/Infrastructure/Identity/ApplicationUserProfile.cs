@@ -1,6 +1,7 @@
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
-using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Application.Users.Queries.GetUser;
+using AssetManagement.Application.Users.Queries.GetUsers;
+
 using AutoMapper;
 
 namespace AssetManagement.Infrastructure.Identity;

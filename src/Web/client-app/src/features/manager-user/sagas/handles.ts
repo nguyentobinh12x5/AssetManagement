@@ -3,15 +3,17 @@ import { call, put } from 'redux-saga/effects';
 import { IUser } from '../interfaces/IUser';
 import {
   setUserById,
-  setUserByIdError, setUsers,
+  setUserByIdError,
+  setUsers,
   updateUser,
   updateUserError,
-} from "../reducers/user-slice";
+} from '../reducers/user-slice';
 import {
   editUser as editUserRequest,
-  getUserById as getUserByIdRequest, getUsers,
-} from "./requests";
-import { IUserQuery } from "../interfaces/IUserQuery";
+  getUserById as getUserByIdRequest,
+  getUsers,
+} from './requests';
+import { IUserQuery } from '../interfaces/IUserQuery';
 
 export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
   const userQuery = action.payload;
