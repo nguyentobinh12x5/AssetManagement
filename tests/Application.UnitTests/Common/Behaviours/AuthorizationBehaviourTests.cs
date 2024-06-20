@@ -79,6 +79,24 @@ public class AuthorizationBehaviourTests
     }
 
     [Test]
+    public void Handle_ShouldProceed_WhenUserIsInRole()
+    {
+        // Arrange
+        var request = new TestRequestWithAuthorizeRole();
+        var response = new TestResponse();
+        RequestHandlerDelegate<TestResponse> next = () => Task.FromResult(response);
+
+        _userMock.Setup(u => u.Id).Returns("123");
+        _identityServiceMock.Setup(s => s.IsInRoleAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+
+        // Act
+        Func<Task> act = async () => await _behaviour.Handle(request, next, CancellationToken.None);
+
+        // Assert
+        act.Should().ThrowAsync<ForbiddenAccessException>();
+    }
+
+    [Test]
     public void Handle_ShouldThrowForbiddenAccessException_WhenUserNotAuthorizedByPolicy()
     {
         // Arrange
@@ -94,6 +112,24 @@ public class AuthorizationBehaviourTests
 
         // Assert
         act.Should().ThrowAsync<ForbiddenAccessException>();
+    }
+
+    [Test]
+    public async Task Handle_ShouldProceed_WhenUserWithValidPolicty()
+    {
+        // Arrange
+        var request = new TestRequestWithAuthorize();
+        var response = new TestResponse();
+        RequestHandlerDelegate<TestResponse> next = () => Task.FromResult(response);
+
+        _userMock.Setup(u => u.Id).Returns("123");
+        _identityServiceMock.Setup(s => s.IsInRoleAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+
+        // Act
+        var result = await _behaviour.Handle(request, next, CancellationToken.None);
+
+        // Assert
+        result.Should().Be(response);
     }
 
     [Test]
@@ -124,6 +160,9 @@ public class AuthorizationBehaviourTests
 
     [Authorize(Policy = "TestPolicy")]
     private class TestRequestWithAuthorizePolicy : BaseTestRequest { }
+
+    [Authorize(Policy = "TestPolicy", Roles = "Admin")]
+    private class TestRequestWithMultiplePolicy : BaseTestRequest { }
 
     private class TestResponse { }
 }
