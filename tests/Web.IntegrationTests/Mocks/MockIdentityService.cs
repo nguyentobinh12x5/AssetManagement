@@ -3,6 +3,8 @@ using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersBySearch;
+using AssetManagement.Application.Users.Queries.GetUsersByType;
 
 namespace Web.IntegrationTests.Mocks;
 
@@ -94,6 +96,11 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task Logout()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
         throw new NotImplementedException();
     }

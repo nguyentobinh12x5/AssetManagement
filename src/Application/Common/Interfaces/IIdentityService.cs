@@ -2,6 +2,7 @@ using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersBySearch;
 using AssetManagement.Application.Users.Queries.GetUsersByType;
 
 namespace AssetManagement.Application.Common.Interfaces;
@@ -28,6 +29,7 @@ public interface IIdentityService
 
     Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query);
     Task<PaginatedList<UserBriefDto>> GetUsersByTypeAsync(GetUsersByTypeQuery query);
+    Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query);
 
     Task<bool> CheckCurrentPassword(string currentPassword);
     Task<bool> IsSameOldPassword(string newPassword);

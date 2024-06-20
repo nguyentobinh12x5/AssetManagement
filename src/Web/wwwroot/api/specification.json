@@ -581,12 +581,12 @@
         }
       }
     },
-    "/api/Users/type": {
+    "/api/Users/Type": {
       "get": {
         "tags": [
           "Users"
         ],
-        "operationId": "GetApiUsersType",
+        "operationId": "GetUserByType",
         "parameters": [
           {
             "name": "PageNumber",
@@ -630,6 +630,77 @@
           },
           {
             "name": "Type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 5
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfUserBriefDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/Search": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "SearchUsers",
+        "parameters": [
+          {
+            "name": "SearchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "SortColumnName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "SortColumnDirection",
             "in": "query",
             "required": true,
             "schema": {

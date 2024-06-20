@@ -10,6 +10,7 @@ using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersBySearch;
 using AssetManagement.Application.Users.Queries.GetUsersByType;
 using AssetManagement.Infrastructure.Data;
 
@@ -365,5 +366,37 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
+    public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    {
+        var usersQuery = _userManager.Users.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+        {
+            var searchTermLower = query.SearchTerm.ToLower();
+            usersQuery = usersQuery.Where(u =>
+                EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
+                u.StaffCode.ToLower().Contains(searchTermLower));
+        }
+
+        usersQuery = usersQuery.OrderByDynamic(query.SortColumnName, query.SortColumnDirection);
+
+        var totalCount = await usersQuery.CountAsync();
+
+        var users = await usersQuery
+            .Skip((query.PageNumber - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ToListAsync();
+
+        var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
+
+        return new PaginatedList<UserBriefDto>(
+            userBriefDtos,
+            totalCount,
+            query.PageNumber,
+            query.PageSize
+        );
+    }
+
+
 
 }

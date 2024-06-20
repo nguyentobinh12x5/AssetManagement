@@ -3,6 +3,7 @@ using AssetManagement.Application.Users.Commands.DeleteUser;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersBySearch;
 using AssetManagement.Application.Users.Queries.GetUsersByType;
 
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,8 @@ public class Users : EndpointGroupBase
             .MapPut(UpdateUser, "{id}")
             .MapGet(GetUserList)
             .MapDelete(DeleteUser, "{id}")
-            .MapGet("type", GetUserByType);
+            .MapGet(GetUserByType,"Type")
+            .MapGet(SearchUsers,"Search");
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
@@ -49,5 +51,9 @@ public class Users : EndpointGroupBase
     {
         await sender.Send(new DeleteUserCommand(id));
         return Results.NoContent();
+    }
+    public Task<PaginatedList<UserBriefDto>> SearchUsers(ISender sender, [AsParameters] GetUsersBySearchQuery query) 
+    {
+        return sender.Send(query);
     }
 }
