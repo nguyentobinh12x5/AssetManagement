@@ -11,7 +11,13 @@ interface PopupComponentProps {
     handleClose: () => void;
     userId:string
 }
-
+const formatDate = (date: Date) => {
+  const parsedDate = typeof date === 'string' ? new Date(date) : date;
+  const day = String(parsedDate.getDate()).padStart(2, '0');
+  const month = String(parsedDate.getMonth() + 1).padStart(2, '0');
+  const year = parsedDate.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 const PopupComponent: React.FC<PopupComponentProps> = ({ show, handleClose, userId}) => {
 	const { user} = useDetailUser(userId);
 	if (!user) {
@@ -54,7 +60,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({ show, handleClose, user
 							</rect>
 						</svg>
 						<div id="ID10111996_kxp">
-							<span>{user.dateOfBirth}</span>
+                <span>{formatDate(user.dateOfBirth)}</span>
 						</div>
 					</div>
 					<div id="Gender_kxq">
@@ -78,7 +84,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({ show, handleClose, user
 							</rect>
 						</svg>
 						<div id="ID10052020_kxy">
-							<span>{user.joinDate }</span>
+                <span>{formatDate(user.joinDate)}</span>
 						</div>
 					</div>
 					<div id="Type_kxz">

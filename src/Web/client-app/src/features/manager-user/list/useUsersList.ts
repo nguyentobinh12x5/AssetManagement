@@ -46,7 +46,7 @@ const useUserList = () => {
 
   // Main State
   const dispatch = useAppDispatch();
-  const { users } = useAppState((state) => state.users);
+  const { users ,isLoading} = useAppState((state) => state.users);
 
   const defaultUserQuery: IUserQuery = {
     pageNumber: hasPaging.page,
@@ -66,7 +66,7 @@ const useUserList = () => {
     defaultIPagedUserModel,
     hasSortColumn,
     users,
-
+      isLoading,
     handleSort,
     handlePaging,
   };
