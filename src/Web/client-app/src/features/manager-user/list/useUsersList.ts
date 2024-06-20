@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
-import { IUserQuery } from '../interfaces/IUserQuery';
+import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { APP_DEFAULT_PAGE_SIZE } from '../../../constants/paging';
-import { getUsers, getUsersByType } from '../reducers/user-slice';
+import {
+  getUsers,
+  getUsersByType,
+  getUsersBySearchTerm,
+} from '../reducers/user-slice';
 import { IBriefUser } from '../interfaces/IBriefUser';
 
 const defaultIPagedUserModel: IPagedModel<IBriefUser> = {
@@ -19,12 +23,14 @@ const defaultIPagedUserModel: IPagedModel<IBriefUser> = {
 };
 
 const useUserList = () => {
-  // Paging Sorting
+  const dispatch = useAppDispatch();
+  const { users } = useAppState((state) => state.users);
+
   const updateMainSortState = (
     sortColumnName: string,
     sortColumnDirection: string
   ) => {
-    setUserQuery((prevQuery) => ({
+    setHasUserQuery((prevQuery) => ({
       ...prevQuery,
       sortColumnName,
       sortColumnDirection,
@@ -32,7 +38,7 @@ const useUserList = () => {
   };
 
   const updateMainPagingState = (page: number) => {
-    setUserQuery((prevQuery) => ({
+    setHasUserQuery((prevQuery) => ({
       ...prevQuery,
       pageNumber: page,
     }));
@@ -44,10 +50,6 @@ const useUserList = () => {
   );
   const { hasPaging, handlePaging } = useAppPaging(updateMainPagingState);
 
-  // Main State
-  const dispatch = useAppDispatch();
-  const { users } = useAppState((state) => state.users);
-
   const defaultUserQuery: IUserQuery = {
     pageNumber: hasPaging.page,
     pageSize: APP_DEFAULT_PAGE_SIZE,
@@ -55,34 +57,47 @@ const useUserList = () => {
     sortColumnDirection: hasSortColumn.sortOrder,
   };
 
-  const [hasUserQuery, setUserQuery] = useState(defaultUserQuery);
+  const [hasUserQuery, setHasUserQuery] = useState(defaultUserQuery);
   const [filterType, setFilterType] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
-  //Fetch Data
+  // Fetch Data
   useEffect(() => {
-    if (filterType) {
+    fetchData();
+  }, [searchTerm, hasUserQuery, filterType]);
+
+  const fetchData = () => {
+    if (filterType && !searchTerm) {
       dispatch(getUsersByType({ ...hasUserQuery, type: filterType }));
-    } else {
+    } else if (searchTerm && !filterType) {
+      dispatch(getUsersBySearchTerm({ ...defaultUserQuery, searchTerm }));
+    } else {        
       dispatch(getUsers(hasUserQuery));
     }
-  }, [hasUserQuery]);
+  };
 
   const handleFilterByType = (type: string) => {
+    setSearchTerm('');  
     setFilterType(type);
-    setUserQuery((prevQuery) => ({
+    setHasUserQuery((prevQuery) => ({
       ...prevQuery,
       pageNumber: 1,
     }));
+  };
+
+  const handleSearch = (searchTerm: string) => {
+    setFilterType('');
+    setSearchTerm(searchTerm.trim());
   };
 
   return {
     defaultIPagedUserModel,
     hasSortColumn,
     users,
-
     handleSort,
     handlePaging,
     handleFilterByType,
+    handleSearch,
   };
 };
 

@@ -24,7 +24,7 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
   const handleTypeChange = (displayType: string) => {
     // Find the actual value from the display value
     const actualType = (Object.keys(userTypesMap) as UserType[]).find(
-      (key) => userTypesMap[key as UserType] === displayType
+      (key) => userTypesMap[key] === displayType
     );
 
     if (actualType) {

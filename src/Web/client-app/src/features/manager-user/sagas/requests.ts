@@ -4,8 +4,9 @@ import { AxiosResponse } from 'axios';
 import { IUser } from '../interfaces/IUser';
 import { IBriefUser } from '../interfaces/IBriefUser';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
-import { IUserQuery } from '../interfaces/IUserQuery';
+import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
+import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 
 export function editUser(user: IUser): Promise<AxiosResponse<IUser>> {
   return RequestService.axios.put(`${ENDPOINTS.USER}/${user.id}`, user);
@@ -32,8 +33,22 @@ export function getUsersByType(
 ): Promise<AxiosResponse<IPagedModel<IBriefUser>>> {
   return RequestService.axios.get(
     `${ENDPOINTS.USER}` +
-      `/type?` +
+      `/Type?` +
       `&Type=${userQuery.type}` +
+      `&PageNumber=${userQuery.pageNumber}` +
+      `&PageSize=${userQuery.pageSize}` +
+      `&SortColumnName=${userQuery.sortColumnName}` +
+      `&SortColumnDirection=${userQuery.sortColumnDirection}`
+  );
+}
+
+export function getUserBySearchTerm(
+  userQuery: IUserSearchQuery
+): Promise<AxiosResponse<IPagedModel<IBriefUser>>> {
+  return RequestService.axios.get(
+    `${ENDPOINTS.USER}` +
+      `/Search?` +
+      `&SearchTerm=${userQuery.searchTerm}` +
       `&PageNumber=${userQuery.pageNumber}` +
       `&PageSize=${userQuery.pageSize}` +
       `&SortColumnName=${userQuery.sortColumnName}` +

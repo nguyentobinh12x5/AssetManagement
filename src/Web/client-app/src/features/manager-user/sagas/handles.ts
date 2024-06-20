@@ -13,11 +13,13 @@ import {
   deleteUserRequest,
   editUser as editUserRequest,
   getUserById as getUserByIdRequest,
+  getUserBySearchTerm,
   getUsers,
   getUsersByType,
 } from './requests';
-import { IUserQuery } from '../interfaces/IUserQuery';
+import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
+import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 
 export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
   const userQuery = action.payload;
@@ -35,6 +37,19 @@ export function* handleGetUsersByType(action: PayloadAction<IUserTypeQuery>) {
 
   try {
     const { data } = yield call(getUsersByType, userQuery);
+    yield put(setUsers(data));
+  } catch (error: any) {
+    const msg = error.response.data;
+  }
+}
+
+export function* handleGetUsersBySearchTerm(
+  action: PayloadAction<IUserSearchQuery>
+) {
+  const userQuery = action.payload;
+
+  try {
+    const { data } = yield call(getUserBySearchTerm, userQuery);
     yield put(setUsers(data));
   } catch (error: any) {
     const msg = error.response.data;

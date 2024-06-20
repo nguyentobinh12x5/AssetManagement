@@ -1,5 +1,7 @@
+import { Col, Row } from "react-bootstrap";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import FilterByRole from "../components/FilterByRole";
+import SearchBox from "../components/SearchBox";
 import UserTable from "./UserTable";
 import useUserList from "./useUsersList";
 
@@ -12,11 +14,19 @@ const ListUsers = () => {
     handleSort,
     handlePaging,
     handleFilterByType,
+    handleSearch,
   } = useUserList();
 
   return (
     <div>
-      <FilterByRole handleFilterByType={handleFilterByType} />
+      <Row className="mb-3">
+        <Col md={3}>
+          <FilterByRole handleFilterByType={handleFilterByType} />
+        </Col>
+        <Col md={3}>
+          <SearchBox handleFilterBySearchTerm={handleSearch} />
+        </Col>
+      </Row>
 
       <UserTable
         users={users ?? defaultIPagedUserModel}

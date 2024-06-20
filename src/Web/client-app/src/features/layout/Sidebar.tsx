@@ -14,14 +14,8 @@ const Sidebar = () => {
       </NavLink>
       {isAdminUser(user) && (
         <>
-          <NavLink className="navItem intro-x" to={TODO_ITEM_LINK}>
-            <button className="btnCustom">Todo Items</button>
-          </NavLink>
           <NavLink className="navItem intro-x" to={USER_LINK}>
             <button className="btnCustom">Manage User</button>
-          </NavLink>
-          <NavLink className="navItem intro-x" to={TODO_ITEM_LINK}>
-            <button className="btnCustom">Protected</button>
           </NavLink>
         </>
       )}

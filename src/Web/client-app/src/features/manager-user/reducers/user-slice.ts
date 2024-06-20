@@ -1,9 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IUser } from '../interfaces/IUser';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
-import { IUserQuery } from '../interfaces/IUserQuery';
+import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IBriefUser } from '../interfaces/IBriefUser';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
+import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 
 interface User {
   id: string;
@@ -50,6 +51,13 @@ const UserSlice = createSlice({
     getUsersByType: (
       state: UserState,
       action: PayloadAction<IUserTypeQuery>
+    ): UserState => ({
+      ...state,
+      isLoading: true,
+    }),
+    getUsersBySearchTerm: (
+      state: UserState,
+      action: PayloadAction<IUserSearchQuery>
     ): UserState => ({
       ...state,
       isLoading: true,
@@ -125,6 +133,7 @@ export const {
   getUsers,
   setUsers,
   getUsersByType,
+  getUsersBySearchTerm,
   getUserById,
   setUserById,
   setUserByIdError,
