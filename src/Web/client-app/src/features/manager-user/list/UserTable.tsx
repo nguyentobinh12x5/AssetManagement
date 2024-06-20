@@ -9,7 +9,6 @@ import ButtonIcon from "../../../components/ButtonIcon";
 import { useNavigate } from "react-router-dom";
 import { PencilFill } from "react-bootstrap-icons";
 import PopupComponent from "../details";
-import { Button } from "../../../components";
 import Loading from "../../../components/Loading";
 import ConfirmDisable from "../components/ConfirmDisable";
 
@@ -34,7 +33,6 @@ const UserTable: React.FC<UserTableProps> = ({
     { name: "Username", value: "UserName", disable: true },
     { name: "Joined Date", value: "JoinDate" },
     { name: "Type", value: "Type" },
-    { name: "Action", value: "", disable: true },
   ];
   const navigate = useNavigate();
   const handleEditClick = (userId: string) => {
@@ -83,20 +81,21 @@ const UserTable: React.FC<UserTableProps> = ({
             <td>{data.userName}</td>
             <td>{data.joinDate.toString()}</td>
             <td>{data.type}</td>
-            <td className="text-center">
+            <div className="text-center">
               <div className="d-flex justify-content-center align-items-center gap-2">
                 <ButtonIcon
-                  onClick={() => {
+                  onClick={(e: { stopPropagation: () => void }) => {
+                    e.stopPropagation(); // Prevents triggering the row click
                     handleEditClick(data.id);
                   }}
                   disable={false}
                 >
-                  <PencilFill></PencilFill>
+                  <PencilFill />
                 </ButtonIcon>
 
                 <ConfirmDisable userId={data.id}></ConfirmDisable>
               </div>
-            </td>
+            </div>
           </tr>
         ))}
       </Table>

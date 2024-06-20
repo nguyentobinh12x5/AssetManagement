@@ -41,7 +41,10 @@ const ConfirmDisable = ({ userId }: { userId: string }) => {
             </button>
             <button
               className="btn btn-light btn-outline-secondary"
-              onClick={handleCloseModal}
+              onClick={(e: { stopPropagation: () => void }) => {
+                e.stopPropagation(); // Prevents triggering the row click
+                handleCloseModal();
+              }}
             >
               Cancel
             </button>
