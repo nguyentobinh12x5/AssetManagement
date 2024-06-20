@@ -23,9 +23,9 @@ const LoginForm = () => {
             </div>
             <div className="login-form-wrapper">
               <TextField
-                id="username"
+                id="email"
                 label="Username"
-                name="username"
+                name="email"
                 type="text"
                 required
               />
