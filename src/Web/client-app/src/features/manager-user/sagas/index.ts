@@ -4,12 +4,14 @@ import {
   getUserById,
   getUsers,
   deleteUser,
+  getUsersByType
 } from '../reducers/user-slice';
 import {
   handleDeleteUser,
   handleEditUser,
   handleGetUserById,
   handleGetUsers,
+  handleGetUsersByType
 } from './handles';
 
 export default function* userSagas() {
@@ -17,4 +19,5 @@ export default function* userSagas() {
   yield takeLatest(getUserById.type, handleGetUserById);
   yield takeLatest(getUsers.type, handleGetUsers);
   yield takeLatest(deleteUser.type, handleDeleteUser);
+  yield takeLatest(getUsersByType.type, handleGetUsersByType);
 }

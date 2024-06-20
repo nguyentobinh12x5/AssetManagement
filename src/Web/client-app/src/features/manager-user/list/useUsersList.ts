@@ -6,7 +6,7 @@ import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { APP_DEFAULT_PAGE_SIZE } from '../../../constants/paging';
-import { getUsers } from '../reducers/user-slice';
+import { getUsers, getUsersByType } from '../reducers/user-slice';
 import { IBriefUser } from '../interfaces/IBriefUser';
 
 const defaultIPagedUserModel: IPagedModel<IBriefUser> = {
@@ -24,18 +24,18 @@ const useUserList = () => {
     sortColumnName: string,
     sortColumnDirection: string
   ) => {
-    setUserQuery({
-      ...hasUserQuery,
+    setUserQuery((prevQuery) => ({
+      ...prevQuery,
       sortColumnName,
       sortColumnDirection,
-    });
+    }));
   };
 
   const updateMainPagingState = (page: number) => {
-    setUserQuery({
-      ...hasUserQuery,
+    setUserQuery((prevQuery) => ({
+      ...prevQuery,
       pageNumber: page,
-    });
+    }));
   };
 
   const { hasSortColumn, handleSort } = useAppSort(
@@ -56,11 +56,23 @@ const useUserList = () => {
   };
 
   const [hasUserQuery, setUserQuery] = useState(defaultUserQuery);
+  const [filterType, setFilterType] = useState<string | null>(null);
 
   //Fetch Data
   useEffect(() => {
-    dispatch(getUsers(hasUserQuery));
-  }, [hasUserQuery]);
+    if (filterType) {
+      dispatch(getUsersByType({ ...hasUserQuery, type: filterType }));
+    } else {
+      dispatch(getUsers(hasUserQuery));
+    }  }, [hasUserQuery]);
+
+  const handleFilterByType = (type: string) => {
+    setFilterType(type);
+    setUserQuery((prevQuery) => ({
+      ...prevQuery,
+      pageNumber: 1,
+    }));
+  };
 
   return {
     defaultIPagedUserModel,
@@ -69,6 +81,7 @@ const useUserList = () => {
 
     handleSort,
     handlePaging,
+    handleFilterByType
   };
 };
 

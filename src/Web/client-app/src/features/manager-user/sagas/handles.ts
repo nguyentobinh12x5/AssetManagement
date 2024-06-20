@@ -14,8 +14,10 @@ import {
   editUser as editUserRequest,
   getUserById as getUserByIdRequest,
   getUsers,
+  getUsersByType,
 } from './requests';
 import { IUserQuery } from '../interfaces/IUserQuery';
+import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 
 export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
   const userQuery = action.payload;
@@ -27,6 +29,18 @@ export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
     const msg = error.response.data;
   }
 }
+
+export function* handleGetUsersByType(action: PayloadAction<IUserTypeQuery>) {
+  const userQuery = action.payload;
+
+  try {
+    const { data } = yield call(getUsersByType, userQuery);
+    yield put(setUsers(data));
+  } catch (error: any) {
+    const msg = error.response.data;
+  }
+}
+
 export function* handleEditUser(action: PayloadAction<IUser>) {
   const user = action.payload;
   try {

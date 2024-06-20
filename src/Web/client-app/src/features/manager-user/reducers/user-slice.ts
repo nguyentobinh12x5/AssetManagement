@@ -3,6 +3,7 @@ import { IUser } from '../interfaces/IUser';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IUserQuery } from '../interfaces/IUserQuery';
 import { IBriefUser } from '../interfaces/IBriefUser';
+import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 
 interface User {
   id: string;
@@ -46,6 +47,13 @@ const UserSlice = createSlice({
       ...state,
       isLoading: true,
     }),
+    getUsersByType: (
+      state: UserState,
+      action: PayloadAction<IUserTypeQuery>
+    ): UserState => ({
+      ...state,
+      isLoading: true,
+    }),
     getUserById: (
       state: UserState,
       action: PayloadAction<string>
@@ -64,7 +72,6 @@ const UserSlice = createSlice({
     setUsers: (
       state: UserState,
       action: PayloadAction<IPagedModel<IBriefUser & User>>
-      // ??? Ask Tam why he made separate User interface from IBriefUser
     ) => {
       const users = action.payload;
       return {
@@ -111,12 +118,14 @@ const UserSlice = createSlice({
     setDeleteStatus: (state, action: PayloadAction<boolean>) => {
       state.isDeleting = action.payload;
     },
+    
   },
 });
 
 export const {
   getUsers,
   setUsers,
+  getUsersByType,
   getUserById,
   setUserById,
   setUserByIdError,
