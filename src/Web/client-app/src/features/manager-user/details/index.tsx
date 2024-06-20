@@ -30,7 +30,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
     );
   }
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal className="detail-model" show={show} onHide={handleClose}>
       <Modal.Body>
         <div id="detailed_user">
           <svg className="header_kxg">

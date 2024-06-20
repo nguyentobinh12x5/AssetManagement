@@ -6,15 +6,15 @@
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-.fade.modal.show {
+.detail-model.fade.modal.show {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -35%);
 }
-.modal-body {
+.detail-model.modal-body {
   padding: 0 !important;
 }
-.modal-content {
+.detail-model.modal-content {
   border: none !important;
 }
 .popup-container {

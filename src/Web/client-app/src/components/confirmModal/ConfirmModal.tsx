@@ -21,11 +21,11 @@ const ConfirmModal: React.FC<Props> = ({
       show={isShow}
       onHide={onHide}
       dialogClassName={`modal-90w ${dialogClassName}`}
-      aria-labelledby="login-modal"
+      aria-labelledby="disable-confirm-modal"
       centered
     >
       <Modal.Header className="custom-header">
-        <Modal.Title id="login-modal">{title}</Modal.Title>
+        <Modal.Title id="disable-confirm-modal">{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Fragment>{children}</Fragment>

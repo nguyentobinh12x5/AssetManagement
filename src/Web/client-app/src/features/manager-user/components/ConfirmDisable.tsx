@@ -23,7 +23,7 @@ const ConfirmDisable = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <div>
+    <div className="container">
       <ButtonIcon onClick={handleShowModal}>
         <XCircle color="red" />
       </ButtonIcon>

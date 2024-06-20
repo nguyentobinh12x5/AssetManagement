@@ -74,26 +74,25 @@ const UserTable: React.FC<UserTableProps> = ({
           <tr
             key={data.id}
             onClick={() => handleShowPopup(data.id)}
-            style={{ cursor: "pointer" }}
           >
             <td>{data.staffCode}</td>
             <td>{data.fullName}</td>
             <td>{data.userName}</td>
             <td>{data.joinDate.toString()}</td>
             <td>{data.type}</td>
-            <div className="text-center">
-              <div className="d-flex justify-content-center align-items-center gap-2">
-                <ButtonIcon
-                  onClick={(e: { stopPropagation: () => void }) => {
-                    e.stopPropagation(); // Prevents triggering the row click
-                    handleEditClick(data.id);
-                  }}
-                  disable={false}
-                >
-                  <PencilFill />
-                </ButtonIcon>
+            <div className="text-center d-flex justify-content-center align-items-center gap-2">
+              <ButtonIcon
+                onClick={(e: { stopPropagation: () => void }) => {
+                  e.stopPropagation();
+                  handleEditClick(data.id);
+                }}
+                disable={false}
+              >
+                <PencilFill />
+              </ButtonIcon>
 
-                <ConfirmDisable userId={data.id}></ConfirmDisable>
+              <div onClick={(e) => e.stopPropagation()}>
+                <ConfirmDisable userId={data.id} />
               </div>
             </div>
           </tr>
