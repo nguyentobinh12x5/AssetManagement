@@ -322,7 +322,7 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
-    public async Task<List<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
         var usersQuery = _userManager.Users.AsQueryable();
 
@@ -334,11 +334,25 @@ public class IdentityService : IIdentityService
                 u.StaffCode.ToLower().Contains(searchTermLower));
         }
 
-        var users = await usersQuery.ToListAsync();
+        usersQuery = usersQuery.OrderByDynamic(query.SortColumnName, query.SortColumnDirection);
+
+        var totalCount = await usersQuery.CountAsync();
+
+        var users = await usersQuery
+            .Skip((query.PageNumber - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ToListAsync();
+
         var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
 
-        return userBriefDtos;
+        return new PaginatedList<UserBriefDto>(
+            userBriefDtos,
+            totalCount,
+            query.PageNumber,
+            query.PageSize
+        );
     }
+
 
 
 }

@@ -22,7 +22,7 @@ public interface IIdentityService
 
     Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query);
     Task<PaginatedList<UserBriefDto>> GetUsersByTypeAsync(GetUsersByTypeQuery query);
-    Task<List<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query);
+    Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query);
 
     Task<bool> CheckCurrentPassword(string currentPassword);
     Task<bool> IsSameOldPassword(string newPassword);

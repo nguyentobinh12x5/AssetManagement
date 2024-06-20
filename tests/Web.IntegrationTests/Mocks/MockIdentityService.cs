@@ -79,7 +79,7 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public Task<List<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
         throw new NotImplementedException();
     }

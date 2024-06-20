@@ -10,13 +10,17 @@ using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Domain.Constants;
 
 namespace AssetManagement.Application.Users.Queries.GetUsersBySearch;
-public record GetUsersBySearchQuery : IRequest<List<UserBriefDto>>
+public record GetUsersBySearchQuery : IRequest<PaginatedList<UserBriefDto>>
 {
     public string? SearchTerm { get; init; }
-    //public string? FullName { get; init; }
-    //public string? StaffCode { get; init; }
+    public int PageNumber { get; init; } = AppPagingConstants.DefaultPageNumber;
+    public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
+    public string SortColumnName { get; init; } = "StaffCode";
+    public string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
 }
-public class GetUsersBySearchQueryHandler : IRequestHandler<GetUsersBySearchQuery, List<UserBriefDto>>
+
+
+public class GetUsersBySearchQueryHandler : IRequestHandler<GetUsersBySearchQuery, PaginatedList<UserBriefDto>>
 {
     private readonly IIdentityService _identityService;
 
@@ -25,12 +29,9 @@ public class GetUsersBySearchQueryHandler : IRequestHandler<GetUsersBySearchQuer
         _identityService = identityService;
     }
 
-    public async Task<List<UserBriefDto>> Handle(GetUsersBySearchQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<UserBriefDto>> Handle(GetUsersBySearchQuery request, CancellationToken cancellationToken)
     {
-        //var users = await _identityService.GetUserBriefsBySearchAsync(request);
-
-        //return users;
-
         return await _identityService.GetUserBriefsBySearchAsync(request);
     }
 }
+

@@ -9,24 +9,13 @@ namespace AssetManagement.Web.Endpoints;
 
 public class Users : EndpointGroupBase
 {
-    //public override void Map(WebApplication app)
-    //{
-    //    app.MapGroup(this)
-    //        .AllowAnonymous()
-    //        .MapGet(GetUserList)
-    //        .MapGet("type", GetUserByType)
-    //        .MapGet("search", SearchUsers);
-
-
-    //}
     public override void Map(WebApplication app)
     {
-        var group = app.MapGroup(this)
-            .AllowAnonymous();
-
-        group.MapGet("/", GetUserList);
-        group.MapGet("/type", GetUserByType);
-        group.MapGet("/search", SearchUsers);
+        app.MapGroup(this)
+            .AllowAnonymous()
+            .MapGet(GetUserList)
+            .MapGet(GetUserByType,"Type")
+            .MapGet(SearchUsers,"Search");
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
@@ -37,7 +26,7 @@ public class Users : EndpointGroupBase
     {
         return sender.Send(query);
     }
-    public Task<List<UserBriefDto>> SearchUsers(ISender sender, [AsParameters] GetUsersBySearchQuery query) 
+    public Task<PaginatedList<UserBriefDto>> SearchUsers(ISender sender, [AsParameters] GetUsersBySearchQuery query) 
     {
         return sender.Send(query);
     }
