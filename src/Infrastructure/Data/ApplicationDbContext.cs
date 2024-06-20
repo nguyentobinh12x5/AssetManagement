@@ -17,9 +17,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
 
+    public DbSet<ApplicationUser> ApplicationUser => Set<ApplicationUser>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-    }
+
+        builder.Entity<ApplicationUser>()
+			.HasQueryFilter(x => x.IsDelete == false);
+	}
 }

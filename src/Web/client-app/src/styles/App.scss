@@ -8,6 +8,7 @@
 @import "../features/auth/login/LoginForm.scss";
 @import "../features/auth/firstime-login/ChangePasswordFirstTimeForm.scss";
 @import "../features/auth/changepassword/ChangePasswordForm.scss";
+@import '../components/confirmModal/ConfirmModal.scss';
 
 :root {
   --primary-grey: #ced4da;

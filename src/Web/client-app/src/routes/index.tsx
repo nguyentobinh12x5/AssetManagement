@@ -1,12 +1,13 @@
 import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import SuspenseLoading from "../components/SuspenseLoading";
-import { AUTH, HOME, TODO_ITEM } from "../constants/pages";
+import { HOME, AUTH, MANAGE_USER, TODO_ITEM } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 
 const Home = lazy(() => import("../features/home"));
 const TodoItems = lazy(() => import("../features/todo-item"));
+const Users = lazy(() => import("../features/manage-user"));
 const Auth = lazy(() => import("../features/auth"));
 
 const AppRoutes = () => {
@@ -28,7 +29,15 @@ const AppRoutes = () => {
               <TodoItems />
             </PrivateRoute>
           }
-        />
+              />
+              <Route
+                  path={MANAGE_USER}
+                  element={
+                      <PublicRoute>
+                          <Users />
+                      </PublicRoute>
+                  }
+              />
         <Route
           path={AUTH}
           element={
