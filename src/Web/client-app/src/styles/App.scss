@@ -98,3 +98,8 @@ body {
     align-self: flex-end;
   }
 }
+
+.form-control.is-invalid,
+.form-control.is-valid {
+  background: none !important;
+}
