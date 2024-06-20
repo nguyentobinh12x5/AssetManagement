@@ -41,7 +41,12 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public Task<PaginatedList<UserBriefDto>> GetUsersByTypeAsync(GetUsersByTypeQuery query)
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {
         throw new NotImplementedException();
     }

@@ -672,7 +672,7 @@
             "x-position": 4
           },
           {
-            "name": "Type",
+            "name": "Types",
             "in": "query",
             "required": true,
             "schema": {

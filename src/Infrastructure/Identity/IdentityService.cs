@@ -184,7 +184,7 @@ public class IdentityService : IIdentityService
     {
         var users = await InitialGetUserBriefAsync(query.SortColumnName, query.SortColumnDirection);
 
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "Default");
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
 
         if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
             userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
@@ -200,10 +200,12 @@ public class IdentityService : IIdentityService
         );
     }
 
+
     // Handles the case where User's role was chosen to be sorted
     // in which case won't be able to since it's not of User's prop
-    private async Task<List<UserBriefDto>> GetUserBriefDtosWithRoleAsync(List<ApplicationUser> users, string typeName)
+    private async Task<List<UserBriefDto>> GetUserBriefDtosWithRoleAsync(List<ApplicationUser> users, string types)
     {
+        var userTypes = types.Split(",");
         var userBriefDtos = new List<UserBriefDto>();
 
         var userIds = users.Select(u => u.Id).ToList();
@@ -229,9 +231,9 @@ public class IdentityService : IIdentityService
             userBriefDtos.Add(userBriefDto);
         }
 
-        if (!typeName.Equals("Default", StringComparison.OrdinalIgnoreCase))
+        if (!userTypes.Contains("all", StringComparer.OrdinalIgnoreCase))
             userBriefDtos = userBriefDtos
-                .Where(u => u.Type.Equals(typeName, StringComparison.OrdinalIgnoreCase))
+                .Where(u => userTypes.Contains(u.Type, StringComparer.OrdinalIgnoreCase))
                 .ToList();
 
         return userBriefDtos;
@@ -381,11 +383,11 @@ public class IdentityService : IIdentityService
             MustChangePassword = user.MustChangePassword,
         };
     }
-    public async Task<PaginatedList<UserBriefDto>> GetUsersByTypeAsync(GetUsersByTypeQuery query)
+    public async Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {
         var users = await InitialGetUserBriefAsync(query.SortColumnName, query.SortColumnDirection);
 
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Type);
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types);
 
         if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
             userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);

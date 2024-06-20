@@ -30,7 +30,7 @@ public interface IIdentityService
     Task<Result> DeleteUserAsync(string userId);
 
     Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query);
-    Task<PaginatedList<UserBriefDto>> GetUsersByTypeAsync(GetUsersByTypeQuery query);
+    Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query);
     Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query);
 
     Task<bool> CheckCurrentPassword(string currentPassword);
