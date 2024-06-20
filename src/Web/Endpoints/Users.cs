@@ -13,7 +13,7 @@ public class Users : EndpointGroupBase
         app.MapGroup(this)
             .AllowAnonymous()
             .MapGet(GetUserList)
-            .MapGet("type",GetUserByType);
+            .MapGet(GetUserByType,"type");
 
     }
 

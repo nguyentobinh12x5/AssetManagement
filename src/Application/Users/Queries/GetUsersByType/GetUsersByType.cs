@@ -35,6 +35,8 @@ public class GetUsersByTypeQueryHandler : IRequestHandler<GetUsersByTypeQuery, P
 
         return users;
     }
+
+
 }
 
 
