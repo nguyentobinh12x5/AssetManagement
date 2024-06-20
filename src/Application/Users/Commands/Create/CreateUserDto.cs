@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AssetManagement.Application.Users.Commands.Create
 {
-    public class UserDTOs
+    public class CreateUserDto
     {
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;

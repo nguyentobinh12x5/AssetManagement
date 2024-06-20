@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace AssetManagement.Application.UnitTests.Users.Commands.Create
 {
     [TestFixture]
-    public class UserDTOsTests
+    public class CreateUserDtoTests
     {
         [Test]
         public void UserDTOs_Initialization_Default_Values()
         {
             // Arrange
-            var userDto = new UserDTOs();
+            var userDto = new CreateUserDto();
 
             // Assert
             Assert.IsNull(userDto.FirstName);
@@ -33,7 +33,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
         {
             // Arrange
             var joinDate = DateTime.Now.AddDays(-30);
-            var userDto = new UserDTOs
+            var userDto = new CreateUserDto
             {
                 FirstName = "John",
                 LastName = "Doe",

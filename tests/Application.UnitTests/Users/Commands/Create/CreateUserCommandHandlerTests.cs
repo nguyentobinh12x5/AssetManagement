@@ -42,7 +42,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
 
             var expectedStaffCode = "SD0004"; // Expected new staff code based on existingCodes
 
-            mockIdentityService.Setup(x => x.CreateUserAsync(It.IsAny<UserDTOs>()))
+            mockIdentityService.Setup(x => x.CreateUserAsync(It.IsAny<CreateUserDto>()))
                                .ReturnsAsync((Result.Success(), expectedStaffCode));
 
             // Act
@@ -52,7 +52,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
             Assert.That(result, Is.EqualTo(expectedStaffCode));
 
             mockContext.Verify(x => x.SaveChangesAsync(CancellationToken.None), Times.Once);
-            mockIdentityService.Verify(x => x.CreateUserAsync(It.IsAny<UserDTOs>()), Times.Once);
+            mockIdentityService.Verify(x => x.CreateUserAsync(It.IsAny<CreateUserDto>()), Times.Once);
 
             // Additional assertion to verify the generated staff code
             var generatedStaffCode = existingCodes.GenerateNewStaffCode();
@@ -81,7 +81,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
 
             var expectedStaffCode = "SD0001"; // Mocked staff code
 
-            mockIdentityService.Setup(x => x.CreateUserAsync(It.IsAny<UserDTOs>()))
+            mockIdentityService.Setup(x => x.CreateUserAsync(It.IsAny<CreateUserDto>()))
                                .ReturnsAsync((Result.Success(), expectedStaffCode));
 
             // Act
@@ -90,7 +90,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
             // Assert
             Assert.That(result, Is.EqualTo(expectedStaffCode));
             mockContext.Verify(x => x.SaveChangesAsync(CancellationToken.None), Times.Once);
-            mockIdentityService.Verify(x => x.CreateUserAsync(It.IsAny<UserDTOs>()), Times.Once);
+            mockIdentityService.Verify(x => x.CreateUserAsync(It.IsAny<CreateUserDto>()), Times.Once);
         }
     }
 }

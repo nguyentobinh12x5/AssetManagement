@@ -28,7 +28,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
     }
     public async Task<string> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var user = new UserDTOs
+        var user = new CreateUserDto
         {
             FirstName = request.FirstName,
             LastName = request.LastName,

@@ -14,7 +14,7 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public Task<(Result Result, string StaffCode)> CreateUserAsync(UserDTOs user)
+    public Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser)
     {
         throw new NotImplementedException();
     }

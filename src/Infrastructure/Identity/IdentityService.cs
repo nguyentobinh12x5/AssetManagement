@@ -59,7 +59,7 @@ public class IdentityService : IIdentityService
         return user?.UserName;
     }
 
-    public async Task<(Result Result, string StaffCode)> CreateUserAsync(UserDTOs user)
+    public async Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser)
     {
         var id = _userManager.Users.Select(e => e.StaffCode).ToList();
 
@@ -68,22 +68,22 @@ public class IdentityService : IIdentityService
 
         var newUser = new ApplicationUser
         {
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            FirstName = createUser.FirstName,
+            LastName = createUser.LastName,
             IsDelete = false,
-            DateOfBirth = user.DateOfBirth,
-            JoinDate = user.JoinDate,
+            DateOfBirth = createUser.DateOfBirth,
+            JoinDate = createUser.JoinDate,
             StaffCode = id.GenerateNewStaffCode(),
             Id = Guid.NewGuid().ToString(),
-            UserName = userName.GenerateUsername(user.FirstName, user.LastName),
+            UserName = userName.GenerateUsername(createUser.FirstName, createUser.LastName),
             Location = "HCM"
         };
-        var password = newUser.UserName.GeneratePassword(user.DateOfBirth);
+        var password = newUser.UserName.GeneratePassword(createUser.DateOfBirth);
 
         var result = await _userManager.CreateAsync(newUser, password);
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(newUser, user.Role);
+            await _userManager.AddToRoleAsync(newUser, createUser.Role);
         }
         return (result.ToApplicationResult(), newUser.StaffCode);
     }

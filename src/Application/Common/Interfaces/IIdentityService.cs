@@ -22,7 +22,7 @@ public interface IIdentityService
 
     Task<bool> AuthorizeAsync(string userId, string policyName);
 
-    Task<(Result Result, string StaffCode)> CreateUserAsync(UserDTOs user);
+    Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser);
 
     Task<Result> DeleteUserAsync(string userId);
 
