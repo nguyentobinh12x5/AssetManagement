@@ -1,6 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
-import { changePasswordFirstTime, getUserInfo, login } from './requests';
+import {
+  changePasswordFirstTime,
+  getUserInfo,
+  login,
+  logout as logoutRequest,
+} from './requests';
 import {
   changePasswordFirstTimeSuccess,
   loginFail,
@@ -41,6 +46,16 @@ export function* handleChangePasswordFirstTime(
   try {
     yield call(changePasswordFirstTime, action.payload);
     yield put(changePasswordFirstTimeSuccess());
+  } catch (error: any) {
+    const errorResponse = error.response.data;
+    if (errorResponse.detail) yield showErrorToast(errorResponse.detail);
+  }
+}
+
+export function* handleLogout() {
+  try {
+    yield call(logoutRequest);
+    yield put(setLogout());
   } catch (error: any) {
     const errorResponse = error.response.data;
     if (errorResponse.detail) yield showErrorToast(errorResponse.detail);

@@ -32,8 +32,6 @@ export const showSuccessToast = (content: string) => {
 };
 
 export const showErrorToast = (content: string) => {
-  console.log('Show Toast');
-  console.log(toast);
   if (toast) {
     toast.error(content);
   }

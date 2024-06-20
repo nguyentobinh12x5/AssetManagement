@@ -37,12 +37,12 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
         <div className="col d-flex position-relative p-0">
           <input
             type={showPass ? "password" : "text"}
-            className={`form-control ps-4 ${validateClass()}`}
+            className={`form-control ps-2 ${validateClass()}`}
             {...field}
             {...props}
           />
           <div
-            className="position-absolute top-50 start-0 translate-middle-y ms-1 icon-eye"
+            className="position-absolute top-50 end-0 translate-middle-y me-2 icon-eye"
             style={{ backgroundColor: "white" }}
             onClick={clickHandler}
           >
@@ -54,7 +54,9 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
           </div>
         </div>
         {(error && touched) || apiError ? (
-          <div className="invalid position-rela">{error || apiError}</div>
+          <div className="invalid position-relative mt-2">
+            {error || apiError}
+          </div>
         ) : null}
       </div>
     </div>

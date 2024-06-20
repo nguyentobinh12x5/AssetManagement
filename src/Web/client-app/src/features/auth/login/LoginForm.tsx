@@ -37,7 +37,7 @@ const LoginForm = () => {
                 isrequired
               />
               <Button type="submit" disabled={!(isValid && dirty)}>
-                Submit
+                Login
               </Button>
             </div>
           </Form>
