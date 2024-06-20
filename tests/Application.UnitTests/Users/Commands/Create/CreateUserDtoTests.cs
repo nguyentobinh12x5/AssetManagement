@@ -1,11 +1,13 @@
-﻿using AssetManagement.Application.Users.Commands.Create;
-using AssetManagement.Domain.Enums;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using AssetManagement.Application.Users.Commands.Create;
+using AssetManagement.Domain.Enums;
+
+using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Users.Commands.Create
 {
@@ -24,7 +26,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
             Assert.IsNull(userDto.Location);
             Assert.That(userDto.DateOfBirth.Date, Is.EqualTo(DateTime.UtcNow.Date));
             Assert.That(userDto.Gender, Is.EqualTo(Gender.Male));
-            Assert.That(userDto.JoinDate, Is.EqualTo(default(DateTime))); 
+            Assert.That(userDto.JoinDate, Is.EqualTo(default(DateTime)));
             Assert.IsNull(userDto.Role);
         }
 

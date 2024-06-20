@@ -1,12 +1,15 @@
-﻿using AssetManagement.Application.Users.Commands.Create;
-using FluentValidation.TestHelper;
-using FluentValidation.Validators;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using AssetManagement.Application.Users.Commands.Create;
+
+using FluentValidation.TestHelper;
+using FluentValidation.Validators;
+
+using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Users.Commands.Create
 {
@@ -24,7 +27,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
         [Test]
         public void FirstName_Valid()
         {
-            var command = new CreateUserCommand { FirstName = "John" , DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = DateTime.UtcNow };
+            var command = new CreateUserCommand { FirstName = "John", DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = DateTime.UtcNow };
             var result = validator.TestValidate(command);
             Assert.That(result.IsValid);
         }
@@ -40,7 +43,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
         [Test]
         public void LastName_Valid()
         {
-            var command = new CreateUserCommand {LastName = "Doe", DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = DateTime.UtcNow };
+            var command = new CreateUserCommand { LastName = "Doe", DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = DateTime.UtcNow };
             var result = validator.TestValidate(command);
             Assert.That(result.IsValid);
         }
@@ -48,7 +51,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
         [Test]
         public void LastName_Invalid()
         {
-            var command = new CreateUserCommand { LastName = "Doe123" , DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = DateTime.UtcNow };
+            var command = new CreateUserCommand { LastName = "Doe123", DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = DateTime.UtcNow };
             var result = validator.TestValidate(command);
             Assert.That(result.Errors.Any(e => e.ErrorMessage == "The Last Name field allows only alphabetical characters and spaces. Please remove any numbers or special characters."));
         }

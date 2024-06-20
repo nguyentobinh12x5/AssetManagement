@@ -4,9 +4,12 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+
 using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Domain.Enums;
+
 using Microsoft.AspNetCore.Mvc.Testing;
+
 using Xunit;
 
 namespace Web.IntegrationTests.Endpoints
@@ -42,7 +45,7 @@ namespace Web.IntegrationTests.Endpoints
             var response = await client.PostAsync("/api/users", content);
 
             // Assert
-            response.EnsureSuccessStatusCode(); 
+            response.EnsureSuccessStatusCode();
             Xunit.Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }

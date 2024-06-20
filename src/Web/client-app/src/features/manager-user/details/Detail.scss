@@ -1,572 +1,604 @@
 .detailed_user {
-    width: 80%;
-    max-width: 480px;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 480px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 .fade.modal.show {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -35%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -35%);
 }
 .modal-body {
-    padding:0 !important;
+  padding: 0 !important;
 }
 .modal-content {
-    border:none !important
+  border: none !important;
 }
-    .popup-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 9999;
-    }
+.popup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+}
 
-    .modal-backdrop.show {
-        opacity: 0;
-    }
+.modal-backdrop.show {
+  opacity: 0;
+}
 
-    #detailed_user {
-        position: absolute;
-        overflow: visible;
-    }
+#detailed_user {
+  position: absolute;
+  overflow: visible;
+}
 
-    #header_kxg {
-        fill: rgba(239,241,245,1);
-        stroke: rgba(33,37,41,1);
-        stroke-width: 1px;
-        stroke-linejoin: miter;
-        stroke-linecap: butt;
-        stroke-miterlimit: 4;
-        shape-rendering: auto;
-    }
+#header_kxg {
+  fill: rgba(239, 241, 245, 1);
+  stroke: rgba(33, 37, 41, 1);
+  stroke-width: 1px;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+  stroke-miterlimit: 4;
+  shape-rendering: auto;
+}
 
-    .header_kxg {
-        position: absolute;
-        overflow: visible;
-        width: 480px;
-        height: 64px;
-        left: 0px;
-        top: 0px;
-    }
+.header_kxg {
+  position: absolute;
+  overflow: visible;
+  width: 480px;
+  height: 64px;
+  left: 0px;
+  top: 0px;
+}
 
-    #background_kxh {
-        fill: rgba(250,252,252,1);
-        stroke: rgba(33,37,41,1);
-        stroke-width: 1px;
-        stroke-linejoin: miter;
-        stroke-linecap: butt;
-        stroke-miterlimit: 4;
-        shape-rendering: auto;
-    }
+#background_kxh {
+  fill: rgba(250, 252, 252, 1);
+  stroke: rgba(33, 37, 41, 1);
+  stroke-width: 1px;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+  stroke-miterlimit: 4;
+  shape-rendering: auto;
+}
 
-    .background_kxh {
-        overflow: visible;
-        position: absolute;
-        width: 480px;
-        height: 315.713px;
-        left: 0px;
-        top: 62px;
-        transform: matrix(1,0,0,1,0,0);
-    }
+.background_kxh {
+  overflow: visible;
+  position: absolute;
+  width: 480px;
+  height: 315.713px;
+  left: 0px;
+  top: 62px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+}
 
-    #Last_Name_kxi {
-        opacity: 0.7;
-        position: absolute;
-        width: 383px;
-        height: 35px;
-        left: 50px;
-        top: 114px;
-        overflow: visible;
-    }
+#Last_Name_kxi {
+  opacity: 0.7;
+  position: absolute;
+  width: 383px;
+  height: 35px;
+  left: 50px;
+  top: 114px;
+  overflow: visible;
+}
 
-    #Full_Name_kxj {
-        left: 0px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 74px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Full_Name_kxj {
+  left: 0px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 74px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Rectangle_330_kxk {
-        fill: rgba(255,255,255,1);
-    }
+#Rectangle_330_kxk {
+  fill: rgba(255, 255, 255, 1);
+}
 
-    .Rectangle_330_kxk {
-        position: absolute;
-        overflow: visible;
-        width: 280px;
-        height: 35px;
-        left: 103px;
-        top: 0px;
-    }
+.Rectangle_330_kxk {
+  position: absolute;
+  overflow: visible;
+  width: 280px;
+  height: 35px;
+  left: 103px;
+  top: 0px;
+}
 
-    #An_Tran_Van_kxl {
-        left: 129px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 89px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#An_Tran_Van_kxl {
+  left: 129px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 89px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #DOB_kxm {
-        opacity: 0.7;
-        position: absolute;
-        width: 383px;
-        height: 35px;
-        left: 50px;
-        top: 179px;
-        overflow: visible;
-    }
+#DOB_kxm {
+  opacity: 0.7;
+  position: absolute;
+  width: 383px;
+  height: 35px;
+  left: 50px;
+  top: 179px;
+  overflow: visible;
+}
 
-    #Date_of_Birth_kxn {
-        left: 0px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 90px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Date_of_Birth_kxn {
+  left: 0px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 90px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Rectangle_330_kxo {
-        fill: rgba(255,255,255,1);
-    }
+#Rectangle_330_kxo {
+  fill: rgba(255, 255, 255, 1);
+}
 
-    .Rectangle_330_kxo {
-        position: absolute;
-        overflow: visible;
-        width: 280px;
-        height: 35px;
-        left: 103px;
-        top: 0px;
-    }
+.Rectangle_330_kxo {
+  position: absolute;
+  overflow: visible;
+  width: 280px;
+  height: 35px;
+  left: 103px;
+  top: 0px;
+}
 
-    #ID10111996_kxp {
-        left: 129px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 80px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#ID10111996_kxp {
+  left: 129px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 80px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Gender_kxq {
-        opacity: 0.7;
-        position: absolute;
-        width: 163px;
-        height: 21px;
-        left: 50px;
-        top: 218px;
-        overflow: visible;
-    }
+#Gender_kxq {
+  opacity: 0.7;
+  position: absolute;
+  width: 163px;
+  height: 21px;
+  left: 50px;
+  top: 218px;
+  overflow: visible;
+}
 
-    #gender_kxr {
-        position: absolute;
-        width: 35px;
-        height: 21px;
-        left: 128px;
-        top: 0px;
-        overflow: visible;
-    }
+#gender_kxr {
+  position: absolute;
+  width: 35px;
+  height: 21px;
+  left: 128px;
+  top: 0px;
+  overflow: visible;
+}
 
-    #female_kxs {
-        position: absolute;
-        width: 35px;
-        height: 21px;
-        left: 0px;
-        top: 0px;
-        overflow: visible;
-    }
+#female_kxs {
+  position: absolute;
+  width: 35px;
+  height: 21px;
+  left: 0px;
+  top: 0px;
+  overflow: visible;
+}
 
-    #Label_kxt {
-        left: 0px;
-        top: 0px;
-        position: absolute;
-        overflow: visible;
-        width: 36px;
-        white-space: nowrap;
-        line-height: 24px;
-        margin-top: -4px;
-        text-align: left;
-        font-family: HelveticaNeue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Label_kxt {
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  overflow: visible;
+  width: 36px;
+  white-space: nowrap;
+  line-height: 24px;
+  margin-top: -4px;
+  text-align: left;
+  font-family: HelveticaNeue, Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Gender_kxu {
-        left: 0px;
-        top: 3px;
-        position: absolute;
-        overflow: visible;
-        width: 55px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Gender_kxu {
+  left: 0px;
+  top: 3px;
+  position: absolute;
+  overflow: visible;
+  width: 55px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Joined_Date_kxv {
-        opacity: 0.7;
-        position: absolute;
-        width: 391px;
-        height: 35px;
-        left: 50px;
-        top: 245px;
-        overflow: visible;
-    }
+#Joined_Date_kxv {
+  opacity: 0.7;
+  position: absolute;
+  width: 391px;
+  height: 35px;
+  left: 50px;
+  top: 245px;
+  overflow: visible;
+}
 
-    #Joined_Date_kxw {
-        left: 0px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 86px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Joined_Date_kxw {
+  left: 0px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 86px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Rectangle_330_kxx {
-        fill: rgba(255,255,255,1);
-    }
+#Rectangle_330_kxx {
+  fill: rgba(255, 255, 255, 1);
+}
 
-    .Rectangle_330_kxx {
-        position: absolute;
-        overflow: visible;
-        width: 280px;
-        height: 35px;
-        left: 111px;
-        top: 0px;
-    }
+.Rectangle_330_kxx {
+  position: absolute;
+  overflow: visible;
+  width: 280px;
+  height: 35px;
+  left: 111px;
+  top: 0px;
+}
 
-    #ID10052020_kxy {
-        left: 128px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 81px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#ID10052020_kxy {
+  left: 128px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 81px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Type_kxz {
-        opacity: 0.7;
-        position: absolute;
-        width: 378px;
-        height: 35px;
-        left: 50px;
-        top: 280px;
-        overflow: visible;
-    }
+#Type_kxz {
+  opacity: 0.7;
+  position: absolute;
+  width: 378px;
+  height: 35px;
+  left: 50px;
+  top: 280px;
+  overflow: visible;
+}
 
-    #Type_kx {
-        left: 0px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 36px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Type_kx {
+  left: 0px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 36px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Path_8_kx {
-        fill: rgba(255,255,255,1);
-    }
+#Path_8_kx {
+  fill: rgba(255, 255, 255, 1);
+}
 
-    .Path_8_kx {
-        overflow: visible;
-        position: absolute;
-        width: 280px;
-        height: 35px;
-        left: 98px;
-        top: 0px;
-        transform: matrix(1,0,0,1,0,0);
-    }
+.Path_8_kx {
+  overflow: visible;
+  position: absolute;
+  width: 280px;
+  height: 35px;
+  left: 98px;
+  top: 0px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+}
 
-    #Staff_kx {
-        left: 130px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 34px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Staff_kx {
+  left: 130px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 34px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #First_Name_kx {
-        opacity: 0.7;
-        position: absolute;
-        width: 390.5px;
-        height: 264.5px;
-        left: 42.5px;
-        top: 79px;
-        overflow: visible;
-    }
+#First_Name_kx {
+  opacity: 0.7;
+  position: absolute;
+  width: 390.5px;
+  height: 264.5px;
+  left: 42.5px;
+  top: 79px;
+  overflow: visible;
+}
 
-    #Staff_Code_kx {
-        left: 7.5px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 76px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Staff_Code_kx {
+  left: 7.5px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 76px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Rectangle_330_kx {
-        fill: rgba(255,255,255,1);
-    }
+#Rectangle_330_kx {
+  fill: rgba(255, 255, 255, 1);
+}
 
-    .Rectangle_330_kx {
-        position: absolute;
-        overflow: visible;
-        width: 280px;
-        height: 35px;
-        left: 110.5px;
-        top: 0px;
-    }
+.Rectangle_330_kx {
+  position: absolute;
+  overflow: visible;
+  width: 280px;
+  height: 35px;
+  left: 110.5px;
+  top: 0px;
+}
 
-    #SD1234_kx {
-        left: 135.5px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 59px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#SD1234_kx {
+  left: 135.5px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 59px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Path_15_kx {
-        fill: rgba(0,0,0,0);
-        stroke: rgba(112,112,112,1);
-        stroke-width: 1px;
-        stroke-linejoin: miter;
-        stroke-linecap: butt;
-        stroke-miterlimit: 4;
-        shape-rendering: auto;
-    }
+#Path_15_kx {
+  fill: rgba(0, 0, 0, 0);
+  stroke: rgba(112, 112, 112, 1);
+  stroke-width: 1px;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+  stroke-miterlimit: 4;
+  shape-rendering: auto;
+}
 
-    .Path_15_kx {
-        overflow: visible;
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        left: 0px;
-        top: 264.5px;
-        transform: matrix(1,0,0,1,0,0);
-    }
+.Path_15_kx {
+  overflow: visible;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  left: 0px;
+  top: 264.5px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+}
 
-    #Detailed_User_Information {
-        left: 50px;
-        top: 17px;
-        position: absolute;
-        overflow: visible;
-        width: 246px;
-        white-space: nowrap;
-        line-height: 67px;
-        margin-top: -23.5px;
-        text-align: left;
-        font-family: Segoe UI, Arial;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 20px;
-        color: rgba(207,35,56,1);
-    }
+#Detailed_User_Information {
+  left: 50px;
+  top: 17px;
+  position: absolute;
+  overflow: visible;
+  width: 246px;
+  white-space: nowrap;
+  line-height: 67px;
+  margin-top: -23.5px;
+  text-align: left;
+  font-family:
+    Segoe UI,
+    Arial;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(207, 35, 56, 1);
+}
 
-    #x-square-fill_kx {
-        fill: transparent;
-        stroke: rgba(227,12,24,1);
-        stroke-width: 2.5px;
-        stroke-linejoin: miter;
-        stroke-linecap: butt;
-        stroke-miterlimit: 4;
-        shape-rendering: auto;
-    }
+#x-square-fill_kx {
+  fill: transparent;
+  stroke: rgba(227, 12, 24, 1);
+  stroke-width: 2.5px;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+  stroke-miterlimit: 4;
+  shape-rendering: auto;
+}
 
-    .x-square-fill_kx {
-        overflow: visible;
-        position: absolute;
-        width: 22.5px;
-        height: 22.5px;
-        left: 407px;
-        top: 24px;
-        transform: matrix(1,0,0,1,0,0);
-        transition: all 0.3s ease-out;
-        --web-animation: fadein 0.3s ease-out;
-        --web-action-type: page;
-        --web-action-target: Manage_User.html;
-        cursor: pointer;
-    }
+.x-square-fill_kx {
+  overflow: visible;
+  position: absolute;
+  width: 22.5px;
+  height: 22.5px;
+  left: 407px;
+  top: 24px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  transition: all 0.3s ease-out;
+  --web-animation: fadein 0.3s ease-out;
+  --web-action-type: page;
+  --web-action-target: Manage_User.html;
+  cursor: pointer;
+}
 
-    #Type_kya {
-        opacity: 0.7;
-        position: absolute;
-        width: 378px;
-        height: 35px;
-        left: 50px;
-        top: 315px;
-        overflow: visible;
-    }
+#Type_kya {
+  opacity: 0.7;
+  position: absolute;
+  width: 378px;
+  height: 35px;
+  left: 50px;
+  top: 315px;
+  overflow: visible;
+}
 
-    #Location_kyb {
-        left: 0px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 61px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#Location_kyb {
+  left: 0px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 61px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 
-    #Path_8_kyc {
-        fill: rgba(255,255,255,1);
-    }
+#Path_8_kyc {
+  fill: rgba(255, 255, 255, 1);
+}
 
-    .Path_8_kyc {
-        overflow: visible;
-        position: absolute;
-        width: 280px;
-        height: 35px;
-        left: 98px;
-        top: 0px;
-        transform: matrix(1,0,0,1,0,0);
-    }
+.Path_8_kyc {
+  overflow: visible;
+  position: absolute;
+  width: 280px;
+  height: 35px;
+  left: 98px;
+  top: 0px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+}
 
-    #HCM_kyd {
-        left: 129px;
-        top: 9px;
-        position: absolute;
-        overflow: visible;
-        width: 37px;
-        white-space: nowrap;
-        text-align: left;
-        font-family: Helvetica Neue, Arial;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-        color: rgba(33,37,41,1);
-    }
+#HCM_kyd {
+  left: 129px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 37px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
+}
 #Last_Name_kyh {
-    opacity: 0.7;
-    position: absolute;
-    width: 383px;
-    height: 35px;
-    left: 50px;
-    top: 147px;
-    overflow: visible;
+  opacity: 0.7;
+  position: absolute;
+  width: 383px;
+  height: 35px;
+  left: 50px;
+  top: 147px;
+  overflow: visible;
 }
 
 #Username {
-    left: 0px;
-    top: 9px;
-    position: absolute;
-    overflow: visible;
-    width: 75px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Helvetica Neue, Arial;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    color: rgba(33,37,41,1);
+  left: 0px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 75px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
 }
 
 #Rectangle_330_kyj {
-    fill: rgba(255,255,255,1);
+  fill: rgba(255, 255, 255, 1);
 }
 
 .Rectangle_330_kyj {
-    position: absolute;
-    overflow: visible;
-    width: 280px;
-    height: 35px;
-    left: 103px;
-    top: 0px;
+  position: absolute;
+  overflow: visible;
+  width: 280px;
+  height: 35px;
+  left: 103px;
+  top: 0px;
 }
 
 #antv_kyk {
-    left: 129px;
-    top: 9px;
-    position: absolute;
-    overflow: visible;
-    width: 31px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Helvetica Neue, Arial;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    color: rgba(33,37,41,1);
+  left: 129px;
+  top: 9px;
+  position: absolute;
+  overflow: visible;
+  width: 31px;
+  white-space: nowrap;
+  text-align: left;
+  font-family:
+    Helvetica Neue,
+    Arial;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: rgba(33, 37, 41, 1);
 }

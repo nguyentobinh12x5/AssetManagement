@@ -1,15 +1,12 @@
 import { Button, Col, Row } from "react-bootstrap";
-import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import FilterByRole from "../components/FilterByRole";
 import SearchBox from "../components/SearchBox";
 import UserTable from "./UserTable";
 import useUserList from "./useUsersList";
-import Loading from "../../../components/Loading";
 import { useNavigate } from "react-router-dom";
 
 const ListUsers = () => {
   const {
-    defaultIPagedUserModel,
     hasSortColumn,
     users,
 
@@ -23,7 +20,7 @@ const ListUsers = () => {
 
   const handleCreateUser = () => {
     navigate(`create`);
-  }
+  };
 
   return (
     <div>
@@ -42,7 +39,7 @@ const ListUsers = () => {
       </div>
 
       <UserTable
-        users={users ?? defaultIPagedUserModel}
+        users={users}
         sortState={{
           name: hasSortColumn.sortColumn,
           orderBy: hasSortColumn.sortOrder,

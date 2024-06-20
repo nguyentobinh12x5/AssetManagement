@@ -14,8 +14,7 @@ type inputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const DateField: React.FC<inputFieldProps> = (props) => {
-  const [{ value }, { error }, { setValue}] =
-    useField(props);
+  const [{ value }, { error }, { setValue }] = useField(props);
   const { label, required } = props;
 
   const handleDateChange = (date: Date) => {
@@ -35,7 +34,7 @@ const DateField: React.FC<inputFieldProps> = (props) => {
           {required && <div className="invalid ml-1">*</div>}
         </label>
         <div className="col">
-                  <div className="form-control pt-1 pb-1 d-flex justify-content-between align-items-center">
+          <div className="form-control pt-1 pb-1 d-flex justify-content-between align-items-center">
             <DatePicker
               dateFormat="dd/MM/yyyy"
               selected={value}
@@ -45,7 +44,7 @@ const DateField: React.FC<inputFieldProps> = (props) => {
               <CalendarDateFill />
             </div>
           </div>
-          { error && <div className="invalid">{error}</div>}
+          {error && <div className="invalid">{error}</div>}
         </div>
       </div>
     </>

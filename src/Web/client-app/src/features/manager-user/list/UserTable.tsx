@@ -36,7 +36,7 @@ const UserTable: React.FC<UserTableProps> = ({
     { name: "Type", value: "Type" },
     { name: "Action", value: "", disable: true },
   ];
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleEditClick = (userId: string) => {
     navigate(`edit/${userId}`);
   };
@@ -61,9 +61,7 @@ const UserTable: React.FC<UserTableProps> = ({
   };
 
   if (!users) {
-    return (
-       <Loading />
-    );
+    return <Loading />;
   }
 
   return (
@@ -75,27 +73,30 @@ const UserTable: React.FC<UserTableProps> = ({
         pagination={pagination}
       >
         {items?.map((data) => (
-          <tr key={data.id} onClick={() => handleShowPopup(data.id)} style={{ cursor: 'pointer' }}>
+          <tr
+            key={data.id}
+            onClick={() => handleShowPopup(data.id)}
+            style={{ cursor: "pointer" }}
+          >
             <td>{data.staffCode}</td>
             <td>{data.fullName}</td>
             <td>{data.userName}</td>
             <td>{data.joinDate.toString()}</td>
             <td>{data.type}</td>
             <td className="text-center">
-            <div className="d-flex justify-content-center align-items-center gap-2">
+              <div className="d-flex justify-content-center align-items-center gap-2">
                 <ButtonIcon
                   onClick={() => {
-                   
-                  handleEditClick(data.id);
-                }}
+                    handleEditClick(data.id);
+                  }}
                   disable={false}
                 >
                   <PencilFill></PencilFill>
                 </ButtonIcon>
-  
-              <ConfirmDisable userId={data.id}></ConfirmDisable>
-            </div>
-          </td>
+
+                <ConfirmDisable userId={data.id}></ConfirmDisable>
+              </div>
+            </td>
           </tr>
         ))}
       </Table>

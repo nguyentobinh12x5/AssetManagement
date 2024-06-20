@@ -3,17 +3,16 @@ import { getUserById } from '../reducers/user-slice';
 import { useEffect } from 'react';
 
 const useDetailUser = (id: string) => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppState((state) => state.users);
 
-    const dispatch = useAppDispatch();
-    const { user } = useAppState((state) => state.users);
+  useEffect(() => {
+    if (id) {
+      dispatch(getUserById(id));
+    }
+  }, [id]);
 
-    useEffect(() => {
-        if (id) {
-            dispatch(getUserById(id));
-        }
-    }, [id]);
-
-    return { user };
+  return { user };
 };
 
 export default useDetailUser;

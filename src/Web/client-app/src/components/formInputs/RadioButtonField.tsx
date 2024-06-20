@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from "react";
 import { useField } from "formik";
-import "./RadioButtonField.scss"
+import "./RadioButtonField.scss";
 import ISelectOption from "./interfaces/ISelectOption";
 import { isRimrafOptions } from "rimraf";
 

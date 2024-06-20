@@ -8,13 +8,19 @@ import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 
-export function editUser(user: IUserCommand): Promise<AxiosResponse<IUserCommand>> {
+export function editUser(
+  user: IUserCommand
+): Promise<AxiosResponse<IUserCommand>> {
   return RequestService.axios.put(`${ENDPOINTS.USER}/${user.id}`, user);
 }
-export function CreateUser(user: IUserCommand): Promise<AxiosResponse<IUserCommand>> {
-    return RequestService.axios.post(`${ENDPOINTS.USER}`, user);
+export function CreateUser(
+  user: IUserCommand
+): Promise<AxiosResponse<IUserCommand>> {
+  return RequestService.axios.post(`${ENDPOINTS.USER}`, user);
 }
-export function getUserById(userId: string): Promise<AxiosResponse<IUserCommand>> {
+export function getUserById(
+  userId: string
+): Promise<AxiosResponse<IUserCommand>> {
   return RequestService.axios.get(`${ENDPOINTS.USER}/${userId}`);
 }
 

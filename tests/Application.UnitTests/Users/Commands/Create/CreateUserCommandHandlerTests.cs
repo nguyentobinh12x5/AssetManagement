@@ -1,17 +1,22 @@
-﻿using AssetManagement.Application.Common.Extensions;
-using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.Users.Commands.Create;
-using AssetManagement.Domain.Enums;
-using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using AssetManagement.Application.Common.Extensions;
+using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.Create;
+using AssetManagement.Domain.Enums;
+
+using FluentAssertions;
+
+using Microsoft.AspNetCore.Identity;
+
+using Moq;
+
+using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Users.Commands.Create
 {
@@ -58,7 +63,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
             var generatedStaffCode = existingCodes.GenerateNewStaffCode();
             Assert.That(generatedStaffCode, Is.EqualTo(expectedStaffCode));
         }
-        
+
         [Test]
         public async Task Handle_ValidCommand_SuccessfullyCreatesUser()
         {
