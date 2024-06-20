@@ -35,7 +35,7 @@ const ListUsers = () => {
         <Col md={{ span: 4, offset: 4 }} className="ml-auto">
           <SearchBox handleFilterBySearchTerm={handleSearch} />
         </Col>
-        
+
         <Col md={2}>
           <Button variant="danger" onClick={handleCreateUser}>
             Create new user
