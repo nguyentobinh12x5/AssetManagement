@@ -54,7 +54,9 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
           </div>
         </div>
         {(error && touched) || apiError ? (
-          <div className="invalid position-rela">{error || apiError}</div>
+          <div className="invalid position-relative mt-2">
+            {error || apiError}
+          </div>
         ) : null}
       </div>
     </div>
