@@ -10,8 +10,6 @@ import {
   setUserQuery,
 } from '../reducers/user-slice';
 
-
-
 const useUserList = () => {
   const dispatch = useAppDispatch();
   const { users, userQuery } = useAppState((state) => state.users);
@@ -20,41 +18,42 @@ const useUserList = () => {
     sortColumnName: string,
     sortColumnDirection: string
   ) => {
-    dispatch(setUserQuery(({
-      ...userQuery,
-      sortColumnName,
-      sortColumnDirection,
-    })));
+    dispatch(
+      setUserQuery({
+        ...userQuery,
+        sortColumnName,
+        sortColumnDirection,
+      })
+    );
   };
 
   const updateMainPagingState = (page: number) => {
-    dispatch(setUserQuery( ({
-      ...userQuery,
-      pageNumber: page,
-    })))
+    dispatch(
+      setUserQuery({
+        ...userQuery,
+        pageNumber: page,
+      })
+    );
   };
 
   const { hasSortColumn, handleSort } = useAppSort(
     DEFAULT_MANAGE_USER_SORT_COLUMN,
     updateMainSortState
   );
-  const {  handlePaging } = useAppPaging(updateMainPagingState);
-
-
+  const { handlePaging } = useAppPaging(updateMainPagingState);
 
   const [filterType, setFilterType] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-
-  
-
   const handleFilterByType = (type: string) => {
     setSearchTerm('');
     setFilterType(type);
-    dispatch(setUserQuery(({
-      ...userQuery,
-      pageNumber: 1,
-    })));
+    dispatch(
+      setUserQuery({
+        ...userQuery,
+        pageNumber: 1,
+      })
+    );
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -62,7 +61,6 @@ const useUserList = () => {
     setSearchTerm(searchTerm.trim());
   };
 
-  
   // Fetch Data
   useEffect(() => {
     const fetchData = () => {
@@ -71,12 +69,12 @@ const useUserList = () => {
       // } else if (searchTerm && !filterType) {
       //   dispatch(getUsersBySearchTerm({ ...userQuery, searchTerm }));
       // } else {
-        dispatch(getUsers(userQuery));
+      dispatch(getUsers(userQuery));
       // }
-    }
+    };
 
     fetchData();
-  }, [ dispatch, userQuery]);
+  }, [dispatch, userQuery]);
 
   return {
     hasSortColumn,

@@ -23,9 +23,8 @@ interface UserState {
   error?: string | null;
   succeed: boolean;
   isDeleting: boolean;
-  userQuery: IUserQuery
+  userQuery: IUserQuery;
 }
-
 
 const initialState: UserState = {
   isLoading: false,
@@ -41,7 +40,7 @@ const initialState: UserState = {
   error: null,
   succeed: false,
   isDeleting: false,
-  userQuery: defaultUserQuery
+  userQuery: defaultUserQuery,
 };
 
 const UserSlice = createSlice({
@@ -95,7 +94,7 @@ const UserSlice = createSlice({
       };
     },
     setUserQuery: (state: UserState, action: PayloadAction<IUserQuery>) => {
-      state.userQuery = action.payload
+      state.userQuery = action.payload;
     },
     setUserByIdError: (state: UserState, action: PayloadAction<string>) => ({
       ...state,
@@ -196,7 +195,7 @@ export const {
   setCreateUserError,
   deleteUser,
   setDeleteStatus,
-  setUserQuery
+  setUserQuery,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;
