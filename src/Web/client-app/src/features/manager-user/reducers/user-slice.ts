@@ -118,7 +118,6 @@ const UserSlice = createSlice({
     setDeleteStatus: (state, action: PayloadAction<boolean>) => {
       state.isDeleting = action.payload;
     },
-    
   },
 });
 

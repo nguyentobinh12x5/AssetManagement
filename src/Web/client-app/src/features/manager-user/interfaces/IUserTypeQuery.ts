@@ -1,5 +1,5 @@
-import { IUserQuery } from "./IUserQuery";
+import { IUserQuery } from './IUserQuery';
 
-export interface IUserTypeQuery extends IUserQuery{
-    type: string
-} 
+export interface IUserTypeQuery extends IUserQuery {
+  type: string;
+}

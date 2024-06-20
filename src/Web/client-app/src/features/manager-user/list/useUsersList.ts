@@ -64,7 +64,8 @@ const useUserList = () => {
       dispatch(getUsersByType({ ...hasUserQuery, type: filterType }));
     } else {
       dispatch(getUsers(hasUserQuery));
-    }  }, [hasUserQuery]);
+    }
+  }, [hasUserQuery]);
 
   const handleFilterByType = (type: string) => {
     setFilterType(type);
@@ -81,7 +82,7 @@ const useUserList = () => {
 
     handleSort,
     handlePaging,
-    handleFilterByType
+    handleFilterByType,
   };
 };
 

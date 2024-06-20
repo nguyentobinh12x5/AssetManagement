@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { Dropdown, FormControl, InputGroup, DropdownButton } from "react-bootstrap";
+import {
+  Dropdown,
+  FormControl,
+  InputGroup,
+  DropdownButton,
+} from "react-bootstrap";
 import { FunnelFill } from "react-bootstrap-icons";
 
 interface Props {
@@ -20,7 +25,7 @@ const DropdownFilter: React.FC<Props> = ({
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    setDropdownOpen(true);  // Show the dropdown menu when the search bar changes() Not working)
+    setDropdownOpen(true); // Show the dropdown menu when the search bar changes() Not working)
   };
 
   const filteredOptions = options.filter((option) =>
@@ -28,7 +33,10 @@ const DropdownFilter: React.FC<Props> = ({
   );
 
   return (
-    <Dropdown show={dropdownOpen} onToggle={(isOpen) => setDropdownOpen(isOpen)}>
+    <Dropdown
+      show={dropdownOpen}
+      onToggle={(isOpen) => setDropdownOpen(isOpen)}
+    >
       <InputGroup className="d-inline-flex align-items-center mb-3">
         <FormControl
           placeholder="Search..."
@@ -38,7 +46,7 @@ const DropdownFilter: React.FC<Props> = ({
         />
         <DropdownButton
           variant="outline-secondary"
-          title={<FunnelFill/>}
+          title={<FunnelFill />}
           id="input-group-dropdown-1"
           align="end"
         >

@@ -11,21 +11,21 @@ const ListUsers = () => {
 
     handleSort,
     handlePaging,
-    handleFilterByType
+    handleFilterByType,
   } = useUserList();
 
   return (
-    <div>    
-      <FilterByRole handleFilterByType={handleFilterByType}/>
+    <div>
+      <FilterByRole handleFilterByType={handleFilterByType} />
 
       <UserTable
-      users={users ?? defaultIPagedUserModel}
-      sortState={{
-        name: hasSortColumn.sortColumn,
-        orderBy: hasSortColumn.sortOrder,
-      }}
-      handleSort={handleSort}
-      handlePaging={handlePaging}
+        users={users ?? defaultIPagedUserModel}
+        sortState={{
+          name: hasSortColumn.sortColumn,
+          orderBy: hasSortColumn.sortOrder,
+        }}
+        handleSort={handleSort}
+        handlePaging={handlePaging}
       />
     </div>
   );

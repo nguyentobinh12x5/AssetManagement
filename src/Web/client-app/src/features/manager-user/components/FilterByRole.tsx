@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import DropdownFilter from '../../../components/dropdownFilter/DropDownFilter';
+import React, { useState } from "react";
+import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 
 interface FilterByRoleProps {
   handleFilterByType: (type: string) => void;
 }
 
 const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
-  const [selectedType, setSelectedType] = useState('');
-  
+  const [selectedType, setSelectedType] = useState("");
+
   // Define the type for user types
-  type UserType = 'Staff' | 'Administrator' | 'Default';
+  type UserType = "Staff" | "Administrator" | "Default";
 
   // Mapping of actual values to display values
   const userTypesMap: Record<UserType, string> = {
-    Staff: 'Staff',
-    Administrator: 'Admin',
-    Default: 'All',
+    Staff: "Staff",
+    Administrator: "Admin",
+    Default: "All",
   };
 
   // Get the list of display values from the map

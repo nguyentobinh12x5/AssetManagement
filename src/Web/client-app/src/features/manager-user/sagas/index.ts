@@ -4,14 +4,14 @@ import {
   getUserById,
   getUsers,
   deleteUser,
-  getUsersByType
+  getUsersByType,
 } from '../reducers/user-slice';
 import {
   handleDeleteUser,
   handleEditUser,
   handleGetUserById,
   handleGetUsers,
-  handleGetUsersByType
+  handleGetUsersByType,
 } from './handles';
 
 export default function* userSagas() {
