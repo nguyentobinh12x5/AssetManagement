@@ -1,18 +1,10 @@
-﻿using System;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-
+﻿using System.Net.Http.Json;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Users.Queries.GetUsersByType;
-
+using Assert = Xunit.Assert;
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;
-
 using Xunit;
-
-using Assert = Xunit.Assert;
 
 namespace Web.IntegrationTests.Endpoints
 {
@@ -36,16 +28,14 @@ namespace Web.IntegrationTests.Endpoints
 
             var pageNumber = 1;
             var pageSize = 5;
-            var sortColumnName = "id";
+            var sortColumnName = "StaffCode";
             var sortColumnDirection = "Descending";
             var type = "Administrator";
 
-            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Type={type}";
+            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
 
             // Act
             var response = await _httpClient.GetAsync(url);
-
-            
 
             var responseContent = await response.Content.ReadAsStringAsync();
             Console.WriteLine("Response Content: " + responseContent);
@@ -55,7 +45,7 @@ namespace Web.IntegrationTests.Endpoints
 
             Assert.NotNull(users);
             Assert.NotEmpty(users.Items);
-            Assert.True(users.Items.All(u => u.Type == type));
+            Assert.All(users.Items, u => Assert.Equal(type, u.Type));
         }
 
         [Fact]
@@ -70,14 +60,17 @@ namespace Web.IntegrationTests.Endpoints
             var sortColumnDirection = "Ascending";
             var type = "InvalidType";
 
-            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Type={type}";
+            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
 
             // Act
             var response = await _httpClient.GetAsync(url);
 
-            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Response Content: " + responseContent);
 
             // Assert
+            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
+
             Assert.NotNull(users);
             Assert.Empty(users.Items);
         }
