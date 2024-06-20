@@ -20,8 +20,8 @@ public class Users : EndpointGroupBase
             .MapPut(UpdateUser, "{id}")
             .MapGet(GetUserList)
             .MapDelete(DeleteUser, "{id}")
-            .MapGet(GetUserByType,"Type")
-            .MapGet(SearchUsers,"Search");
+            .MapGet(GetUserByType, "Type")
+            .MapGet(SearchUsers, "Search");
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
@@ -52,7 +52,7 @@ public class Users : EndpointGroupBase
         await sender.Send(new DeleteUserCommand(id));
         return Results.NoContent();
     }
-    public Task<PaginatedList<UserBriefDto>> SearchUsers(ISender sender, [AsParameters] GetUsersBySearchQuery query) 
+    public Task<PaginatedList<UserBriefDto>> SearchUsers(ISender sender, [AsParameters] GetUsersBySearchQuery query)
     {
         return sender.Send(query);
     }

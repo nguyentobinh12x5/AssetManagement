@@ -34,4 +34,3 @@ public class GetUsersBySearchQueryHandler : IRequestHandler<GetUsersBySearchQuer
         return await _identityService.GetUserBriefsBySearchAsync(request);
     }
 }
-
