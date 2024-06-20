@@ -1,8 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
-import { IUser } from '../interfaces/IUser';
+import { IUserCommand } from '../interfaces/IUserCommand';
 import {
-    setCreateUser,
+  setCreateUser,
   setCreateUserError,
   setUserById,
   setUserByIdError,
@@ -28,11 +28,11 @@ export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
     const msg = error.response.data;
   }
 }
-export function* handleEditUser(action: PayloadAction<IUser>) {
+export function* handleEditUser(action: PayloadAction<IUserCommand>) {
   const user = action.payload;
   try {
-    const { data } = yield call(editUserRequest, user);
-    yield put(updateUser(data));
+    yield call(editUserRequest, user);
+    yield put(updateUser(user));
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(updateUserError(errorResponse.detail));
@@ -53,7 +53,7 @@ export function* handleGetUserById(action: PayloadAction<string>) {
     yield put(setUserByIdError(errorResponse.detail));
   }
 }
-export function* handleCreateUser(action: PayloadAction<IUser>) {
+export function* handleCreateUser(action: PayloadAction<IUserCommand>) {
     const user = action.payload;
     try {
         const { data } = yield call(postNewUserRequest, user);
