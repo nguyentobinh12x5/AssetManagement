@@ -52,19 +52,21 @@ const Pagination: React.FC<IPagination> = ({
 
     let nextItems = page + JUMP_ITEMS < total ? page + JUMP_ITEMS : total - 1;
 
-    return total < 2 ? (
-      <></>
-    ) : (
-      [...Array(nextItems - prevItems + 1).keys()].map((i) => (
-        <Paging.Item
-          active={i + prevItems == currentPage}
-          onClick={() => handleChange(i + prevItems)}
-        >
-          {i + prevItems}
-        </Paging.Item>
-      ))
-    );
-  };
+        return ( 
+            total < 2
+                ?<></>
+                :[...Array(nextItems - prevItems + 1).keys()].map(i => (
+                    <Paging.Item 
+                    key={i}
+                        active={i + prevItems == currentPage}
+                        onClick={() => handleChange(i + prevItems)}
+                    >
+                        {i + prevItems}
+                    </Paging.Item>
+                ))
+                
+        )
+    }
 
   const renderNextEllipsis = (page: number, total: number) => {
     return page + JUMP_ITEMS < total - 1 ? <Paging.Ellipsis /> : <></>;

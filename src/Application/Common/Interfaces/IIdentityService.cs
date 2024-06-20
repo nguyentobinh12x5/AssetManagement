@@ -1,5 +1,6 @@
 ﻿using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Queries.GetUsers;
 
 namespace AssetManagement.Application.Common.Interfaces;
 
@@ -22,6 +23,9 @@ public interface IIdentityService
     Task<Result> ChangePasswordFirstTimeAsync(string newPassword);
 
     Task<Result> ChangePasswordAsync(string currentPassword, string newPassword);
+
+    
+    Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync (GetUsersQuery query);
 
     Task<bool> IsUserDisabledAsync(string email);
 

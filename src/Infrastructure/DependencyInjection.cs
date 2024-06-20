@@ -22,9 +22,10 @@ public static class DependencyInjection
         Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+        
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, SoftDeleteInterceptor>();
 
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
