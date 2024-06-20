@@ -29,8 +29,8 @@ const DateField: React.FC<inputFieldProps> = (props) => {
 
   return (
     <>
-          <div className="form-group row ">
-              <label className="col-form-label col-4 ">
+      <div className="form-group row ">
+        <label className="col-form-label col-4 d-flex">
           {label}
           {required && <div className="invalid ml-1">*</div>}
         </label>

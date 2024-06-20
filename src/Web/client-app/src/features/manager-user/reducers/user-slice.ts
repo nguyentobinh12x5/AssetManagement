@@ -50,7 +50,7 @@ const UserSlice = createSlice({
       state: UserState,
       action: PayloadAction<IPagedModel<IBriefUser>>
     ) => {
-      const users = action.payload;
+      let users = action.payload;
       return {
         ...state,
         users: users,
@@ -69,40 +69,43 @@ const UserSlice = createSlice({
     }),
     updateUser: (state: UserState, action: PayloadAction<IUser>) => {
       const updatedUser = action.payload;
-            return {
-                ...state,
-                user: updatedUser,
-                isLoading: false,
-                error: null,
-                succeed: true,
-            };
-        },
-        updateUserError: (state: UserState, action: PayloadAction<string>) => ({
-            ...state,
-            isLoading: false,
-            succeed: false,
-            error: action.payload,
-        }),
-        createUser: (state: UserState, action: PayloadAction<IUser>): UserState => ({
-            ...state,
-            isLoading: true,
-            error: null,
-            succeed: false,
-        }),
-        setCreateUser: (state: UserState, action: PayloadAction<IUser>) => ({
-            ...state,
-            user: action.payload,
-            isLoading: false,
-            error: null,
-            succeed: true,
-        }),
-        setCreateUserError: (state: UserState, action: PayloadAction<string>) => ({
-            ...state,
-            isLoading: false,
-            succeed: false,
-            error: action.payload,
-        }),
+      return {
+        ...state,
+        user: updatedUser,
+        isLoading: false,
+        error: null,
+        succeed: true,
+      };
     },
+    updateUserError: (state: UserState, action: PayloadAction<string>) => ({
+      ...state,
+      isLoading: false,
+      succeed: false,
+      error: action.payload,
+    }),
+    createUser: (
+      state: UserState,
+      action: PayloadAction<IUser>
+    ): UserState => ({
+      ...state,
+      isLoading: true,
+      error: null,
+      succeed: false,
+    }),
+    setCreateUser: (state: UserState, action: PayloadAction<IUser>) => ({
+      ...state,
+      user: action.payload,
+      isLoading: false,
+      error: null,
+      succeed: true,
+    }),
+    setCreateUserError: (state: UserState, action: PayloadAction<string>) => ({
+      ...state,
+      isLoading: false,
+      succeed: false,
+      error: action.payload,
+    }),
+  },
 });
 
 export const {
@@ -114,9 +117,9 @@ export const {
   editUser,
   updateUser,
   updateUserError,
-    createUser,
-    setCreateUser,
-    setCreateUserError,
+  createUser,
+  setCreateUser,
+  setCreateUserError,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;

@@ -1,21 +1,16 @@
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
 using System.Security.Claims;
 
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.Create;
-using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Infrastructure.Data;
 
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -69,15 +64,10 @@ public class IdentityService : IIdentityService
         var id = _userManager.Users.Select(e => e.StaffCode).ToList();
 
         var userName = _userManager.Users.Select(e => e.UserName).ToList();
-
-        //var httpContexts = _httpContextAccessor.HttpContext;
-
-        //var location = httpContexts.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Locality)?.Value;
+        
 
         var newUser = new ApplicationUser
         {
-            UserName = userName,
-            Email = userName
             FirstName = user.FirstName,
             LastName = user.LastName,
             IsDelete = false,
@@ -346,5 +336,10 @@ public class IdentityService : IIdentityService
        var user = await _userManager.FindByEmailAsync(email);
 
         return  user != null && user.IsDelete;
+    }
+
+    public Task<UserInfoDto> GetCurrentUserInfo(string userId)
+    {
+        throw new NotImplementedException();
     }
 }

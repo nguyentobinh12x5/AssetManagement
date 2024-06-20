@@ -14,7 +14,6 @@ import {
   editUser as editUserRequest,
   getUserById as getUserByIdRequest,
   getUsers,
-    getUserById as getUserByIdRequest,
   CreateUser as postNewUserRequest
 } from './requests';
 import { IUserQuery } from '../interfaces/IUserQuery';

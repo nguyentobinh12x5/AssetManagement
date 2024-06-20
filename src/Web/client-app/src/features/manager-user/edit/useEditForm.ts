@@ -15,7 +15,7 @@ const UserSchema = Yup.object().shape({
 });
 export interface IUserForm extends Yup.InferType<typeof UserSchema> {}
 
-const useUserForm = () => {
+const useEditForm = () => {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -44,4 +44,4 @@ const useUserForm = () => {
   return { user, isLoading, handleSubmit, UserSchema };
 };
 
-export default useUserForm;
+export default useEditForm;
