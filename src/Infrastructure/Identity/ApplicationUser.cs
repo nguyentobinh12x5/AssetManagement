@@ -1,5 +1,6 @@
 ﻿using AssetManagement.Domain.Common;
 using AssetManagement.Domain.Enums;
+
 using Microsoft.AspNetCore.Identity;
 
 namespace AssetManagement.Infrastructure.Identity;

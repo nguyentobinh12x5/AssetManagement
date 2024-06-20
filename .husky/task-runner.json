@@ -11,9 +11,10 @@
       }
     },
     {
-      "command": "npx",
-      "args": ["prettier", "--write",  "./src/Web/client-app"],
-      "pathMode": "relative"
+      "name": "Format WebApi",
+      "command": "dotnet",
+      "args": ["format"],
+      "pathMode": "absolute"
     }
   ]
 }

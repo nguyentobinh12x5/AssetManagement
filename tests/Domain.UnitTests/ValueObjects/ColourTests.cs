@@ -1,6 +1,8 @@
 ﻿using AssetManagement.Domain.Exceptions;
 using AssetManagement.Domain.ValueObjects;
+
 using FluentAssertions;
+
 using NUnit.Framework;
 
 namespace AssetManagement.Domain.UnitTests.ValueObjects;

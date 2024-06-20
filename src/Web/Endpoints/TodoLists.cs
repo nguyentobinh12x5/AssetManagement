@@ -20,7 +20,7 @@ public class TodoLists : EndpointGroupBase
 
     public Task<TodosVm> GetTodoLists(ISender sender)
     {
-        return  sender.Send(new GetTodosQuery());
+        return sender.Send(new GetTodosQuery());
     }
 
     public Task<int> CreateTodoList(ISender sender, CreateTodoListCommand command)

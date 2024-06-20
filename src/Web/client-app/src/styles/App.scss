@@ -6,6 +6,8 @@
 @import "../features/layout/Header.scss";
 @import "../features/layout/Sidebar.scss";
 @import "../features/auth/login/LoginForm.scss";
+@import "../features/auth/firstime-login/ChangePasswordFirstTimeForm.scss";
+@import "../features/auth/changepassword/ChangePasswordForm.scss";
 @import '../components/confirmModal/ConfirmModal.scss';
 
 :root {
@@ -65,4 +67,40 @@ body {
   border: 1px solid #ced4da;
   border-radius: 0 0.25rem 0.25rem 0;
   height: calc(1.5em + 0.75rem + 2px);
+}
+
+.pt-10 {
+  padding-top: 10%;
+}
+
+.form-header {
+  text-align: center;
+  padding: 0.5rem 3.5rem;
+  border: 1px solid var(--primary-grey);
+  border-radius: 4px;
+  background-color: var(--primary-grey-200);
+}
+
+.form-body {
+  border: 1px solid var(--primary-grey);
+  border-radius: 4px;
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  background-color: rgba(250, 252, 252, 1);
+
+  .form-group {
+    width: 100%;
+  }
+
+  button {
+    align-self: flex-end;
+  }
+}
+
+.form-control.is-invalid,
+.form-control.is-valid {
+  background: none !important;
 }

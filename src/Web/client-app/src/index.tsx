@@ -10,6 +10,9 @@ import AppRoutes from "./routes";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/index.scss";
 import "./styles/App.scss";
+import { ToastProvider } from "./components/toastify/ToastContext";
+import ToastContainer from "./components/toastify/ToastContainer";
+import AuthProvider from "./features/auth/AuthProvider";
 
 NProgress.configure({ minimum: 1 });
 
@@ -20,7 +23,12 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <AppRoutes />
+        <ToastProvider>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+          <ToastContainer />
+        </ToastProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

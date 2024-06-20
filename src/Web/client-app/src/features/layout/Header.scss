@@ -1,6 +1,6 @@
 .header {
   background-color: rgba(207, 35, 56, 1);
-  height: 51px;
+  height: 58px;
   margin: 0px;
   font-size: 20px;
   line-height: 44px;
@@ -14,4 +14,22 @@
   color: rgba(250, 252, 252, 1);
   text-transform: capitalize;
   margin: 0;
+}
+
+.userText {
+  font-family:
+    Segoe UI,
+    Arial;
+  font-weight: bold;
+  color: rgba(250, 252, 252, 1);
+  text-transform: capitalize;
+  margin: 0;
+  font-size: 14px;
+}
+
+.header-logo {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  margin-right: 16px;
 }
