@@ -1,6 +1,7 @@
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Queries.GetUsers;
 
 namespace Web.IntegrationTests.Mocks;
 
@@ -12,6 +13,11 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<Result> ChangePasswordAsync(string currentPassword, string newPassword)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
         throw new NotImplementedException();
     }
