@@ -17,7 +17,7 @@ public record GetUsersByTypeQuery : IRequest<PaginatedList<UserBriefDto>>
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
-    public required string Type { get; init; } 
+    public required string Types { get; init; }
 }
 
 public class GetUsersByTypeQueryHandler : IRequestHandler<GetUsersByTypeQuery, PaginatedList<UserBriefDto>>
@@ -31,13 +31,12 @@ public class GetUsersByTypeQueryHandler : IRequestHandler<GetUsersByTypeQuery, P
 
     public async Task<PaginatedList<UserBriefDto>> Handle(GetUsersByTypeQuery request, CancellationToken cancellationToken)
     {
-        var users = await _identityService.GetUsersByTypeAsync(request);
+        var users = await _identityService.GetUsersByTypesAsync(request);
 
         return users;
     }
-
-
 }
+
 
 
 

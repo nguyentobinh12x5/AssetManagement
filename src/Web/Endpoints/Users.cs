@@ -26,6 +26,4 @@ public class Users : EndpointGroupBase
         return sender.Send(query);
     }
 
-
-
 }
