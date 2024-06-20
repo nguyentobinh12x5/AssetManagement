@@ -1,6 +1,6 @@
 .header {
   background-color: rgba(207, 35, 56, 1);
-  height: 51px;
+  height: 58px;
   margin: 0px;
   font-size: 20px;
   line-height: 44px;
@@ -25,4 +25,11 @@
   text-transform: capitalize;
   margin: 0;
   font-size: 14px;
+}
+
+.header-logo {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  margin-right: 16px;
 }

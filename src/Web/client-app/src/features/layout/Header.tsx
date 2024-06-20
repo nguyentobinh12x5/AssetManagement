@@ -1,24 +1,41 @@
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { useAppState } from "../../redux/redux-hooks";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ChangePasswordForm from "../auth/changepassword/ChangePasswordForm";
 import { useState } from "react";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
+  const location = useLocation();
+  const isAtLoginPage = location.pathname.includes("login");
+  console.log(location.pathname);
   const HeaderTitle = isAuthenticated ? "Home" : "Online Asset Management";
 
   return (
     <div className="header align-items-center font-weight-bold">
-      <div className="container-lg-min container-fluid d-flex justify-content-between ">
-        <p className="headText">{HeaderTitle}</p>
+      <div className="container-lg-min mh-100 container-fluid d-flex justify-content-between py-1">
+        <div className="d-flex align-items-center gap-2">
+          {isAtLoginPage && (
+            <img
+              alt="Online asset management icon"
+              src="/images/Logo_lk.png"
+              className="header-logo"
+            />
+          )}
+          <p className="headText">{HeaderTitle}</p>
+        </div>
 
         {user ? (
           <UserDropdown user={user} />
         ) : (
-          <Link to={"/auth/login"} className="text-white text-decoration-none">
-            Login
-          </Link>
+          !isAtLoginPage && (
+            <Link
+              to={"/auth/login"}
+              className="text-white text-decoration-none"
+            >
+              Login
+            </Link>
+          )
         )}
       </div>
     </div>
