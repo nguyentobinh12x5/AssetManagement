@@ -19,7 +19,6 @@ const ConfirmModal: React.FC<Props> = ({
     return (
         <Modal
             show={isShow}
-            onHide={onHide}
             dialogClassName={`modal-90w ${dialogClassName}`}
             aria-labelledby='login-modal'
             centered
