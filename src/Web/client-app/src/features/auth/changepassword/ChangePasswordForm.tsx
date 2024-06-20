@@ -40,7 +40,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
           <div className="text-center p-3">
             <div>Your password has been changed successfully!</div>
             <div className="d-flex mt-3 justify-content-end">
-              <Button className="btn-light btn-outline-dark" onClick={onHide}>
+              <Button className="btn-light btn-outline-dark" style={{ marginRight: '4.5rem', marginTop: '1rem' }} onClick={onHide}>
                 Close
               </Button>
             </div>
