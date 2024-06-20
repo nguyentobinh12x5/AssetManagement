@@ -15,7 +15,6 @@ interface Props {
 }
 
 const DropdownFilter: React.FC<Props> = ({
-  label,
   options,
   selectedOption,
   handleOptionChange,

@@ -24,7 +24,7 @@ const defaultIPagedUserModel: IPagedModel<IBriefUser> = {
 
 const useUserList = () => {
   const dispatch = useAppDispatch();
-  const { users } = useAppState((state) => state.users);
+  const { users, isLoading } = useAppState((state) => state.users);
 
   const updateMainSortState = (
     sortColumnName: string,
@@ -71,13 +71,13 @@ const useUserList = () => {
       dispatch(getUsersByType({ ...hasUserQuery, type: filterType }));
     } else if (searchTerm && !filterType) {
       dispatch(getUsersBySearchTerm({ ...defaultUserQuery, searchTerm }));
-    } else {        
+    } else {
       dispatch(getUsers(hasUserQuery));
     }
   };
 
   const handleFilterByType = (type: string) => {
-    setSearchTerm('');  
+    setSearchTerm('');
     setFilterType(type);
     setHasUserQuery((prevQuery) => ({
       ...prevQuery,
@@ -94,6 +94,8 @@ const useUserList = () => {
     defaultIPagedUserModel,
     hasSortColumn,
     users,
+    isLoading,
+    
     handleSort,
     handlePaging,
     handleFilterByType,

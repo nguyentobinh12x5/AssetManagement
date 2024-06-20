@@ -4,12 +4,14 @@ import FilterByRole from "../components/FilterByRole";
 import SearchBox from "../components/SearchBox";
 import UserTable from "./UserTable";
 import useUserList from "./useUsersList";
+import Loading from "../../../components/Loading";
 
 const ListUsers = () => {
   const {
     defaultIPagedUserModel,
     hasSortColumn,
     users,
+    isLoading,  
 
     handleSort,
     handlePaging,
@@ -20,7 +22,7 @@ const ListUsers = () => {
   return (
     <div>
       <Row className="mb-3">
-        <Col md={3}>
+        <Col md={2}>
           <FilterByRole handleFilterByType={handleFilterByType} />
         </Col>
         <Col md={3}>

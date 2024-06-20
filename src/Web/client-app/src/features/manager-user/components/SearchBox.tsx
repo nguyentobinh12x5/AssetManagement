@@ -4,7 +4,7 @@ import { Search } from "react-bootstrap-icons";
 import useUserList from "../list/useUsersList";
 
 interface SearchBoxProps {
-    handleFilterBySearchTerm: (searchTerm: string) => void;
+  handleFilterBySearchTerm: (searchTerm: string) => void;
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
@@ -17,9 +17,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
   return (
     <InputGroup className="mb-3">
       <FormControl
-        placeholder="Recipient's username"
-        aria-label="Recipient's username"
-        aria-describedby="basic-addon2"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
