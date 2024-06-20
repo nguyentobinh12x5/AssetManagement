@@ -31,7 +31,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
   }, [show, resetState]);
 
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} centered>
       <div className="changepassword-form-header">
         <h3 className="primaryColor fw-bold fs-5">Change password</h3>
       </div>
