@@ -1,20 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IUser } from '../interfaces/IUser';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IBriefUser } from '../interfaces/IBriefUser';
+import { IUserCommand } from '../interfaces/IUserCommand';
+import { IUserDetail} from "../interfaces/IUserDetail";
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
-
-interface User {
-  id: string;
-  isDelete: boolean;
-}
 // ??? Ask Tam why he made separate User interface from IBriefUser
 
 interface UserState {
   isLoading: boolean;
-  users?: IPagedModel<IBriefUser & User>;
+  users?: IPagedModel<IBriefUser>;
   status?: number;
   user?: any;
   error?: string | null;
@@ -24,7 +20,8 @@ interface UserState {
 
 const initialState: UserState = {
   isLoading: false,
-  user: {
+  user: null,
+  users: {
     items: [],
     pageNumber: 1,
     totalPages: 1,
@@ -71,7 +68,7 @@ const UserSlice = createSlice({
       error: null,
       succeed: false,
     }),
-    setUserById: (state: UserState, action: PayloadAction<IUser>) => ({
+    setUserById: (state: UserState, action: PayloadAction<IUserDetail>) => ({
       ...state,
       user: action.payload,
       isLoading: false,
@@ -79,9 +76,9 @@ const UserSlice = createSlice({
     }),
     setUsers: (
       state: UserState,
-      action: PayloadAction<IPagedModel<IBriefUser & User>>
+      action: PayloadAction<IPagedModel<IBriefUser>>
     ) => {
-      const users = action.payload;
+      let users = action.payload;
       return {
         ...state,
         users: users,
@@ -92,17 +89,31 @@ const UserSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    editUser: (state: UserState, action: PayloadAction<IUser>): UserState => ({
+    editUser: (state: UserState, action: PayloadAction<IUserCommand>): UserState => ({
       ...state,
       isLoading: true,
       error: null,
       succeed: false,
     }),
-    updateUser: (state: UserState, action: PayloadAction<IUser>) => {
-      const updatedUser = action.payload;
-
+    updateUser: (state: UserState, action: PayloadAction<IUserCommand>) => {
+      const existingUser: IBriefUser = state.users!.items.find(u => u.id === action.payload.id)!;
+      
+      const updatedUser: IBriefUser = {
+        ...existingUser,
+        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
+        joinDate: new Date(action.payload.joinDate),
+      };
+      
+      const updatedUsers = state.users?.items.filter(
+        (user) => user.id !== updatedUser.id
+      ) ?? [];
+      
       return {
         ...state,
+        users:  {
+          ...state.users!,
+          items: [updatedUser, ...updatedUsers],
+        },
         user: updatedUser,
         isLoading: false,
         error: null,
@@ -115,6 +126,29 @@ const UserSlice = createSlice({
       succeed: false,
       error: action.payload,
     }),
+    createUser: (
+      state: UserState,
+      action: PayloadAction<IUserCommand>
+    ): UserState => ({
+      ...state,
+      isLoading: true,
+      error: null,
+      succeed: false,
+    }),
+    setCreateUser: (state: UserState, action: PayloadAction<IUserCommand>) => ({
+      ...state,
+      user: action.payload,
+      isLoading: false,
+      error: null,
+      succeed: true,
+    }),
+    setCreateUserError: (state: UserState, action: PayloadAction<string>) => ({
+      ...state,
+      isLoading: false,
+      succeed: false,
+      error: action.payload,
+    }),
+    
     deleteUser: (state, action: PayloadAction<string>) => {
       state.isDeleting = true;
       const userId = action.payload;
@@ -140,6 +174,9 @@ export const {
   editUser,
   updateUser,
   updateUserError,
+  createUser,
+  setCreateUser,
+  setCreateUserError,
   deleteUser,
   setDeleteStatus,
 } = UserSlice.actions;

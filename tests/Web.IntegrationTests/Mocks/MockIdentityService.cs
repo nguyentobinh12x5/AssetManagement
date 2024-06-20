@@ -1,6 +1,7 @@
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Application.Users.Queries.GetUsersBySearch;
@@ -11,6 +12,11 @@ namespace Web.IntegrationTests.Mocks;
 public class MockIdentityService : IIdentityService
 {
     public Task<bool> AuthorizeAsync(string userId, string policyName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser)
     {
         throw new NotImplementedException();
     }

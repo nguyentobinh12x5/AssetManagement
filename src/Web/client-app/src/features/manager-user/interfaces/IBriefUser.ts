@@ -5,4 +5,5 @@
   userName: string;
   joinDate: Date;
   type: string;
+  isDelete: boolean;
 }

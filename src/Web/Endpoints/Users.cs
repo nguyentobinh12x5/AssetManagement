@@ -1,4 +1,5 @@
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Commands.DeleteUser;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
@@ -15,10 +16,12 @@ public class Users : EndpointGroupBase
     public override void Map(WebApplication app)
     {
         app.MapGroup(this)
+            //.RequireAuthorization()
             .AllowAnonymous()
+            .MapGet(GetUserList)
             .MapGet(GetUser, "{id}")
             .MapPut(UpdateUser, "{id}")
-            .MapGet(GetUserList)
+            .MapPost(CreateUser)
             .MapDelete(DeleteUser, "{id}")
             .MapGet(GetUserByType, "Type")
             .MapGet(SearchUsers, "Search");
@@ -40,6 +43,11 @@ public class Users : EndpointGroupBase
         return Results.Ok(result);
     }
 
+    public Task<string> CreateUser(ISender sender, CreateUserCommand command)
+    {
+        return sender.Send(command);
+    }
+    
     public async Task<IResult> UpdateUser(ISender sender, string id, UpdateUserCommand command)
     {
         if (id != command.Id) return Results.BadRequest();

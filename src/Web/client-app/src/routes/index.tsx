@@ -32,7 +32,7 @@ const AppRoutes = () => {
         <Route
           path={USER}
           element={
-            <PublicRoute showSidebar={true}>
+            <PublicRoute>
               <Users />
             </PublicRoute>
           }

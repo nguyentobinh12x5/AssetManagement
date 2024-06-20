@@ -94,7 +94,6 @@ const useUserList = () => {
     defaultIPagedUserModel,
     hasSortColumn,
     users,
-    isLoading,
 
     handleSort,
     handlePaging,

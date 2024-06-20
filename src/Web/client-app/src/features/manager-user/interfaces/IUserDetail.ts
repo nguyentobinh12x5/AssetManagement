@@ -1,4 +1,4 @@
-export interface IUser {
+﻿export interface IUserDetail {
   id?: string;
   firstName: string;
   lastName: string;
@@ -6,4 +6,7 @@ export interface IUser {
   gender: string;
   joinDate: string;
   type: string;
+  username: string;
+  location: string;
+  staffCode: string;
 }

@@ -1,7 +1,9 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
-import { IUser } from '../interfaces/IUser';
+import { IUserCommand } from '../interfaces/IUserCommand';
 import {
+  setCreateUser,
+  setCreateUserError,
   setDeleteStatus,
   setUserById,
   setUserByIdError,
@@ -15,6 +17,7 @@ import {
   getUserById as getUserByIdRequest,
   getUserBySearchTerm,
   getUsers,
+  CreateUser as postNewUserRequest,
   getUsersByType,
 } from './requests';
 import { IUserQuery } from '../interfaces/common/IUserQuery';
@@ -56,11 +59,11 @@ export function* handleGetUsersBySearchTerm(
   }
 }
 
-export function* handleEditUser(action: PayloadAction<IUser>) {
+export function* handleEditUser(action: PayloadAction<IUserCommand>) {
   const user = action.payload;
   try {
-    const { data } = yield call(editUserRequest, user);
-    yield put(updateUser(data));
+    yield call(editUserRequest, user);
+    yield put(updateUser(user));
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(updateUserError(errorResponse.detail));
@@ -90,4 +93,15 @@ export function* handleDeleteUser(action: PayloadAction<string>) {
   } catch (error: any) {
     yield put(setDeleteStatus(false));
   }
+}
+export function* handleCreateUser(action: PayloadAction<IUserCommand>) {
+    const user = action.payload;
+    try {
+        const { data } = yield call(postNewUserRequest, user);
+        yield put(setCreateUser(data));
+    } catch (error: any) {
+        const errorResponse = error.response.data;
+        yield put(setCreateUserError(errorResponse.detail));
+        yield;
+    }
 }

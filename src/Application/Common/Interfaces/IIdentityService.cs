@@ -1,5 +1,7 @@
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.Create;
+using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Application.Users.Queries.GetUsersBySearch;
@@ -23,7 +25,7 @@ public interface IIdentityService
 
     Task<bool> AuthorizeAsync(string userId, string policyName);
 
-    Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password);
+    Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser);
 
     Task<Result> DeleteUserAsync(string userId);
 

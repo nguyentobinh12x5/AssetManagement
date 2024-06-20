@@ -1,18 +1,20 @@
 import ENDPOINTS from '../../../constants/endpoints';
 import RequestService from '../../../services/request';
 import { AxiosResponse } from 'axios';
-import { IUser } from '../interfaces/IUser';
+import { IUserCommand } from '../interfaces/IUserCommand';
 import { IBriefUser } from '../interfaces/IBriefUser';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 
-export function editUser(user: IUser): Promise<AxiosResponse<IUser>> {
+export function editUser(user: IUserCommand): Promise<AxiosResponse<IUserCommand>> {
   return RequestService.axios.put(`${ENDPOINTS.USER}/${user.id}`, user);
 }
-
-export function getUserById(userId: string): Promise<AxiosResponse<IUser>> {
+export function CreateUser(user: IUserCommand): Promise<AxiosResponse<IUserCommand>> {
+    return RequestService.axios.post(`${ENDPOINTS.USER}`, user);
+}
+export function getUserById(userId: string): Promise<AxiosResponse<IUserCommand>> {
   return RequestService.axios.get(`${ENDPOINTS.USER}/${userId}`);
 }
 

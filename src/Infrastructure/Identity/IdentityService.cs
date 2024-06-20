@@ -4,10 +4,10 @@ using System.Security.Claims;
 
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Exceptions;
+using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.Users.Commands.UpdateUser;
+using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Application.Users.Queries.GetUsersBySearch;
@@ -64,18 +64,35 @@ public class IdentityService : IIdentityService
         return user?.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public async Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser)
     {
-        var user = new ApplicationUser
+        var id = _userManager.Users.Select(e => e.StaffCode).ToList();
+
+        var userName = _userManager.Users.Select(e => e.UserName).ToList();
+        
+
+        var newUser = new ApplicationUser
         {
-            UserName = userName,
-            Email = userName
+            FirstName = createUser.FirstName,
+            LastName = createUser.LastName,
+            IsDelete = false,
+            DateOfBirth = createUser.DateOfBirth,
+            JoinDate = createUser.JoinDate,
+            StaffCode = id.GenerateNewStaffCode(),
+            Id = Guid.NewGuid().ToString(),
+            UserName = userName.GenerateUsername(createUser.FirstName, createUser.LastName),
+            Location = "HCM"
         };
+        var password = newUser.UserName.GeneratePassword(createUser.DateOfBirth);
 
-        var result = await _userManager.CreateAsync(user, password);
-
-        return (result.ToApplicationResult(), user.Id);
+        var result = await _userManager.CreateAsync(newUser, password);
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(newUser, createUser.Role);
+        }
+        return (result.ToApplicationResult(), newUser.StaffCode);
     }
+
     public async Task<UserDto> GetUserWithRoleAsync(string userId)
     {
         var user = await _userManager.FindByIdAsync(userId);
@@ -396,7 +413,4 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
-
-
-
 }

@@ -1,5 +1,5 @@
 import { Form, Formik } from "formik";
-import useUserForm from "./useUserForm";
+import useEditForm from "./useEditForm";
 import { Button } from "../../../components";
 import TextField from "../../../components/formInputs/TextField";
 import DateField from "../../../components/formInputs/DateField";
@@ -10,7 +10,7 @@ import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading";
 const UseForm = () => {
-  const { user, isLoading, handleSubmit, UserSchema } = useUserForm();
+  const { user, isLoading, handleSubmit, UserSchema } = useEditForm();
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -26,9 +26,6 @@ const UseForm = () => {
     >
       {({ isValid, dirty }) => (
         <Form>
-          <div className="mb-3">
-            <h3 className="primaryColor fw-bold fs-5">Edit User</h3>
-          </div>
           <div className="mb-3">
             <TextField
               id="firstName"
