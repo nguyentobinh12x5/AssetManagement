@@ -2,34 +2,40 @@ import React, { useState } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 
 interface FilterByRoleProps {
-  handleFilterByType: (type: string) => void;
+  handleFilterByType: (types: string[]) => void;
 }
 
 const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
-  const [selectedType, setSelectedType] = useState("");
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
 
   // Define the type for user types
-  type UserType = "Staff" | "Administrator" | "Default";
+  type UserType = "Staff" | "Administrator" | "All";
 
   // Mapping of actual values to display values
   const userTypesMap: Record<UserType, string> = {
     Staff: "Staff",
     Administrator: "Admin",
-    Default: "All",
+    All: "All",
   };
 
   // Get the list of display values from the map
   const displayUserTypes = Object.values(userTypesMap);
 
-  const handleTypeChange = (displayType: string) => {
-    // Find the actual value from the display value
-    const actualType = (Object.keys(userTypesMap) as UserType[]).find(
-      (key) => userTypesMap[key] === displayType
-    );
+  const handleTypeChange = (displayTypes: string[]) => {
+    if (displayTypes.length === 0) {
+      setSelectedTypes(["All"]);
+      handleFilterByType(["All"]);
+    } else {
+      // Convert display types to actual types
+      const actualTypes: UserType[] = displayTypes.map(
+        (displayType) =>
+          (Object.keys(userTypesMap) as UserType[]).find(
+            (key) => userTypesMap[key] === displayType
+          )!
+      );
 
-    if (actualType) {
-      setSelectedType(displayType);
-      handleFilterByType(actualType);
+      setSelectedTypes(actualTypes);
+      handleFilterByType(actualTypes);
     }
   };
 
@@ -37,7 +43,9 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
     <DropdownFilter
       label="Type"
       options={displayUserTypes}
-      selectedOption={selectedType}
+      selectedOptions={selectedTypes.map(
+        (type) => userTypesMap[type as UserType]
+      )}
       handleOptionChange={handleTypeChange}
     />
   );

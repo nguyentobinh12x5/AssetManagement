@@ -42,7 +42,7 @@ export function getUsersByType(
   return RequestService.axios.get(
     `${ENDPOINTS.USER}` +
       `/Type?` +
-      `&Type=${userQuery.type}` +
+      `&Types=${userQuery.type}` +
       `&PageNumber=${userQuery.pageNumber}` +
       `&PageSize=${userQuery.pageSize}` +
       `&SortColumnName=${userQuery.sortColumnName}` +

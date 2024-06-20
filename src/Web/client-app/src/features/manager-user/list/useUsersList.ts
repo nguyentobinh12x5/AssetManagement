@@ -42,10 +42,10 @@ const useUserList = () => {
   );
   const { handlePaging } = useAppPaging(updateMainPagingState);
 
-  const [filterType, setFilterType] = useState<string | null>(null);
+  const [filterType, setFilterType] = useState<string[] | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const handleFilterByType = (type: string) => {
+  const handleFilterByType = (type: string[]) => {
     setSearchTerm('');
     setFilterType(type);
     dispatch(
@@ -57,7 +57,7 @@ const useUserList = () => {
   };
 
   const handleSearch = (searchTerm: string) => {
-    setFilterType('');
+    setFilterType([]);
     setSearchTerm(searchTerm.trim());
     dispatch(
       setUserQuery({
