@@ -118,7 +118,7 @@ const UserSlice = createSlice({
       const updatedUser: IBriefUser = {
         ...existingUser,
         fullName: `${action.payload.firstName} ${action.payload.lastName}`,
-        joinDate: new Date(action.payload.joinDate),
+        joinDate: action.payload.joinDate,
       };
 
       const updatedUsers =
@@ -142,15 +142,31 @@ const UserSlice = createSlice({
       succeed: false,
       error: action.payload,
     }),
-    createUser: (
-      state: UserState,
-      action: PayloadAction<IUserCommand>
-    ): UserState => ({
-      ...state,
-      isLoading: true,
-      error: null,
-      succeed: false,
-    }),
+    createUser: (state: UserState, action: PayloadAction<IUserCommand>) => {
+      const existingUser: IBriefUser = state.users!.items.find(
+        (u) => u.id === action.payload.id
+      )!;
+
+      const updatedUser: IBriefUser = {
+        ...existingUser,
+        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
+        joinDate: action.payload.joinDate,
+      };
+
+      const updatedUsers =
+        state.users?.items.filter((user) => user.id !== updatedUser.id) ?? [];
+
+      return {
+        ...state,
+        users: {
+          ...state.users!,
+          items: [updatedUser, ...updatedUsers],
+        },
+        isLoading: false,
+        error: null,
+        succeed: true,
+      };
+    },
     setCreateUser: (state: UserState, action: PayloadAction<IUserCommand>) => ({
       ...state,
       user: action.payload,

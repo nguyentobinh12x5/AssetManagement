@@ -3,7 +3,7 @@
   staffCode: string;
   fullName: string;
   userName: string;
-  joinDate: Date;
+  joinDate: string;
   type: string;
   isDelete: boolean;
 }

@@ -71,13 +71,13 @@ const UserTable: React.FC<UserTableProps> = ({
         pagination={pagination}
       >
         {items?.map((data) => (
-          <tr key={data.id} onClick={() => handleShowPopup(data.id)}>
+          <tr key={data.id}>
             <td>{data.staffCode}</td>
-            <td>{data.fullName}</td>
+            <td onClick={() => handleShowPopup(data.id)}>{data.fullName}</td>
             <td>{data.userName}</td>
-            <td>{new Date(data.joinDate.toString()).toLocaleDateString()}</td>
+            <td>{new Date(data.joinDate).toLocaleDateString()}</td>
             <td>{data.type}</td>
-            <div className="text-center d-flex justify-content-center align-items-center gap-2">
+            <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0">
               <div onClick={(e) => e.stopPropagation()}>
                 <ButtonIcon
                   onClick={() => {
@@ -92,7 +92,7 @@ const UserTable: React.FC<UserTableProps> = ({
               <div onClick={(e) => e.stopPropagation()}>
                 <ConfirmDisable userId={data.id} />
               </div>
-            </div>
+            </td>
           </tr>
         ))}
       </Table>
