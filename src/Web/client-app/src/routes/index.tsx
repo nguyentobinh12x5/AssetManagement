@@ -29,15 +29,15 @@ const AppRoutes = () => {
               <TodoItems />
             </PrivateRoute>
           }
-              />
-              <Route
-                  path={MANAGE_USER}
-                  element={
-                      <PublicRoute>
-                          <Users />
-                      </PublicRoute>
-                  }
-              />
+        />
+        <Route
+          path={MANAGE_USER}
+          element={
+            <PublicRoute>
+              <Users />
+            </PublicRoute>
+          }
+        />
         <Route
           path={AUTH}
           element={

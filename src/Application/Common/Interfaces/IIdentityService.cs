@@ -24,8 +24,8 @@ public interface IIdentityService
 
     Task<Result> ChangePasswordAsync(string currentPassword, string newPassword);
 
-    
-    Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync (GetUsersQuery query);
+
+    Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query);
 
     Task<bool> IsUserDisabledAsync(string email);
 

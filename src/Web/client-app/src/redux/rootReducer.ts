@@ -8,6 +8,6 @@ export default {
   counter: counterReducer,
   todoItems: todoItemsReducer,
   auth: authReducer,
-    changePassword: changePasswordReducer,
-    users: usersReducer
+  changePassword: changePasswordReducer,
+  users: usersReducer,
 };
