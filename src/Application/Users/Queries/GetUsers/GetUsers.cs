@@ -16,11 +16,11 @@ public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
 public class GetUsersQueryValidator : AbstractValidator<GetUsersQuery>
 {
     public GetUsersQueryValidator()
-        {
-            RuleFor(x => x.SortColumnName)
-                .NotEmpty().WithMessage("SortColumnName is required.")
-                .Must(BeAValidColumn).WithMessage("Sorting by Username is not allowed.");
-        }
+    {
+        RuleFor(x => x.SortColumnName)
+            .NotEmpty().WithMessage("SortColumnName is required.")
+            .Must(BeAValidColumn).WithMessage("Sorting by Username is not allowed.");
+    }
 
     private bool BeAValidColumn(string sortColumnName)
     {
@@ -40,7 +40,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
     public async Task<PaginatedList<UserBriefDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
         var users = await _identityService.GetUserBriefsAsync(request);
-        
+
         return users;
     }
 }

@@ -6,8 +6,8 @@ const ENDPOINTS = {
 
   TODOITEM: 'api/TodoItems',
   CHANGE_PASSWORD: '/api/Auth/change-password',
-    USER: "api/Users",
-    DELETE_USER: "/api/users",
+  USER: 'api/Users',
+  DELETE_USER: '/api/users',
 };
 
 export default ENDPOINTS;

@@ -9,8 +9,10 @@ using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
 using AssetManagement.Infrastructure.Data;
+
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -100,7 +102,7 @@ public class IdentityService : IIdentityService
 
         Guard.Against.NotFound(userId, user);
 
-        return await DeleteUserAsync(user);   
+        return await DeleteUserAsync(user);
     }
 
     public async Task<Result> DeleteUserAsync(ApplicationUser user)
@@ -206,9 +208,9 @@ public class IdentityService : IIdentityService
         //var test = users.FirstOrDefault()?.UserRoles?.FirstOrDefault()?.Role.Name;
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users);
-    
-        if(query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
-            userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);             
+
+        if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+            userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
 
         return new PaginatedList<UserBriefDto>(
             userBriefDtos
@@ -236,11 +238,11 @@ public class IdentityService : IIdentityService
                 r => r.Id,
                 (ur, r) => new { ur.UserId, RoleName = r.Name })
             .ToListAsync();
-            
+
         foreach (var user in users)
         {
             var userBriefDto = _mapper.Map<UserBriefDto>(user);
-            
+
             var userRole = userRoles.FirstOrDefault(ur => ur.UserId == user.Id);
             userBriefDto.Type = userRole?.RoleName;
 
@@ -253,13 +255,15 @@ public class IdentityService : IIdentityService
     }
 
     private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(GetUsersQuery query)
-    {    
-        if( !query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase)){ 
-            return await _userManager.Users                
-                .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)            
+    {
+        if (!query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+        {
+            return await _userManager.Users
+                .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)
                 .ToListAsync();
         }
-        else{
+        else
+        {
             return await _userManager.Users
                 .OrderByDynamic("StaffCode", query.SortColumnDirection)
                 .ToListAsync();
@@ -268,9 +272,9 @@ public class IdentityService : IIdentityService
 
     private List<UserBriefDto> FinalGetUserBriefAsync(List<UserBriefDto> userBriefDto, string orderDirection)
     {
-        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ? 
-            userBriefDto.OrderByDescending( u => u.Type ).ToList():
-            userBriefDto.OrderBy( u => u.Type ).ToList();
+        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
+            userBriefDto.OrderByDescending(u => u.Type).ToList() :
+            userBriefDto.OrderBy(u => u.Type).ToList();
     }
 
     public async Task<bool> IsUserDisabledAsync(string email)
