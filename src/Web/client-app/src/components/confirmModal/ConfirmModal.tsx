@@ -12,20 +12,18 @@ interface Props {
 const ConfirmModal: React.FC<Props> = ({
   title,
   isShow,
-  onHide,
   children,
   dialogClassName = "",
 }) => {
   return (
     <Modal
       show={isShow}
-      onHide={onHide}
       dialogClassName={`modal-90w ${dialogClassName}`}
-      aria-labelledby="disable-confirm-modal"
+      aria-labelledby="custom-confirm-modal"
       centered
     >
       <Modal.Header className="custom-header">
-        <Modal.Title id="disable-confirm-modal">{title}</Modal.Title>
+        <Modal.Title id="custom-confirm-modal">{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Fragment>{children}</Fragment>
