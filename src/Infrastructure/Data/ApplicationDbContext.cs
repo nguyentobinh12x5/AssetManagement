@@ -23,8 +23,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-        builder.Entity<ApplicationUser>()
-			.HasQueryFilter(x => x.IsDelete == false);
-	}
+    }
 }
