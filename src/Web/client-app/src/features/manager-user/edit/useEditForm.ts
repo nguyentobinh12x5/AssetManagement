@@ -1,7 +1,11 @@
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
-import { editUser, getUserById } from '../reducers/user-slice';
+import {
+  editUser,
+  getUserById,
+  setSucceedStatus,
+} from '../reducers/user-slice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -39,6 +43,7 @@ const useEditForm = () => {
 
   useEffect(() => {
     if (succeed && !isLoading && !error) {
+      dispatch(setSucceedStatus(false));
       navigate('/user');
     }
   }, [succeed, navigate]);

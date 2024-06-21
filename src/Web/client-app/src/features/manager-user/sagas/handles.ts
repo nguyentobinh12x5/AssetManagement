@@ -98,7 +98,10 @@ export function* handleCreateUser(action: PayloadAction<IUserCommand>) {
   const user = action.payload;
   try {
     const { data } = yield call(postNewUserRequest, user);
-    yield put(setCreateUser(data));
+
+    const { data: createdUser } = yield call(getUserByIdRequest, data);
+
+    yield put(setCreateUser(createdUser));
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(setCreateUserError(errorResponse.detail));
