@@ -8,11 +8,14 @@ import {
   getUsersByType,
   getUsersBySearchTerm,
   setUserQuery,
+  setIsDataFetched,
 } from '../reducers/user-slice';
 
 const useUserList = () => {
   const dispatch = useAppDispatch();
-  const { users, userQuery } = useAppState((state) => state.users);
+  const { users, userQuery, isDataFetched } = useAppState(
+    (state) => state.users
+  );
 
   const updateMainSortState = (
     sortColumnName: string,
@@ -34,6 +37,7 @@ const useUserList = () => {
         pageNumber: page,
       })
     );
+    dispatch(setIsDataFetched(false));
   };
 
   const { hasSortColumn, handleSort } = useAppSort(
@@ -54,6 +58,7 @@ const useUserList = () => {
         pageNumber: 1,
       })
     );
+    dispatch(setIsDataFetched(false));
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -65,6 +70,7 @@ const useUserList = () => {
         pageNumber: 1,
       })
     );
+    dispatch(setIsDataFetched(false));
   };
 
   // Fetch Data
@@ -79,8 +85,10 @@ const useUserList = () => {
       }
     };
 
-    fetchData();
-  }, [dispatch, userQuery]);
+    if (!isDataFetched) {
+      fetchData();
+    }
+  }, [dispatch, userQuery, isDataFetched, filterType, searchTerm]);
 
   return {
     hasSortColumn,
