@@ -16,25 +16,21 @@ const ConfirmModal: React.FC<Props> = ({
   children,
   dialogClassName = "",
 }) => {
-    return (
-        <Modal
-            show={isShow}
-            dialogClassName={`modal-90w ${dialogClassName}`}
-            aria-labelledby='login-modal'
-            centered
-        >
-            <Modal.Header className="custom-header">
-                <Modal.Title id='login-modal'>
-                    {title}
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Fragment>
-                    {children}
-                </Fragment>
-            </Modal.Body>
-        </Modal>
-    );
+  return (
+    <Modal
+      show={isShow}
+      dialogClassName={`modal-90w ${dialogClassName}`}
+      aria-labelledby="login-modal"
+      centered
+    >
+      <Modal.Header className="custom-header">
+        <Modal.Title id="login-modal">{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Fragment>{children}</Fragment>
+      </Modal.Body>
+    </Modal>
+  );
 };
 
 export default ConfirmModal;

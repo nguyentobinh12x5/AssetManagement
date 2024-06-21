@@ -7,8 +7,8 @@ export const ChangePasswordSchema = Yup.object().shape({
     .test(
       'password-complexity',
       'Password must be at least 6 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character.',
-      value => 
-        value.length >= 6 && 
+      (value) =>
+        value.length >= 6 &&
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(value)
     ),
 });

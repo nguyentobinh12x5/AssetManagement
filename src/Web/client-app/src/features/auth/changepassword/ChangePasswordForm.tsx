@@ -31,7 +31,11 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
   }, [show, resetState]);
 
   return (
-    <Modal show={show} centered className={ success ? "changepassword-form-success-wrapper" : "" }>
+    <Modal
+      show={show}
+      centered
+      className={success ? "changepassword-form-success-wrapper" : ""}
+    >
       <div className="changepassword-form-header">
         <h3 className="primaryColor fw-bold fs-5">Change password</h3>
       </div>
