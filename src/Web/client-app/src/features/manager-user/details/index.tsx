@@ -10,6 +10,15 @@ interface PopupComponentProps {
   userId: string;
 }
 
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
 const PopupComponent: React.FC<PopupComponentProps> = ({
   show,
   handleClose,
@@ -81,7 +90,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
               ></rect>
             </svg>
             <div id="ID10111996_kxp">
-              <span>{user.dateOfBirth}</span>
+              <span>{formatDate(user.dateOfBirth)}</span>
             </div>
           </div>
           <div id="Gender_kxq">
@@ -112,7 +121,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
               ></rect>
             </svg>
             <div id="ID10052020_kxy">
-              <span>{user.joinDate}</span>
+              <span>{formatDate(user.joinDate)}</span>
             </div>
           </div>
           <div id="Type_kxz">

@@ -143,37 +143,35 @@ const UserSlice = createSlice({
         succeed: true,
       };
     },
+    createUser: (state: UserState, action: PayloadAction<IUserCommand>) => {
+      const newUser: IBriefUser = {
+        id: 'new-user',
+        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
+        joinDate: action.payload.joinDate,
+        staffCode: 'new user',
+        type: action.payload.type,
+        userName: 'user name',
+        isDelete: false,
+      };
+      return {
+        ...state,
+        users: {
+          ...state.users!,
+          items: [newUser, ...state.users!.items], // Add new user to the top of the list
+        },
+        user: newUser,
+        isLoading: false,
+        error: null,
+        succeed: true,
+      };
+    },
     updateUserError: (state: UserState, action: PayloadAction<string>) => ({
       ...state,
       isLoading: false,
       succeed: false,
       error: action.payload,
     }),
-    createUser: (state: UserState, action: PayloadAction<IUserCommand>) => {
-      const existingUser: IBriefUser = state.users!.items.find(
-        (u) => u.id === action.payload.id
-      )!;
 
-      const updatedUser: IBriefUser = {
-        ...existingUser,
-        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
-        joinDate: action.payload.joinDate,
-      };
-
-      const updatedUsers =
-        state.users?.items.filter((user) => user.id !== updatedUser.id) ?? [];
-
-      return {
-        ...state,
-        users: {
-          ...state.users!,
-          items: [updatedUser, ...updatedUsers],
-        },
-        isLoading: false,
-        error: null,
-        succeed: true,
-      };
-    },
     setCreateUser: (state: UserState, action: PayloadAction<IUserCommand>) => ({
       ...state,
       user: action.payload,
