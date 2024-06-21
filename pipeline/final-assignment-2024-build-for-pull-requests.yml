@@ -64,7 +64,7 @@ stages:
         command: "test"
         projects: $(testProjects)
         publishTestResults: false
-        arguments: '--logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
+        arguments: '-p:SkipNSwag=True --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura'
 
     - task: reportgenerator@5
       displayName: Generate Test Report
