@@ -8,7 +8,6 @@ import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 import { APP_DEFAULT_PAGE_SIZE, ASCENDING } from '../../../constants/paging';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
-// ??? Ask Tam why he made separate User interface from IBriefUser
 const defaultUserQuery: IUserQuery = {
   pageNumber: 1,
   pageSize: APP_DEFAULT_PAGE_SIZE,
@@ -24,6 +23,7 @@ interface UserState {
   succeed: boolean;
   isDeleting: boolean;
   userQuery: IUserQuery;
+  isDataFetched: boolean;
 }
 
 const initialState: UserState = {
@@ -41,6 +41,7 @@ const initialState: UserState = {
   succeed: false,
   isDeleting: false,
   userQuery: defaultUserQuery,
+  isDataFetched: false,
 };
 
 const UserSlice = createSlice({
@@ -60,6 +61,7 @@ const UserSlice = createSlice({
     ): UserState => ({
       ...state,
       isLoading: true,
+      isDataFetched: false,
     }),
     getUsersBySearchTerm: (
       state: UserState,
@@ -67,6 +69,7 @@ const UserSlice = createSlice({
     ): UserState => ({
       ...state,
       isLoading: true,
+      isDataFetched: false,
     }),
     getUserById: (
       state: UserState,
@@ -91,7 +94,11 @@ const UserSlice = createSlice({
       return {
         ...state,
         users: users,
+        isDataFetched: true,
       };
+    },
+    setIsDataFetched: (state: UserState, action: PayloadAction<boolean>) => {
+      state.isDataFetched = action.payload;
     },
     setUserQuery: (state: UserState, action: PayloadAction<IUserQuery>) => {
       state.userQuery = action.payload;
@@ -212,6 +219,7 @@ export const {
   deleteUser,
   setDeleteStatus,
   setUserQuery,
+  setIsDataFetched,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;
