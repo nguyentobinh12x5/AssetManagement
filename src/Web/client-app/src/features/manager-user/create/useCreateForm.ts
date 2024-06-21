@@ -94,10 +94,10 @@ export interface IUserForm extends Yup.InferType<typeof UserSchema> {}
 
 const currentDateString = new Date();
 
-const useUserForm = () => {
+const useCreateForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, succeed } = useAppState((state) => state.users);
+  const { isLoading, succeed, error } = useAppState((state) => state.users);
   const user: IUserForm = {
     firstName: '',
     lastName: '',
@@ -121,12 +121,12 @@ const useUserForm = () => {
   };
 
   useEffect(() => {
-    if (succeed) {
+    if (succeed && !isLoading && !error) {
       navigate('/user');
     }
-  }, [succeed, navigate]);
+  }, [succeed, navigate, error, isLoading]);
 
   return { user, isLoading, handleSubmit, UserSchema };
 };
 
-export default useUserForm;
+export default useCreateForm;

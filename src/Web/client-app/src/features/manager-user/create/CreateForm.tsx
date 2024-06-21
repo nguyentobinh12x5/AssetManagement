@@ -1,5 +1,5 @@
 import { Form, Formik } from "formik";
-import useUserForm from "./useCreateForm";
+import useCreateForm from "./useCreateForm";
 import { Button } from "../../../components";
 import TextField from "../../../components/formInputs/TextField";
 import DateField from "../../../components/formInputs/DateField";
@@ -10,7 +10,7 @@ import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
 import "./CreateForm.scss";
 const CreateForm = () => {
-  const { user, handleSubmit, UserSchema } = useUserForm();
+  const { user, handleSubmit, UserSchema } = useCreateForm();
   const navigate = useNavigate();
 
   return (

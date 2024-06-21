@@ -19,7 +19,9 @@ const useEditForm = () => {
   const { userId } = useParams<{ userId: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, isLoading, succeed } = useAppState((state) => state.users);
+  const { user, isLoading, succeed, error } = useAppState(
+    (state) => state.users
+  );
 
   useEffect(() => {
     if (userId) {
@@ -36,7 +38,7 @@ const useEditForm = () => {
   };
 
   useEffect(() => {
-    if (succeed) {
+    if (succeed && !isLoading && !error) {
       navigate('/user');
     }
   }, [succeed, navigate]);

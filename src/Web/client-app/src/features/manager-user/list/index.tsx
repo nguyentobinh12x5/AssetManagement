@@ -10,7 +10,6 @@ const ListUsers = () => {
   const {
     hasSortColumn,
     users,
-
     handleSort,
     handlePaging,
     handleFilterByType,
