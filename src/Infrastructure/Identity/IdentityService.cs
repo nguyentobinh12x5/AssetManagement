@@ -388,6 +388,42 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
+    //public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    //{
+    //    var usersQuery = _userManager.Users.AsQueryable();
+
+
+    //    if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+    //    {
+    //        var searchTermLower = query.SearchTerm.ToLower();
+    //        usersQuery = usersQuery.Where(u =>
+    //            EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
+    //            u.StaffCode.ToLower().Contains(searchTermLower));
+    //    }
+
+    //    usersQuery = usersQuery.OrderByDynamic(query.SortColumnName, query.SortColumnDirection);
+
+    //    var totalCount = await usersQuery.CountAsync();
+
+    //    var users = await usersQuery
+    //        .Skip((query.PageNumber - 1) * query.PageSize)
+    //        .Take(query.PageSize)
+    //        .ToListAsync();
+
+    //    //var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
+
+    //    var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
+
+
+
+    //    return new PaginatedList<UserBriefDto>(
+    //        userBriefDtos,
+    //        totalCount,
+    //        query.PageNumber,
+    //        query.PageSize
+    //    );
+    //}
+
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
         var usersQuery = _userManager.Users.Where(u => u.Location == query.Location).AsQueryable();
@@ -410,6 +446,22 @@ public class IdentityService : IIdentityService
             .ToListAsync();
 
         var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
+
+        var userIds = users.Select(u => u.Id).ToList();
+
+        var userRoles = await _applicationDbContext.UserRoles
+            .Where(ur => userIds.Contains(ur.UserId))
+            .Join(_applicationDbContext.Roles,
+                ur => ur.RoleId,
+                r => r.Id,
+                (ur, r) => new { ur.UserId, RoleName = r.Name })
+            .ToListAsync();
+
+        foreach (var userBriefDto in userBriefDtos)
+        {
+            var userRole = userRoles.FirstOrDefault(ur => ur.UserId == userBriefDto.Id);
+            userBriefDto.Type = userRole?.RoleName ?? "Default";
+        }
 
         return new PaginatedList<UserBriefDto>(
             userBriefDtos,
