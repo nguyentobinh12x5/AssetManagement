@@ -92,7 +92,17 @@ const UserSchema = Yup.object().shape({
 
 export interface IUserForm extends Yup.InferType<typeof UserSchema> {}
 
-const currentDateString = new Date();
+const minDobString = new Date();
+const minJoinedDateString = new Date();
+
+minDobString.setFullYear(
+  minDobString.getFullYear() - 20
+);
+
+minJoinedDateString.setFullYear(
+  minDobString.getFullYear() + 18
+);
+
 
 const useCreateForm = () => {
   const navigate = useNavigate();
@@ -101,8 +111,8 @@ const useCreateForm = () => {
   const user: IUserForm = {
     firstName: '',
     lastName: '',
-    dateOfBirth: currentDateString,
-    joinDate: currentDateString,
+    dateOfBirth: minDobString,
+    joinDate: minJoinedDateString,
     type: 'Staff',
     gender: 'Male',
   };

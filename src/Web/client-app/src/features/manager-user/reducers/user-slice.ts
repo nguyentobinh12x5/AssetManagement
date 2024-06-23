@@ -116,6 +116,7 @@ const UserSlice = createSlice({
       isLoading: true,
       error: null,
       succeed: false,
+      isDataFetched: true
     }),
     updateUser: (state: UserState, action: PayloadAction<IUserCommand>) => {
       const existingUser: IBriefUser = state.users!.items.find(
@@ -157,7 +158,7 @@ const UserSlice = createSlice({
         ...state,
         users: {
           ...state.users!,
-          items: [newUser, ...state.users!.items], // Add new user to the top of the list
+          items: [newUser, ...state.users!.items],
         },
         user: newUser,
         isLoading: false,
