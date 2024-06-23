@@ -28,6 +28,7 @@ const useUserList = () => {
         sortColumnDirection,
       })
     );
+    dispatch(setIsDataFetched(false));
   };
 
   const updateMainPagingState = (page: number) => {

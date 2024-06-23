@@ -182,7 +182,7 @@ public class IdentityService : IIdentityService
 
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
-        var users = await InitialGetUserBriefAsync(query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(query.Location, query.SortColumnName, query.SortColumnDirection);
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
 
@@ -240,17 +240,19 @@ public class IdentityService : IIdentityService
     }
 
 
-    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(string columnName, string columnDirection)
+    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(string location, string columnName, string columnDirection)
     {
         if (!columnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
         {
             return await _userManager.Users
+                .Where(u => u.Location == location)
                 .OrderByDynamic(columnName, columnDirection)
                 .ToListAsync();
         }
         else
         {
             return await _userManager.Users
+                .Where(u => u.Location == location)
                 .OrderByDynamic("StaffCode", columnDirection)
                 .ToListAsync();
         }
@@ -338,23 +340,6 @@ public class IdentityService : IIdentityService
         return false;
     }
 
-
-    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(GetUsersQuery query)
-    {
-        if (!query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
-        {
-            return await _userManager.Users
-                .OrderByDynamic(query.SortColumnName, query.SortColumnDirection)
-                .ToListAsync();
-        }
-        else
-        {
-            return await _userManager.Users
-                .OrderByDynamic("StaffCode", query.SortColumnDirection)
-                .ToListAsync();
-        }
-    }
-
     private List<UserBriefDto> FinalGetUserBriefAsync(List<UserBriefDto> userBriefDto, string orderDirection)
     {
         return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
@@ -380,12 +365,13 @@ public class IdentityService : IIdentityService
             Email = user.Email!,
             IsEmailConfirmed = user.EmailConfirmed,
             Roles = roles,
+            Location = user.Location,
             MustChangePassword = user.MustChangePassword,
         };
     }
     public async Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {
-        var users = await InitialGetUserBriefAsync(query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(query.Location, query.SortColumnName, query.SortColumnDirection);
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types);
 
@@ -404,7 +390,7 @@ public class IdentityService : IIdentityService
     }
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
-        var usersQuery = _userManager.Users.AsQueryable();
+        var usersQuery = _userManager.Users.Where(u => u.Location == query.Location).AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(query.SearchTerm))
         {

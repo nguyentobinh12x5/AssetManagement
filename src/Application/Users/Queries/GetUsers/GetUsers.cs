@@ -11,6 +11,7 @@ public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
+    public required string Location { get; init; }
 }
 
 public class GetUsersQueryValidator : AbstractValidator<GetUsersQuery>

@@ -30,6 +30,7 @@ export function getUsers(
 ): Promise<AxiosResponse<IPagedModel<IBriefUser>>> {
   return RequestService.axios.get(
     `${ENDPOINTS.USER}?` +
+      `&Location=${userQuery.location}` +
       `&PageNumber=${userQuery.pageNumber}` +
       `&PageSize=${userQuery.pageSize}` +
       `&SortColumnName=${userQuery.sortColumnName}` +
@@ -43,7 +44,8 @@ export function getUsersByType(
   return RequestService.axios.get(
     `${ENDPOINTS.USER}` +
       `/Type?` +
-      `&Types=${userQuery.type}` +
+      `&Types=${userQuery.type}` +      
+      `&Location=${userQuery.location}` +
       `&PageNumber=${userQuery.pageNumber}` +
       `&PageSize=${userQuery.pageSize}` +
       `&SortColumnName=${userQuery.sortColumnName}` +
@@ -57,6 +59,7 @@ export function getUserBySearchTerm(
   return RequestService.axios.get(
     `${ENDPOINTS.USER}` +
       `/Search?` +
+      `&Location=${userQuery.location}` +
       `&SearchTerm=${userQuery.searchTerm}` +
       `&PageNumber=${userQuery.pageNumber}` +
       `&PageSize=${userQuery.pageSize}` +

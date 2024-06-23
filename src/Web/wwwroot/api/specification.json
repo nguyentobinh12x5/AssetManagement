@@ -498,6 +498,16 @@
               "nullable": true
             },
             "x-position": 4
+          },
+          {
+            "name": "Location",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 5
           }
         ],
         "responses": {
@@ -680,6 +690,16 @@
               "nullable": true
             },
             "x-position": 5
+          },
+          {
+            "name": "Location",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 6
           }
         ],
         "responses": {
@@ -751,6 +771,16 @@
               "nullable": true
             },
             "x-position": 5
+          },
+          {
+            "name": "Location",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 6
           }
         ],
         "responses": {
@@ -1204,6 +1234,9 @@
           },
           "mustChangePassword": {
             "type": "boolean"
+          },
+          "location": {
+            "type": "string"
           },
           "roles": {
             "type": "array",

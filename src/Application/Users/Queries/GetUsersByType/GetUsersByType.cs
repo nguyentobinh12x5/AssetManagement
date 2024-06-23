@@ -18,6 +18,7 @@ public record GetUsersByTypeQuery : IRequest<PaginatedList<UserBriefDto>>
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
     public required string Types { get; init; }
+    public required string Location { get; init; }
 }
 
 public class GetUsersByTypeQueryHandler : IRequestHandler<GetUsersByTypeQuery, PaginatedList<UserBriefDto>>
