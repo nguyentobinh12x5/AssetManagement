@@ -7,11 +7,13 @@ interface AuthState {
   user?: any;
   isAuthenticated: boolean;
   loginError?: string;
+  isCheckingSession: boolean;
 }
 
 const initialState: AuthState = {
   isLoading: false,
   isAuthenticated: false,
+  isCheckingSession: true,
 };
 
 const AuthSlice = createSlice({
@@ -25,7 +27,7 @@ const AuthSlice = createSlice({
     }),
     getUserInfo: (state: AuthState) => ({
       ...state,
-      isLoading: true,
+      isCheckingSession: true,
     }),
     changePasswordFirstTime: (
       state: AuthState,
@@ -45,6 +47,7 @@ const AuthSlice = createSlice({
       user: action.payload,
       isLoading: false,
       isAuthenticated: true,
+      isCheckingSession: false,
     }),
     setAuth: (state: AuthState, action: PayloadAction) => ({
       ...state,

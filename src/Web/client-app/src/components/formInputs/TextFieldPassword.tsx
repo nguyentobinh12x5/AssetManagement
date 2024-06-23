@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, useState } from "react";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -13,6 +13,7 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 
 const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
   const [field, { error, touched }] = useField(props);
+  const { values, isSubmitting } = useFormikContext();
   const { label, isrequired, notvalidate, apiError } = props;
 
   const validateClass = () => {
@@ -53,7 +54,7 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
             )}
           </div>
         </div>
-        {(error && touched) || apiError ? (
+        {(error && isSubmitting) || apiError ? (
           <div className="invalid position-relative mt-2">
             {error || apiError}
           </div>

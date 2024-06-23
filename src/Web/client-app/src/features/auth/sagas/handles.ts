@@ -2,8 +2,8 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
 import {
   changePasswordFirstTime,
-  getUserInfo,
-  login,
+  getUserInfo as getUserInfoRequest,
+  login as loginRequest,
   logout as logoutRequest,
 } from './requests';
 import {
@@ -20,7 +20,7 @@ import { IChangePasswordFirstTimeCommand } from '../interfaces/IChangePasswordFi
 export function* handleLogin(action: PayloadAction<ILoginCommand>) {
   const loginCommand = action.payload;
   try {
-    yield call(login, loginCommand);
+    yield call(loginRequest, loginCommand);
     yield put(setAuth());
     yield call(handleGetUserInfo);
   } catch (error: any) {
@@ -32,7 +32,7 @@ export function* handleLogin(action: PayloadAction<ILoginCommand>) {
 
 export function* handleGetUserInfo() {
   try {
-    const { data } = yield call(getUserInfo);
+    const { data } = yield call(getUserInfoRequest);
     yield put(setUser(data));
   } catch (error: any) {
     const errorResponse = error.response.data;
