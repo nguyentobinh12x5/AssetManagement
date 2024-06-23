@@ -7,6 +7,7 @@ import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
+import { IUserDetail } from '../interfaces/IUserDetail';
 
 export function editUser(
   user: IUserCommand
@@ -20,7 +21,7 @@ export function CreateUser(
 }
 export function getUserById(
   userId: string
-): Promise<AxiosResponse<IUserCommand>> {
+): Promise<AxiosResponse<IUserDetail>> {
   return RequestService.axios.get(`${ENDPOINTS.USER}/${userId}`);
 }
 

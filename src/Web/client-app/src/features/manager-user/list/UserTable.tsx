@@ -78,7 +78,7 @@ const UserTable: React.FC<UserTableProps> = ({
             <td>{new Date(data.joinDate).toLocaleDateString()}</td>
             <td>{data.type}</td>
             <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0">
-              <div onClick={(e) => e.stopPropagation()}>
+              <div>
                 <ButtonIcon
                   onClick={() => {
                     handleEditClick(data.id);
@@ -89,7 +89,7 @@ const UserTable: React.FC<UserTableProps> = ({
                 </ButtonIcon>
               </div>
 
-              <div onClick={(e) => e.stopPropagation()}>
+              <div>
                 <ConfirmDisable userId={data.id} />
               </div>
             </td>

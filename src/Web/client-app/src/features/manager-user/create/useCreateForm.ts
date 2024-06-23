@@ -1,7 +1,7 @@
 import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
-import { createUser } from '../reducers/user-slice';
+import { createUser, setSucceedStatus } from '../reducers/user-slice';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -127,6 +127,7 @@ const useCreateForm = () => {
 
   useEffect(() => {
     if (succeed && !isLoading && !error) {
+      dispatch(setSucceedStatus(false));
       navigate('/user');
     }
   }, [succeed, navigate, error, isLoading]);

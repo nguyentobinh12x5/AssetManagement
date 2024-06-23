@@ -145,22 +145,8 @@ const UserSlice = createSlice({
       };
     },
     createUser: (state: UserState, action: PayloadAction<IUserCommand>) => {
-      const newUser: IBriefUser = {
-        id: 'new-user',
-        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
-        joinDate: action.payload.joinDate,
-        staffCode: 'new user',
-        type: action.payload.type,
-        userName: 'user name',
-        isDelete: false,
-      };
       return {
         ...state,
-        users: {
-          ...state.users!,
-          items: [newUser, ...state.users!.items],
-        },
-        user: newUser,
         isLoading: false,
         error: null,
         succeed: true,
@@ -173,13 +159,27 @@ const UserSlice = createSlice({
       error: action.payload,
     }),
 
-    setCreateUser: (state: UserState, action: PayloadAction<IUserCommand>) => ({
-      ...state,
-      user: action.payload,
-      isLoading: false,
-      error: null,
-      succeed: true,
-    }),
+    setCreateUser: (state: UserState, action: PayloadAction<IBriefUser>) => {
+      const newUser: IBriefUser = {
+        id: action.payload.id,
+        fullName: action.payload.fullName,
+        joinDate: action.payload.joinDate,
+        staffCode: action.payload.staffCode,
+        type: action.payload.type,
+        userName: action.payload.userName,
+        isDelete: false,
+      };
+      return {
+        ...state,
+        users: {
+          ...state.users!,
+          items: [newUser, ...state.user.items],
+        },
+        isLoading: false,
+        error: null,
+        succeed: true,
+      };
+    },
     setCreateUserError: (state: UserState, action: PayloadAction<string>) => ({
       ...state,
       isLoading: false,
@@ -197,6 +197,9 @@ const UserSlice = createSlice({
     },
     setDeleteStatus: (state, action: PayloadAction<boolean>) => {
       state.isDeleting = action.payload;
+    },
+    setSucceedStatus: (state, action: PayloadAction<boolean>) => {
+      state.succeed = action.payload;
     },
   },
 });
@@ -219,6 +222,7 @@ export const {
   setDeleteStatus,
   setUserQuery,
   setIsDataFetched,
+  setSucceedStatus,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;

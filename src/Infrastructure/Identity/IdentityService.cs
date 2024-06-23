@@ -65,7 +65,7 @@ public class IdentityService : IIdentityService
         return user?.UserName;
     }
 
-    public async Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser)
+    public async Task<(Result Result, string Id)> CreateUserAsync(CreateUserDto createUser)
     {
         var id = _userManager.Users.Select(e => e.StaffCode).ToList();
 
@@ -91,7 +91,7 @@ public class IdentityService : IIdentityService
         {
             await _userManager.AddToRoleAsync(newUser, createUser.Role);
         }
-        return (result.ToApplicationResult(), newUser.StaffCode);
+        return (result.ToApplicationResult(), newUser.Id);
     }
 
     public async Task<UserDto> GetUserWithRoleAsync(string userId)

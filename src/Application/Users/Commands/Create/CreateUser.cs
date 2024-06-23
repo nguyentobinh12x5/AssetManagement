@@ -43,6 +43,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return newUser.Result.StaffCode;
+        return newUser.Result.Id;
     }
 }
