@@ -9,11 +9,6 @@ using Moq;
 
 using NUnit.Framework;
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace AssetManagement.Application.UnitTests.Users.Queries.GetUsersBySearch
 {
     [TestFixture]
@@ -39,7 +34,8 @@ namespace AssetManagement.Application.UnitTests.Users.Queries.GetUsersBySearch
                 PageNumber = 1,
                 PageSize = 5,
                 SortColumnName = "id",
-                SortColumnDirection = "Descending"
+                SortColumnDirection = "Descending",
+                Location = "HCM"
             };
 
             var expectedUsers = new PaginatedList<UserBriefDto>(
@@ -70,7 +66,8 @@ namespace AssetManagement.Application.UnitTests.Users.Queries.GetUsersBySearch
                 PageNumber = 1,
                 PageSize = 5,
                 SortColumnName = "id",
-                SortColumnDirection = "Descending"
+                SortColumnDirection = "Descending",
+                Location = "HCM"
             };
 
             var expectedUsers = new PaginatedList<UserBriefDto>(new List<UserBriefDto>(), 0, 1, 5);

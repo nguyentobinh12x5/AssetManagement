@@ -160,21 +160,21 @@ const UserSlice = createSlice({
       error: action.payload,
     }),
 
-    setCreateUser: (state: UserState, action: PayloadAction<IBriefUser>) => {
+    setCreateUser: (state: UserState, action: PayloadAction<IUserDetail>) => {
       const newUser: IBriefUser = {
-        id: action.payload.id,
-        fullName: action.payload.fullName,
+        id: action.payload.id ?? "something clearly wrong here",
+        fullName: `${action.payload.firstName} ${action.payload.lastName}`,
         joinDate: action.payload.joinDate,
         staffCode: action.payload.staffCode,
         type: action.payload.type,
-        userName: action.payload.userName,
+        userName: action.payload.username,
         isDelete: false,
       };
       return {
         ...state,
         users: {
           ...state.users!,
-          items: [newUser, ...state.user.items],
+          items: [newUser, ...state.users.items],
         },
         isLoading: false,
         error: null,
