@@ -10,6 +10,7 @@ const ListUsers = () => {
   const {
     hasSortColumn,
     users,
+    searchTerm,
     handleSort,
     handlePaging,
     handleFilterByType,
@@ -44,6 +45,7 @@ const ListUsers = () => {
 
       <UserTable
         users={users}
+        searchTerm={searchTerm}
         sortState={{
           name: hasSortColumn.sortColumn,
           orderBy: hasSortColumn.sortOrder,

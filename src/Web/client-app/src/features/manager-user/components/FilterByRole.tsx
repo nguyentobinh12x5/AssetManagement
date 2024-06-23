@@ -13,9 +13,9 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
 
   // Mapping of actual values to display values
   const userTypesMap: Record<UserType, string> = {
-    Staff: "Staff",
-    Administrator: "Admin",
     All: "All",
+    Administrator: "Admin",
+    Staff: "Staff",
   };
 
   // Get the list of display values from the map

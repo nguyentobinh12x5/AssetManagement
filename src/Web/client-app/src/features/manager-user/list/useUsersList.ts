@@ -62,7 +62,7 @@ const useUserList = () => {
   };
 
   const handleSearch = (searchTerm: string) => {
-    setFilterType([]);
+    setFilterType(null);
     setSearchTerm(searchTerm.trim());
     dispatch(
       setUserQuery({
@@ -93,6 +93,7 @@ const useUserList = () => {
   return {
     hasSortColumn,
     users,
+    searchTerm,
     handleSort,
     handlePaging,
     handleFilterByType,

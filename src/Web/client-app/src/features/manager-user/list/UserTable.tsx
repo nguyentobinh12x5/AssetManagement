@@ -17,11 +17,13 @@ type UserTableProps = {
   handleSort: (value: string) => void;
   handlePaging: (page: number) => void;
   sortState: ISortState;
+  searchTerm: string;
 };
 
 const UserTable: React.FC<UserTableProps> = ({
   users,
   sortState,
+  searchTerm,
   handleSort,
   handlePaging,
 }) => {
@@ -60,6 +62,22 @@ const UserTable: React.FC<UserTableProps> = ({
 
   if (!users) {
     return <Loading />;
+  }
+
+  if (items?.length === 0 && searchTerm) {
+    return (
+      <div className="text-center">
+        <p>There's no data, please adjust your search condition</p>
+      </div>
+    );
+  }
+
+  if (items?.length === 0) {
+    return (
+      <div className="text-center">
+        <p>No data available</p>
+      </div>
+    );
   }
 
   return (
