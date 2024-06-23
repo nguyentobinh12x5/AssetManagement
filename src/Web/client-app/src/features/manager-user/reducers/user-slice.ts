@@ -116,7 +116,7 @@ const UserSlice = createSlice({
       isLoading: true,
       error: null,
       succeed: false,
-      isDataFetched: true
+      isDataFetched: true,
     }),
     updateUser: (state: UserState, action: PayloadAction<IUserCommand>) => {
       const existingUser: IBriefUser = state.users!.items.find(
