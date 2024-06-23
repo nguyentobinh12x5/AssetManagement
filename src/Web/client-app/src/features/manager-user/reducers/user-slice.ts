@@ -10,7 +10,7 @@ import { APP_DEFAULT_PAGE_SIZE, ASCENDING } from '../../../constants/paging';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
 const defaultUserQuery: IUserQuery = {
   pageNumber: 1,
-  location: "HCM",
+  location: 'HCM',
   pageSize: APP_DEFAULT_PAGE_SIZE,
   sortColumnName: DEFAULT_MANAGE_USER_SORT_COLUMN,
   sortColumnDirection: ASCENDING,
