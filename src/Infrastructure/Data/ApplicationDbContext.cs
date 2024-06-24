@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Entities;
@@ -28,5 +28,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        builder.Entity<ApplicationUser>()
+            .HasQueryFilter(x => x.IsDelete == false);
     }
 }

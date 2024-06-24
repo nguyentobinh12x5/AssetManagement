@@ -1,6 +1,7 @@
-﻿using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
+using AssetManagement.Application.Users.Commands.Create;
+using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Infrastructure.Identity;
 
 using AutoMapper;
 
@@ -10,9 +11,13 @@ public class ApplicationUserProfile : Profile
 {
     public ApplicationUserProfile()
     {
-        //Uncomment this later
-        //CreateMap<ApplicationUser, UserDto>();
-        CreateMap<ApplicationUser, UserBriefDto>();
+        CreateMap<ApplicationUser, UserDto>().ReverseMap(); ;
+        CreateMap<ApplicationUser, UserBriefDto>()
+            .ForMember(
+                dest => dest.FullName,
+                opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}")
+            );
         CreateMap<UserInfoDto, ApplicationUser>();
+        CreateMap<ApplicationUser, CreateUserDto>();
     }
 }

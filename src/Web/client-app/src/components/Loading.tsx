@@ -2,12 +2,13 @@ import { Spinner } from "react-bootstrap";
 
 const Loading = () => {
   return (
-    <div className="position-relative w-100">
-      <div className="position-absolute" style={{ top: 50, left: 50 }}>
-        <Spinner animation="border" variant="danger">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
+      <Spinner animation="border" variant="danger">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
     </div>
   );
 };

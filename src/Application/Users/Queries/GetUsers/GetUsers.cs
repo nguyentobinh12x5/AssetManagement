@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Domain.Constants;
@@ -11,21 +11,7 @@ public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
-}
-
-public class GetUsersQueryValidator : AbstractValidator<GetUsersQuery>
-{
-    public GetUsersQueryValidator()
-    {
-        RuleFor(x => x.SortColumnName)
-            .NotEmpty().WithMessage("SortColumnName is required.")
-            .Must(BeAValidColumn).WithMessage("Sorting by Username is not allowed.");
-    }
-
-    private bool BeAValidColumn(string sortColumnName)
-    {
-        return !string.Equals(sortColumnName, "Username", StringComparison.OrdinalIgnoreCase);
-    }
+    public required string Location { get; init; }
 }
 
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserBriefDto>>
@@ -43,4 +29,5 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList
 
         return users;
     }
+
 }
