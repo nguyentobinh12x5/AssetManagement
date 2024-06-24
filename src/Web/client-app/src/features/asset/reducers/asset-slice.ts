@@ -10,8 +10,8 @@ const defaultAssetQuery: IAssetQuery = {
   pageSize: APP_DEFAULT_PAGE_SIZE,
   sortColumnName: DEFAULT_MANAGE_ASSET_SORT_COLUMN,
   sortColumnDirection: ASCENDING,
-  categoryName: 'All',
-  assetStatusName: 'All',
+  categoryName: ['All'],
+  assetStatusName: ['All'],
   searchTerm: '',
 };
 

@@ -91,7 +91,7 @@ const useAssetList = () => {
   // Fetch Data
   useEffect(() => {
     const fetchData = () => {
-      dispatch(getAssets(assetQuery));
+      dispatch(getAssets({ ...assetQuery, categoryName: filterCategory ?? [], assetStatusName: filterStatus ?? [], searchTerm: searchTerm }));
     };
 
     if (!isDataFetched) {

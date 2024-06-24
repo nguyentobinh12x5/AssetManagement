@@ -10,13 +10,13 @@ export function getAssetsRequest(
 ): Promise<AxiosResponse<IPagedModel<IBriefAsset>>> {
   return RequestService.axios.get(
     `${ENDPOINTS.ASSETS}?` +
-      // `Category=${assetQuery.categoryName}` +
-      // `&Status=${assetQuery.assetStatusName}` +
-      `PageNumber=${assetQuery.pageNumber}` +
+      `CategoryName=${assetQuery.categoryName}` +
+      `&AssetStatusName=${assetQuery.assetStatusName}` +
+      `&PageNumber=${assetQuery.pageNumber}` +
       `&PageSize=${assetQuery.pageSize}` +
       `&SortColumnName=${assetQuery.sortColumnName}` +
-      `&SortColumnDirection=${assetQuery.sortColumnDirection}`
-    // `&SearchTerm=${assetQuery.searchTerm}`
+      `&SortColumnDirection=${assetQuery.sortColumnDirection}` +
+      `&SearchTerm=${assetQuery.searchTerm}`
   );
 }
 

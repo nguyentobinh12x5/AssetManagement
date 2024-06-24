@@ -16,7 +16,6 @@ import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 
 export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
   try {
-    console.log('data');
     const { data } = yield call(getAssetsRequest, action.payload);
     yield put(setAssets(data));
     yield put(getAssetsSuccess(data));
