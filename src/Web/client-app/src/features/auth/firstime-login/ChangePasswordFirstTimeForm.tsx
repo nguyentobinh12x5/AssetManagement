@@ -24,7 +24,7 @@ const ChangePasswordFirstTimeForm: React.FC<Props> = ({
       onSubmit={handleChangePassword}
       validationSchema={validationSchema}
     >
-      {({ isValid, dirty }) => (
+      {({ isValid, dirty, errors }) => (
         <Form>
           <div className="form-header">
             <h3 className="primaryColor fw-bold fs-5 text-start">
@@ -41,6 +41,7 @@ const ChangePasswordFirstTimeForm: React.FC<Props> = ({
               id="newPassword"
               label="New password"
               name="newPassword"
+              apiError={errors.newPassword}
             />
             <Button
               id="changePasswordFirstTimeBtn"

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
+  ASSETS_LINK,
   HOME_LINK,
-  TODO_ITEM_LINK,
   MANAGE_USER_LINK,
 } from "../../constants/pages";
 import { useAppState } from "../../redux/redux-hooks";
@@ -18,14 +18,11 @@ const Sidebar = () => {
       </NavLink>
       {isAdminUser(user) && (
         <>
-          <NavLink className="navItem intro-x" to={TODO_ITEM_LINK}>
-            <button className="btnCustom">Todo Items</button>
-          </NavLink>
-          <NavLink className="navItem intro-x" to={TODO_ITEM_LINK}>
-            <button className="btnCustom">Protected</button>
-          </NavLink>
           <NavLink className="navItem intro-x" to={MANAGE_USER_LINK}>
             <button className="btnCustom">Manage User</button>
+          </NavLink>
+          <NavLink className="navItem intro-x" to={ASSETS_LINK}>
+            <button className="btnCustom">Manage Asset</button>
           </NavLink>
         </>
       )}

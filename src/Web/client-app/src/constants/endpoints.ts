@@ -8,6 +8,8 @@ const ENDPOINTS = {
   CHANGE_PASSWORD: '/api/Auth/change-password',
   USER: 'api/Users',
   DELETE_USER: '/api/users',
+
+  ASSETS: '/api/Assets',
 };
 
 export default ENDPOINTS;
