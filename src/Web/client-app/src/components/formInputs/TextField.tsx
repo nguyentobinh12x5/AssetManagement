@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
-import { useField } from "formik";
+import { ErrorMessage, useField } from "formik";
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -32,7 +32,12 @@ const TextField: React.FC<InputFieldProps> = (props) => {
           {...field}
           {...props}
         />
-        {error && touched && <div className="invalid">{error}</div>}
+        <ErrorMessage
+          name={props.name}
+          component={"div"}
+          className="invalid mt-2"
+        />
+        {/* {error && touched && <div className="invalid">{error}</div>} */}
       </div>
     </div>
   );

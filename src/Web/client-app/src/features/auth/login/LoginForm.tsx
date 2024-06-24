@@ -14,7 +14,7 @@ const LoginForm = () => {
         onSubmit={handleSubmit}
         validationSchema={LoginSchema}
       >
-        {({ isValid, dirty }) => (
+        {({ isSubmitting, isValid, dirty }) => (
           <Form>
             <div className="login-form-header">
               <h3 className="primaryColor fw-bold fs-5">
@@ -34,9 +34,12 @@ const LoginForm = () => {
                 id="password"
                 label="Password"
                 name="password"
-                isrequired
+                required
               />
-              <Button type="submit" disabled={!(isValid && dirty)}>
+              <Button
+                type="submit"
+                disabled={isSubmitting || !(isValid && dirty)}
+              >
                 Login
               </Button>
             </div>
