@@ -4,6 +4,7 @@ import IColumnOption from "./interfaces/IColumnOption";
 import ISortState from "./interfaces/ISortState";
 import IPagination from "./interfaces/IPagination";
 import Pagination from "./Pagination";
+import { Anchor } from "react-bootstrap";
 
 interface Props {
   columns: IColumnOption[];
@@ -27,10 +28,14 @@ const Table: React.FC<Props> = ({
           <tr>
             {columns.map((col, i) => (
               <th scope="col" key={i} className={`table-th-${i}`}>
-                <a className="btn" onClick={() => handleSort(col.value)}>
-                  {col.name}
-                  <ColumnICon name={col.value} sortState={sortState} />
-                </a>
+                {!col.disable ? (
+                  <Anchor className="btn" onClick={() => handleSort(col.value)}>
+                    {col.name}
+                    <ColumnICon name={col.value} sortState={sortState} />
+                  </Anchor>
+                ) : (
+                  <span className="btn">{col.name}</span>
+                )}
               </th>
             ))}
           </tr>

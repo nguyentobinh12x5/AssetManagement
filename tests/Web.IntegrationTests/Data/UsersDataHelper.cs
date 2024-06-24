@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,7 +53,18 @@ namespace Web.IntegrationTests.Helpers
             using (var scope = factory.Services.CreateScope())
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                var roles = new[] { "Administrator", "Staff" };
+
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
 
                 foreach (var user in UsersList)
                 {
@@ -67,10 +78,12 @@ namespace Web.IntegrationTests.Helpers
                             {
                                 throw new Exception($"Failed to create user {user.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                             }
+
+                            var role = user.StaffCode == "SC001" ? "Administrator" : "Staff";
+                            await userManager.AddToRoleAsync(user, role);
                         }
                     }
                 }
-
             }
         }
     }
