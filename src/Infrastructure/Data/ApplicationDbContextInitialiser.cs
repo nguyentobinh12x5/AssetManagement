@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 using AssetManagement.Domain.Constants;
 using AssetManagement.Domain.Entities;
@@ -79,7 +79,7 @@ public class ApplicationDbContextInitialiser
         }
 
         // Default users
-        var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost", FirstName = "Mock", LastName = "Admin", StaffCode = "AD0000", Location = "HCM" };
+        var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost", FirstName = "Jahn", LastName = "Doe", Location = "HCM", StaffCode = "S01" };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
@@ -89,10 +89,14 @@ public class ApplicationDbContextInitialiser
                 await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
             }
         }
-
-
-        // Default Asset Status data
-        if (!_context.AssetStatuses.Any())
+        var staffsRole = new IdentityRole(Roles.Staff);
+        if (_roleManager.Roles.All(r => r.Name != staffsRole.Name))
+        {
+            await _roleManager.CreateAsync(staffsRole);
+        }
+        // Default data
+        // Seed, if necessary
+        if (!_context.TodoLists.Any())
         {
             _context.AssetStatuses.AddRange(
                 new AssetStatus { Name = "Available" },

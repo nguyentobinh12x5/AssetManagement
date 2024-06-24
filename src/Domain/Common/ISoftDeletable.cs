@@ -1,4 +1,4 @@
-﻿namespace AssetManagement.Domain.Common;
+namespace AssetManagement.Domain.Common;
 
 public interface ISoftDeletable
 {

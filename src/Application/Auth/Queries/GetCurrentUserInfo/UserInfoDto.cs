@@ -7,5 +7,6 @@ public sealed class UserInfoDto
 
     public required string Username { get; init; }
     public required bool MustChangePassword { get; init; }
+    public required string Location { get; init; }
     public IList<string> Roles { get; init; } = new List<string>();
 }

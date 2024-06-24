@@ -8,6 +8,7 @@ import { store } from "./redux/store";
 import AppRoutes from "./routes";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./styles/index.scss";
 import "./styles/App.scss";
 import { ToastProvider } from "./components/toastify/ToastContext";

@@ -16,13 +16,13 @@ const Header = () => {
     <div className="header align-items-center font-weight-bold">
       <div className="container-lg-min mh-100 container-fluid d-flex justify-content-between py-1">
         <div className="d-flex align-items-center gap-2">
-          {isAtLoginPage && (
+          {/* {isAtLoginPage && (
             <img
               alt="Online asset management icon"
               src="/images/Logo_lk.png"
               className="header-logo"
             />
-          )}
+          )} */}
           <p className="headText">{HeaderTitle}</p>
         </div>
 

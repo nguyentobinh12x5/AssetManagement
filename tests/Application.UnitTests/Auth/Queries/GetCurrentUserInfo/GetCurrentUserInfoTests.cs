@@ -46,7 +46,9 @@ public class GetCurrentUserInfoTests
         var userId = "123";
         var expected = new UserInfoDto
         {
-            Username = "test@localhost",
+            Email = "test@localhost",
+            Location = "HCM",
+            IsEmailConfirmed = true,
             MustChangePassword = true,
             Roles = ["Administrator"]
         };
