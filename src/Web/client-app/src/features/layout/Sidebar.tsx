@@ -20,7 +20,7 @@ const Sidebar = () => {
       </NavLink>
       {isAdminUser(user) && (
         <>
-          <NavLink className="navItem intro-x" to={MANAGE_USER_LINK}>
+          <NavLink className="navItem intro-x" to={USER_LINK}>
             <button className="btnCustom">Manage User</button>
           </NavLink>
           <NavLink className="navItem intro-x" to={ASSETS_LINK}>

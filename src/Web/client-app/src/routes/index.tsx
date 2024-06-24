@@ -23,7 +23,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path={MANAGE_USER}
+          path={USER}
           element={
             <PrivateRoute>
               <Users />

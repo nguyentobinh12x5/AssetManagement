@@ -351,6 +351,7 @@ public class IdentityService : IIdentityService
         return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
             userBriefDto.OrderByDescending(u => u.Type).ToList() :
             userBriefDto.OrderBy(u => u.Type).ToList();
+
     }
 
     public async Task<bool> IsUserDisabledAsync(string email)

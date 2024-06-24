@@ -25,6 +25,7 @@ interface UserState {
   isDeleting: boolean;
   userQuery: IUserQuery;
   isDataFetched: boolean;
+  types: string[];
 }
 
 const initialState: UserState = {
@@ -42,6 +43,7 @@ const initialState: UserState = {
   succeed: false,
   isDeleting: false,
   userQuery: defaultUserQuery,
+  types: ['All'],
   isDataFetched: false,
 };
 
@@ -202,6 +204,13 @@ const UserSlice = createSlice({
     setSucceedStatus: (state, action: PayloadAction<boolean>) => {
       state.succeed = action.payload;
     },
+    getUserTypes: (state: UserState) => {
+      state.isLoading = true;
+    },
+    setUserTypes: (state: UserState, action: PayloadAction<string[]>) => {
+      state.types = ['All', ...action.payload];
+      state.isLoading = false;
+    },
   },
 });
 
@@ -224,6 +233,8 @@ export const {
   setUserQuery,
   setIsDataFetched,
   setSucceedStatus,
+  getUserTypes,
+  setUserTypes,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;

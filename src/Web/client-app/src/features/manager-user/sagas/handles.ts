@@ -7,6 +7,7 @@ import {
   setDeleteStatus,
   setUserById,
   setUserByIdError,
+  setUserTypes,
   setUsers,
   updateUser,
   updateUserError,
@@ -19,6 +20,7 @@ import {
   getUsers,
   CreateUser as postNewUserRequest,
   getUsersByType,
+  getUserTypes,
 } from './requests';
 import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
@@ -85,6 +87,18 @@ export function* handleGetUserById(action: PayloadAction<string>) {
   }
 }
 
+export function* handleGetUserTypes() {
+  try {
+    const { data } = yield call(getUserTypes);
+    yield put(setUserTypes(data));
+  } catch (error: any) {
+    const errorResponse = error.response.data;
+    if (errorResponse.status === 404) {
+      yield (window.location.href = '/notfound');
+    }
+  }
+}
+
 // Handle delete user action
 export function* handleDeleteUser(action: PayloadAction<string>) {
   try {
@@ -94,6 +108,7 @@ export function* handleDeleteUser(action: PayloadAction<string>) {
     yield put(setDeleteStatus(false));
   }
 }
+
 export function* handleCreateUser(action: PayloadAction<IUserCommand>) {
   const user = action.payload;
   try {
