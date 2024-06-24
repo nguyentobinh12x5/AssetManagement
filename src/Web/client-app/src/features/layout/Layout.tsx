@@ -19,9 +19,7 @@ const Layout: React.FC<Props> = ({ children, showSidebar }) => {
             </div>
           )}
 
-          <div
-            className={`${showSidebar ? "col-lg-9 col-md-7" : "col-12"} ms-5`}
-          >
+          <div className={`${showSidebar ? "col-lg-9 col-md-7" : "col-12"}`}>
             {children}
           </div>
         </div>
