@@ -43,7 +43,7 @@ const initialState: UserState = {
   succeed: false,
   isDeleting: false,
   userQuery: defaultUserQuery,
-  types: ["All"],
+  types: ['All'],
   isDataFetched: false,
 };
 
@@ -205,11 +205,11 @@ const UserSlice = createSlice({
       state.succeed = action.payload;
     },
     getUserTypes: (state: UserState) => {
-      state.isLoading = true
+      state.isLoading = true;
     },
     setUserTypes: (state: UserState, action: PayloadAction<string[]>) => {
-      state.types = ['All', ...action.payload]
-      state.isLoading = false
+      state.types = ['All', ...action.payload];
+      state.isLoading = false;
     },
   },
 });

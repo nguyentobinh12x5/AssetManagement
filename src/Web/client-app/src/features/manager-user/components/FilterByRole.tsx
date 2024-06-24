@@ -13,21 +13,22 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
   const { types } = useAppState((state) => state.users);
   const dispatch = useAppDispatch();
 
-
   useEffect(() => {
-    if(types.length <= 1)
-      dispatch(getUserTypes());
-  })
+    if (types.length <= 1) dispatch(getUserTypes());
+  });
 
   // Define the type for user types
-  type UserType = typeof types[number];
+  type UserType = (typeof types)[number];
   //type UserType = "Staff" | "Administrator" | "All";
 
   // Mapping of actual values to display values
-  const userTypesMap: Record<UserType, string> = types.reduce((acc, type) => {
-    acc[type as UserType] = type.slice(0, 5);
-    return acc;
-  }, {} as Record<UserType, string>);
+  const userTypesMap: Record<UserType, string> = types.reduce(
+    (acc, type) => {
+      acc[type as UserType] = type.slice(0, 5);
+      return acc;
+    },
+    {} as Record<UserType, string>
+  );
 
   // Get the list of display values from the map
   const displayUserTypes = Object.values(userTypesMap);
@@ -63,5 +64,3 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
 };
 
 export default FilterByRole;
-
-

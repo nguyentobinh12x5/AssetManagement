@@ -25,7 +25,7 @@ public class Users : EndpointGroupBase
             .MapDelete(DeleteUser, "{id}")
             .MapGet(GetUserByType, "Type")
             .MapGet(SearchUsers, "Search")
-            .MapGet(GetUserTypes,"Types");
+            .MapGet(GetUserTypes, "Types");
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)

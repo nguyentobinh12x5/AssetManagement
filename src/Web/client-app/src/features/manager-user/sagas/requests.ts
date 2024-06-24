@@ -73,7 +73,6 @@ export function deleteUserRequest(userId: string) {
   return RequestService.axios.delete(`${ENDPOINTS.DELETE_USER}/${userId}`);
 }
 
-export function getUserTypes(): 
-  Promise<AxiosResponse<string[]>> {
+export function getUserTypes(): Promise<AxiosResponse<string[]>> {
   return RequestService.axios.get(`${ENDPOINTS.USER}/Types`);
 }

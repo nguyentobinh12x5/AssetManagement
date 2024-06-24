@@ -87,7 +87,6 @@ export function* handleGetUserById(action: PayloadAction<string>) {
   }
 }
 
-
 export function* handleGetUserTypes() {
   try {
     const { data } = yield call(getUserTypes);
