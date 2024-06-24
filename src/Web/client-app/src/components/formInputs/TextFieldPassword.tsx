@@ -9,12 +9,13 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   required?: boolean;
   notvalidate?: boolean;
   apiError?: string;
+  showError?: boolean;
 };
 
 const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
   const [field, { error, touched }] = useField(props);
   const { values, isSubmitting } = useFormikContext();
-  const { label, required, notvalidate, apiError } = props;
+  const { label, required, notvalidate, apiError, showError } = props;
 
   const validateClass = () => {
     if ((touched && error) || apiError) return "is-invalid";
@@ -54,19 +55,27 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
             )}
           </div>
         </div>
-        <ErrorMessage
-          name={props.name}
-          component={"div"}
-          className="invalid mt-2"
-        />
-        {/* {(error && isSubmitting) || apiError ? (
-          <div className="invalid position-relative mt-2">
-            {error || apiError}
-          </div>
-        ) : null} */}
+        {touched && (error || apiError) && (
+          <ErrorMsg error={error} apiError={apiError} />
+        )}
       </div>
     </div>
   );
 };
 
 export default TextFieldPassword;
+
+const ErrorMsg = ({
+  error,
+  apiError,
+}: {
+  error?: string;
+  apiError?: string;
+}) => {
+  let message = "";
+  if (error) message = error;
+
+  if (apiError) message = apiError;
+
+  return <div className="invalid position-relative mt-2">{message}</div>;
+};

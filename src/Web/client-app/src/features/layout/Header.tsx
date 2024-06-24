@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ChangePasswordForm from "../auth/changepassword/ChangePasswordForm";
 import { useState } from "react";
 import { logout } from "../auth/reducers/auth-slice";
+import { IUserInfo } from "../auth/interfaces/IUserInfo";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
@@ -44,7 +45,7 @@ const Header = () => {
 
 export default Header;
 
-const UserDropdown = (props: any) => {
+const UserDropdown = (props: { user: IUserInfo }) => {
   const { user } = props;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const UserDropdown = (props: any) => {
     <>
       <Dropdown data-bs-theme="dark" align={"end"}>
         <Dropdown.Toggle className="bg-transparent border-0">
-          {user.email}
+          {user?.username}
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
