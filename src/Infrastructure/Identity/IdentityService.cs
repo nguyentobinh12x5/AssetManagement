@@ -20,6 +20,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AssetManagement.Infrastructure.Identity;
 
@@ -182,7 +183,7 @@ public class IdentityService : IIdentityService
 
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
-        var users = await InitialGetUserBriefAsync(query.Location, query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(string.Empty,query.Location, query.SortColumnName, query.SortColumnDirection);
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
 
@@ -199,7 +200,6 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
-
 
     // Handles the case where User's role was chosen to be sorted
     // in which case won't be able to since it's not of User's prop
@@ -239,20 +239,24 @@ public class IdentityService : IIdentityService
         return userBriefDtos;
     }
 
-
-    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(string location, string columnName, string columnDirection)
+    private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(string SearchTerm, string location, string columnName, string columnDirection)
     {
+        var searchTermLower = SearchTerm.ToLower();
         if (!columnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
         {
             return await _userManager.Users
-                .Where(u => u.Location == location)
+                .Where(u => u.Location == location &&
+                    EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
+                    u.StaffCode.ToLower().Contains(searchTermLower))
                 .OrderByDynamic(columnName, columnDirection)
                 .ToListAsync();
         }
         else
         {
             return await _userManager.Users
-                .Where(u => u.Location == location)
+                .Where(u => u.Location == location &&
+                    EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
+                    u.StaffCode.ToLower().Contains(searchTermLower))
                 .OrderByDynamic("StaffCode", columnDirection)
                 .ToListAsync();
         }
@@ -371,7 +375,7 @@ public class IdentityService : IIdentityService
     }
     public async Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {
-        var users = await InitialGetUserBriefAsync(query.Location, query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(string.Empty,query.Location, query.SortColumnName, query.SortColumnDirection);
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types);
 
@@ -388,86 +392,70 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
-    //public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
-    //{
-    //    var usersQuery = _userManager.Users.AsQueryable();
-
-
-    //    if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-    //    {
-    //        var searchTermLower = query.SearchTerm.ToLower();
-    //        usersQuery = usersQuery.Where(u =>
-    //            EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
-    //            u.StaffCode.ToLower().Contains(searchTermLower));
-    //    }
-
-    //    usersQuery = usersQuery.OrderByDynamic(query.SortColumnName, query.SortColumnDirection);
-
-    //    var totalCount = await usersQuery.CountAsync();
-
-    //    var users = await usersQuery
-    //        .Skip((query.PageNumber - 1) * query.PageSize)
-    //        .Take(query.PageSize)
-    //        .ToListAsync();
-
-    //    //var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
-
-    //    var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
-
-
-
-    //    return new PaginatedList<UserBriefDto>(
-    //        userBriefDtos,
-    //        totalCount,
-    //        query.PageNumber,
-    //        query.PageSize
-    //    );
-    //}
-
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
-        var usersQuery = _userManager.Users.Where(u => u.Location == query.Location).AsQueryable();
+        var users = await InitialGetUserBriefAsync(query.SearchTerm,query.Location, query.SortColumnName, query.SortColumnDirection);
 
-        if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-        {
-            var searchTermLower = query.SearchTerm.ToLower();
-            usersQuery = usersQuery.Where(u =>
-                EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
-                u.StaffCode.ToLower().Contains(searchTermLower));
-        }
+       var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
 
-        usersQuery = usersQuery.OrderByDynamic(query.SortColumnName, query.SortColumnDirection);
+       if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+            userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
 
-        var totalCount = await usersQuery.CountAsync();
-
-        var users = await usersQuery
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize)
-            .ToListAsync();
-
-        var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
-
-        var userIds = users.Select(u => u.Id).ToList();
-
-        var userRoles = await _applicationDbContext.UserRoles
-            .Where(ur => userIds.Contains(ur.UserId))
-            .Join(_applicationDbContext.Roles,
-                ur => ur.RoleId,
-                r => r.Id,
-                (ur, r) => new { ur.UserId, RoleName = r.Name })
-            .ToListAsync();
-
-        foreach (var userBriefDto in userBriefDtos)
-        {
-            var userRole = userRoles.FirstOrDefault(ur => ur.UserId == userBriefDto.Id);
-            userBriefDto.Type = userRole?.RoleName ?? "Default";
-        }
-
-        return new PaginatedList<UserBriefDto>(
-            userBriefDtos,
-            totalCount,
+       return new PaginatedList<UserBriefDto>(
+            userBriefDtos
+                .Skip((query.PageNumber - 1) * query.PageSize)
+                .Take(query.PageSize)
+                .ToList(),
+            userBriefDtos.Count,
             query.PageNumber,
             query.PageSize
-        );
+       );
     }
+
+    // public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    // {
+    //     var usersQuery = _userManager.Users.Where(u => u.Location == query.Location).AsQueryable();
+
+    //     if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+    //     {
+    //         var searchTermLower = query.SearchTerm.ToLower();
+    //         usersQuery = usersQuery.Where(u =>
+    //             EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
+    //             u.StaffCode.ToLower().Contains(searchTermLower));
+    //     }
+
+    //     usersQuery = usersQuery.OrderByDynamic(query.SortColumnName, query.SortColumnDirection);
+
+    //     var totalCount = await usersQuery.CountAsync();
+
+    //     var users = await usersQuery
+    //         .Skip((query.PageNumber - 1) * query.PageSize)
+    //         .Take(query.PageSize)
+    //         .ToListAsync();
+
+    //     var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
+
+    //     var userIds = users.Select(u => u.Id).ToList();
+
+    //     var userRoles = await _applicationDbContext.UserRoles
+    //         .Where(ur => userIds.Contains(ur.UserId))
+    //         .Join(_applicationDbContext.Roles,
+    //             ur => ur.RoleId,
+    //             r => r.Id,
+    //             (ur, r) => new { ur.UserId, RoleName = r.Name })
+    //         .ToListAsync();
+
+    //     foreach (var userBriefDto in userBriefDtos)
+    //     {
+    //         var userRole = userRoles.FirstOrDefault(ur => ur.UserId == userBriefDto.Id);
+    //         userBriefDto.Type = userRole?.RoleName ?? "Default";
+    //     }
+
+    //     return new PaginatedList<UserBriefDto>(
+    //         userBriefDtos,
+    //         totalCount,
+    //         query.PageNumber,
+    //         query.PageSize
+    //     );
+    // }
 }
