@@ -68,6 +68,32 @@
         }
       }
     },
+    "/api/Assets/Categories": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "operationId": "GetAssetCategories",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/Assets/Status": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "operationId": "GetAssetStatus",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/Auth/change-password": {
       "post": {
         "tags": [

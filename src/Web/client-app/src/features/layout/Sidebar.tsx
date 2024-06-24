@@ -2,8 +2,6 @@ import { NavLink } from "react-router-dom";
 import {
   ASSETS_LINK,
   HOME_LINK,
-  MANAGE_USER_LINK,
-  TODO_ITEM_LINK,
   USER_LINK
 } from "../../constants/pages";
 import { useAppState } from "../../redux/redux-hooks";
