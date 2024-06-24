@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using AssetManagement.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using AssetManagement.Domain.Entities;
 
 namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets
@@ -19,6 +20,12 @@ namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets
         public string CategoryName { get; set; } = null!;
         public string AssetStatusName { get; set; } = null!;
 
-        
+        private class Mapping : Profile
+        {
+            public Mapping()
+            {
+                CreateMap<Asset, AssetDto>();
+            }
+        }
     }
 }
