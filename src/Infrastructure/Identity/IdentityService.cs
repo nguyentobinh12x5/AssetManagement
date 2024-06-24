@@ -14,8 +14,10 @@ using AssetManagement.Application.Users.Queries.GetUsersBySearch;
 using AssetManagement.Application.Users.Queries.GetUsersByType;
 using AssetManagement.Infrastructure.Data;
 
+
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -165,6 +167,7 @@ public class IdentityService : IIdentityService
 
         Guard.Against.NotFound(userId, user);
 
+        return await DeleteUserAsync(user);
         return await DeleteUserAsync(user);
     }
 
@@ -346,6 +349,9 @@ public class IdentityService : IIdentityService
 
     private List<UserBriefDto> FinalGetUserBriefAsync(List<UserBriefDto> userBriefDto, string orderDirection)
     {
+        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
+            userBriefDto.OrderByDescending(u => u.Type).ToList() :
+            userBriefDto.OrderBy(u => u.Type).ToList();
         return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
             userBriefDto.OrderByDescending(u => u.Type).ToList() :
             userBriefDto.OrderBy(u => u.Type).ToList();

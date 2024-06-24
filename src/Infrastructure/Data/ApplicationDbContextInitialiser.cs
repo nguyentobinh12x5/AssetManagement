@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 using AssetManagement.Domain.Constants;
 using AssetManagement.Domain.Entities;
