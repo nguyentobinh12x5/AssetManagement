@@ -74,7 +74,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
                       id="oldPassword"
                       label="Old Password"
                       name="currentPassword"
-                      isrequired
+                      required
                       aria-describedby="currentPasswordError"
                       apiError={apiError.currentPassword}
                     />
@@ -83,7 +83,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
                       id="newPassword"
                       label="New Password"
                       name="newPassword"
-                      isrequired
+                      required
                       aria-describedby="newPasswordError"
                       apiError={apiError.newPassword}
                     />

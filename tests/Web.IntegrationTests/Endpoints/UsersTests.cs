@@ -1,10 +1,20 @@
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Infrastructure.Data;
+using AssetManagement.Infrastructure.Identity;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;
+
+using Xunit;
+
+using Assert = Xunit.Assert;
 
 using Xunit;
 
@@ -17,7 +27,17 @@ namespace Web.IntegrationTests.Endpoints
     {
         private readonly TestWebApplicationFactory<Program> _factory;
         private readonly HttpClient _httpClient;
+    [Collection("Sequential")]
+    public class UsersTests : IClassFixture<TestWebApplicationFactory<Program>>
+    {
+        private readonly TestWebApplicationFactory<Program> _factory;
+        private readonly HttpClient _httpClient;
 
+        public UsersTests(TestWebApplicationFactory<Program> factory)
+        {
+            _factory = factory;
+            _httpClient = _factory.GetApplicationHttpClient();
+        }
         public UsersTests(TestWebApplicationFactory<Program> factory)
         {
             _factory = factory;

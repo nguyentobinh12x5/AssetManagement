@@ -1240,11 +1240,8 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "email": {
+          "username": {
             "type": "string"
-          },
-          "isEmailConfirmed": {
-            "type": "boolean"
           },
           "mustChangePassword": {
             "type": "boolean"

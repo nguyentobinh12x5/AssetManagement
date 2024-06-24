@@ -98,19 +98,29 @@ public class ApplicationDbContextInitialiser
         // Seed, if necessary
         if (!_context.TodoLists.Any())
         {
-            _context.TodoLists.Add(new TodoList
-            {
-                Title = "Todo List",
-                Items =
-                {
-                    new TodoItem { Title = "Make a todo list 📃" },
-                    new TodoItem { Title = "Check off the first item ✅" },
-                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
-                    new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
-                }
-            });
+            _context.AssetStatuses.AddRange(
+                new AssetStatus { Name = "Available" },
+                new AssetStatus { Name = "Not available" },
+                new AssetStatus { Name = "Waiting for Recycling" },
+                new AssetStatus { Name = "Recycled" },
+                new AssetStatus { Name = "Assigned" }
+            );
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Default Categories data
+        if (!_context.Categories.Any())
+        {
+            _context.Categories.AddRange(
+                new Category { Name = "Laptop", Code = "LA" },
+                new Category { Name = "Monitor", Code = "MO" },
+                new Category { Name = "Personal Computer", Code = "PC" }
+            );
 
             await _context.SaveChangesAsync();
         }
     }
+
+
 }

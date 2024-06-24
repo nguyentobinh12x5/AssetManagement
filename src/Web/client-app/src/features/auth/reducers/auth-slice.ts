@@ -1,17 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ILoginCommand } from '../interfaces/ILoginCommand';
 import { IChangePasswordFirstTimeCommand } from '../interfaces/IChangePasswordFirstTimeCommand';
+import { IUserInfo } from '../interfaces/IUserInfo';
 
 interface AuthState {
   isLoading: boolean;
-  user?: any;
+  user?: IUserInfo;
   isAuthenticated: boolean;
   loginError?: string;
+  isCheckingSession: boolean;
+  error?: string;
 }
 
 const initialState: AuthState = {
   isLoading: false,
   isAuthenticated: false,
+  isCheckingSession: true,
 };
 
 const AuthSlice = createSlice({
@@ -25,7 +29,7 @@ const AuthSlice = createSlice({
     }),
     getUserInfo: (state: AuthState) => ({
       ...state,
-      isLoading: true,
+      isCheckingSession: true,
     }),
     changePasswordFirstTime: (
       state: AuthState,
@@ -40,11 +44,12 @@ const AuthSlice = createSlice({
     }),
 
     // Set state
-    setUser: (state: AuthState, action: PayloadAction) => ({
+    setUser: (state: AuthState, action: PayloadAction<IUserInfo>) => ({
       ...state,
       user: action.payload,
       isLoading: false,
       isAuthenticated: true,
+      isCheckingSession: false,
     }),
     setAuth: (state: AuthState, action: PayloadAction) => ({
       ...state,
@@ -60,7 +65,7 @@ const AuthSlice = createSlice({
       ...state,
       isLoading: false,
       user: {
-        ...state.user,
+        ...state.user!,
         mustChangePassword: false,
       },
     }),

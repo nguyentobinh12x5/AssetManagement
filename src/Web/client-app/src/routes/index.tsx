@@ -1,9 +1,11 @@
 import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import SuspenseLoading from "../components/SuspenseLoading";
-import { AUTH, USER, HOME, TODO_ITEM } from "../constants/pages";
+import { AUTH, USER, HOME, TODO_ITEM, ASSETS } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
+import Assets from "../features/asset";
+
 const Home = lazy(() => import("../features/home"));
 const Auth = lazy(() => import("../features/auth"));
 const Users = lazy(() => import("../features/manager-user"));
@@ -34,6 +36,14 @@ const AppRoutes = () => {
             <PublicRoute showSidebar={false}>
               <Auth />
             </PublicRoute>
+          }
+        />
+        <Route
+          path={ASSETS}
+          element={
+            <PrivateRoute showSidebar={true}>
+              <Assets />
+            </PrivateRoute>
           }
         />
         <Route path={"*"} element={<div>Notfound</div>} />

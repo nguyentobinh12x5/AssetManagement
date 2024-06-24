@@ -22,8 +22,7 @@ public class UserInfoDtoTests
         };
 
         // Assert
-        userInfoDto.Email.Should().Be("test@example.com");
-        userInfoDto.IsEmailConfirmed.Should().BeTrue();
+        userInfoDto.Username.Should().Be("test@example.com");
         userInfoDto.MustChangePassword.Should().BeFalse();
     }
 

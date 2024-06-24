@@ -16,8 +16,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<TodoList> TodoLists => Set<TodoList>();
 
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
+    public DbSet<Asset> Assets => Set<Asset>();
+
+    public DbSet<Category> Categories => Set<Category>();
 
     public DbSet<ApplicationUser> ApplicationUser => Set<ApplicationUser>();
+
+    public DbSet<AssetStatus> AssetStatuses => Set<AssetStatus>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
