@@ -1,6 +1,6 @@
 namespace AssetManagement.Domain.Entities;
 
-public class Asset : BaseEntity
+public class Asset : BaseAuditableEntity
 {
     public string Code { get; set; } = null!;
     public string Name { get; set; } = null!;
