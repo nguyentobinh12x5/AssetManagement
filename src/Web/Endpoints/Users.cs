@@ -24,7 +24,8 @@ public class Users : EndpointGroupBase
             .MapPost(CreateUser)
             .MapDelete(DeleteUser, "{id}")
             .MapGet(GetUserByType, "Type")
-            .MapGet(SearchUsers, "Search");
+            .MapGet(SearchUsers, "Search")
+            .MapGet(GetUser);
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserList(ISender sender, [AsParameters] GetUsersQuery query)
@@ -40,6 +41,12 @@ public class Users : EndpointGroupBase
     public async Task<IResult> GetUser(ISender sender, string id)
     {
         var result = await sender.Send(new GetUserQuery { Id = id });
+        return Results.Ok(result);
+    }
+
+    public async Task<IResult> GetUserTypes(ISender sender)
+    {
+        var result = await sender.Send(new GetUserTypes());
         return Results.Ok(result);
     }
 

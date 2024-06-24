@@ -45,4 +45,6 @@ public interface IIdentityService
 
     Task<UserInfoDto> GetCurrentUserInfo(string userId);
 
+    Task<List<string?>> GetUserTypes();
+
 }

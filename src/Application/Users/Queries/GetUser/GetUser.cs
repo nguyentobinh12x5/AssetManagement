@@ -7,11 +7,11 @@ public record GetUserQuery() : IRequest<UserDto>
     public string Id { get; set; } = null!;
 };
 
-public class GetUsersQueryHandler : IRequestHandler<GetUserQuery, UserDto>
+public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
 {
     private readonly IIdentityService _identityService;
 
-    public GetUsersQueryHandler(
+    public GetUserQueryHandler(
         IIdentityService identityService
     )
     {

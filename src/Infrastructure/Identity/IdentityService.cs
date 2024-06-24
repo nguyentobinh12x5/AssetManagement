@@ -183,7 +183,7 @@ public class IdentityService : IIdentityService
 
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
-        var users = await InitialGetUserBriefAsync(string.Empty,query.Location, query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(string.Empty, query.Location, query.SortColumnName, query.SortColumnDirection);
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
 
@@ -375,7 +375,7 @@ public class IdentityService : IIdentityService
     }
     public async Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {
-        var users = await InitialGetUserBriefAsync(string.Empty,query.Location, query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(string.Empty, query.Location, query.SortColumnName, query.SortColumnDirection);
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types);
 
@@ -392,70 +392,31 @@ public class IdentityService : IIdentityService
             query.PageSize
         );
     }
+
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
-        var users = await InitialGetUserBriefAsync(query.SearchTerm,query.Location, query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(query.SearchTerm, query.Location, query.SortColumnName, query.SortColumnDirection);
 
-       var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
 
-       if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
+        if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
             userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
 
-       return new PaginatedList<UserBriefDto>(
-            userBriefDtos
-                .Skip((query.PageNumber - 1) * query.PageSize)
-                .Take(query.PageSize)
-                .ToList(),
-            userBriefDtos.Count,
-            query.PageNumber,
-            query.PageSize
-       );
+        return new PaginatedList<UserBriefDto>(
+             userBriefDtos
+                 .Skip((query.PageNumber - 1) * query.PageSize)
+                 .Take(query.PageSize)
+                 .ToList(),
+             userBriefDtos.Count,
+             query.PageNumber,
+             query.PageSize
+        );
     }
 
-    // public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
-    // {
-    //     var usersQuery = _userManager.Users.Where(u => u.Location == query.Location).AsQueryable();
-
-    //     if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-    //     {
-    //         var searchTermLower = query.SearchTerm.ToLower();
-    //         usersQuery = usersQuery.Where(u =>
-    //             EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
-    //             u.StaffCode.ToLower().Contains(searchTermLower));
-    //     }
-
-    //     usersQuery = usersQuery.OrderByDynamic(query.SortColumnName, query.SortColumnDirection);
-
-    //     var totalCount = await usersQuery.CountAsync();
-
-    //     var users = await usersQuery
-    //         .Skip((query.PageNumber - 1) * query.PageSize)
-    //         .Take(query.PageSize)
-    //         .ToListAsync();
-
-    //     var userBriefDtos = _mapper.Map<List<UserBriefDto>>(users);
-
-    //     var userIds = users.Select(u => u.Id).ToList();
-
-    //     var userRoles = await _applicationDbContext.UserRoles
-    //         .Where(ur => userIds.Contains(ur.UserId))
-    //         .Join(_applicationDbContext.Roles,
-    //             ur => ur.RoleId,
-    //             r => r.Id,
-    //             (ur, r) => new { ur.UserId, RoleName = r.Name })
-    //         .ToListAsync();
-
-    //     foreach (var userBriefDto in userBriefDtos)
-    //     {
-    //         var userRole = userRoles.FirstOrDefault(ur => ur.UserId == userBriefDto.Id);
-    //         userBriefDto.Type = userRole?.RoleName ?? "Default";
-    //     }
-
-    //     return new PaginatedList<UserBriefDto>(
-    //         userBriefDtos,
-    //         totalCount,
-    //         query.PageNumber,
-    //         query.PageSize
-    //     );
-    // }
+    public async Task<List<string?>> GetUserTypes()
+    {
+        return await _applicationDbContext.Roles
+            .Select(r => r.Name)
+            .ToListAsync();
+    }
 }

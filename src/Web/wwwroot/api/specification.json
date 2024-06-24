@@ -726,6 +726,7 @@
           {
             "name": "SearchTerm",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string",
               "nullable": true

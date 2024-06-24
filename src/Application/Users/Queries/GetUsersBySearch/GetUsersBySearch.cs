@@ -12,7 +12,7 @@ using AssetManagement.Domain.Constants;
 namespace AssetManagement.Application.Users.Queries.GetUsersBySearch;
 public record GetUsersBySearchQuery : IRequest<PaginatedList<UserBriefDto>>
 {
-    public string? SearchTerm { get; init; }
+    public required string SearchTerm { get; init; }
     public int PageNumber { get; init; } = AppPagingConstants.DefaultPageNumber;
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public string SortColumnName { get; init; } = "StaffCode";
