@@ -12,6 +12,12 @@ public class GetAssetsWithPaginationQuery : IRequest<PaginatedList<AssetBriefDto
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
+    
+    public string? CategoryName { get; init; }
+    
+    public string? AssetStatusName { get; init; }
+    
+    public string? SearchTerm { get; init; }
 }
 
 public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWithPaginationQuery, PaginatedList<AssetBriefDto>>
@@ -26,7 +32,24 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
     }
     public async Task<PaginatedList<AssetBriefDto>> Handle(GetAssetsWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Assets
+        var query = _context.Assets.AsQueryable();
+        
+        if (!string.IsNullOrEmpty(request.CategoryName))
+        {
+            query = query.Where(a => a.Category.Name == request.CategoryName);
+        }
+
+        if (!string.IsNullOrEmpty(request.AssetStatusName))
+        {
+            query = query.Where(a => a.AssetStatus.Name == request.AssetStatusName);
+        }
+        
+        if (!string.IsNullOrEmpty(request.SearchTerm))
+        {
+            query = query.Where(a => a.Name.Contains(request.SearchTerm) || a.Code.Contains(request.SearchTerm));
+        }
+        
+        return await query
             //.OrderBy(x => x.Title)
             .OrderByDynamic(request.SortColumnName, request.SortColumnDirection)
             .ProjectTo<AssetBriefDto>(_mapper.ConfigurationProvider)

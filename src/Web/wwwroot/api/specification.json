@@ -52,6 +52,33 @@
               "nullable": true
             },
             "x-position": 4
+          },
+          {
+            "name": "CategoryName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "AssetStatusName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 6
+          },
+          {
+            "name": "SearchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 7
           }
         ],
         "responses": {
@@ -64,32 +91,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/api/Assets/Categories": {
-      "get": {
-        "tags": [
-          "Assets"
-        ],
-        "operationId": "GetAssetCategories",
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/Assets/Status": {
-      "get": {
-        "tags": [
-          "Assets"
-        ],
-        "operationId": "GetAssetStatus",
-        "responses": {
-          "200": {
-            "description": ""
           }
         }
       }

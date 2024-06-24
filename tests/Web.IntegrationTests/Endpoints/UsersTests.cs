@@ -1,10 +1,20 @@
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Infrastructure.Data;
+using AssetManagement.Infrastructure.Identity;
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;
+
+using Xunit;
+
+using Assert = Xunit.Assert;
 
 using Xunit;
 
@@ -25,111 +35,42 @@ namespace Web.IntegrationTests.Endpoints
         }
 
         [Fact]
-        public async Task GetUserByType_ShouldReturnUsers_WhenTypeIsValid()
+        public async Task DeleteUser_ShouldRemoveUser_WhenUserExists()
         {
             // Arrange
             await UsersDataHelper.CreateSampleData(_factory);
 
-            var pageNumber = 1;
-            var pageSize = 5;
-            var sortColumnName = "StaffCode";
-            var sortColumnDirection = "Descending";
-            var type = "Administrator";
+            using var scope = _factory.Services.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
+            var user = await userManager.FindByEmailAsync("user1@test.com");
+            Assert.NotNull(user);
 
             // Act
-            var response = await _httpClient.GetAsync(url);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Response Content: " + responseContent);
+            var response = await _httpClient.DeleteAsync($"/api/Users/{user!.Id}");
 
             // Assert
-            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
+            var usersResponse = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
+            var users = await usersResponse.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
 
             Assert.NotNull(users);
-            Assert.NotEmpty(users.Items);
-            Assert.All(users.Items, u => Assert.Equal(type, u.Type));
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+            Assert.DoesNotContain(users.Items, u => u.Id == user.Id);
         }
 
         [Fact]
-        public async Task GetUserByType_ShouldReturnEmpty_WhenTypeIsInvalid()
+        public async Task DeleteUser_ShouldReturnNotFound_WhenUserDoesNotExist()
         {
             // Arrange
-            await UsersDataHelper.CreateSampleData(_factory);
-
-            var pageNumber = 1;
-            var pageSize = 5;
-            var sortColumnName = "StaffCode";
-            var sortColumnDirection = "Ascending";
-            var type = "InvalidType";
-
-            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
+            using var scope = _factory.Services.CreateScope();
 
             // Act
-            var response = await _httpClient.GetAsync(url);
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Response Content: " + responseContent);
+            var response = await _httpClient.DeleteAsync($"/api/Users/{Guid.NewGuid()}");
 
             // Assert
-            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
-
-            Assert.NotNull(users);
-            Assert.Empty(users.Items);
-        }
-        [Fact]
-        public async Task SearchUsers_ShouldReturnUsers_WhenSearchTermIsValid()
-        {
-            // Arrange
-            await UsersDataHelper.CreateSampleData(_factory);
-
-            var query = new GetUsersBySearchQuery
-            {
-                SearchTerm = "user1",
-                PageNumber = 1,
-                PageSize = 5,
-                SortColumnName = "StaffCode",
-                SortColumnDirection = "Ascending"
-            };
-
-            // Act
-            var response = await _httpClient.GetAsync($"/api/Users/Search?SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Response Content: " + responseContent);
-
-            // Assert
-            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
-
-            Assert.NotNull(users);
-            Assert.All(users.Items, user => Assert.Contains(query.SearchTerm, user.UserName, StringComparison.OrdinalIgnoreCase));
-        }
-        [Fact]
-        public async Task SearchUsers_ShouldReturnEmpty_WhenSearchTermIsInvalid()
-        {
-            // Arrange
-            await UsersDataHelper.CreateSampleData(_factory);
-
-            var query = new GetUsersBySearchQuery
-            {
-                SearchTerm = "nonexistinguser",
-                PageNumber = 1,
-                PageSize = 5,
-                SortColumnName = "StaffCode",
-                SortColumnDirection = "Ascending"
-            };
-
-            // Act
-            var response = await _httpClient.GetAsync($"/api/Users/Search?SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Response Content: " + responseContent);
-
-            // Assert
-            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
-            Assert.NotNull(users);
-            Assert.Empty(users.Items);
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }

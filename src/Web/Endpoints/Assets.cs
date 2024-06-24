@@ -19,7 +19,7 @@ public class Assets : EndpointGroupBase
     {
         return sender.Send(query);
     }
-
+    
     public async Task<IResult> GetAssetCategories(ISender sender)
     {
         var result = await sender.Send(new GetAssetCategories());
