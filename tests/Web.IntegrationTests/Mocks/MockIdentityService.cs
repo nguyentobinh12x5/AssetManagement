@@ -1,3 +1,4 @@
+
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
@@ -16,17 +17,8 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser)
-    {
-        throw new NotImplementedException();
-    }
 
     public Task<Result> ChangePasswordAsync(string currentPassword, string newPassword)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
         throw new NotImplementedException();
     }
@@ -37,16 +29,6 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {
         throw new NotImplementedException();
     }
@@ -62,11 +44,6 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<Result> DeleteUserAsync(string userId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
         throw new NotImplementedException();
     }
@@ -116,7 +93,22 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
+    public Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<string?>> GetUserTypes()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<(Result Result, string Id)> CreateUserAsync(CreateUserDto createUser)
     {
         throw new NotImplementedException();
     }

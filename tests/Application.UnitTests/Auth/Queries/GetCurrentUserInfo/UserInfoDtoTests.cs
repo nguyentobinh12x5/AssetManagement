@@ -15,9 +15,8 @@ public class UserInfoDtoTests
         // Arrange & Act
         var userInfoDto = new UserInfoDto
         {
-            Email = "test@example.com",
+            Username = "test@example.com",
             Location = "HCM",
-            IsEmailConfirmed = true,
             MustChangePassword = false
         };
 
@@ -32,9 +31,8 @@ public class UserInfoDtoTests
         // Arrange & Act
         var userInfoDto = new UserInfoDto
         {
-            Email = "test@example.com",
+            Username = "test@example.com",
             Location = "HCM",
-            IsEmailConfirmed = true,
             MustChangePassword = false
         };
 
@@ -52,9 +50,8 @@ public class UserInfoDtoTests
         // Act
         var userInfoDto = new UserInfoDto
         {
-            Email = "test@example.com",
+            Username = "test@example.com",
             Location = "HCM",
-            IsEmailConfirmed = true,
             MustChangePassword = false,
             Roles = roles
         };
