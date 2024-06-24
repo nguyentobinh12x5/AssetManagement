@@ -16,6 +16,8 @@ public class GetAssetsWithPaginationQuery : IRequest<PaginatedList<AssetBriefDto
     public string? CategoryName { get; init; }
     
     public string? AssetStatusName { get; init; }
+    
+    public string? SearchTerm { get; init; }
 }
 
 public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWithPaginationQuery, PaginatedList<AssetBriefDto>>
@@ -42,6 +44,10 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
             query = query.Where(a => a.AssetStatus.Name == request.AssetStatusName);
         }
         
+        if (!string.IsNullOrEmpty(request.SearchTerm))
+        {
+            query = query.Where(a => a.Name.Contains(request.SearchTerm) || a.Code.Contains(request.SearchTerm));
+        }
         
         return await query
             //.OrderBy(x => x.Title)
