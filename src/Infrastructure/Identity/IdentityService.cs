@@ -168,7 +168,6 @@ public class IdentityService : IIdentityService
         Guard.Against.NotFound(userId, user);
 
         return await DeleteUserAsync(user);
-        return await DeleteUserAsync(user);
     }
 
     public async Task<Result> DeleteUserAsync(ApplicationUser user)
@@ -352,9 +351,7 @@ public class IdentityService : IIdentityService
         return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
             userBriefDto.OrderByDescending(u => u.Type).ToList() :
             userBriefDto.OrderBy(u => u.Type).ToList();
-        return orderDirection.Equals("Descending", StringComparison.OrdinalIgnoreCase) ?
-            userBriefDto.OrderByDescending(u => u.Type).ToList() :
-            userBriefDto.OrderBy(u => u.Type).ToList();
+
     }
 
     public async Task<bool> IsUserDisabledAsync(string email)

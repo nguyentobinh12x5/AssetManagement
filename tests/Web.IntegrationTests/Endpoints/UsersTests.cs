@@ -1,10 +1,14 @@
 using System.Net.Http.Json;
+
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using Assert = Xunit.Assert;
+
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;
+
 using Xunit;
+
+using Assert = Xunit.Assert;
 
 namespace Web.IntegrationTests.Endpoints
 {

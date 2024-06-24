@@ -798,6 +798,19 @@
         }
       }
     },
+    "/api/Users/Types": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "GetUserTypes",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/WeatherForecasts": {
       "get": {
         "tags": [
@@ -1530,7 +1543,8 @@
             "format": "date-time"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         }
       },

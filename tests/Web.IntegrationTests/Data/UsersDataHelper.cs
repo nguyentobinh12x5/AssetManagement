@@ -8,7 +8,7 @@ namespace Web.IntegrationTests.Helpers
 {
     public static class UsersDataHelper
     {
-        private static List<ApplicationUser> UsersList = new()
+        private static readonly List<ApplicationUser> UsersList = new()
         {
             new ApplicationUser
             {
