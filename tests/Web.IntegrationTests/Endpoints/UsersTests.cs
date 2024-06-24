@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersBySearch;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
 
@@ -16,28 +17,15 @@ using Xunit;
 
 using Assert = Xunit.Assert;
 
-using Xunit;
-
-using Assert = Xunit.Assert;
-
 namespace Web.IntegrationTests.Endpoints
 {
     [Collection("Sequential")]
-    public class UsersTests : IClassFixture<TestWebApplicationFactory<Program>>
-    {
-        private readonly TestWebApplicationFactory<Program> _factory;
-        private readonly HttpClient _httpClient;
-    [Collection("Sequential")]
+
     public class UsersTests : IClassFixture<TestWebApplicationFactory<Program>>
     {
         private readonly TestWebApplicationFactory<Program> _factory;
         private readonly HttpClient _httpClient;
 
-        public UsersTests(TestWebApplicationFactory<Program> factory)
-        {
-            _factory = factory;
-            _httpClient = _factory.GetApplicationHttpClient();
-        }
         public UsersTests(TestWebApplicationFactory<Program> factory)
         {
             _factory = factory;
@@ -56,7 +44,7 @@ namespace Web.IntegrationTests.Endpoints
             var sortColumnDirection = "Descending";
             var type = "Administrator";
 
-            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
+            var url = $"/api/Users/type?Location=HCM&PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
 
             // Act
             var response = await _httpClient.GetAsync(url);
@@ -84,7 +72,7 @@ namespace Web.IntegrationTests.Endpoints
             var sortColumnDirection = "Ascending";
             var type = "InvalidType";
 
-            var url = $"/api/Users/type?PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
+            var url = $"/api/Users/type?Location=HCM&PageNumber={pageNumber}&PageSize={pageSize}&SortColumnName={sortColumnName}&SortColumnDirection={sortColumnDirection}&Types={type}";
 
             // Act
             var response = await _httpClient.GetAsync(url);
@@ -110,11 +98,12 @@ namespace Web.IntegrationTests.Endpoints
                 PageNumber = 1,
                 PageSize = 5,
                 SortColumnName = "StaffCode",
-                SortColumnDirection = "Ascending"
+                SortColumnDirection = "Ascending",
+                Location = "HCM"
             };
 
             // Act
-            var response = await _httpClient.GetAsync($"/api/Users/Search?SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
+            var response = await _httpClient.GetAsync($"/api/Users/Search?Location=HCM&SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
 
             var responseContent = await response.Content.ReadAsStringAsync();
             Console.WriteLine("Response Content: " + responseContent);
@@ -137,11 +126,12 @@ namespace Web.IntegrationTests.Endpoints
                 PageNumber = 1,
                 PageSize = 5,
                 SortColumnName = "StaffCode",
-                SortColumnDirection = "Ascending"
+                SortColumnDirection = "Ascending",
+                Location = "HCM"
             };
 
             // Act
-            var response = await _httpClient.GetAsync($"/api/Users/Search?SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
+            var response = await _httpClient.GetAsync($"/api/Users/Search?Location=HCM&SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
 
             var responseContent = await response.Content.ReadAsStringAsync();
             Console.WriteLine("Response Content: " + responseContent);
