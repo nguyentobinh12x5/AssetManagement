@@ -30,6 +30,7 @@ namespace AssetManagement.Application.UnitTests.Users.Queries.GetUsersByType
             var query = new GetUsersByTypeQuery
             {
                 Types = "Administrator,Staff",
+                Location = "HCM",
                 PageNumber = 1,
                 PageSize = 10,
                 SortColumnName = "StaffCode",
@@ -62,6 +63,7 @@ namespace AssetManagement.Application.UnitTests.Users.Queries.GetUsersByType
             var query = new GetUsersByTypeQuery
             {
                 Types = "NonExistentType",
+                Location = "HCM",
                 PageNumber = 1,
                 PageSize = 5,
                 SortColumnName = "id",

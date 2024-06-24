@@ -13,16 +13,16 @@ using NUnit.Framework;
 namespace AssetManagement.Application.UnitTests.Users.Queries;
 
 [TestFixture]
-public class GetUsersQueryHandlerTests
+public class GetUserQueryHandlerTests
 {
     private Mock<IIdentityService> _identityServiceMock;
-    private GetUsersQueryHandler _handler;
+    private GetUserQueryHandler _handler;
 
     [SetUp]
     public void SetUp()
     {
         _identityServiceMock = new Mock<IIdentityService>();
-        _handler = new GetUsersQueryHandler(_identityServiceMock.Object);
+        _handler = new GetUserQueryHandler(_identityServiceMock.Object);
     }
 
     [Test]

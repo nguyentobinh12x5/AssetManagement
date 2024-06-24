@@ -162,7 +162,7 @@ const UserSlice = createSlice({
 
     setCreateUser: (state: UserState, action: PayloadAction<IUserDetail>) => {
       const newUser: IBriefUser = {
-        id: action.payload.id ?? "something clearly wrong here",
+        id: action.payload.id ?? 'something clearly wrong here',
         fullName: `${action.payload.firstName} ${action.payload.lastName}`,
         joinDate: action.payload.joinDate,
         staffCode: action.payload.staffCode,
