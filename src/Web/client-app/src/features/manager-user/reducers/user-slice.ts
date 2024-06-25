@@ -130,6 +130,7 @@ const UserSlice = createSlice({
         ...existingUser,
         fullName: `${action.payload.firstName} ${action.payload.lastName}`,
         joinDate: action.payload.joinDate,
+        type: action.payload.type,
       };
 
       const updatedUsers =

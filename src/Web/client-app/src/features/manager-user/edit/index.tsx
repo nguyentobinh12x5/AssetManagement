@@ -1,4 +1,4 @@
-﻿import UseForm from "./EditForm";
+﻿import EditForm from "./EditForm";
 import "./EditForm.scss";
 const EditUser = () => {
   return (
@@ -6,7 +6,7 @@ const EditUser = () => {
       <div className="mb-3">
         <h3 className="primaryColor fw-bold fs-5">Edit User</h3>
       </div>
-      <UseForm />
+      <EditForm />
     </div>
   );
 };
