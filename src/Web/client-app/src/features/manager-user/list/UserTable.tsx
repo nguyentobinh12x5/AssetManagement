@@ -11,11 +11,9 @@ import { PencilFill } from "react-bootstrap-icons";
 import PopupComponent from "../details";
 import Loading from "../../../components/Loading";
 import ConfirmDisable from "../components/ConfirmDisable";
-import "../../../components/table/CustomTable.scss"
+import "../../../components/table/CustomTable.scss";
 import { Tooltip } from "react-bootstrap";
 import TextWithTooltip from "../../../components/table/helper/TextToolTip";
-
-
 
 type UserTableProps = {
   users: IPagedModel<IBriefUser>;
@@ -109,7 +107,9 @@ const UserTable: React.FC<UserTableProps> = ({
               <TextWithTooltip text={data.userName} />
             </td>
             <td className="lrgsize">
-              <TextWithTooltip text={new Date(data.joinDate).toLocaleDateString()} />
+              <TextWithTooltip
+                text={new Date(data.joinDate).toLocaleDateString()}
+              />
             </td>
             <td className="midsize">
               <TextWithTooltip text={data.type.slice(0, 5)} />
