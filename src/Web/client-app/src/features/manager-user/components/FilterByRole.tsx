@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
 import { getUserTypes, setUserTypes } from "../reducers/user-slice";
-import { setUser } from "../../auth/reducers/auth-slice";
 
 interface FilterByRoleProps {
   handleFilterByType: (types: string[]) => void;
@@ -14,12 +13,13 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (types.length <= 1) dispatch(getUserTypes());
-  });
+    if (types.length <= 1){
+      dispatch(getUserTypes());
+      setSelectedTypes(["All"])
+    } 
+  },[setSelectedTypes, dispatch, types.length]);
 
-  // Define the type for user types
   type UserType = (typeof types)[number];
-  //type UserType = "Staff" | "Administrator" | "All";
 
   // Mapping of actual values to display values
   const userTypesMap: Record<UserType, string> = types.reduce(
@@ -30,7 +30,6 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
     {} as Record<UserType, string>
   );
 
-  // Get the list of display values from the map
   const displayUserTypes = Object.values(userTypesMap);
 
   const handleTypeChange = (displayTypes: string[]) => {
@@ -44,13 +43,13 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
           (Object.keys(userTypesMap) as UserType[]).find(
             (key) => userTypesMap[key] === displayType
           )!
-      );
+      ).filter((category) => category !== "All");
 
       setSelectedTypes(actualTypes);
       handleFilterByType(actualTypes);
     }
   };
-
+  
   return (
     <DropdownFilter
       label="Type"
@@ -59,6 +58,7 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
         (type) => userTypesMap[type as UserType]
       )}
       handleOptionChange={handleTypeChange}
+      placeholder="Type"
     />
   );
 };

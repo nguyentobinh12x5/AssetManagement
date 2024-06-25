@@ -7,18 +7,21 @@ import {
   Form,
 } from "react-bootstrap";
 import { FunnelFill } from "react-bootstrap-icons";
+import "./DropDownFilter.scss";
 
 interface Props {
   label: string;
   options: string[];
   selectedOptions: string[];
   handleOptionChange: (options: string[]) => void;
+  placeholder?: string;
 }
 
 const DropdownFilter: React.FC<Props> = ({
   options,
   selectedOptions,
   handleOptionChange,
+  placeholder,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -58,18 +61,19 @@ const DropdownFilter: React.FC<Props> = ({
 
   return (
     <InputGroup
-      className="d-inline-flex align-items-center mb-3"
+      className="custom-input-group d-inline-flex align-items-center mb-3"
       onClick={() => {
         handleDropdownToggle();
       }}
     >
       <FormControl
-        placeholder="Search..."
+        placeholder={placeholder ? placeholder : "Search..."}
         value={searchTerm}
         onChange={handleSearchChange}
         onClick={() => setDropdownOpen(true)}
       />
       <DropdownButton
+        className="btn-group position-static"
         show={dropdownOpen}
         variant="outline-secondary"
         title={<FunnelFill />}

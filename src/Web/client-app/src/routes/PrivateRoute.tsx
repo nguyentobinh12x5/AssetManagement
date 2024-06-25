@@ -13,8 +13,6 @@ const PrivateRoute: React.FC<Props> = ({ children, showSidebar = true }) => {
   const { isAuthenticated, isCheckingSession, user } = useAppState(
     (state) => state.auth
   );
-
-  console.log(user);
   if (isCheckingSession) return <InlineLoader />;
 
   if (!isAuthenticated) return <Navigate to={"/auth/login"} />;
