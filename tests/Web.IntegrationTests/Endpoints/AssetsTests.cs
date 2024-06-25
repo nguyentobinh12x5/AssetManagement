@@ -126,4 +126,32 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(assets);
         Assert.Empty(assets.Items);
     }
+    [Fact]
+    public async Task GetAsset_ShouldReturnAssetData()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        // Act
+        var asset = await _httpClient.GetFromJsonAsync<AssetDto>("/api/Assets/1");
+
+        // Assert
+        Assert.NotNull(asset);
+        Assert.Equal(1, asset.Id);
+        Assert.Equal("ASSET-00001", asset.Code);
+        Assert.Equal("Laptop HP", asset.Name);
+    }
+
+    [Fact]
+    public async Task GetAsset_InvalidId_ShouldReturnNotFound()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        // Act
+        var response = await _httpClient.GetAsync("/api/Assets/999");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }
