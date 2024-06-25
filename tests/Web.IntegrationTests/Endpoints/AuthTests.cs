@@ -226,4 +226,44 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(problemDetails);
         Assert.Equal("Password is incorrect", problemDetails.Detail);
     }
+
+    [Fact]
+    public async Task Logout_ShouldReturnNoContent_WhenAuthorizedUserLogout()
+    {
+        // Arrange
+        var loginRequest = new LoginRequest
+        {
+            Email = "administrator@localhost",
+            Password = "Administrator1!",
+
+        };
+        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/auth/logout", new { });
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        // Check if cookies are removed
+        var setCookieHeaders = response.Headers.GetValues("Set-Cookie").ToList();
+        Assert.NotEmpty(setCookieHeaders);
+
+        var identityCookie = setCookieHeaders.FirstOrDefault(header => header.Contains(".AspNetCore.Identity.Application"));
+        Assert.NotNull(identityCookie);
+        Assert.Contains("expires=", identityCookie);
+        Assert.Contains(".AspNetCore.Identity.Application=;", identityCookie);
+
+    }
+
+    [Fact]
+    public async Task Logout_ShouldReturnUnauthorized_WhenUserNotLoggedIn()
+    {
+        // Arrange
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/auth/logout", new { });
+
+        // Assert
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+    }
 }

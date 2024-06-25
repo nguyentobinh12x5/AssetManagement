@@ -1,6 +1,6 @@
 import { Dropdown } from "react-bootstrap";
 import { useAppDispatch, useAppState } from "../../redux/redux-hooks";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ChangePasswordForm from "../auth/changepassword/ChangePasswordForm";
 import { useState } from "react";
 import { logout } from "../auth/reducers/auth-slice";
@@ -8,28 +8,26 @@ import { IUserInfo } from "../auth/interfaces/IUserInfo";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
-  const location = useLocation();
-  const isAtLoginPage = location.pathname.includes("login");
   const HeaderTitle = isAuthenticated ? "Home" : "Online Asset Management";
 
   return (
     <div className="header align-items-center font-weight-bold">
       <div className="container-lg-min mh-100 container-fluid d-flex justify-content-between py-1">
         <div className="d-flex align-items-center gap-2">
-          {/* {isAtLoginPage && (
+          {!isAuthenticated && (
             <img
               alt="Online asset management icon"
               src="/images/Logo_lk.png"
               className="header-logo"
             />
-          )} */}
+          )}
           <p className="headText">{HeaderTitle}</p>
         </div>
 
         {user ? (
           <UserDropdown user={user} />
         ) : (
-          !isAtLoginPage && (
+          !isAuthenticated && (
             <Link
               to={"/auth/login"}
               className="text-white text-decoration-none"
@@ -48,7 +46,6 @@ export default Header;
 const UserDropdown = (props: { user: IUserInfo }) => {
   const { user } = props;
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
@@ -57,9 +54,7 @@ const UserDropdown = (props: { user: IUserInfo }) => {
     setShowChangePasswordModal(false);
 
   const handleLogout = () => {
-    console.log("Logout");
     dispatch(logout());
-    navigate("/auth/login");
   };
   return (
     <>
