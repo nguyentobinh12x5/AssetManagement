@@ -87,9 +87,9 @@ const AssetTable: React.FC<AssetTableProps> = ({
         pagination={pagination}
       >
         {items?.map((data) => (
-          <tr key={data.id}>
+          <tr key={data.id} onClick={() => handleShowPopup(data.id)}>
             <td>{data.code}</td>
-            <td onClick={() => handleShowPopup(data.id)}>{data.name}</td>
+            <td>{data.name}</td>
             <td>{data.categoryName}</td>
             <td>{data.assetStatusName}</td>
             <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0">

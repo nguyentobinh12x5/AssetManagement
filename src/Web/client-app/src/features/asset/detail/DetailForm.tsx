@@ -15,7 +15,6 @@ type AssetID = {
 };
 
 const DetailForm: React.FC<AssetID>  = ({id, onClose}) => {
-  console.log('ID', id)
   const [isModalOpen, setIsModalOpen] = useState(true);
   const dispatch = useDispatch();
   const { assetDetail } = useSelector((state: RootState) => state.assetDetail);
