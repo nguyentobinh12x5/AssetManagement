@@ -15,14 +15,13 @@ public class UserInfoDtoTests
         // Arrange & Act
         var userInfoDto = new UserInfoDto
         {
-            Email = "test@example.com",
-            IsEmailConfirmed = true,
+            Username = "test@example.com",
+            Location = "HCM",
             MustChangePassword = false
         };
 
         // Assert
-        userInfoDto.Email.Should().Be("test@example.com");
-        userInfoDto.IsEmailConfirmed.Should().BeTrue();
+        userInfoDto.Username.Should().Be("test@example.com");
         userInfoDto.MustChangePassword.Should().BeFalse();
     }
 
@@ -32,8 +31,8 @@ public class UserInfoDtoTests
         // Arrange & Act
         var userInfoDto = new UserInfoDto
         {
-            Email = "test@example.com",
-            IsEmailConfirmed = true,
+            Username = "test@example.com",
+            Location = "HCM",
             MustChangePassword = false
         };
 
@@ -51,8 +50,8 @@ public class UserInfoDtoTests
         // Act
         var userInfoDto = new UserInfoDto
         {
-            Email = "test@example.com",
-            IsEmailConfirmed = true,
+            Username = "test@example.com",
+            Location = "HCM",
             MustChangePassword = false,
             Roles = roles
         };

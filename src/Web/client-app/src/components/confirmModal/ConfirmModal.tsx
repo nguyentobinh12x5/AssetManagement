@@ -15,7 +15,6 @@ interface Props {
 const ConfirmModal: React.FC<Props> = ({
   title,
   isShow,
-  onHide,
   children,
   dialogClassName = "",
   isShowClose,

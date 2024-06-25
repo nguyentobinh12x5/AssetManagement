@@ -212,7 +212,8 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         var loginRequest = new LoginRequest
         {
             Email = "administrator@localhost",
-            Password = "Administrator1!"
+            Password = "Administrator1!",
+
         };
         await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
 

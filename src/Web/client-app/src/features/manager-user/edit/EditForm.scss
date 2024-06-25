@@ -1,0 +1,15 @@
+.user-form {
+  width: 500px;
+  margin: auto;
+  padding-top: 50px;
+
+  @media (max-width: 768px) {
+    width: 80%;
+    padding-top: 50px;
+  }
+
+  @media (max-width: 576px) {
+    width: 100%;
+    padding-top: 20px;
+  }
+}

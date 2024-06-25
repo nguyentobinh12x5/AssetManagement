@@ -44,7 +44,11 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
           <div className="changepassword-form-wrapper">
             <div>Your password has been changed successfully!</div>
             <div className="d-flex mt-3 justify-content-end">
-              <Button className="btn-light btn-outline-dark" onClick={onHide}>
+              <Button
+                className="btn-light btn-outline-dark"
+                style={{ marginRight: "4.5rem", marginTop: "1rem" }}
+                onClick={onHide}
+              >
                 Close
               </Button>
             </div>
@@ -70,7 +74,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
                       id="oldPassword"
                       label="Old Password"
                       name="currentPassword"
-                      isrequired
+                      required
                       aria-describedby="currentPasswordError"
                       apiError={apiError.currentPassword}
                     />
@@ -79,7 +83,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
                       id="newPassword"
                       label="New Password"
                       name="newPassword"
-                      isrequired
+                      required
                       aria-describedby="newPasswordError"
                       apiError={apiError.newPassword}
                     />

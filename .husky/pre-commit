@@ -2,6 +2,6 @@
 . "$(dirname "$0")/_/husky.sh"
 
 # Run all formatting tasks
-npx prettier --write ./src/Web/client-app
 dotnet husky run
+npx prettier --write ./src/Web/client-app
 
