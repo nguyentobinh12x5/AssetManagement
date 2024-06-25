@@ -48,12 +48,28 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
     {
         if (!string.IsNullOrEmpty(request.CategoryName))
         {
-            query = query.Where(a => a.Category.Name == request.CategoryName);
+            var categoryNames = request.CategoryName.Split(',')
+                .Select(c => c.Trim())
+                .Where(c => !string.IsNullOrEmpty(c))
+                .ToList();
+
+            if (categoryNames.Any())
+            {
+                query = query.Where(a => categoryNames.Contains(a.Category.Name));
+            }
         }
 
         if (!string.IsNullOrEmpty(request.AssetStatusName))
         {
-            query = query.Where(a => a.AssetStatus.Name == request.AssetStatusName);
+            var assetStatusNames = request.AssetStatusName.Split(',')
+                .Select(c => c.Trim())
+                .Where(c => !string.IsNullOrEmpty(c))
+                .ToList();
+
+            if (assetStatusNames.Any())
+            {
+                query = query.Where(a => assetStatusNames.Contains(a.AssetStatus.Name));
+            }
         }
         
         if (!string.IsNullOrEmpty(request.SearchTerm))
