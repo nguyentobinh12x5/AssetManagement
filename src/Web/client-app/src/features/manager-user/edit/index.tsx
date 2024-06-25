@@ -1,5 +1,6 @@
 import EditForm from "./EditForm";
 import "./EditForm.scss";
+
 const EditUser = () => {
   return (
     <div className="user-form">
