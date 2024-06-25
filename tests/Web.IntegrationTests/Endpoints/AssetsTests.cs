@@ -1,5 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using System.Threading.Tasks;
 
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
@@ -12,46 +14,116 @@ using Xunit;
 
 using Assert = Xunit.Assert;
 
-namespace Web.IntegrationTests.Endpoints
+namespace Web.IntegrationTests.Endpoints;
+
+[Collection("Sequential")]
+public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
 {
-    [Collection("Sequential")]
-    public class AssetsTests : IClassFixture<TestWebApplicationFactory<Program>>
+    private readonly TestWebApplicationFactory<Program> _factory;
+    private readonly HttpClient _httpClient;
+
+    public AssetTests(TestWebApplicationFactory<Program> factory)
     {
-        private readonly TestWebApplicationFactory<Program> _factory;
-        private readonly HttpClient _httpClient;
+        _factory = factory;
+        _httpClient = _factory.GetApplicationHttpClient();
+    }
 
-        public AssetsTests(TestWebApplicationFactory<Program> factory)
-        {
-            _factory = factory;
-            _httpClient = _factory.GetApplicationHttpClient();
-        }
+    [Fact]
+    public async Task GetAssetsWithPagination_ShouldReturnAssetsData()
+    {
+        //Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
 
-        [Fact]
-        public async Task GetAsset_ValidId_ReturnsAssetDto()
-        {
-            // Arrange
-            await AssetDataHelper.CreateSampleData(_factory);
-            var assetId = 1;
+        //Act
+        var assets = await _httpClient
+            .GetFromJsonAsync<PaginatedList<AssetBriefDto>>(
+                "/api/Assets?PageNumber=1&PageSize=2&SortColumnName=Name&SortColumnDirection=Descending"
+            );
 
-            // Act
-            var assetDto = await _httpClient.GetFromJsonAsync<AssetDto>($"/Assets/{assetId}");
+        //Assert
+        Assert.NotNull(assets);
+        Assert.Equal(2, assets.Items.Count);
+    }
+    [Fact]
+    public async Task GetAssetsWithPaginationAndFilterCategory_ShouldReturnFilteredAssetsData()
+    {
+        //Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
 
-            // Assert
-            Assert.NotNull(assetDto);
-            Assert.Equal(assetId, assetDto.Id);
-        }
+        //Act
+        var assets = await _httpClient
+            .GetFromJsonAsync<PaginatedList<AssetBriefDto>>(
+                "/api/Assets?PageNumber=1&PageSize=2&SortColumnName=Name&SortColumnDirection=Descending&CategoryName=Laptop"
+            );
 
-        [Fact]
-        public async Task GetAsset_InvalidId_ReturnsNotFound()
-        {
-            // Arrange
-            var invalidAssetId = 999;
+        //Assert
+        Assert.NotNull(assets);
+        Assert.Single(assets.Items);
+    }
+    [Fact]
+    public async Task GetAssetsWithPaginationAndFilterStatus_ShouldReturnFilteredAssetsData()
+    {
+        //Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
 
-            // Act
-            var response = await _httpClient.GetAsync($"/Assets/{invalidAssetId}");
+        //Act
+        var assets = await _httpClient
+            .GetFromJsonAsync<PaginatedList<AssetBriefDto>>(
+                "/api/Assets?PageNumber=1&PageSize=2&SortColumnName=Name&SortColumnDirection=Descending&AssetStatusName=Available"
+            );
 
-            // Assert
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-        }
+        //Assert
+        Assert.NotNull(assets);
+        Assert.Single(assets.Items);
+    }
+    [Fact] 
+    public async Task GetAssetsWithPaginationAndSearchByName_ShouldReturnFilteredAssetsData()
+    {
+        //Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        //Act
+        var assets = await _httpClient
+            .GetFromJsonAsync<PaginatedList<AssetBriefDto>>(
+                "/api/Assets?PageNumber=1&PageSize=2&SortColumnName=Name&SortColumnDirection=Descending&SearchTerm=HP"
+            );
+
+        //Assert
+        Assert.NotNull(assets);
+        Assert.Single(assets.Items);
+    }
+    [Fact]
+    public async Task GetAssetsWithPaginationAndFilterCategoryAndStatus_ShouldReturnFilteredAssetsData()
+    {
+        //Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        //Act
+        var assets = await _httpClient
+            .GetFromJsonAsync<PaginatedList<AssetBriefDto>>(
+                "/api/Assets?PageNumber=1&PageSize=2&SortColumnName=Name&SortColumnDirection=Descending&CategoryName=Laptop&AssetStatusName=Available"
+            );
+
+        //Assert
+        Assert.NotNull(assets);
+        Assert.Single(assets.Items);
+    }
+
+    [Fact]
+    public async Task GetAssetsWithPagination_ShouldReturnEmptyAssets()
+    {
+        //Arrange 
+        await AssetsDataHelper.CreateSampleData(_factory);
+        
+        //Act
+        
+        var assets = await _httpClient
+            .GetFromJsonAsync<PaginatedList<AssetBriefDto>>(
+                "/api/Assets?PageNumber=3&PageSize=2&SortColumnName=Name&SortColumnDirection=Descending"
+            );
+
+        //Assert
+        Assert.NotNull(assets);
+        Assert.Empty(assets.Items);
     }
 }

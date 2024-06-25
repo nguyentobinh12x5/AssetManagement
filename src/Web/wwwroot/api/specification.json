@@ -6,22 +6,79 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Assets/{id}": {
+    "/api/Assets": {
       "get": {
         "tags": [
           "Assets"
         ],
-        "operationId": "GetAsset",
+        "operationId": "GetAssetList",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "name": "PageNumber",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
             },
             "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "SortColumnName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "SortColumnDirection",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "CategoryName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 5
+          },
+          {
+            "name": "AssetStatusName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 6
+          },
+          {
+            "name": "SearchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 7
           }
         ],
         "responses": {
@@ -30,10 +87,36 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetDto"
+                  "$ref": "#/components/schemas/PaginatedListOfAssetBriefDto"
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Assets/Categories": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "operationId": "GetAssetCategories",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/Assets/Status": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "operationId": "GetAssetStatus",
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }
@@ -1208,38 +1291,6 @@
   },
   "components": {
     "schemas": {
-      "AssetDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "code": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "specification": {
-            "type": "string"
-          },
-          "installedDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "categoryName": {
-            "type": "string"
-          },
-          "assetStatusName": {
-            "type": "string"
-          }
-        }
-      },
       "UpdatePasswordCommand": {
         "type": "object",
         "additionalProperties": false,

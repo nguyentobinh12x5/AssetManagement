@@ -17,6 +17,10 @@ using Xunit;
 
 using Assert = Xunit.Assert;
 
+using Xunit;
+
+using Assert = Xunit.Assert;
+
 namespace Web.IntegrationTests.Endpoints
 {
     [Collection("Sequential")]
@@ -142,4 +146,97 @@ namespace Web.IntegrationTests.Endpoints
             Assert.Empty(users.Items);
         }
     }
+        [Fact]
+        public async Task DeleteUser_ShouldRemoveUser_WhenUserExists()
+        {
+            // Arrange
+            await UsersDataHelper.CreateSampleData(_factory);
+
+            using var scope = _factory.Services.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            var user = await userManager.FindByEmailAsync("user1@test.com");
+            Assert.NotNull(user);
+
+            // Act
+            var response = await _httpClient.DeleteAsync($"/api/Users/{user!.Id}");
+
+            // Assert
+            var usersResponse = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
+            var users = await usersResponse.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
+
+            Assert.NotNull(users);
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+            Assert.DoesNotContain(users.Items, u => u.Id == user.Id);
+        }
+
+        [Fact]
+        public async Task DeleteUser_ShouldReturnNotFound_WhenUserDoesNotExist()
+        {
+            // Arrange
+            using var scope = _factory.Services.CreateScope();
+
+            // Act
+            var response = await _httpClient.DeleteAsync($"/api/Users/{Guid.NewGuid()}");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+    }
+        public async Task SearchUsers_ShouldReturnUsers_WhenSearchTermIsValid()
+        {
+            // Arrange
+            await UsersDataHelper.CreateSampleData(_factory);
+
+            var query = new GetUsersBySearchQuery
+            {
+                SearchTerm = "user1",
+                PageNumber = 1,
+                PageSize = 5,
+                SortColumnName = "StaffCode",
+                SortColumnDirection = "Ascending"
+            };
+
+            // Act
+            var response = await _httpClient.GetAsync($"/api/Users/Search?SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Response Content: " + responseContent);
+
+            // Assert
+            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
+
+            Assert.NotNull(users);
+            Assert.All(users.Items, user => Assert.Contains(query.SearchTerm, user.UserName, StringComparison.OrdinalIgnoreCase));
+        }
+        [Fact]
+        public async Task SearchUsers_ShouldReturnEmpty_WhenSearchTermIsInvalid()
+        {
+            // Arrange
+            await UsersDataHelper.CreateSampleData(_factory);
+
+            var query = new GetUsersBySearchQuery
+            {
+                SearchTerm = "nonexistinguser",
+                PageNumber = 1,
+                PageSize = 5,
+                SortColumnName = "StaffCode",
+                SortColumnDirection = "Ascending"
+            };
+
+            // Act
+            var response = await _httpClient.GetAsync($"/api/Users/Search?SearchTerm={query.SearchTerm}&PageNumber={query.PageNumber}&PageSize={query.PageSize}&SortColumnName={query.SortColumnName}&SortColumnDirection={query.SortColumnDirection}");
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("Response Content: " + responseContent);
+
+            // Assert
+            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
+            Assert.NotNull(users);
+            Assert.Empty(users.Items);
+        }
+    }
+>>>>>>>>> Temporary merge branch 2
 }
