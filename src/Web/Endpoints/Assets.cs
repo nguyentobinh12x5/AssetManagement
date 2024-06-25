@@ -15,19 +15,19 @@ public class Assets : EndpointGroupBase
             .AllowAnonymous()
             .MapGet(GetAssetList)
             .MapGet(GetAssetCategories, "Categories")
-            .MapGet(GetAssetStatus, "Status");
+            .MapGet(GetAssetStatus, "Status")
             .MapGet(GetAsset, "{id}");
     }
 
     public Task<PaginatedList<AssetBriefDto>> GetAssetList(ISender sender, [AsParameters] GetAssetsWithPaginationQuery query)
-
+    {
+        return sender.Send(query);
+    }
     public async Task<AssetDto> GetAsset(ISender sender, int id)
     {
 	    return await sender.Send(new GetAssetByIdQuery(id));
 	}
-    {
-        return sender.Send(query);
-    }
+    
     
     public async Task<IResult> GetAssetCategories(ISender sender)
     {

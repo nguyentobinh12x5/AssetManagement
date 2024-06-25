@@ -3,6 +3,7 @@ import {
   getAssetCategoriesRequest,
   getAssetStatusesRequest,
   getAssetsRequest,
+  getAssetByIdRequest
 } from './requests';
 import { call, put } from 'redux-saga/effects';
 import {
