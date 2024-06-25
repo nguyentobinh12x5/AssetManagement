@@ -1,6 +1,9 @@
 ﻿using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManagement.Web.Endpoints;
 
@@ -12,13 +15,19 @@ public class Assets : EndpointGroupBase
             .AllowAnonymous()
             .MapGet(GetAssetList)
             .MapGet(GetAssetCategories, "Categories")
-            .MapGet(GetAssetStatus, "Status");
+            .MapGet(GetAssetStatus, "Status")
+            .MapGet(GetAsset, "{id}");
     }
 
     public Task<PaginatedList<AssetBriefDto>> GetAssetList(ISender sender, [AsParameters] GetAssetsWithPaginationQuery query)
     {
         return sender.Send(query);
     }
+    public async Task<AssetDto> GetAsset(ISender sender, int id)
+    {
+	    return await sender.Send(new GetAssetByIdQuery(id));
+	}
+    
     
     public async Task<IResult> GetAssetCategories(ISender sender)
     {

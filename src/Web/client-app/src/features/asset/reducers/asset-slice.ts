@@ -39,6 +39,7 @@ const initialState: AssetState = {
   categories: ['All'],
   assetQuery: defaultAssetQuery,
   isDataFetched: false,
+  error: null,
 };
 const AssetSlice = createSlice({
   initialState,

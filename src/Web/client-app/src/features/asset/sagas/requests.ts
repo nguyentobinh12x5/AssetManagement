@@ -4,6 +4,7 @@ import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 import { AxiosResponse } from 'axios';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IBriefAsset } from '../interfaces/IBriefAsset';
+import { IAssetDetail } from '../interfaces/IAssetDetail';
 
 export function getAssetsRequest(
   assetQuery: IAssetQuery
@@ -26,4 +27,8 @@ export function getAssetStatusesRequest(): Promise<AxiosResponse<string[]>> {
 
 export function getAssetCategoriesRequest(): Promise<AxiosResponse<string[]>> {
   return RequestService.axios.get(`${ENDPOINTS.ASSETS}/Categories`);
+}
+
+export function getAssetByIdRequest(id: number): Promise<AxiosResponse<IAssetDetail>> {
+  return RequestService.axios.get(`${ENDPOINTS.ASSETS}/${id}`);
 }

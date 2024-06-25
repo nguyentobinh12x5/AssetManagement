@@ -7,11 +7,15 @@ import {
 import {
   handleGetAssets,
   handleGetAssetsCategories,
-  handleGetAssetsStatuses,
+    handleGetAssetsStatuses,
+    handleGetAssetById
 } from './handles';
+
+import { getAssetById } from '../reducers/asset-detail-slice';
 
 export default function* authorizeSagas() {
   yield takeLatest(getAssets.type, handleGetAssets);
   yield takeLatest(getAssetStatuses.type, handleGetAssetsStatuses);
   yield takeLatest(getAssetCategories.type, handleGetAssetsCategories);
+  yield takeLatest(getAssetById.type, handleGetAssetById);
 }

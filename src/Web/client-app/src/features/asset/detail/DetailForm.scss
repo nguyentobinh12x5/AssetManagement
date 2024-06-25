@@ -1,0 +1,27 @@
+.modal-detail.modal-dialog
+{
+    max-width: 700px;
+}
+.table-detail th{
+    padding-left: 0px;
+    position: relative;
+}
+.table-row-detail td{
+    padding-left: 0px;
+}
+
+.modal-detail .modal-content {
+    .custom-header {
+        padding: 1rem 2rem;
+    }
+
+    .modal-body {
+        padding: 1rem 2rem;
+    }
+
+    .custom-header {
+        #login-modal{
+            padding: 0;
+        }
+    }
+}

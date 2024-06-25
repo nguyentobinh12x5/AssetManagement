@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { PencilFill, XCircle } from "react-bootstrap-icons";
 import Loading from "../../../components/Loading";
 import { IBriefAsset } from "../interfaces/IBriefAsset";
+import DetailForm from "../detail/DetailForm";
 
 type AssetTableProps = {
   assets: IPagedModel<IBriefAsset>;
@@ -112,7 +113,9 @@ const AssetTable: React.FC<AssetTableProps> = ({
           </tr>
         ))}
       </Table>
-      {selectedAsset && <>{/* PopupComponent View Detail */}</>}
+      {selectedAsset && showPopup && (
+        <DetailForm id={selectedAsset} onClose={handleClosePopup} />
+      )}
     </>
   );
 };

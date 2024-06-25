@@ -7,6 +7,7 @@ import FilterByCategory from "../components/FilterByCategory";
 import SearchBox from "../components/SearchBox";
 import useAssetList from "./useAssetList";
 import "./AssetList.scss";
+import DetailForm from "../detail/DetailForm";
 
 const AssetList = () => {
   const {
