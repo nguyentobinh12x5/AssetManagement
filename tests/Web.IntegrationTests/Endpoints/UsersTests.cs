@@ -1,9 +1,8 @@
+using System.Net;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
 
 using Microsoft.AspNetCore.Identity;
@@ -11,10 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;
-
-using Xunit;
-
-using Assert = Xunit.Assert;
 
 using Xunit;
 
@@ -41,14 +36,14 @@ namespace Web.IntegrationTests.Endpoints
             await UsersDataHelper.CreateSampleData(_factory);
 
             using var scope = _factory.Services.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             var user = await userManager.FindByEmailAsync("user1@test.com");
+            
             Assert.NotNull(user);
 
             // Act
-            var response = await _httpClient.DeleteAsync($"/api/Users/{user!.Id}");
+            var response = await _httpClient.DeleteAsync($"/api/Users/{user.Id}");
 
             // Assert
             var usersResponse = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");

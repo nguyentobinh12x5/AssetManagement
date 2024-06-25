@@ -16,35 +16,23 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public Task<(Result Result, string StaffCode)> CreateUserAsync(CreateUserDto createUser)
+    public Task<(Result Result, string Id)> CreateUserAsync(CreateUserDto createUser)
     {
         throw new NotImplementedException();
     }
+
 
     public Task<Result> ChangePasswordAsync(string currentPassword, string newPassword)
     {
         throw new NotImplementedException();
     }
-
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public Task<Result> ChangePasswordFirstTimeAsync(string newPassword)
     {
         throw new NotImplementedException();
     }
-
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
-    {
-        throw new NotImplementedException();
-    }
+    
 
     public Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {
@@ -72,6 +60,11 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<UserInfoDto> GetCurrentUserInfo(string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<string?>> GetUserTypes()
     {
         throw new NotImplementedException();
     }
