@@ -1,0 +1,44 @@
+/* Custom table styling to add a gap on the right side of the bottom border */
+.table th,
+.table td {
+  position: relative;
+  border-bottom: 1px solid white; /* Default table border color */
+  overflow: hidden; 
+  white-space: nowrap;     
+  text-overflow: ellipsis;   
+}
+
+.table td.smlsize  {
+  width: 5%;
+}
+
+.table td.midsize  {
+  width: 13%;
+}
+
+.table td.lrgsize  {
+  width: 22%;
+}
+
+.table td.action::after  {
+  max-width: 50%;
+  border-bottom: solid white; 
+}
+
+/* The pseudo-element creates a gap effect on the right side of the bottom border */
+.table th::after{
+  border-bottom: 2px solid #6b6b6b; 
+}
+
+.table td::after{
+  border-bottom: 2px solid #dad6d6;
+}
+
+.table th::after,
+.table td::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  right: 20px; /* The width of the gap */
+  bottom: -1px; /* Align the bottom border */
+}
