@@ -41,7 +41,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
   const handleCategoryChange = (displayCategories: string[]) => {
     if (displayCategories.length === 0) {
       setSelectedCategories(["All"]);
-      handleFilterByCategory(["All"]);
+      handleFilterByCategory([]);
     } else {
       // Convert display categories to actual categories
       const actualCategories: AssetCategory[] = displayCategories.map(
