@@ -1,5 +1,4 @@
-﻿using Ardalis.GuardClauses;
-
+﻿
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
@@ -7,15 +6,10 @@ using AssetManagement.Domain.Entities;
 
 using AutoMapper;
 
-using Microsoft.EntityFrameworkCore;
-
 using Moq;
 
 using NUnit.Framework;
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAsset
 {
