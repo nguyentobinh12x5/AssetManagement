@@ -29,7 +29,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
   // Mapping of actual values to display values
   const assetCategoriesMap: Record<AssetCategory, string> = categories.reduce(
     (acc, category) => {
-      acc[category as AssetCategory] = category.slice(0, 5);
+      acc[category as AssetCategory] = category;
       return acc;
     },
     {} as Record<AssetCategory, string>
