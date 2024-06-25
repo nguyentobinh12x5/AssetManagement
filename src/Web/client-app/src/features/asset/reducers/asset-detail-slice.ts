@@ -17,7 +17,7 @@ const assetDetailSlice = createSlice({
   name: 'assetDetail',
   initialState,
   reducers: {
-    getAssetById: (state: AssetState, action: PayloadAction<number>) => {
+    getAssetById: (state: AssetState, action: PayloadAction<string>) => {
       state.isLoading = true;
       state.error = null;
     },

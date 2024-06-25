@@ -9,9 +9,14 @@ import { RootState } from "../../../redux/store";
 import { Col, Row } from "react-bootstrap";
 import { text } from "stream/consumers";
 
+type AssetID = {
+  id: string;
+  onClose: () => void;
+};
 
-const DetailForm = ({ id }: { id: number }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const DetailForm: React.FC<AssetID>  = ({id, onClose}) => {
+  console.log('ID', id)
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const dispatch = useDispatch();
   const { assetDetail } = useSelector((state: RootState) => state.assetDetail);
 
@@ -19,23 +24,18 @@ const DetailForm = ({ id }: { id: number }) => {
     if (isModalOpen) {
       dispatch(getAssetById(id));
     }
-  }, [isModalOpen, dispatch, id]);
+    console.log(assetDetail)
 
-  const handleShowModal = () => {
-    setIsModalOpen(true);
-  };
+  }, [isModalOpen, dispatch, id]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    onClose();
   };
 
 
   return (
     <div className="container m-auto p-5">
-      <ButtonIcon onClick={handleShowModal}>
-        <XCircle color="red" />
-      </ButtonIcon>
-
       <ConfirmModal
         title="Detailed Asset Information"
         isShow={isModalOpen}
@@ -51,7 +51,6 @@ const DetailForm = ({ id }: { id: number }) => {
               </Col>
               <Col md={9}>
                 {assetDetail?.code}
-                123213
               </Col>
             </Row>
           </div>
@@ -62,7 +61,6 @@ const DetailForm = ({ id }: { id: number }) => {
               </Col>
               <Col md={9}>
                 {assetDetail?.name}
-                21321312
               </Col>
             </Row>
           </div>
@@ -73,7 +71,6 @@ const DetailForm = ({ id }: { id: number }) => {
               </Col>
               <Col md={9}>
                 {assetDetail?.categoryName}
-                3123123
               </Col>
             </Row>
           </div>
@@ -83,7 +80,7 @@ const DetailForm = ({ id }: { id: number }) => {
                 Installed Date
               </Col>
               <Col md={9}>
-                A123
+                {new Date(assetDetail?.installedDate ?? new Date()).toDateString()}
               </Col>
             </Row>
           </div>
@@ -93,7 +90,7 @@ const DetailForm = ({ id }: { id: number }) => {
                 State
               </Col>
               <Col md={9}>
-                A123
+                {assetDetail?.assetStatusName}
               </Col>
             </Row>
           </div>
@@ -103,7 +100,7 @@ const DetailForm = ({ id }: { id: number }) => {
                 Location
               </Col>
               <Col md={9}>
-                A123
+                {assetDetail?.location}
               </Col>
             </Row>
           </div>
@@ -112,14 +109,16 @@ const DetailForm = ({ id }: { id: number }) => {
               <Col md={3}>
                 Specification
               </Col>
-              <Col md={9}>
-                A123
+              <Col md={5}>
+                {assetDetail?.specification}
               </Col>
             </Row>
           </div>
           <div>
             <Row className="mb-3">
-              <Col md={3}>
+              <Col md={3} style={{paddingTop: 8
+                
+              }}>
                 History
               </Col>
               <Col md={9}>

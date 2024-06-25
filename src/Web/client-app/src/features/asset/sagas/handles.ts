@@ -14,6 +14,7 @@ import {
   setAssets,
 } from '../reducers/asset-slice';
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
+import { getAssetByIdSuccess } from '../reducers/asset-detail-slice';
 
 export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
   try {
@@ -53,7 +54,7 @@ export function* handleGetAssetById(action: PayloadAction<number>) {
   const id = action.payload;
   try {
     const { data } = yield call(getAssetByIdRequest, id);
-    yield put(getAssetsSuccess([data]));
+    yield put(getAssetByIdSuccess(data));
   } catch (error: any) {
     yield put(getAssetsFailure(error.data.detail));
   }
