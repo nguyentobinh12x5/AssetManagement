@@ -37,7 +37,6 @@ export function* handleGetUserInfo() {
     const { data }: AxiosResponse<IUserInfo> = yield call(getUserInfoRequest);
     yield put(setUser(data));
   } catch (error: any) {
-    const errorResponse = error.response.data;
     yield put(setLogout());
   }
 }

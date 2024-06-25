@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import ENDPOINTS from '../constants/endpoints';
 import { APP_CONFIG } from '../constants/appConfig';
 
 const config: AxiosRequestConfig = {
@@ -15,4 +14,5 @@ class RequestService {
   }
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default new RequestService();

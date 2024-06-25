@@ -13,12 +13,14 @@ interface Props {
   options: string[];
   selectedOptions: string[];
   handleOptionChange: (options: string[]) => void;
+  placeholder?: string;
 }
 
 const DropdownFilter: React.FC<Props> = ({
   options,
   selectedOptions,
   handleOptionChange,
+  placeholder,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -64,7 +66,7 @@ const DropdownFilter: React.FC<Props> = ({
       }}
     >
       <FormControl
-        placeholder="Search..."
+        placeholder={placeholder ? placeholder : "Search..."}
         value={searchTerm}
         onChange={handleSearchChange}
         onClick={() => setDropdownOpen(true)}

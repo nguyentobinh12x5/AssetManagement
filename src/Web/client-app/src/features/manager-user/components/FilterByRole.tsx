@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import { getUserTypes, setUserTypes } from "../reducers/user-slice";
-import { setUser } from "../../auth/reducers/auth-slice";
+import { getUserTypes } from "../reducers/user-slice";
 
 interface FilterByRoleProps {
   handleFilterByType: (types: string[]) => void;

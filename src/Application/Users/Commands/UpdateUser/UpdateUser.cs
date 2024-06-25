@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Enums;
 
 namespace AssetManagement.Application.Users.Commands.UpdateUser;
@@ -29,7 +29,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
     public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var currentUser = await _identityService.GetUserWithRoleAsync(request.Id);
-        
+
         currentUser.DateOfBirth = request.DateOfBirth;
         currentUser.Gender = request.Gender;
         currentUser.JoinDate = request.JoinDate;

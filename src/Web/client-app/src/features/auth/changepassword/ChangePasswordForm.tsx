@@ -3,6 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import { Form, Formik, FormikProps } from "formik";
 import useChangePassword from "./useChangePassword";
 import TextFieldPassword from "../../../components/formInputs/TextFieldPassword";
+import { ChangePasswordRequiredSchema } from "./ChangePasswordSchema";
 
 interface ChangePasswordFormProps {
   show: boolean;
@@ -13,14 +14,8 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
   show,
   onHide,
 }) => {
-  const {
-    initialValues,
-    handleSubmit,
-    ChangePasswordSchema,
-    success,
-    apiError,
-    resetState,
-  } = useChangePassword();
+  const { initialValues, handleSubmit, success, apiError, resetState } =
+    useChangePassword();
   const [shouldResetForm, setShouldResetForm] = useState(false);
 
   useEffect(() => {
@@ -57,7 +52,9 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
           <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            validationSchema={ChangePasswordSchema}
+            validateOnBlur={false}
+            validateOnChange={true}
+            validationSchema={ChangePasswordRequiredSchema}
             enableReinitialize={shouldResetForm}
           >
             {(formikProps: FormikProps<any>) => {

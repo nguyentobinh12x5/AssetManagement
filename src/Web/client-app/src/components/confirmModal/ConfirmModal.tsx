@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import Modal from "react-bootstrap/Modal";
+import { XSquare } from "react-bootstrap-icons";
+import ButtonIcon from "../ButtonIcon";
 
 interface Props {
   title: string;
@@ -7,6 +9,7 @@ interface Props {
   onHide?: () => void;
   children: React.ReactNode;
   dialogClassName?: string;
+  isShowClose?: boolean;
 }
 
 const ConfirmModal: React.FC<Props> = ({
@@ -14,16 +17,27 @@ const ConfirmModal: React.FC<Props> = ({
   isShow,
   children,
   dialogClassName = "",
+  isShowClose,
+  onHide,
 }) => {
   return (
     <Modal
       show={isShow}
-      dialogClassName={`modal-90w ${dialogClassName}`}
-      aria-labelledby="custom-confirm-modal"
+      dialogClassName={`${dialogClassName}`}
+      aria-labelledby="login-modal"
       centered
     >
       <Modal.Header className="custom-header">
-        <Modal.Title id="custom-confirm-modal">{title}</Modal.Title>
+        <Modal.Title id="login-modal">
+          <div className="d-flex align-items-center justify-content-between">
+            {title}
+            {isShowClose && (
+              <ButtonIcon onClick={onHide}>
+                <XSquare color="red" />
+              </ButtonIcon>
+            )}
+          </div>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Fragment>{children}</Fragment>

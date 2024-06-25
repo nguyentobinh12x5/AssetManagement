@@ -1,4 +1,4 @@
-﻿export interface IUserDetail {
+export interface IUserDetail {
   id?: string;
   firstName: string;
   lastName: string;

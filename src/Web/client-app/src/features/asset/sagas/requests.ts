@@ -1,6 +1,43 @@
 import RequestService from '../../../services/request';
 import ENDPOINTS from '../../../constants/endpoints';
+import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
+import { IAssetQuery } from '../interfaces/common/IAssetQuery';
+import { AxiosResponse } from 'axios';
+import { IPagedModel } from '../../../interfaces/IPagedModel';
+import { IBriefAsset } from '../interfaces/IBriefAsset';
+import { IAssetDetail } from '../interfaces/IAssetDetail';
 
-export function getAssetsRequest(query: any): Promise<any> {
-  return RequestService.axios.get(ENDPOINTS.ASSETS);
+export function getAssetsRequest(
+  assetQuery: IAssetQuery
+): Promise<AxiosResponse<IPagedModel<IBriefAsset>>> {
+  return RequestService.axios.get(
+    `${ENDPOINTS.ASSETS}?` +
+      `CategoryName=${assetQuery.categoryName}` +
+      `&AssetStatusName=${assetQuery.assetStatusName}` +
+      `&PageNumber=${assetQuery.pageNumber}` +
+      `&PageSize=${assetQuery.pageSize}` +
+      `&SortColumnName=${assetQuery.sortColumnName}` +
+      `&SortColumnDirection=${assetQuery.sortColumnDirection}` +
+      `&SearchTerm=${assetQuery.searchTerm}`
+  );
+}
+
+export function getAssetStatusesRequest(): Promise<AxiosResponse<string[]>> {
+  return RequestService.axios.get(`${ENDPOINTS.ASSETS}/Status`);
+}
+
+export function getAssetCategoriesRequest(): Promise<AxiosResponse<string[]>> {
+  return RequestService.axios.get(`${ENDPOINTS.ASSETS}/Categories`);
+}
+
+export function createAssetRequest(
+  command: ICreateAssetCommand
+): Promise<AxiosResponse<number>> {
+  return RequestService.axios.post<number>(ENDPOINTS.ASSETS, command);
+}
+
+export function getAssetByIdRequest(
+  id: number
+): Promise<AxiosResponse<IAssetDetail>> {
+  return RequestService.axios.get<IAssetDetail>(`${ENDPOINTS.ASSETS}/${id}`);
 }

@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, useState } from "react";
-import { ErrorMessage, useField, useFormikContext } from "formik";
+import { useField } from "formik";
 import { EyeFill, EyeSlashFill } from "react-bootstrap-icons";
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -9,16 +9,14 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   required?: boolean;
   notvalidate?: boolean;
   apiError?: string;
-  showError?: boolean;
 };
 
 const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
   const [field, { error, touched }] = useField(props);
-  const { values, isSubmitting } = useFormikContext();
-  const { label, required, notvalidate, apiError, showError } = props;
+  const { label, required, notvalidate, apiError } = props;
 
   const validateClass = () => {
-    if ((touched && error) || apiError) return "is-invalid";
+    if (touched && (error || error === "" || apiError)) return "is-invalid";
     if (notvalidate) return "";
     if (touched) return "is-valid";
     return "";
@@ -55,8 +53,10 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
             )}
           </div>
         </div>
-        {touched && (error || apiError) && (
-          <ErrorMsg error={error} apiError={apiError} />
+        {touched && (apiError || error) && (
+          <div className="invalid position-relative mt-2">
+            {apiError ?? error}
+          </div>
         )}
       </div>
     </div>
@@ -64,18 +64,3 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
 };
 
 export default TextFieldPassword;
-
-const ErrorMsg = ({
-  error,
-  apiError,
-}: {
-  error?: string;
-  apiError?: string;
-}) => {
-  let message = "";
-  if (error) message = error;
-
-  if (apiError) message = apiError;
-
-  return <div className="invalid position-relative mt-2">{message}</div>;
-};
