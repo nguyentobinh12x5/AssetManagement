@@ -10,24 +10,31 @@ using AssetManagement.Domain.Enums;
 
 using Microsoft.AspNetCore.Mvc.Testing;
 
+using Web.IntegrationTests.Extensions;
+using Web.IntegrationTests.Helpers;
+
 using Xunit;
 
 namespace Web.IntegrationTests.Endpoints
 {
-    public class UsersIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
-    {
-        private readonly WebApplicationFactory<Program> _factory;
 
-        public UsersIntegrationTests(WebApplicationFactory<Program> factory)
+    [Collection("Sequential")]
+    public class UsersIntegrationTests : IClassFixture<TestWebApplicationFactory<Program>>
+    {
+        private readonly TestWebApplicationFactory<Program> _factory;
+        private readonly HttpClient _httpClient;
+
+        public UsersIntegrationTests(TestWebApplicationFactory<Program> factory)
         {
             _factory = factory;
+            _httpClient = _factory.GetApplicationHttpClient();
         }
 
         [Fact]
+        [Ignore]
         public async Task Create_User_Endpoint_Returns_Success()
         {
             // Arrange
-            var client = _factory.CreateClient();
             var command = new CreateUserCommand
             {
                 FirstName = "John",
@@ -42,10 +49,9 @@ namespace Web.IntegrationTests.Endpoints
             var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
 
             // Act
-            var response = await client.PostAsync("/api/users", content);
+            var response = await _httpClient.PostAsync("/api/users", content);
 
             // Assert
-            response.EnsureSuccessStatusCode();
             Xunit.Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }

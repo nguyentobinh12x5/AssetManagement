@@ -8,15 +8,9 @@ import SelectField from "../../../components/formInputs/SelectField";
 import { GenderOptions } from "../constants/gender-user";
 import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../../components/Loading";
-const UseForm = () => {
-  const { user, isLoading, handleSubmit, UserSchema } = useEditForm();
+const EditForm = () => {
+  const { user, handleSubmit, UserSchema } = useEditForm();
   const navigate = useNavigate();
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <Formik
       initialValues={user}
@@ -33,6 +27,7 @@ const UseForm = () => {
               name="firstName"
               type="text"
               required
+              disabled={true}
             />
           </div>
           <div className="mb-3">
@@ -42,6 +37,7 @@ const UseForm = () => {
               name="lastName"
               type="text"
               required
+              disabled={true}
             />
           </div>
           <div className="mb-3">
@@ -101,4 +97,4 @@ const UseForm = () => {
   );
 };
 
-export default UseForm;
+export default EditForm;
