@@ -7,10 +7,6 @@ public record UpdateUserCommand : IRequest
 {
     public string Id { get; init; } = null!;
 
-    public string FirstName { get; init; } = null!;
-
-    public string LastName { get; init; } = null!;
-
     public DateTime DateOfBirth { get; init; }
 
     public DateTime JoinDate { get; init; }
@@ -33,9 +29,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
     public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
         var currentUser = await _identityService.GetUserWithRoleAsync(request.Id);
-
-        currentUser.FirstName = request.FirstName;
-        currentUser.LastName = request.LastName;
+        
         currentUser.DateOfBirth = request.DateOfBirth;
         currentUser.Gender = request.Gender;
         currentUser.JoinDate = request.JoinDate;
