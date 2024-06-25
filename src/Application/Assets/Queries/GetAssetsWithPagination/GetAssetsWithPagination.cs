@@ -3,6 +3,7 @@ using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using AssetManagement.Domain.Constants;
+using AssetManagement.Domain.Entities;
 
 namespace AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 
@@ -34,25 +35,48 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
     {
         var query = _context.Assets.AsQueryable();
         
+        query = FilterAssets(request, query);
+
+        return await query
+            //.OrderBy(x => x.Title)
+            .OrderByDynamic(request.SortColumnName, request.SortColumnDirection)
+            .ProjectTo<AssetBriefDto>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(request.PageNumber, request.PageSize);
+    }
+
+    private static IQueryable<Asset> FilterAssets(GetAssetsWithPaginationQuery request, IQueryable<Asset> query)
+    {
         if (!string.IsNullOrEmpty(request.CategoryName))
         {
-            query = query.Where(a => a.Category.Name == request.CategoryName);
+            var categoryNames = request.CategoryName.Split(',')
+                .Select(c => c.Trim())
+                .Where(c => !string.IsNullOrEmpty(c))
+                .ToList();
+
+            if (categoryNames.Any())
+            {
+                query = query.Where(a => categoryNames.Contains(a.Category.Name));
+            }
         }
 
         if (!string.IsNullOrEmpty(request.AssetStatusName))
         {
-            query = query.Where(a => a.AssetStatus.Name == request.AssetStatusName);
+            var assetStatusNames = request.AssetStatusName.Split(',')
+                .Select(c => c.Trim())
+                .Where(c => !string.IsNullOrEmpty(c))
+                .ToList();
+
+            if (assetStatusNames.Any())
+            {
+                query = query.Where(a => assetStatusNames.Contains(a.AssetStatus.Name));
+            }
         }
         
         if (!string.IsNullOrEmpty(request.SearchTerm))
         {
             query = query.Where(a => a.Name.Contains(request.SearchTerm) || a.Code.Contains(request.SearchTerm));
         }
-        
-        return await query
-            //.OrderBy(x => x.Title)
-            .OrderByDynamic(request.SortColumnName, request.SortColumnDirection)
-            .ProjectTo<AssetBriefDto>(_mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+
+        return query;
     }
 }
