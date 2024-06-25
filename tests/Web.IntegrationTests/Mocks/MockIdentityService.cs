@@ -1,3 +1,4 @@
+
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
@@ -54,11 +55,6 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<UserInfoDto> GetCurrentUserInfo(string userId)
     {
         throw new NotImplementedException();
@@ -110,6 +106,11 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
         throw new NotImplementedException();
     }

@@ -369,8 +369,7 @@ public class IdentityService : IIdentityService
         var roles = await _userManager.GetRolesAsync(user);
         return new UserInfoDto
         {
-            Email = user.Email!,
-            IsEmailConfirmed = user.EmailConfirmed,
+            Username = user.UserName!,
             Roles = roles,
             Location = user.Location,
             MustChangePassword = user.MustChangePassword,
