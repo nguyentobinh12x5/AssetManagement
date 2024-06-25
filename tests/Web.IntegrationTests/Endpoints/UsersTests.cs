@@ -50,7 +50,7 @@ namespace Web.IntegrationTests.Endpoints
             var response = await _httpClient.DeleteAsync($"/api/Users/{user!.Id}");
 
             // Assert
-            var usersResponse = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
+            var usersResponse = await _httpClient.GetAsync("/api/Users?Location=HCM&PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
             var users = await usersResponse.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
 
             Assert.NotNull(users);

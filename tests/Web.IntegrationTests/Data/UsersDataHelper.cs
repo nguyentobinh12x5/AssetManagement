@@ -38,7 +38,7 @@ namespace Web.IntegrationTests.Helpers
                 Email = "user2@test.com",
                 FirstName = "Jane",
                 LastName = "Smith",
-                Location = "Location2",
+                Location = "HCM",
                 StaffCode = "SC002",
                 DateOfBirth = DateTime.UtcNow.AddYears(-25),
                 JoinDate = DateTime.UtcNow.AddMonths(-6),
