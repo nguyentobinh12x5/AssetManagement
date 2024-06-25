@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string().required('Required'),
-  password: Yup.string().required('Required'),
+  username: Yup.string().required(''),
+  password: Yup.string().required(''),
 });
 export interface ILoginForm extends Yup.InferType<typeof LoginSchema> {}
 
