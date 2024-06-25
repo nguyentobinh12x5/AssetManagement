@@ -1,4 +1,4 @@
-﻿import React, { lazy } from "react";
+import React, { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { MANAGE_USER_LIST } from "./constants/user-pages";
 import { CREATE_USER, EDIT_USER } from "./constants/edit-user";

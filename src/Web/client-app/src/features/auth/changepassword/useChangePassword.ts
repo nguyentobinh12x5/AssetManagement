@@ -29,8 +29,27 @@ const useChangePassword = () => {
     values: ChangePasswordType,
     actions: FormikHelpers<ChangePasswordType>
   ) => {
-    dispatch(changePasswordRequest({ values, actions, setApiError }));
-    actions.setSubmitting(false);
+    const { setSubmitting, setTouched, setErrors } = actions;
+    ChangePasswordSchema.validate(values, { abortEarly: false })
+      .then(() => {
+        // Proceed with form submission
+        dispatch(changePasswordRequest({ values, actions, setApiError }));
+
+        // Form submission logic
+        setSubmitting(false);
+      })
+      .catch((errors) => {
+        const formErrors = errors.inner.reduce((acc: any, err: any) => {
+          acc[err.path] = err.message;
+          return acc;
+        }, {});
+        setErrors(formErrors);
+        setTouched({
+          currentPassword: true,
+          newPassword: true,
+        });
+        setSubmitting(false);
+      });
   };
 
   const resetState = useCallback(() => {

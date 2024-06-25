@@ -23,6 +23,8 @@ const ChangePasswordFirstTimeForm: React.FC<Props> = ({
       initialValues={formInitialValues}
       onSubmit={handleChangePassword}
       validationSchema={validationSchema}
+      validateOnChange={true}
+      validateOnBlur={false}
     >
       {({ isValid, dirty, errors }) => (
         <Form>

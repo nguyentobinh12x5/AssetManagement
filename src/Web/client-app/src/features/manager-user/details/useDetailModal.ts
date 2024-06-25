@@ -10,7 +10,7 @@ const useDetailUser = (id: string) => {
     if (id) {
       dispatch(getUserById(id));
     }
-  }, [id]);
+  }, [dispatch, id]);
 
   return { user };
 };

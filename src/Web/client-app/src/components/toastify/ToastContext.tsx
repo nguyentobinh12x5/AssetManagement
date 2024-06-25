@@ -57,6 +57,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     []
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const toast: ToastContextType["toast"] = useCallback(
     ((content: string, variant: ToastVariant = "info") => {
       addToast(content, variant);

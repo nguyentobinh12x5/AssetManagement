@@ -2,8 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import { ASSET_LIST } from "./constants/asset-list";
 import { CREATE_ASSET_PATH } from "./constants/create-asset";
 
-import AssetList from "./list";
-import CreateNewAsset from "./create";
+import { lazy } from "react";
+
+const AssetList = lazy(() => import("./list"));
+const CreateNewAsset = lazy(() => import("./create"));
 
 const Assets = () => {
   return (

@@ -11,40 +11,53 @@ type inputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   name: string;
   required?: boolean;
   novalidation?: boolean;
+  apiError?: string;
+  maxDate?: Date | null | undefined;
 };
 
 const DateField: React.FC<inputFieldProps> = (props) => {
-  const [{ value }, { error }, { setValue }] = useField(props);
-  const { label, required } = props;
+  const [{ value }, { error, touched }, { setValue, setError }] =
+    useField(props);
+  const { label, required, apiError, maxDate } = props;
 
   const handleDateChange = (date: Date) => {
     if (!date) {
+      setError("");
       setValue(undefined);
     } else {
-      const formattedDate = date.toISOString();
-      setValue(formattedDate);
+      setValue(date);
     }
   };
 
   return (
     <>
-      <div className="form-group row ">
-        <label className="col-form-label col-4 d-flex">
+      <div className="form-group row">
+        <label htmlFor={props.name} className="col-4 d-flex form-label">
           {label}
           {required && <div className="invalid ml-1">*</div>}
         </label>
         <div className="col">
           <div className="form-control pt-1 pb-1 d-flex justify-content-between align-items-center">
             <DatePicker
+              id={props.id}
+              name={props.name}
               dateFormat="dd/MM/yyyy"
               selected={value}
               onChange={handleDateChange}
+              showYearDropdown
+              showMonthDropdown
+              dropdownMode="select"
+              maxDate={maxDate}
             />
-            <div className="date-icon p-1 pointer">
+            <label htmlFor={props.name} className="date-icon p-1 pointer">
               <CalendarDateFill />
-            </div>
+            </label>
           </div>
-          {error && <div className="invalid">{error}</div>}
+          {touched && (apiError || error) && (
+            <div className="invalid position-relative mt-2">
+              {apiError ?? error}
+            </div>
+          )}
         </div>
       </div>
     </>

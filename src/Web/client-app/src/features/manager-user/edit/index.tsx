@@ -1,4 +1,4 @@
-﻿import EditForm from "./EditForm";
+import EditForm from "./EditForm";
 import "./EditForm.scss";
 const EditUser = () => {
   return (

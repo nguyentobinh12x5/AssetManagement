@@ -2,7 +2,6 @@ import React, { InputHTMLAttributes } from "react";
 import { useField } from "formik";
 import "./RadioButtonField.scss";
 import ISelectOption from "./interfaces/ISelectOption";
-import { isRimrafOptions } from "rimraf";
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -35,6 +34,7 @@ const RadioButtonField: React.FC<InputFieldProps> = (props) => {
         {options.map(({ id, label, value: optionValue }) => (
           <div className={`form-check ${display()}`} key={id}>
             <input
+              {...field}
               className={`form-check-input input-radio`}
               id={id.toString()}
               type="radio"

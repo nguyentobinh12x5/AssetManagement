@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import IPagination from "./interfaces/IPagination";
 import Paging from "react-bootstrap/Pagination";
@@ -40,7 +41,7 @@ const Pagination: React.FC<IPagination> = ({
 
   const renderFirstPage = () => {
     return (
-      <Paging.Item active={currentPage == 1} onClick={() => handleChange(1)}>
+      <Paging.Item active={currentPage === 1} onClick={() => handleChange(1)}>
         1
       </Paging.Item>
     );
@@ -61,7 +62,7 @@ const Pagination: React.FC<IPagination> = ({
       [...Array(nextItems - prevItems + 1).keys()].map((i) => (
         <Paging.Item
           key={i}
-          active={i + prevItems == currentPage}
+          active={i + prevItems === currentPage}
           onClick={() => handleChange(i + prevItems)}
         >
           {i + prevItems}
@@ -79,7 +80,7 @@ const Pagination: React.FC<IPagination> = ({
       <></>
     ) : (
       <Paging.Item
-        active={total == currentPage}
+        active={total === currentPage}
         onClick={() => handleChange(total)}
       >
         {total}
