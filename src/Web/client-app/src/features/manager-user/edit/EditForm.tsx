@@ -27,6 +27,7 @@ const EditForm = () => {
               name="firstName"
               type="text"
               required
+              disabled={true}
             />
           </div>
           <div className="mb-3">
@@ -36,6 +37,7 @@ const EditForm = () => {
               name="lastName"
               type="text"
               required
+              disabled={true}
             />
           </div>
           <div className="mb-3">

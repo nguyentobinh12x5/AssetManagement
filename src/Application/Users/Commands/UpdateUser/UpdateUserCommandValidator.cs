@@ -8,14 +8,6 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
             .NotEmpty()
             .MaximumLength(256);
 
-        RuleFor(v => v.FirstName)
-            .NotEmpty()
-            .MaximumLength(256);
-
-        RuleFor(v => v.LastName)
-            .NotEmpty()
-            .MaximumLength(256);
-
         RuleFor(v => v.DateOfBirth)
             .NotEmpty()
             .LessThanOrEqualTo(DateTime.Now).WithMessage("Date of Birth cannot be in the future.");
