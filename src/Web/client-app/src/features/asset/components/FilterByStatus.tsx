@@ -44,7 +44,7 @@ const FilterByStatus: React.FC<FilterByStatusProps> = ({
           (Object.keys(assetStatusesMap) as AssetStatus[]).find(
             (key) => assetStatusesMap[key] === displayStatus
           )!
-      );
+      ).filter((status) => status !== "All");
 
       setSelectedStatuses(actualStatuses);
       handleFilterByStatus(actualStatuses);

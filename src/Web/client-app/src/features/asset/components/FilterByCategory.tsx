@@ -49,7 +49,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
           (Object.keys(assetCategoriesMap) as AssetCategory[]).find(
             (key) => assetCategoriesMap[key] === displayCategory
           )!
-      );
+      ).filter((category) => category !== "All");
 
       setSelectedCategories(actualCategories);
       handleFilterByCategory(actualCategories);
