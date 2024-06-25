@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { error } from 'console';
 
 interface AssetState {
   assets: any[];
@@ -9,6 +10,7 @@ interface AssetState {
 const initialState: AssetState = {
   assets: [],
   isLoading: false,
+  error: null,
 };
 const AssetSlice = createSlice({
   initialState,
@@ -35,7 +37,7 @@ const AssetSlice = createSlice({
   },
 });
 
-export const { getAssets, getAssetsSuccess, getAssetsFailure } =
+export const {getAssets, getAssetsSuccess, getAssetsFailure } =
   AssetSlice.actions;
 
 export default AssetSlice.reducer;

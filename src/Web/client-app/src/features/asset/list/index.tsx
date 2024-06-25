@@ -1,7 +1,12 @@
 import React from "react";
+import DetailForm from "../detail/DetailForm";
 
 const AssetList = () => {
-  return <div>AssetList</div>;
+  const id = 1
+  return <div>
+  AssetList
+  <DetailForm id={id}/>
+</div>
 };
 
 export default AssetList;

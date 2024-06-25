@@ -29,3 +29,19 @@
 #login-modal {
   padding-left: 10px;
 }
+
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.custom-header .modal-title {
+  flex-grow: 1;
+}
+
+.custom-header .btn-icon {
+  display: flex;
+  align-items: center;
+}
