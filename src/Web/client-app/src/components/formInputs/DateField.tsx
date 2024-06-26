@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import DatePicker from "react-datepicker";
 import { CalendarDateFill } from "react-bootstrap-icons";
 
@@ -18,15 +18,21 @@ type inputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 const DateField: React.FC<inputFieldProps> = (props) => {
   const [{ value }, { error, touched }, { setValue, setError }] =
     useField(props);
+
   const { label, required, apiError, maxDate } = props;
 
+  const { setFieldTouched } = useFormikContext();
+
   const handleDateChange = (date: Date) => {
+    setFieldTouched(props.name, true);
     if (!date) {
       setError("");
       setValue(undefined);
+
     } else {
       setValue(date);
     }
+    
   };
 
   return (
