@@ -1,4 +1,4 @@
-﻿using AssetManagement.Domain.Entities;
+using AssetManagement.Domain.Entities;
 using AssetManagement.Infrastructure.Data;
 
 using Microsoft.Extensions.DependencyInjection;

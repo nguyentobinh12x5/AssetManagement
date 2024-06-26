@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Domain.Constants;

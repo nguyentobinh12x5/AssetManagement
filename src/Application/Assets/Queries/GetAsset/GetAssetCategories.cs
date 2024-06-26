@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Interfaces;
 
 namespace AssetManagement.Application.Assets.Queries.GetAsset
 {

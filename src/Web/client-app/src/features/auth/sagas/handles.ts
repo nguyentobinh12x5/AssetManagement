@@ -8,6 +8,7 @@ import {
 } from './requests';
 import {
   changePasswordFirstTimeSuccess,
+  getUserInfoFailure,
   loginFail,
   setAuth,
   setLogout,
@@ -39,7 +40,7 @@ export function* handleGetUserInfo() {
     const { data }: AxiosResponse<IUserInfo> = yield call(getUserInfoRequest);
     yield put(setUser(data));
   } catch (error: any) {
-    yield put(setLogout());
+    yield put(getUserInfoFailure());
   }
 }
 

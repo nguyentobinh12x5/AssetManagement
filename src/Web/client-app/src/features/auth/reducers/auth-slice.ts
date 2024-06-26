@@ -70,6 +70,11 @@ const AuthSlice = createSlice({
       },
     }),
     setLogout: () => initialState,
+    getUserInfoFailure: (state: AuthState) => ({
+      ...state,
+      isCheckingSession: false,
+      isAuthenticated: false,
+    }),
   },
   extraReducers(builder) {},
 });
@@ -84,6 +89,7 @@ export const {
   setLogout,
   changePasswordFirstTime,
   changePasswordFirstTimeSuccess,
+  getUserInfoFailure,
 } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

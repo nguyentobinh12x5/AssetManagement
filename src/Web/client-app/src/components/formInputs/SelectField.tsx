@@ -13,15 +13,17 @@ type SelectFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   required?: boolean;
   noValidation?: boolean;
   apiError?: string;
+  defaultValue?: Option;
 };
 
 const SelectField: React.FC<SelectFieldProps> = (props) => {
   const [field, { error, touched }, helpers] = useField(props);
-  const { label, required, noValidation, options, apiError } = props;
+  const { label, required, noValidation, options, apiError, defaultValue } =
+    props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<Option | null>(
-    options.length > 0 ? options[0] : null
+  const [selectedOption, setSelectedOption] = useState<Option | undefined>(
+    defaultValue
   );
   const selectRef = useRef<HTMLDivElement>(null);
 
