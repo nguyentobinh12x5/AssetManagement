@@ -30,11 +30,13 @@ export function getUsers(
 ): Promise<AxiosResponse<IPagedModel<IBriefUser>>> {
   return RequestService.axios.get(
     `${ENDPOINTS.USER}?` +
-      `&Location=${userQuery.location}` +
       `&PageNumber=${userQuery.pageNumber}` +
       `&PageSize=${userQuery.pageSize}` +
       `&SortColumnName=${userQuery.sortColumnName}` +
-      `&SortColumnDirection=${userQuery.sortColumnDirection}`
+      `&SortColumnDirection=${userQuery.sortColumnDirection}` +
+      `&Location=${userQuery.location}` +
+      `&SearchTerm=${userQuery.searchTerm}` +
+      `&Types=${userQuery.types}`
   );
 }
 
