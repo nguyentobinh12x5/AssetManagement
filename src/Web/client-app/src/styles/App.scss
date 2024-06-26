@@ -114,3 +114,11 @@ option {
 .form-control.is-valid {
   background: none !important;
 }
+
+.modal-backdrop.show {
+  background: none;
+}
+
+.fade.modal-backdrop {
+  background: none;
+}

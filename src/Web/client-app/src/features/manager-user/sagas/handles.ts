@@ -12,6 +12,7 @@ import {
   setUsers,
   updateUser,
   updateUserError,
+  removeUser,
 } from '../reducers/user-slice';
 import {
   deleteUserRequest,
@@ -104,6 +105,7 @@ export function* handleDeleteUser(action: PayloadAction<string>) {
   try {
     yield call(deleteUserRequest, action.payload);
     yield put(setDeleteStatus(false));
+    yield put(removeUser(action.payload));
   } catch (error: any) {
     yield put(setDeleteStatus(false));
   }
