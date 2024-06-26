@@ -17,6 +17,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
   userId,
 }) => {
   const { user } = useDetailUser(userId);
+  console.log(user);
   if (!user) {
     return (
       <Modal show={show} onHide={handleClose}>

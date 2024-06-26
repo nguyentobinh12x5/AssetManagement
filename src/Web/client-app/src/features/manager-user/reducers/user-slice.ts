@@ -199,6 +199,12 @@ const UserSlice = createSlice({
         user.isDelete = true;
       }
     },
+    removeUser: (state, action: PayloadAction<string>) => {
+      state.users.items = state.users.items.filter(
+        (user) => user.id !== action.payload
+      );
+      state.isDataFetched = false;
+    },
     setDeleteStatus: (state, action: PayloadAction<boolean>) => {
       state.isDeleting = action.payload;
     },
@@ -236,6 +242,7 @@ export const {
   setSucceedStatus,
   getUserTypes,
   setUserTypes,
+  removeUser,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;
