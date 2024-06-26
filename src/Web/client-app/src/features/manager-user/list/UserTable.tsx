@@ -11,6 +11,10 @@ import { PencilFill } from "react-bootstrap-icons";
 import PopupComponent from "../details";
 import Loading from "../../../components/Loading";
 import ConfirmDisable from "../components/ConfirmDisable";
+import "../../../components/table/CustomTable.scss";
+import { Tooltip } from "react-bootstrap";
+import TextWithTooltip from "../../../components/table/helper/TextToolTip";
+import { formatDate } from "../../../utils/dateUtils";
 
 type UserTableProps = {
   users: IPagedModel<IBriefUser>;
@@ -90,24 +94,27 @@ const UserTable: React.FC<UserTableProps> = ({
       >
         {items?.map((data) => (
           <tr key={data.id}>
-            <td>{data.staffCode}</td>
-            <td onClick={() => handleShowPopup(data.id)}>{data.fullName}</td>
-            <td>{data.userName}</td>
-            <td>{new Date(data.joinDate).toLocaleDateString()}</td>
-            <td>{data.type}</td>
-            <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0">
-              <div>
+            <td className="smlsize">{data.staffCode}</td>
+            <td className="lrgsize" onClick={() => handleShowPopup(data.id)}>
+              <TextWithTooltip text={data.fullName} />
+            </td>
+            <td className="lrgsize">
+              <TextWithTooltip text={data.userName} />
+            </td>
+            <td className="lrgsize">
+              <TextWithTooltip text={formatDate(data.joinDate)} />
+            </td>
+            <td>
+              <TextWithTooltip text={data.type.slice(0, 5)} />
+            </td>
+            <td className="action">
+              <div className="d-flex gap-4 justify-content-evenly align-items-center">
                 <ButtonIcon
-                  onClick={() => {
-                    handleEditClick(data.id);
-                  }}
+                  onClick={() => handleEditClick(data.id)}
                   disable={false}
                 >
                   <PencilFill />
                 </ButtonIcon>
-              </div>
-
-              <div>
                 <ConfirmDisable userId={data.id} />
               </div>
             </td>

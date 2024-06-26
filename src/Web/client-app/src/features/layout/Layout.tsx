@@ -14,12 +14,18 @@ const Layout: React.FC<Props> = ({ children, showSidebar }) => {
       <div className="container-lg-min container-fluid">
         <div className="row mt-5">
           {showSidebar && (
-            <div className="col-lg-2 col-md-4 col-12 mr-5">
+            <div
+              className="col-12 col-md-3"
+              style={{
+                minWidth: "min-content",
+                maxWidth: "19%",
+              }}
+            >
               <Sidebar />
             </div>
           )}
 
-          <div className={`${showSidebar ? "col-lg-10 col-md-8" : "col-12"}`}>
+          <div className={`${showSidebar ? "col-12 col-md-9" : "col-12"}`}>
             {children}
           </div>
         </div>

@@ -24,7 +24,7 @@ const ListUsers = () => {
   };
 
   return (
-    <div className="user-list">
+    <div className="user-list offset-1">
       <p className="title">User list</p>
 
       <Row className="mb-3">

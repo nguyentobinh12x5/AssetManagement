@@ -1,19 +1,18 @@
 import * as Yup from 'yup';
 
-
 const isOver18 = (date: Date) => {
-    const now = new Date();
-    const age = now.getFullYear() - date.getFullYear();
-    const month = now.getMonth() - date.getMonth();
-    if (month < 0 || (month === 0 && now.getDate() < date.getDate())) {
-        return age > 18;
-    }
-    return age >= 18;
+  const now = new Date();
+  const age = now.getFullYear() - date.getFullYear();
+  const month = now.getMonth() - date.getMonth();
+  if (month < 0 || (month === 0 && now.getDate() < date.getDate())) {
+    return age > 18;
+  }
+  return age >= 18;
 };
 
 const isWeekend = (date: Date) => {
-    const day = date.getDay();
-    return day === 0 || day === 6;
+  const day = date.getDay();
+  return day === 0 || day === 6;
 };
 
 export const UserSchema = Yup.object().shape({
@@ -79,5 +78,5 @@ export const UserSchema = Yup.object().shape({
         .required('Required'),
 });
 
-export interface IUserForm extends Yup.InferType<typeof UserSchema> { };
-export { };
+export interface IUserForm extends Yup.InferType<typeof UserSchema> {}
+export {};

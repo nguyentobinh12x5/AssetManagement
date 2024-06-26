@@ -1,5 +1,5 @@
 export const TypeOptions = [
-  { value:'',label:'' },
+  { value: '', label: '' },
   { value: 'Administrator', label: 'Admin' },
   { value: 'Staff', label: 'Staff' },
 ];
