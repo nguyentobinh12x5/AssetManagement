@@ -57,7 +57,7 @@ const SelectField: React.FC<SelectFieldProps> = (props) => {
 
   useEffect(() => {
     const selected = options.find((option) => option.value === field.value);
-    setSelectedOption(selected ?? null);
+    setSelectedOption(selected);
   }, [field.value, options]);
 
   return (
