@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Enums;
 
 namespace AssetManagement.Application.Users.Commands.UpdateUser;
@@ -6,10 +6,6 @@ namespace AssetManagement.Application.Users.Commands.UpdateUser;
 public record UpdateUserCommand : IRequest
 {
     public string Id { get; init; } = null!;
-
-    public string FirstName { get; init; } = null!;
-
-    public string LastName { get; init; } = null!;
 
     public DateTime DateOfBirth { get; init; }
 
@@ -34,8 +30,6 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand>
     {
         var currentUser = await _identityService.GetUserWithRoleAsync(request.Id);
 
-        currentUser.FirstName = request.FirstName;
-        currentUser.LastName = request.LastName;
         currentUser.DateOfBirth = request.DateOfBirth;
         currentUser.Gender = request.Gender;
         currentUser.JoinDate = request.JoinDate;

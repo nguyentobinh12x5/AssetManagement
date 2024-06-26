@@ -89,14 +89,36 @@ public class ApplicationDbContextInitialiser
                 await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
             }
         }
-        var staffsRole = new IdentityRole(Roles.Staff);
-        if (_roleManager.Roles.All(r => r.Name != staffsRole.Name))
-        {
-            await _roleManager.CreateAsync(staffsRole);
-        }
+
         // Default data
         // Seed, if necessary
         if (!_context.TodoLists.Any())
+        {
+            _context.AssetStatuses.AddRange(
+                new AssetStatus { Name = "Available" },
+                new AssetStatus { Name = "Not available" },
+                new AssetStatus { Name = "Waiting for Recycling" },
+                new AssetStatus { Name = "Recycled" },
+                new AssetStatus { Name = "Assigned" }
+            );
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Default Categories data
+        if (!_context.Categories.Any())
+        {
+            _context.Categories.AddRange(
+                new Category { Name = "Laptop", Code = "LA" },
+                new Category { Name = "Monitor", Code = "MO" },
+                new Category { Name = "Personal Computer", Code = "PC" }
+            );
+
+            await _context.SaveChangesAsync();
+        }
+
+        // Default Asset Status data
+        if (!_context.AssetStatuses.Any())
         {
             _context.AssetStatuses.AddRange(
                 new AssetStatus { Name = "Available" },

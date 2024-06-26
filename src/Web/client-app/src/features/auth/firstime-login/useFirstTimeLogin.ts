@@ -2,17 +2,8 @@ import { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../redux/redux-hooks';
 import { changePasswordFirstTime } from '../reducers/auth-slice';
-import { PASSWORD_VALIDATE_MSG } from '../constants/auth-first-time';
+import { ChangePasswordFirstimeSchema } from './change-password-first-time-schema';
 
-const ChangePasswordFirstimeSchema = Yup.object().shape({
-  newPassword: Yup.string()
-    .required('Required')
-    .min(6, PASSWORD_VALIDATE_MSG)
-    .matches(/[A-Z]/, PASSWORD_VALIDATE_MSG)
-    .matches(/[a-z]/, PASSWORD_VALIDATE_MSG)
-    .matches(/[0-9]/, PASSWORD_VALIDATE_MSG)
-    .matches(/[^a-zA-Z0-9]/, PASSWORD_VALIDATE_MSG),
-});
 export interface IChangePasswordFirstTime
   extends Yup.InferType<typeof ChangePasswordFirstimeSchema> {}
 
@@ -24,11 +15,30 @@ const useFirstTimeLogin = () => {
     values: IChangePasswordFirstTime,
     actions: FormikHelpers<IChangePasswordFirstTime>
   ) => {
-    dispatch(changePasswordFirstTime(values));
-    actions.setSubmitting(false);
+    const { setSubmitting, setTouched, setErrors } = actions;
+
+    ChangePasswordFirstimeSchema.validate(values, { abortEarly: false })
+      .then(() => {
+        // Proceed with form submission
+        dispatch(changePasswordFirstTime(values));
+
+        // Form submission logic
+        setSubmitting(false);
+      })
+      .catch((errors) => {
+        const formErrors = errors.inner.reduce((acc: any, err: any) => {
+          acc[err.path] = err.message;
+          return acc;
+        }, {});
+        setErrors(formErrors);
+        setTouched({
+          newPassword: true,
+        });
+        setSubmitting(false);
+      });
   };
 
-  return { initialValues, handleSubmit, ChangePasswordFirstimeSchema };
+  return { initialValues, handleSubmit };
 };
 
 export default useFirstTimeLogin;

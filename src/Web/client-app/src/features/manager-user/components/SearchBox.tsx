@@ -22,10 +22,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
   return (
     <>
       <InputGroup className="mb-3">
-        <FormControl
-          value={searchTerm}
-          onChange={handleInputChange}
-        />
+        <FormControl value={searchTerm} onChange={handleInputChange} />
         <Button
           variant="outline-secondary"
           id="button-addon2"

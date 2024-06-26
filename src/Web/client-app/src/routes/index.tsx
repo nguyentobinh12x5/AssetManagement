@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import SuspenseLoading from "../components/SuspenseLoading";
-import { AUTH, USER, HOME, TODO_ITEM, ASSETS } from "../constants/pages";
+import { HOME, AUTH, ASSETS, USER } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import Assets from "../features/asset";

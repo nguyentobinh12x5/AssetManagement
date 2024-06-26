@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { ITodoItem } from '../interfaces/ITodoItem';
 import { ITodoQuery } from '../interfaces/ITodoQuery';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
-import { getTodoItems, setTodoItems } from '../reducers/todo-item-slice';
+import { getTodoItems } from '../reducers/todo-item-slice';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_TODO_ITEM_SORT_COLUMN } from '../constants/todo-item-sort';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
-import { APP_DEFAULT_PAGE_SIZE, ASCENDING } from '../../../constants/paging';
+import { APP_DEFAULT_PAGE_SIZE } from '../../../constants/paging';
 
 const defaultIPagedTodoItemModel: IPagedModel<ITodoItem> = {
   items: [],
@@ -61,7 +61,7 @@ const useTodoItemList = () => {
   //Fetch Data
   useEffect(() => {
     dispatch(getTodoItems(hasTodoQuery));
-  }, [hasTodoQuery]);
+  }, [dispatch, hasTodoQuery]);
 
   return {
     defaultIPagedTodoItemModel,

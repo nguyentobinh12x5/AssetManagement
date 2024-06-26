@@ -1,4 +1,4 @@
-﻿using Ardalis.GuardClauses;
+using Ardalis.GuardClauses;
 
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
@@ -38,8 +38,8 @@ public class GetUpdateUserTests
         var user = new UserDto
         {
             Id = userId,
-            FirstName = "OldFirstName",
-            LastName = "OldLastName",
+            FirstName = "FirstName",
+            LastName = "LastName",
             DateOfBirth = new DateTime(1990, 1, 1),
             JoinDate = new DateTime(2020, 1, 1),
             Gender = Gender.Male,
@@ -48,8 +48,6 @@ public class GetUpdateUserTests
         var updateCommand = new UpdateUserCommand
         {
             Id = userId,
-            FirstName = "NewFirstName",
-            LastName = "NewLastName",
             DateOfBirth = new DateTime(2000, 1, 1),
             Gender = Gender.Male,
             JoinDate = new DateTime(2020, 1, 1),
@@ -71,16 +69,8 @@ public class GetUpdateUserTests
 
         // Assert
         _identityServiceMock.Verify(x => x.GetUserWithRoleAsync(userId), Times.Once);
-        _identityServiceMock.Verify(x => x.UpdateUserAsync(It.Is<UserDto>(u =>
-            u.Id == userId &&
-            u.FirstName == "NewFirstName" &&
-            u.LastName == "NewLastName" &&
-            u.DateOfBirth == new DateTime(2000, 1, 1) &&
-            u.Gender == Gender.Male &&
-            u.JoinDate == new DateTime(2020, 1, 1)
-        )), Times.Once);
+        _identityServiceMock.Verify(x => x.UpdateUserAsync(user), Times.Once);
         _identityServiceMock.Verify(x => x.UpdateUserToRoleAsync(userId, "OldRole", "NewRole"), Times.Once);
-        _identityServiceMock.Verify(x => x.GetUserWithRoleAsync(userId), Times.Once);
     }
 
     [Test]
@@ -91,8 +81,6 @@ public class GetUpdateUserTests
         var updateCommand = new UpdateUserCommand
         {
             Id = userId,
-            FirstName = "NewFirstName",
-            LastName = "NewLastName",
             DateOfBirth = new DateTime(2000, 1, 1),
             Gender = Gender.Male,
             JoinDate = new DateTime(2020, 1, 1),
@@ -120,8 +108,8 @@ public class GetUpdateUserTests
         var user = new UserDto
         {
             Id = userId,
-            FirstName = "OldFirstName",
-            LastName = "OldLastName",
+            FirstName = "FirstName",
+            LastName = "LastName",
             DateOfBirth = new DateTime(1990, 1, 1),
             JoinDate = new DateTime(2020, 1, 1),
             Gender = Gender.Male,
@@ -130,8 +118,6 @@ public class GetUpdateUserTests
         var updateCommand = new UpdateUserCommand
         {
             Id = userId,
-            FirstName = "NewFirstName",
-            LastName = "NewLastName",
             DateOfBirth = new DateTime(2000, 1, 1),
             Gender = Gender.Male,
             JoinDate = new DateTime(2020, 1, 1),

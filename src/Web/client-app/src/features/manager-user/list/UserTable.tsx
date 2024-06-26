@@ -102,9 +102,7 @@ const UserTable: React.FC<UserTableProps> = ({
               <TextWithTooltip text={data.userName} />
             </td>
             <td className="lrgsize">
-              <TextWithTooltip
-                text={formatDate(data.joinDate)}
-              />
+              <TextWithTooltip text={formatDate(data.joinDate)} />
             </td>
             <td>
               <TextWithTooltip text={data.type.slice(0, 5)} />

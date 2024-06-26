@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Paging from 'react-bootstrap/Pagination';
 import IPagination from './interfaces/IPagination';
 

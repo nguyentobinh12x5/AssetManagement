@@ -1,4 +1,4 @@
-import React, { DetailedHTMLProps } from "react";
+import React from "react";
 import { Button as BootstrapButton, ButtonProps } from "react-bootstrap";
 type Props = ButtonProps & {
   children: React.ReactNode;

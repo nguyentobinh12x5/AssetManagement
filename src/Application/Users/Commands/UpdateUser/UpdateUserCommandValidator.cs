@@ -1,18 +1,10 @@
-﻿namespace AssetManagement.Application.Users.Commands.UpdateUser;
+namespace AssetManagement.Application.Users.Commands.UpdateUser;
 
 public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserCommandValidator()
     {
         RuleFor(v => v.Id)
-            .NotEmpty()
-            .MaximumLength(256);
-
-        RuleFor(v => v.FirstName)
-            .NotEmpty()
-            .MaximumLength(256);
-
-        RuleFor(v => v.LastName)
             .NotEmpty()
             .MaximumLength(256);
 

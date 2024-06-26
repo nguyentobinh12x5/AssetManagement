@@ -10,7 +10,5 @@ export function* handleGetTodoItems(action: PayloadAction<ITodoQuery>) {
   try {
     const { data } = yield call(getTodoItems, todoQuery);
     yield put(setTodoItems(data));
-  } catch (error: any) {
-    const msg = error.response.data;
-  }
+  } catch (error: any) {}
 }
