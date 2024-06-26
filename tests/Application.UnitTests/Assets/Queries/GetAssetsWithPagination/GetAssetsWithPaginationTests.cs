@@ -26,6 +26,7 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
     {
         private Mock<IApplicationDbContext> _mockContext;
         private IMapper _mapper;
+        private Mock<IUser> _mockCurrentUser;
 
         [SetUp]
         public void SetUp()
@@ -33,9 +34,9 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
             // Mock data
             var assets = new List<Asset>
             {
-                new Asset { Id = 1, Name = "Asset1", Category = new Category { Name = "Category1" }, AssetStatus = new AssetStatus { Name = "Active" } },
-                new Asset { Id = 2, Name = "Asset2", Category = new Category { Name = "Category2" }, AssetStatus = new AssetStatus { Name = "Inactive" } },
-                new Asset { Id = 3, Name = "Asset3", Category = new Category { Name = "Category1" }, AssetStatus = new AssetStatus { Name = "Active" } }
+                new Asset { Id = 1, Name = "Asset1", Category = new Category { Name = "Category1" }, AssetStatus = new AssetStatus { Name = "Active" }, Location = "Location1" },
+                new Asset { Id = 2, Name = "Asset2", Category = new Category { Name = "Category2" }, AssetStatus = new AssetStatus { Name = "Inactive" }, Location = "Location1" },
+                new Asset { Id = 3, Name = "Asset3", Category = new Category { Name = "Category1" }, AssetStatus = new AssetStatus { Name = "Active" }, Location = "Location2" }
             }.AsQueryable();
 
             // Mock DbContext and IMapper
@@ -48,6 +49,10 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
             });
 
             _mapper = configurationProvider.CreateMapper();
+
+            // Mock CurrentUser
+            _mockCurrentUser = new Mock<IUser>();
+            _mockCurrentUser.Setup(cu => cu.Location).Returns("Location1");
         }
 
         [Test]
@@ -64,10 +69,10 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
                 SortColumnDirection = "asc",
                 CategoryName = "Category1",
                 AssetStatusName = "Active",
-                SearchTerm = "Asset"
+                SearchTerm = "Asset",
             };
 
-            var handler = new GetAssetsWithPaginationQueryHandler(_mockContext.Object, _mapper);
+            var handler = new GetAssetsWithPaginationQueryHandler(_mockContext.Object, _mapper, _mockCurrentUser.Object);
 
             // Act + Assert
             Assert.ThrowsAsync<Exception>(async () =>
