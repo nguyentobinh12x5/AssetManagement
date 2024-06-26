@@ -9,22 +9,12 @@ import { Col, Row } from "react-bootstrap";
 import { text } from "stream/consumers";
 import Table from "../../../components/table/Table";
 import IColumnOption from "../../../components/table/interfaces/IColumnOption";
+import { formatDate } from "../../../utils/dateUtils";
 
 type AssetID = {
   id: string;
   onClose: () => void;
 };
-
-function formatDate(dateString: string | undefined) {
-  if (!dateString) return "";
-
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
-}
 
 const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -98,7 +88,7 @@ const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
                 Installed Date
               </Col>
               <Col md={9}>
-                {formatDate(assetDetail?.installedDate)}
+                {formatDate(assetDetail ? assetDetail.installedDate : (new Date()).toDateString())}
               </Col>
             </Row>
           </div>
