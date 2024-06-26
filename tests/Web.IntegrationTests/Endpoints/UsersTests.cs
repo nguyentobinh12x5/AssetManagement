@@ -1,6 +1,5 @@
 using System.Net;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
@@ -18,7 +17,6 @@ using Xunit;
 
 
 using Assert = Xunit.Assert;
-using System.Net;
 
 namespace Web.IntegrationTests.Endpoints
 {
