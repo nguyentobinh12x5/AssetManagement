@@ -5,34 +5,24 @@ import ButtonIcon from "../../../components/ButtonIcon";
 import { XCircle } from "react-bootstrap-icons";
 import { deleteUser } from "../reducers/user-slice";
 
-const ConfirmDisable = ({ userId }: { userId: string }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface Props {
+  userId: string | null;
+  hideModal: () => void;
+}
+
+const ConfirmDisable: React.FC<Props> = ({ userId, hideModal }) => {
   const dispatch = useDispatch();
 
-  const handleShowModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleDisableUser = () => {
+  const handleDisableUser = (e: any) => {
+    e.stopPropagation();
+    if (!userId) return;
     dispatch(deleteUser(userId));
-    setIsModalOpen(false);
+    hideModal();
   };
 
   return (
     <div>
-      <ButtonIcon onClick={handleShowModal}>
-        <XCircle color="red" />
-      </ButtonIcon>
-
-      <ConfirmModal
-        title="Are you sure?"
-        isShow={isModalOpen}
-        onHide={handleCloseModal}
-      >
+      <ConfirmModal title="Are you sure?" isShow={userId !== null}>
         <div className="modal-body-content">
           <p>Do you want to disable this user?</p>
           <div className="modal-buttons">
@@ -42,8 +32,8 @@ const ConfirmDisable = ({ userId }: { userId: string }) => {
             <button
               className="btn btn-light btn-outline-secondary"
               onClick={(e: { stopPropagation: () => void }) => {
-                e.stopPropagation(); // Prevents triggering the row click
-                handleCloseModal();
+                e.stopPropagation();
+                hideModal();
               }}
             >
               Cancel

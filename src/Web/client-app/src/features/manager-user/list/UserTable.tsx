@@ -7,7 +7,7 @@ import { IBriefUser } from "../interfaces/IBriefUser";
 import Table from "../../../components/table/Table";
 import ButtonIcon from "../../../components/ButtonIcon";
 import { useNavigate } from "react-router-dom";
-import { PencilFill } from "react-bootstrap-icons";
+import { PencilFill, XCircle } from "react-bootstrap-icons";
 import PopupComponent from "../details";
 import Loading from "../../../components/Loading";
 import ConfirmDisable from "../components/ConfirmDisable";
@@ -46,9 +46,19 @@ const UserTable: React.FC<UserTableProps> = ({
   };
 
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [deleteUserId, setDeleteUserId] = useState<string | null>(null);
+
   const [showPopup, setShowPopup] = useState(false);
 
+  const handleShowDisableModal = (userId: string) => {
+    setDeleteUserId(userId);
+  };
+  const hideDisableModal = () => {
+    setDeleteUserId(null);
+  };
+
   const handleShowPopup = (userId: string) => {
+    console.log("ShowPopu");
     setSelectedUser(userId);
     setShowPopup(true);
   };
@@ -115,12 +125,18 @@ const UserTable: React.FC<UserTableProps> = ({
                 >
                   <PencilFill />
                 </ButtonIcon>
-                <ConfirmDisable userId={data.id} />
+                <ButtonIcon
+                  onClick={handleShowDisableModal.bind(null, data.id)}
+                >
+                  <XCircle color="red" />
+                </ButtonIcon>
               </div>
             </td>
           </tr>
         ))}
       </Table>
+      <ConfirmDisable userId={deleteUserId} hideModal={hideDisableModal} />
+
       {selectedUser && (
         <PopupComponent
           show={showPopup}
