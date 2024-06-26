@@ -5,12 +5,21 @@ import ChangePasswordForm from "../auth/changepassword/ChangePasswordForm";
 import { useState } from "react";
 import { logout } from "../auth/reducers/auth-slice";
 import { IUserInfo } from "../auth/interfaces/IUserInfo";
+import { HEADER_TITLES } from "../../constants/headerTitles";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
   const location = useLocation();
   const isAtLoginPage = location.pathname.includes("login");
-  const HeaderTitle = isAuthenticated ? "Home" : "Online Asset Management";
+  let HeaderTitle = isAuthenticated ? "Home" : "Online Asset Management";
+
+  for (const [key, title] of Object.entries(HEADER_TITLES)) {
+    if (location.pathname.includes(key)) {
+      HeaderTitle = title;
+      break;
+    }
+  }
+
 
   return (
     <div className="header align-items-center font-weight-bold">

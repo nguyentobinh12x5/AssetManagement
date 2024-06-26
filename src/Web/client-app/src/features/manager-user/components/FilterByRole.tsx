@@ -13,11 +13,11 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (types.length <= 1){
+    setSelectedTypes(["All"]);
+    if (types.length <= 1) {
       dispatch(getUserTypes());
-      setSelectedTypes(["All"])
-    } 
-  },[setSelectedTypes, dispatch, types.length]);
+    }
+  }, [setSelectedTypes, dispatch, types.length]);
 
   type UserType = (typeof types)[number];
 
@@ -38,18 +38,20 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
       handleFilterByType(["All"]);
     } else {
       // Convert display types to actual types
-      const actualTypes: UserType[] = displayTypes.map(
-        (displayType) =>
-          (Object.keys(userTypesMap) as UserType[]).find(
-            (key) => userTypesMap[key] === displayType
-          )!
-      ).filter((category) => category !== "All");
+      const actualTypes: UserType[] = displayTypes
+        .map(
+          (displayType) =>
+            (Object.keys(userTypesMap) as UserType[]).find(
+              (key) => userTypesMap[key] === displayType
+            )!
+        )
+        .filter((category) => category !== "All");
 
       setSelectedTypes(actualTypes);
       handleFilterByType(actualTypes);
     }
   };
-  
+
   return (
     <DropdownFilter
       label="Type"
