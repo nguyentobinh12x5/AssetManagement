@@ -93,7 +93,7 @@ const AssetTable: React.FC<AssetTableProps> = ({
             <td>{data.name}</td>
             <td>{data.categoryName}</td>
             <td>{data.assetStatusName}</td>
-            <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0">
+            <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0 action">
               <div>
                 <ButtonIcon
                   onClick={() => {
