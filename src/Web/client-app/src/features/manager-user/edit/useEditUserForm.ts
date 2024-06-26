@@ -8,16 +8,7 @@ import {
 } from '../reducers/user-slice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-
-const UserSchema = Yup.object().shape({
-  firstName: Yup.string().required('Required'),
-  lastName: Yup.string().required('Required'),
-  dateOfBirth: Yup.string().required('Required'),
-  joinDate: Yup.string().required('Required'),
-  type: Yup.string().required('Required'),
-  gender: Yup.string().required('Required'),
-});
-export interface IUserForm extends Yup.InferType<typeof UserSchema> {}
+import { IUserForm } from '../components/validateUserSchemas';
 
 const useEditForm = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -48,7 +39,7 @@ const useEditForm = () => {
     }
   }, [succeed, navigate, isLoading, error, dispatch]);
 
-  return { user, isLoading, handleSubmit, UserSchema };
+  return { user, isLoading, handleSubmit };
 };
 
 export default useEditForm;

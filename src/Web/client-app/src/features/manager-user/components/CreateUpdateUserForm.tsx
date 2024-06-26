@@ -1,5 +1,4 @@
-import { Form, Formik } from "formik";
-import useEditForm from "./useEditForm";
+import { Form, Formik, FormikHelpers, FormikValues } from "formik";
 import { Button } from "../../../components";
 import TextField from "../../../components/formInputs/TextField";
 import DateField from "../../../components/formInputs/DateField";
@@ -8,15 +7,35 @@ import SelectField from "../../../components/formInputs/SelectField";
 import { GenderOptions } from "../constants/gender-user";
 import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
-const EditForm = () => {
-  const { user, handleSubmit, UserSchema } = useEditForm();
+import "./CreateUpdateUserForm.scss";
+
+interface Props<TVal> {
+  initialValues: FormikValues & TVal;
+  handleSubmit: (
+    values: FormikValues & TVal,
+    formikHelpers: FormikHelpers<FormikValues & TVal>
+  ) => void | Promise<any>;
+  validationSchema: any;
+  enableReinitialize: boolean;
+  isEdit?: boolean;
+}
+
+function CreateUpdateUserForm<TVal>({
+  initialValues,
+  handleSubmit,
+  validationSchema,
+  enableReinitialize,
+  isEdit,
+}: Props<TVal>) {
   const navigate = useNavigate();
+
   return (
     <Formik
-      initialValues={user}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={UserSchema}
-      enableReinitialize
+      validateOnChange={true}
+      validationSchema={validationSchema}
+      enableReinitialize={enableReinitialize}
     >
       {({ isValid, dirty }) => (
         <Form>
@@ -27,7 +46,7 @@ const EditForm = () => {
               name="firstName"
               type="text"
               required
-              disabled={true}
+              disabled={isEdit}
             />
           </div>
           <div className="mb-3">
@@ -37,7 +56,7 @@ const EditForm = () => {
               name="lastName"
               type="text"
               required
-              disabled={true}
+              disabled={isEdit}
             />
           </div>
           <div className="mb-3">
@@ -95,6 +114,6 @@ const EditForm = () => {
       )}
     </Formik>
   );
-};
+}
 
-export default EditForm;
+export default CreateUpdateUserForm;
