@@ -9,14 +9,16 @@ import { GenderOptions } from "../constants/gender-user";
 import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
 import "./CreateForm.scss";
+import { UserSchema } from "./validateSchemas";
 const CreateForm = () => {
-  const { user, handleSubmit, UserSchema } = useCreateForm();
+  const { user, handleSubmit } = useCreateForm();
   const navigate = useNavigate();
 
   return (
     <Formik
       initialValues={user}
       onSubmit={handleSubmit}
+      validateOnChange={true}
       validationSchema={UserSchema}
       enableReinitialize
     >

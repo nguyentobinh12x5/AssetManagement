@@ -14,6 +14,7 @@ import ConfirmDisable from "../components/ConfirmDisable";
 import "../../../components/table/CustomTable.scss";
 import { Tooltip } from "react-bootstrap";
 import TextWithTooltip from "../../../components/table/helper/TextToolTip";
+import { formatDate } from "../../../utils/dateUtils";
 
 type UserTableProps = {
   users: IPagedModel<IBriefUser>;
@@ -63,12 +64,6 @@ const UserTable: React.FC<UserTableProps> = ({
     handleChange: handlePaging,
   };
 
-  const renderTooltip = (props: any) => (
-    <Tooltip id="button-tooltip" {...props}>
-      {props.toString()}
-    </Tooltip>
-  );
-
   if (!users) {
     return <Loading />;
   }
@@ -107,26 +102,19 @@ const UserTable: React.FC<UserTableProps> = ({
               <TextWithTooltip text={data.userName} />
             </td>
             <td className="lrgsize">
-              <TextWithTooltip
-                text={new Date(data.joinDate).toLocaleDateString()}
-              />
+              <TextWithTooltip text={formatDate(data.joinDate)} />
             </td>
-            <td className="midsize">
+            <td>
               <TextWithTooltip text={data.type.slice(0, 5)} />
             </td>
-            <td className="action text-center d-flex align-items-center gap-2">
-              <div>
+            <td className="action">
+              <div className="d-flex gap-4 justify-content-evenly align-items-center">
                 <ButtonIcon
-                  onClick={() => {
-                    handleEditClick(data.id);
-                  }}
+                  onClick={() => handleEditClick(data.id)}
                   disable={false}
                 >
                   <PencilFill />
                 </ButtonIcon>
-              </div>
-
-              <div>
                 <ConfirmDisable userId={data.id} />
               </div>
             </td>

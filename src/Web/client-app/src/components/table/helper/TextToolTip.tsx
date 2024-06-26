@@ -21,7 +21,7 @@ const TextWithTooltip: React.FC<{ text: string }> = ({ text }) => {
       ref={textRef}
       className="text-truncate"
       style={{
-        maxWidth: "170px",
+        maxWidth: "90%",
         overflow: "hidden",
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",

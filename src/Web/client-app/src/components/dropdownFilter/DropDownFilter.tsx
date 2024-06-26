@@ -7,6 +7,7 @@ import {
   Form,
 } from "react-bootstrap";
 import { FunnelFill } from "react-bootstrap-icons";
+import "./DropDownFilter.scss";
 
 interface Props {
   label: string;
@@ -60,7 +61,7 @@ const DropdownFilter: React.FC<Props> = ({
 
   return (
     <InputGroup
-      className="d-inline-flex align-items-center mb-3"
+      className="custom-input-group d-inline-flex align-items-center mb-3"
       onClick={() => {
         handleDropdownToggle();
       }}
@@ -72,6 +73,7 @@ const DropdownFilter: React.FC<Props> = ({
         onClick={() => setDropdownOpen(true)}
       />
       <DropdownButton
+        className="btn-group position-static"
         show={dropdownOpen}
         variant="outline-secondary"
         title={<FunnelFill />}
