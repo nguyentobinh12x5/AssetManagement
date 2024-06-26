@@ -3,7 +3,7 @@ import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import { createUser, setSucceedStatus } from '../reducers/user-slice';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { IUserForm } from './validateSchema';
+import { IUserForm } from './validateSchemas';
 
 const useCreateForm = () => {
     const navigate = useNavigate();

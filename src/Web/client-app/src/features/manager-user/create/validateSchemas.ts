@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 
-const isOver18 = (date: Date) => {
+export const isOver18 = (date: Date) => {
     const now = new Date();
     const age = now.getFullYear() - date.getFullYear();
     const month = now.getMonth() - date.getMonth();
@@ -11,7 +11,7 @@ const isOver18 = (date: Date) => {
     return age >= 18;
 };
 
-const isWeekend = (date: Date) => {
+export const isWeekend = (date: Date) => {
     const day = date.getDay();
     return day === 0 || day === 6;
 };

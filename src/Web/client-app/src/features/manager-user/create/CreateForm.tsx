@@ -9,7 +9,7 @@ import { GenderOptions } from "../constants/gender-user";
 import { TypeOptions } from "../constants/type-user";
 import { useNavigate } from "react-router-dom";
 import "./CreateForm.scss";
-import { UserSchema } from "./validateSchema";
+import { UserSchema } from "./validateSchemas";
 const CreateForm = () => {
   const { user, handleSubmit } = useCreateForm();
   const navigate = useNavigate();
