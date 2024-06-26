@@ -9,7 +9,8 @@ interface Props {
 }
 
 const ColumnICon: React.FC<Props> = ({ name, sortState }) => {
-  return name == sortState.name && sortState.orderBy == SORT_TYPE.DESCENDING ? (
+  return name === sortState.name &&
+    sortState.orderBy === SORT_TYPE.DESCENDING ? (
     <CaretUpFill />
   ) : (
     <CaretDownFill />

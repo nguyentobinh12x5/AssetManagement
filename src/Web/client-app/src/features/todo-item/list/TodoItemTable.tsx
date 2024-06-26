@@ -2,11 +2,9 @@ import React from "react";
 import IColumnOption from "../../../components/table/interfaces/IColumnOption";
 import IPagination from "../../../components/table/interfaces/IPagination";
 import ISortState from "../../../components/table/interfaces/ISortState";
-import { ASCENDING } from "../../../constants/paging";
 import { IPagedModel } from "../../../interfaces/IPagedModel";
 import { ITodoItem } from "../interfaces/ITodoItem";
 import Table from "../../../components/table/Table";
-import { DEFAULT_TODO_ITEM_SORT_COLUMN } from "../constants/todo-item-sort";
 
 type TodoItemTableProps = {
   todoItems: IPagedModel<ITodoItem>;

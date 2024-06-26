@@ -9,7 +9,7 @@ using AssetManagement.Domain.Entities;
 
 namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets
 {
-    public class AssetDto 
+    public class AssetDto
     {
         public int Id { get; set; }
         public string Code { get; set; } = null!;

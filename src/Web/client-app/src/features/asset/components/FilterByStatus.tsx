@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import { getAssetStatuses, setAssetStatuses } from "../reducers/asset-slice";
+import { getAssetStatuses } from "../reducers/asset-slice";
 
 interface FilterByStatusProps {
   handleFilterByStatus: (statuses: string[]) => void;

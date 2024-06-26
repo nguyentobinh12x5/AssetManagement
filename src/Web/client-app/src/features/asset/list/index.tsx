@@ -8,6 +8,7 @@ import SearchBox from "../components/SearchBox";
 import useAssetList from "./useAssetList";
 import "./AssetList.scss";
 import DetailForm from "../detail/DetailForm";
+import { CREATE_ASSET_PATH } from "../constants/create-asset";
 
 const AssetList = () => {
   const {
@@ -25,6 +26,7 @@ const AssetList = () => {
 
   const handleCreateAsset = () => {
     // Navigate to Create new Asset
+    navigate(CREATE_ASSET_PATH);
   };
 
   return (

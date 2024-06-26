@@ -11,6 +11,10 @@
 @import "../features/asset/detail/DetailForm.scss";
 
 @import "../components/confirmModal/ConfirmModal.scss";
+@import "../components/formInputs/RadioButtonField.scss";
+@import "../components/formInputs/SelectField.scss";
+
+@import "../features/styles.scss";
 
 :root {
   --primary-grey: #ced4da;
@@ -27,6 +31,10 @@
 
 body {
   max-width: 100vw;
+}
+
+option {
+  padding: 8px 16px;
 }
 
 .bgPrimary {

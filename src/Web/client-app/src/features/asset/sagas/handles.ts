@@ -1,19 +1,27 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import {
-  getAssetCategoriesRequest,
-  getAssetStatusesRequest,
-  getAssetsRequest,
-  getAssetByIdRequest
-} from './requests';
 import { call, put } from 'redux-saga/effects';
 import {
+  createAssetFailure,
+  createAssetSuccess,
   getAssetsFailure,
   getAssetsSuccess,
   setAssetCategories,
   setAssetStatuses,
   setAssets,
 } from '../reducers/asset-slice';
+import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
+import {
+  createAssetRequest,
+  getAssetCategoriesRequest,
+  getAssetStatusesRequest,
+  getAssetsRequest,
+  getAssetByIdRequest,
+} from './requests';
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
+import { AxiosResponse } from 'axios';
+import { IAssetDetail } from '../interfaces/IAssetDetail';
+import { ASSETS } from '../../../constants/pages';
+import { navigateTo } from '../../../utils/navigateUtils';
 import { getAssetByIdSuccess } from '../reducers/asset-detail-slice';
 
 export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
@@ -23,6 +31,24 @@ export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
     yield put(getAssetsSuccess(data));
   } catch (error: any) {
     yield put(getAssetsFailure(error.data.detail));
+  }
+}
+
+export function* handleCreateAsset(action: PayloadAction<ICreateAssetCommand>) {
+  try {
+    const { data: createdAssetId }: AxiosResponse<number> = yield call(
+      createAssetRequest,
+      action.payload
+    );
+    const { data: createdAsset }: AxiosResponse<IAssetDetail> = yield call(
+      getAssetByIdRequest,
+      createdAssetId
+    );
+    yield put(createAssetSuccess(createdAsset));
+    yield navigateTo(ASSETS);
+  } catch (error: any) {
+    const errorMsg = error.data.detail;
+    yield put(createAssetFailure(errorMsg));
   }
 }
 
@@ -49,7 +75,6 @@ export function* handleGetAssetsCategories() {
     }
   }
 }
-
 export function* handleGetAssetById(action: PayloadAction<number>) {
   const id = action.payload;
   try {

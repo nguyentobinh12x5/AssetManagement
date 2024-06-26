@@ -54,6 +54,7 @@
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/",
+    "lint:fix": "npm run lint -- --fix",
     "format:write": "npx prettier --write . --cache",
     "format:check": "npx prettier --check . --cache"
   },

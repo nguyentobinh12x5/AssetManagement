@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -30,8 +30,7 @@ namespace Web.IntegrationTests.Endpoints
             _httpClient = _factory.GetApplicationHttpClient();
         }
 
-        [Fact]
-        [Ignore]
+        [Fact(Skip = "For smoke test")]
         public async Task Create_User_Endpoint_Returns_Success()
         {
             // Arrange

@@ -1,4 +1,4 @@
-﻿export interface IBriefUser {
+export interface IBriefUser {
   id: string;
   staffCode: string;
   fullName: string;

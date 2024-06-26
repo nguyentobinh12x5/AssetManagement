@@ -130,7 +130,7 @@ const useCreateForm = () => {
       dispatch(setSucceedStatus(false));
       navigate('/user');
     }
-  }, [succeed, navigate, error, isLoading]);
+  }, [succeed, navigate, error, isLoading, dispatch]);
 
   return { user, isLoading, handleSubmit, UserSchema };
 };

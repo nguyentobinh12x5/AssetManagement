@@ -1,4 +1,3 @@
-
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
@@ -45,7 +44,7 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
-    public Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public Task<(Result Result, string Id)> CreateUserAsync(CreateUserDto createUser)
     {
         throw new NotImplementedException();
     }
@@ -70,17 +69,27 @@ public class MockIdentityService : IIdentityService
         throw new NotImplementedException();
     }
 
+    public Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<string?> GetUserNameAsync(string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<string?>> GetUserTypes()
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<UserDto> GetUserWithRoleAsync(string userId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result> UpdateUserAsync(UserDto userDto)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result> UpdateUserToRoleAsync(string userId, string currentRole, string newRole)
     {
         throw new NotImplementedException();
     }
@@ -91,16 +100,6 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<bool> IsSameOldPassword(string newPassword)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> IsUserDisabledAsync(string email)
-    {
-        return Task.FromResult(false);
-    }
-
-    public Task Logout()
     {
         throw new NotImplementedException();
     }

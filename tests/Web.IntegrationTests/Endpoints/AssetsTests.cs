@@ -76,7 +76,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(assets);
         Assert.Single(assets.Items);
     }
-    [Fact] 
+    [Fact]
     public async Task GetAssetsWithPaginationAndSearchByName_ShouldReturnFilteredAssetsData()
     {
         //Arrange
@@ -114,9 +114,9 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
     {
         //Arrange 
         await AssetsDataHelper.CreateSampleData(_factory);
-        
+
         //Act
-        
+
         var assets = await _httpClient
             .GetFromJsonAsync<PaginatedList<AssetBriefDto>>(
                 "/api/Assets?PageNumber=3&PageSize=2&SortColumnName=Name&SortColumnDirection=Descending"

@@ -6,7 +6,6 @@ import changePasswordReducer from '../features/auth/changepassword/reducers/chan
 import assetsReducer from '../features/asset/reducers/asset-slice';
 import assetDetailReducer from '../features/asset/reducers/asset-detail-slice';
 
-
 const rootReducer = {
   counter: counterReducer,
   todoItems: todoItemsReducer,

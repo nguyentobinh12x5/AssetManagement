@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect } from "react";
 import { useAppDispatch, useAppState } from "../../redux/redux-hooks";
 import { getUserInfo } from "./reducers/auth-slice";
-import SuspenseLoading from "../../components/SuspenseLoading";
 import FirtimeLoginChangePassword from "./firstime-login";
 
 interface Props {

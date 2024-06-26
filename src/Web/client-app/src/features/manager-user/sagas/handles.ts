@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put } from 'redux-saga/effects';
 import { IUserCommand } from '../interfaces/IUserCommand';

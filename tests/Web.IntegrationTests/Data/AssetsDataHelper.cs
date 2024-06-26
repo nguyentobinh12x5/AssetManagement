@@ -1,6 +1,8 @@
 ﻿using AssetManagement.Domain.Entities;
 using AssetManagement.Infrastructure.Data;
+
 using Microsoft.Extensions.DependencyInjection;
+
 using Web.IntegrationTests.Helpers;
 
 namespace Web.IntegrationTests.Data
@@ -23,35 +25,35 @@ namespace Web.IntegrationTests.Data
 
         private static readonly List<Asset> AssetsLists = new()
         {
-            new Asset() 
-            { 
-                Code = "ASSET-00001", 
-                Name = "Laptop HP", 
-                Category = Categories[0], 
-                Location = "Office", 
-                Specification = "HP EliteBook 840 G7", 
-                InstalledDate = DateTime.UtcNow, 
-                AssetStatus = AssetStatuses[0] 
+            new Asset()
+            {
+                Code = "ASSET-00001",
+                Name = "Laptop HP",
+                Category = Categories[0],
+                Location = "Office",
+                Specification = "HP EliteBook 840 G7",
+                InstalledDate = DateTime.UtcNow,
+                AssetStatus = AssetStatuses[0]
             },
-            new Asset() 
-            { 
-                Code = "ASSET-00002", 
-                Name = "Desktop Dell", 
-                Category = Categories[1], 
-                Location = "Office", 
-                Specification = "Dell OptiPlex 7070", 
-                InstalledDate = DateTime.UtcNow, 
-                AssetStatus = AssetStatuses[1] 
+            new Asset()
+            {
+                Code = "ASSET-00002",
+                Name = "Desktop Dell",
+                Category = Categories[1],
+                Location = "Office",
+                Specification = "Dell OptiPlex 7070",
+                InstalledDate = DateTime.UtcNow,
+                AssetStatus = AssetStatuses[1]
             },
-            new Asset() 
-            { 
-                Code = "ASSET-00003", 
-                Name = "Monitor Samsung", 
-                Category = Categories[2], 
-                Location = "Office", 
-                Specification = "Samsung 27\" Curved", 
-                InstalledDate = DateTime.UtcNow, 
-                AssetStatus = AssetStatuses[2] 
+            new Asset()
+            {
+                Code = "ASSET-00003",
+                Name = "Monitor Samsung",
+                Category = Categories[2],
+                Location = "Office",
+                Specification = "Samsung 27\" Curved",
+                InstalledDate = DateTime.UtcNow,
+                AssetStatus = AssetStatuses[2]
             }
         };
 

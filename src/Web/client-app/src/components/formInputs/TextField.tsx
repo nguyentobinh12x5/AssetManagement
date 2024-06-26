@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
-import { ErrorMessage, useField } from "formik";
+import { useField } from "formik";
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -8,15 +8,14 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   required?: boolean;
   noValidation?: boolean;
   apiError?: string;
-  showError?: boolean;
 };
 
 const TextField: React.FC<InputFieldProps> = (props) => {
   const [field, { error, touched }] = useField(props);
-  const { label, required, noValidation, apiError, showError } = props;
+  const { label, required, noValidation, apiError } = props;
 
   const validateClass = () => {
-    if (touched && error) return "is-invalid";
+    if (touched && (error || error === "" || apiError)) return "is-invalid";
     if (noValidation) return "";
     if (touched) return "is-valid";
     return "";
@@ -35,8 +34,10 @@ const TextField: React.FC<InputFieldProps> = (props) => {
           {...props}
         />
 
-        {touched && (error || apiError) && (
-          <ErrorMsg error={error} apiError={apiError} />
+        {touched && (apiError || error) && (
+          <div className="invalid position-relative mt-2">
+            {apiError ?? error}
+          </div>
         )}
       </div>
     </div>
@@ -44,18 +45,3 @@ const TextField: React.FC<InputFieldProps> = (props) => {
 };
 
 export default TextField;
-
-const ErrorMsg = ({
-  error,
-  apiError,
-}: {
-  error?: string;
-  apiError?: string;
-}) => {
-  let message = "";
-  if (error) message = error;
-
-  if (apiError) message = apiError;
-
-  return <div className="invalid position-relative mt-2">{message}</div>;
-};

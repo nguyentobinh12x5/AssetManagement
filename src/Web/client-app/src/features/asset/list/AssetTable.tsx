@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import IColumnOption from "../../../components/table/interfaces/IColumnOption";
 import IPagination from "../../../components/table/interfaces/IPagination";

@@ -31,7 +31,7 @@ const useEditForm = () => {
     if (userId) {
       dispatch(getUserById(userId));
     }
-  }, [userId]);
+  }, [dispatch, userId]);
 
   const handleSubmit = (
     values: IUserForm,
@@ -46,7 +46,7 @@ const useEditForm = () => {
       dispatch(setSucceedStatus(false));
       navigate('/user');
     }
-  }, [succeed, navigate]);
+  }, [succeed, navigate, isLoading, error, dispatch]);
 
   return { user, isLoading, handleSubmit, UserSchema };
 };

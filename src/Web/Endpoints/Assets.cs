@@ -1,7 +1,10 @@
-﻿using AssetManagement.Application.Assets.Queries.GetAsset;
+﻿using AssetManagement.Application.Assets.Commands.Create;
+using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
-using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
+using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Common.Security;
+using AssetManagement.Application.Users.Commands.Create;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,9 +17,10 @@ public class Assets : EndpointGroupBase
         app.MapGroup(this)
             .AllowAnonymous()
             .MapGet(GetAssetList)
+            .MapGet(GetAsset, "{id}")
             .MapGet(GetAssetCategories, "Categories")
             .MapGet(GetAssetStatus, "Status")
-            .MapGet(GetAsset, "{id}");
+            .MapPost(AddAsset);
     }
 
     public Task<PaginatedList<AssetBriefDto>> GetAssetList(ISender sender, [AsParameters] GetAssetsWithPaginationQuery query)
@@ -27,7 +31,7 @@ public class Assets : EndpointGroupBase
     {
 	    return await sender.Send(new GetAssetByIdQuery(id));
 	}
-    
+
     
     public async Task<IResult> GetAssetCategories(ISender sender)
     {
@@ -39,6 +43,11 @@ public class Assets : EndpointGroupBase
     {
         var result = await sender.Send(new GetAssetStatus());
         return Results.Ok(result);
+    }
+
+    public Task<int> AddAsset(ISender sender, CreateNewAssetCommand command)
+    {
+        return sender.Send(command);
     }
 
 }

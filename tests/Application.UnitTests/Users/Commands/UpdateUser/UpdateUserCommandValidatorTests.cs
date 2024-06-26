@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Users.Commands.UpdateUser;
+using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Domain.Enums;
 
 using FluentValidation.TestHelper;
@@ -40,7 +40,7 @@ public class UpdateUserCommandValidatorTests
         var result = _validator.TestValidate(command);
         result.ShouldNotHaveValidationErrorFor(c => c.Id);
     }
-    
+
 
     [Test]
     public void Should_Have_Error_When_DateOfBirth_Is_In_The_Future()

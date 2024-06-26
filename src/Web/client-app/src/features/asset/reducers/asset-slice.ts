@@ -4,6 +4,8 @@ import { APP_DEFAULT_PAGE_SIZE, ASCENDING } from '../../../constants/paging';
 import { IBriefAsset } from '../interfaces/IBriefAsset';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { DEFAULT_MANAGE_ASSET_SORT_COLUMN } from '../constants/asset-sort';
+import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
+import { IAssetDetail } from '../interfaces/IAssetDetail';
 
 const defaultAssetQuery: IAssetQuery = {
   pageNumber: 1,
@@ -50,6 +52,14 @@ const AssetSlice = createSlice({
       isLoading: true,
       isDataFetched: false,
     }),
+    createAsset: (
+      state: AssetState,
+      action: PayloadAction<ICreateAssetCommand>
+    ) => ({
+      ...state,
+      isLoading: true,
+      succeed: false,
+    }),
 
     setAssets: (
       state: AssetState,
@@ -69,11 +79,41 @@ const AssetSlice = createSlice({
       isLoading: true,
       assets: action.payload,
     }),
+    createAssetSuccess: (
+      state: AssetState,
+      action: PayloadAction<IAssetDetail>
+    ) => {
+      const { id, categoryName, assetStatusName, code, name } = action.payload;
+      const newAsset: IBriefAsset = {
+        id: id,
+        categoryName: categoryName,
+        assetStatusName: assetStatusName,
+        code: code,
+        name: name,
+      };
+
+      return {
+        ...state,
+        isLoading: false,
+        succeed: true,
+        assets: {
+          ...state.assets,
+          items: [newAsset, ...state.assets.items],
+        },
+      };
+    },
 
     // Failure handles
     getAssetsFailure: (state: AssetState, action: PayloadAction<string>) => ({
       ...state,
       isLoading: true,
+      succeed: false,
+      error: action.payload,
+    }),
+    createAssetFailure: (state: AssetState, action: PayloadAction<string>) => ({
+      ...state,
+      isLoading: false,
+      succeed: false,
       error: action.payload,
     }),
     getAssetStatuses: (state: AssetState) => {
@@ -103,6 +143,7 @@ const AssetSlice = createSlice({
 });
 
 export const {
+  createAsset,
   getAssets,
   setAssets,
   getAssetsSuccess,
@@ -113,6 +154,8 @@ export const {
   setAssetCategories,
   setAssetQuery,
   setIsDataFetched,
+  createAssetFailure,
+  createAssetSuccess,
 } = AssetSlice.actions;
 
 export default AssetSlice.reducer;

@@ -1,9 +1,13 @@
 import * as Yup from 'yup';
 
+export const ChangePasswordRequiredSchema = Yup.object().shape({
+  currentPassword: Yup.string().required(''),
+  newPassword: Yup.string().required(''),
+});
 export const ChangePasswordSchema = Yup.object().shape({
-  currentPassword: Yup.string().required('Old password is required'),
+  currentPassword: Yup.string().required(''),
   newPassword: Yup.string()
-    .required('New password is required')
+    .required('')
     .test(
       'password-complexity',
       'Password must be at least 6 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character.',

@@ -1,10 +1,13 @@
 ﻿using System.Diagnostics.Metrics;
 
-using AutoMapper;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Entities;
+
+using AutoMapper;
+
+using MediatR;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 

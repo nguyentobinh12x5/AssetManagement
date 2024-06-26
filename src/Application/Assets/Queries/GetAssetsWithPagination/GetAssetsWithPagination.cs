@@ -13,11 +13,11 @@ public class GetAssetsWithPaginationQuery : IRequest<PaginatedList<AssetBriefDto
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
-    
+
     public string? CategoryName { get; init; }
-    
+
     public string? AssetStatusName { get; init; }
-    
+
     public string? SearchTerm { get; init; }
 }
 
@@ -25,7 +25,7 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
-    
+
     public GetAssetsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
         _context = context;
@@ -34,7 +34,7 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
     public async Task<PaginatedList<AssetBriefDto>> Handle(GetAssetsWithPaginationQuery request, CancellationToken cancellationToken)
     {
         var query = _context.Assets.AsQueryable();
-        
+
         query = FilterAssets(request, query);
 
         return await query
@@ -71,7 +71,7 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
                 query = query.Where(a => assetStatusNames.Contains(a.AssetStatus.Name));
             }
         }
-        
+
         if (!string.IsNullOrEmpty(request.SearchTerm))
         {
             query = query.Where(a => a.Name.Contains(request.SearchTerm) || a.Code.Contains(request.SearchTerm));

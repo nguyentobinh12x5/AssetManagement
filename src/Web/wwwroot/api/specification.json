@@ -93,30 +93,35 @@
             }
           }
         }
-      }
-    },
-    "/api/Assets/Categories": {
-      "get": {
+      },
+      "post": {
         "tags": [
           "Assets"
         ],
-        "operationId": "GetAssetCategories",
+        "operationId": "AddAsset",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNewAssetCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/api/Assets/Status": {
-      "get": {
-        "tags": [
-          "Assets"
-        ],
-        "operationId": "GetAssetStatus",
-        "responses": {
-          "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
           }
         }
       }
@@ -149,6 +154,32 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/Assets/Categories": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "operationId": "GetAssetCategories",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/Assets/Status": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "operationId": "GetAssetStatus",
+        "responses": {
+          "200": {
+            "description": ""
           }
         }
       }
@@ -1403,6 +1434,31 @@
             "type": "string"
           },
           "assetStatusName": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateNewAssetCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "specification": {
+            "type": "string"
+          },
+          "installDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string"
+          },
+          "location": {
             "type": "string"
           }
         }

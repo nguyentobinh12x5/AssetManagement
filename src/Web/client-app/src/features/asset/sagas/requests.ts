@@ -1,5 +1,6 @@
 import RequestService from '../../../services/request';
 import ENDPOINTS from '../../../constants/endpoints';
+import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 import { AxiosResponse } from 'axios';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
@@ -29,6 +30,14 @@ export function getAssetCategoriesRequest(): Promise<AxiosResponse<string[]>> {
   return RequestService.axios.get(`${ENDPOINTS.ASSETS}/Categories`);
 }
 
-export function getAssetByIdRequest(id: number): Promise<AxiosResponse<IAssetDetail>> {
-  return RequestService.axios.get(`${ENDPOINTS.ASSETS}/${id}`);
+export function createAssetRequest(
+  command: ICreateAssetCommand
+): Promise<AxiosResponse<number>> {
+  return RequestService.axios.post<number>(ENDPOINTS.ASSETS, command);
+}
+
+export function getAssetByIdRequest(
+  id: number
+): Promise<AxiosResponse<IAssetDetail>> {
+  return RequestService.axios.get<IAssetDetail>(`${ENDPOINTS.ASSETS}/${id}`);
 }

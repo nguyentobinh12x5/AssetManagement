@@ -18,6 +18,8 @@ import { showErrorToast } from '../../../components/toastify/toast-helper';
 import { IChangePasswordFirstTimeCommand } from '../interfaces/IChangePasswordFirstTimeCommand';
 import { AxiosResponse } from 'axios';
 import { IUserInfo } from '../interfaces/IUserInfo';
+import { navigateTo } from '../../../utils/navigateUtils';
+import { AUTH_LOGIN } from '../constants/auth-login';
 
 export function* handleLogin(action: PayloadAction<ILoginCommand>) {
   const loginCommand = action.payload;
@@ -37,7 +39,6 @@ export function* handleGetUserInfo() {
     const { data }: AxiosResponse<IUserInfo> = yield call(getUserInfoRequest);
     yield put(setUser(data));
   } catch (error: any) {
-    const errorResponse = error.response.data;
     yield put(setLogout());
   }
 }
@@ -57,9 +58,10 @@ export function* handleChangePasswordFirstTime(
 export function* handleLogout() {
   try {
     yield call(logoutRequest);
-    yield put(setLogout());
   } catch (error: any) {
     const errorResponse = error.response.data;
     if (errorResponse.detail) yield showErrorToast(errorResponse.detail);
   }
+  yield put(setLogout());
+  navigateTo(`/auth/${AUTH_LOGIN}`);
 }
