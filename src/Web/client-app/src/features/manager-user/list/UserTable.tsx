@@ -93,9 +93,9 @@ const UserTable: React.FC<UserTableProps> = ({
         pagination={pagination}
       >
         {items?.map((data) => (
-          <tr key={data.id}>
+          <tr key={data.id} onClick={() => handleShowPopup(data.id)}>
             <td className="smlsize">{data.staffCode}</td>
-            <td className="lrgsize" onClick={() => handleShowPopup(data.id)}>
+            <td className="lrgsize" >
               <TextWithTooltip text={data.fullName} />
             </td>
             <td className="lrgsize">
