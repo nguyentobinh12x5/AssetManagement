@@ -4,20 +4,39 @@ import ConfirmModal from "../../../components/confirmModal/ConfirmModal";
 import ButtonIcon from "../../../components/ButtonIcon";
 import { XCircle } from "react-bootstrap-icons";
 import { getAssetById } from '../reducers/asset-detail-slice';
-import Table from "react-bootstrap/Table";
 import { RootState } from "../../../redux/store";
 import { Col, Row } from "react-bootstrap";
 import { text } from "stream/consumers";
+import Table from "../../../components/table/Table";
+import IColumnOption from "../../../components/table/interfaces/IColumnOption";
 
 type AssetID = {
   id: string;
   onClose: () => void;
 };
 
-const DetailForm: React.FC<AssetID>  = ({id, onClose}) => {
+function formatDate(dateString: string | undefined) {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
+const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const dispatch = useDispatch();
   const { assetDetail } = useSelector((state: RootState) => state.assetDetail);
+
+  const columns: IColumnOption[] = [
+    { name: "Date", value: "Date", disable: true },
+    { name: "Assigned to", value: "AssignedTo", disable: true },
+    { name: "Assigned by", value: "AssignedBy", disable: true },
+    { name: "Returned Date", value: "ReturnedDate", disable: true },
+  ];
 
   useEffect(() => {
     if (isModalOpen) {
@@ -79,7 +98,7 @@ const DetailForm: React.FC<AssetID>  = ({id, onClose}) => {
                 Installed Date
               </Col>
               <Col md={9}>
-                {new Date(assetDetail?.installedDate ?? new Date()).toDateString()}
+                {formatDate(assetDetail?.installedDate)}
               </Col>
             </Row>
           </div>
@@ -115,35 +134,37 @@ const DetailForm: React.FC<AssetID>  = ({id, onClose}) => {
           </div>
           <div>
             <Row className="mb-3">
-              <Col md={3} style={{paddingTop: 8
-                
+              <Col md={3} style={{
+                paddingTop: 8
+
               }}>
                 History
               </Col>
-              <Col md={9}>
-                <Table>
-                  <thead>
-                    <tr className="table-detail">
-                      <th>Date</th>
-                      <th>Assigned to</th>
-                      <th>Assigned by</th>
-                      <th>Returned Date</th>
+              <Col className="p-1" md={9}>
+                <Table
+                  columns={columns}
+                  sortState={{
+                    name: "",
+                    orderBy: ""
+                  }}
+                  handleSort={() => {}}
+                  pagination={{
+                   currentPage: 0,
+                   totalPage: 0,
+                   handleChange: () => {} 
+                  }}>
+                    <tr>
+                      <td className="smlsize">12/10/2018</td>
+                      <td className="smlsize">hungtv1</td>
+                      <td className="smlsize">binhnv</td>
+                      <td className="smlsize">07/03/2019</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="table-row-detail">
-                      <td>12/10/2018</td>
-                      <td>hungtv1</td>
-                      <td>binhnv</td>
-                      <td>07/03/2019</td>
+                    <tr>
+                      <td className="smlsize">10/03/2024</td>
+                      <td className="smlsize">thinhptx</td>
+                      <td className="smlsize">tuanha</td>
+                      <td className="smlsize">22/03/2024</td>
                     </tr>
-                    <tr className="table-row-detail">
-                      <td>10/03/2024</td>
-                      <td>thinhptx</td>
-                      <td>tuanha</td>
-                      <td>22/03/2024</td>
-                    </tr>
-                  </tbody>
                 </Table>
               </Col>
             </Row>
