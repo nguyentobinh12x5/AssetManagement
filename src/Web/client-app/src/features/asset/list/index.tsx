@@ -30,7 +30,7 @@ const AssetList = () => {
   };
 
   return (
-    <div className="asset-list">
+    <div className="asset-list offset-1">
       <p className="title">Asset list</p>
 
       <Row className="mb-3">
