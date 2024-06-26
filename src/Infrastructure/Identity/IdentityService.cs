@@ -29,7 +29,7 @@ namespace AssetManagement.Infrastructure.Identity;
 public class IdentityService : IIdentityService
 {
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly SignInManager _signInManager;
     private readonly ApplicationDbContext _applicationDbContext;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
@@ -38,7 +38,7 @@ public class IdentityService : IIdentityService
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager,
+        SignInManager signInManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
         IAuthorizationService authorizationService,
         ApplicationDbContext applicationDbContext,

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +16,7 @@ namespace AssetManagement.Application.Common.Extensions
                 .Select(code => int.Parse(code.Substring(prefix.Length)))
                 .DefaultIfEmpty(0)
                 .Max();
-            return $"{prefix}{(maxNumber + 1).ToString("D5")}";
+            return $"{prefix}{(maxNumber + 1).ToString("D6")}";
         }
     }
 }

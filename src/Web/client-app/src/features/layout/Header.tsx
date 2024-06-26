@@ -5,34 +5,15 @@ import ChangePasswordForm from "../auth/changepassword/ChangePasswordForm";
 import { useState } from "react";
 import { logout } from "../auth/reducers/auth-slice";
 import { IUserInfo } from "../auth/interfaces/IUserInfo";
-import { HEADER_TITLES } from "../../constants/headerTitles";
+import BreadCrumbs from "./BreadCrumbs";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
-  const location = useLocation();
-  const isAtLoginPage = location.pathname.includes("login");
-  let HeaderTitle = isAuthenticated ? "Home" : "Online Asset Management";
-
-  for (const [key, title] of Object.entries(HEADER_TITLES)) {
-    if (location.pathname.includes(key)) {
-      HeaderTitle = title;
-      break;
-    }
-  }
 
   return (
     <div className="header align-items-center font-weight-bold">
       <div className="container-lg-min mh-100 container-fluid d-flex justify-content-between py-1">
-        <div className="d-flex align-items-center gap-2">
-          {!isAuthenticated && (
-            <img
-              alt="Online asset management icon"
-              src="/images/Logo_lk.png"
-              className="header-logo"
-            />
-          )}
-          <p className="headText">{HeaderTitle}</p>
-        </div>
+        <BreadCrumbs />
 
         {user ? (
           <UserDropdown user={user} />

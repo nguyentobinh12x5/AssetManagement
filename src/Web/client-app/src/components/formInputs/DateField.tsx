@@ -28,11 +28,9 @@ const DateField: React.FC<inputFieldProps> = (props) => {
     if (!date) {
       setError("");
       setValue(undefined);
-
     } else {
       setValue(date);
     }
-    
   };
 
   return (

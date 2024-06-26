@@ -95,7 +95,7 @@ const UserTable: React.FC<UserTableProps> = ({
         {items?.map((data) => (
           <tr key={data.id} onClick={() => handleShowPopup(data.id)}>
             <td className="smlsize">{data.staffCode}</td>
-            <td className="lrgsize" >
+            <td className="lrgsize">
               <TextWithTooltip text={data.fullName} />
             </td>
             <td className="lrgsize">

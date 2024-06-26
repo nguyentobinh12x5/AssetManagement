@@ -1,4 +1,4 @@
-﻿namespace AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
+namespace AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 
 public class GetAssetsWithPaginationQueryValidator : AbstractValidator<GetAssetsWithPaginationQuery>
 {
