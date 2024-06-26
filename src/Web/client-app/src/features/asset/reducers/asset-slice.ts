@@ -90,6 +90,10 @@ const AssetSlice = createSlice({
         code: code,
         name: name,
       };
+      const items =
+        state.assets.items.length === state.assetQuery.pageSize
+          ? state.assets.items.slice(0, state.assetQuery.pageSize - 1)
+          : state.assets.items;
 
       return {
         ...state,
@@ -97,7 +101,7 @@ const AssetSlice = createSlice({
         succeed: true,
         assets: {
           ...state.assets,
-          items: [newAsset, ...state.assets.items],
+          items: [newAsset, ...items],
         },
       };
     },

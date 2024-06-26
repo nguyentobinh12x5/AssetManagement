@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -25,7 +25,7 @@ namespace Web.IntegrationTests.Endpoints
             _factory = factory;
         }
 
-        [Fact(Skip = "For smoke test")]
+        [Fact(Skip = "Not use global setting")]
         public async Task AddAsset_ValidCommand_ReturnsSuccess()
         {
             // Arrange

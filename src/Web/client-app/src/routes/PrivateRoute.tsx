@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../features/layout/Layout";
 import { useAppState } from "../redux/redux-hooks";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import InlineLoader from "../components/InlineLoader";
 
 interface Props {
@@ -10,9 +10,14 @@ interface Props {
 }
 
 const PrivateRoute: React.FC<Props> = ({ children, showSidebar = true }) => {
+  const navigate = useNavigate();
   const { isAuthenticated, isCheckingSession } = useAppState(
     (state) => state.auth
   );
+
+  useEffect(() => {
+    if (!isCheckingSession && !isAuthenticated) navigate("/auth/login");
+  }, [isAuthenticated, isCheckingSession, navigate]);
 
   if (isCheckingSession) return <InlineLoader />;
 

@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Common.Extensions;
+using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Security;
 using AssetManagement.Application.Users.Commands.Create;
@@ -26,7 +26,7 @@ public class CreateNewAssetCommandHandler : IRequestHandler<CreateNewAssetComman
 
     public async Task<int> Handle(CreateNewAssetCommand request, CancellationToken cancellationToken)
     {
-        var CodeList = await _context.Assets.AsNoTracking().Select(c => c.Code).ToListAsync();
+        var CodeList = await _context.Assets.Select(c => c.Code).ToListAsync();
 
         var category = await _context.Categories.FirstOrDefaultAsync(e => e.Name == request.Category);
 

@@ -16,22 +16,13 @@ const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (value.length > 256) {
-      setWarningMessage("Search term cannot exceed 256 characters.");
-    } else {
-      setWarningMessage("");
-    }
     setSearchTerm(value);
   };
 
   return (
     <>
       <InputGroup className="mb-3">
-        <FormControl
-          value={searchTerm}
-          onChange={handleInputChange}
-          isInvalid={searchTerm.length > 256}
-        />
+        <FormControl value={searchTerm} onChange={handleInputChange} />
         <Button
           variant="outline-secondary"
           id="button-addon2"

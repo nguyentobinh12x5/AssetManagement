@@ -64,7 +64,6 @@ const CreateUpdateAssetForm = () => {
               id="state"
               label="State"
               name="state"
-              value={statuses.length > 0 ? statuses[0] : ""}
               options={statuses.map((st) => ({
                 id: st,
                 label: st,

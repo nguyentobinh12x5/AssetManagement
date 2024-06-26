@@ -1,28 +1,19 @@
 import { Dropdown } from "react-bootstrap";
 import { useAppDispatch, useAppState } from "../../redux/redux-hooks";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ChangePasswordForm from "../auth/changepassword/ChangePasswordForm";
 import { useState } from "react";
 import { logout } from "../auth/reducers/auth-slice";
 import { IUserInfo } from "../auth/interfaces/IUserInfo";
+import BreadCrumbs from "./BreadCrumbs";
 
 const Header = () => {
   const { user, isAuthenticated } = useAppState((state) => state.auth);
-  const HeaderTitle = isAuthenticated ? "Home" : "Online Asset Management";
 
   return (
     <div className="header align-items-center font-weight-bold">
       <div className="container-lg-min mh-100 container-fluid d-flex justify-content-between py-1">
-        <div className="d-flex align-items-center gap-2">
-          {!isAuthenticated && (
-            <img
-              alt="Online asset management icon"
-              src="/images/Logo_lk.png"
-              className="header-logo"
-            />
-          )}
-          <p className="headText">{HeaderTitle}</p>
-        </div>
+        <BreadCrumbs />
 
         {user ? (
           <UserDropdown user={user} />

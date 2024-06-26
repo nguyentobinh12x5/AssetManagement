@@ -1,0 +1,19 @@
+.bread-crumbs-wrapper {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #555;
+}
+
+.bread-crumbs-item {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family:
+    Segoe UI,
+    Arial;
+  font-weight: bold;
+  color: rgba(250, 252, 252, 1);
+  text-transform: capitalize;
+}
