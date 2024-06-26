@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 using AssetManagement.Domain.Constants;
 using AssetManagement.Domain.Entities;
@@ -33,7 +33,8 @@ public class ApplicationDbContextInitialiser
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger,
+        ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _logger = logger;
         _context = context;
@@ -79,7 +80,15 @@ public class ApplicationDbContextInitialiser
         }
 
         // Default users
-        var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost", FirstName = "Jahn", LastName = "Doe", Location = "HCM", StaffCode = "S01" };
+        var administrator = new ApplicationUser
+        {
+            UserName = "administrator@localhost",
+            Email = "administrator@localhost",
+            FirstName = "Jahn",
+            LastName = "Doe",
+            Location = "HCM",
+            StaffCode = "S01"
+        };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
@@ -90,29 +99,27 @@ public class ApplicationDbContextInitialiser
             }
         }
 
+        var staffsRole = new IdentityRole(Roles.Staff);
+        if (_roleManager.Roles.All(r => r.Name != staffsRole.Name))
+        {
+            await _roleManager.CreateAsync(staffsRole);
+        }
+
         // Default data
         // Seed, if necessary
         if (!_context.TodoLists.Any())
         {
-            _context.AssetStatuses.AddRange(
-                new AssetStatus { Name = "Available" },
-                new AssetStatus { Name = "Not available" },
-                new AssetStatus { Name = "Waiting for Recycling" },
-                new AssetStatus { Name = "Recycled" },
-                new AssetStatus { Name = "Assigned" }
-            );
-
-            await _context.SaveChangesAsync();
-        }
-
-        // Default Categories data
-        if (!_context.Categories.Any())
-        {
-            _context.Categories.AddRange(
-                new Category { Name = "Laptop", Code = "LA" },
-                new Category { Name = "Monitor", Code = "MO" },
-                new Category { Name = "Personal Computer", Code = "PC" }
-            );
+            _context.TodoLists.Add(new TodoList
+            {
+                Title = "Todo List",
+                Items =
+                {
+                    new TodoItem { Title = "Make a todo list 📃" },
+                    new TodoItem { Title = "Check off the first item ✅" },
+                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯" },
+                    new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
+                }
+            });
 
             await _context.SaveChangesAsync();
         }

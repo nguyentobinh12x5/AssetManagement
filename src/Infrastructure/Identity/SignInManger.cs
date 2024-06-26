@@ -1,3 +1,5 @@
+using System.Security.Claims;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -29,7 +31,14 @@ public class SignInManager : SignInManager<ApplicationUser>
         }
 
         // Continue with the regular password sign-in
-        return await PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
+        var result = await PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
+
+        if (result.Succeeded)
+        {
+                var locationClaim = new Claim("Location", user.Location);
+                await UserManager.AddClaimAsync(user, locationClaim);
+        }
+        return result;
     }
 
     public override async Task<SignInResult> PasswordSignInAsync(ApplicationUser user, string password, bool isPersistent, bool lockoutOnFailure)

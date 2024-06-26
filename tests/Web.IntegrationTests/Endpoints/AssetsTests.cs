@@ -1,9 +1,10 @@
-using System.Net;
+﻿using System.Net;
 using System.Net.Http.Json;
-
-using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
-using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
+using System.Threading.Tasks;
+
+using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 
 using Web.IntegrationTests.Data;
 using Web.IntegrationTests.Extensions;
@@ -125,30 +126,30 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(assets);
         Assert.Empty(assets.Items);
     }
-
-    [Fact(Skip = "For smoke test")]
-    public async Task GetAsset_ValidId_ReturnsAssetDto()
+    [Fact]
+    public async Task GetAsset_ShouldReturnAssetData()
     {
         // Arrange
-        await AssetDataHelper.CreateSampleData(_factory);
-        var assetId = 1;
+        await AssetsDataHelper.CreateSampleData(_factory);
 
         // Act
-        var assetDto = await _httpClient.GetFromJsonAsync<AssetDto>($"/Assets/{assetId}");
+        var asset = await _httpClient.GetFromJsonAsync<AssetDto>("/api/Assets/1");
 
         // Assert
-        Assert.NotNull(assetDto);
-        Assert.Equal(assetId, assetDto.Id);
+        Assert.NotNull(asset);
+        Assert.Equal(1, asset.Id);
+        Assert.Equal("ASSET-00001", asset.Code);
+        Assert.Equal("Laptop HP", asset.Name);
     }
 
     [Fact]
-    public async Task GetAsset_InvalidId_ReturnsNotFound()
+    public async Task GetAsset_InvalidId_ShouldReturnNotFound()
     {
         // Arrange
-        var invalidAssetId = 999;
+        await AssetsDataHelper.CreateSampleData(_factory);
 
         // Act
-        var response = await _httpClient.GetAsync($"/Assets/{invalidAssetId}");
+        var response = await _httpClient.GetAsync("/api/Assets/999");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

@@ -36,7 +36,7 @@ const FilterByStatus: React.FC<FilterByStatusProps> = ({
   const handleStatusChange = (displayStatuses: string[]) => {
     if (displayStatuses.length === 0) {
       setSelectedStatuses(["All"]);
-      handleFilterByStatus(["All"]);
+      handleFilterByStatus([]);
     } else {
       // Convert display statuses to actual statuses
       const actualStatuses: AssetStatus[] = displayStatuses.map(
@@ -44,7 +44,7 @@ const FilterByStatus: React.FC<FilterByStatusProps> = ({
           (Object.keys(assetStatusesMap) as AssetStatus[]).find(
             (key) => assetStatusesMap[key] === displayStatus
           )!
-      );
+      ).filter((status) => status !== "All");
 
       setSelectedStatuses(actualStatuses);
       handleFilterByStatus(actualStatuses);

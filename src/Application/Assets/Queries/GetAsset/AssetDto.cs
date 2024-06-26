@@ -20,7 +20,7 @@ namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets
         public string CategoryName { get; set; } = null!;
         public string AssetStatusName { get; set; } = null!;
 
-        private class Mapping : Profile
+        public class Mapping : Profile
         {
             public Mapping()
             {
