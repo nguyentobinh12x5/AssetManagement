@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Domain.Entities;
+
 using AutoMapper;
 
 namespace AssetManagement.Application.UnitTests.MappingProfiles

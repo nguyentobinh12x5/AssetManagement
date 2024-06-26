@@ -28,7 +28,7 @@ const SelectField: React.FC<SelectFieldProps> = (props) => {
   const selectRef = useRef<HTMLDivElement>(null);
 
   const validateClass = () => {
-    if (touched && (error || error === "" || apiError)) return "is-invalid";
+    if (touched && (error || apiError)) return "is-invalid";
     if (noValidation) return "";
     if (touched) return "is-valid";
     return "";
@@ -55,6 +55,11 @@ const SelectField: React.FC<SelectFieldProps> = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    const selected = options.find((option) => option.value === field.value);
+    setSelectedOption(selected ?? null);
+  }, [field.value, options]);
+
   return (
     <div className="form-group row">
       <label htmlFor={props.name} className="col-form-label col-4 d-flex">
@@ -68,7 +73,7 @@ const SelectField: React.FC<SelectFieldProps> = (props) => {
               className={`form-control ${validateClass()}`}
               {...field}
               {...props}
-              value={selectedOption?.value ?? ""}
+              value={selectedOption?.label ?? ""}
               readOnly
             />
             <span className="form-select-arrow">
@@ -90,20 +95,9 @@ const SelectField: React.FC<SelectFieldProps> = (props) => {
           )}
         </div>
 
-        {/* <select className={`d-none ${validateClass()}`} {...field} {...props}>
-          {options.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              className="form-select-option"
-            >
-              {option.label}
-            </option>
-          ))}
-        </select> */}
         {touched && (apiError || error) && (
           <div className="invalid position-relative mt-2">
-            {apiError ?? error}
+            {apiError ? apiError : error}
           </div>
         )}
       </div>

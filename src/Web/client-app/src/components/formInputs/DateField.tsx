@@ -59,7 +59,7 @@ const DateField: React.FC<inputFieldProps> = (props) => {
           </div>
           {touched && (apiError || error) && (
             <div className="invalid position-relative mt-2">
-              {apiError ?? error}
+              {apiError ? apiError : error}
             </div>
           )}
         </div>

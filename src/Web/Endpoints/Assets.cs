@@ -29,10 +29,10 @@ public class Assets : EndpointGroupBase
     }
     public async Task<AssetDto> GetAsset(ISender sender, int id)
     {
-	    return await sender.Send(new GetAssetByIdQuery(id));
-	}
+        return await sender.Send(new GetAssetByIdQuery(id));
+    }
 
-    
+
     public async Task<IResult> GetAssetCategories(ISender sender)
     {
         var result = await sender.Send(new GetAssetCategories());

@@ -20,7 +20,7 @@ import {
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 import { AxiosResponse } from 'axios';
 import { IAssetDetail } from '../interfaces/IAssetDetail';
-import { ASSETS } from '../../../constants/pages';
+import { ASSETS_LINK } from '../../../constants/pages';
 import { navigateTo } from '../../../utils/navigateUtils';
 import { getAssetByIdSuccess } from '../reducers/asset-detail-slice';
 
@@ -45,7 +45,7 @@ export function* handleCreateAsset(action: PayloadAction<ICreateAssetCommand>) {
       createdAssetId
     );
     yield put(createAssetSuccess(createdAsset));
-    yield navigateTo(ASSETS);
+    yield navigateTo(ASSETS_LINK);
   } catch (error: any) {
     const errorMsg = error.data.detail;
     yield put(createAssetFailure(errorMsg));

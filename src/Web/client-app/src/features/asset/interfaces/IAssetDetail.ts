@@ -1,11 +1,10 @@
 export interface IAssetDetail {
-    id: string;
+  id: string;
   code: string;
   name: string;
   location: string;
   specification: string;
-    installedDate: string;
+  installedDate: string;
   categoryName: string;
   assetStatusName: string;
 }
-  

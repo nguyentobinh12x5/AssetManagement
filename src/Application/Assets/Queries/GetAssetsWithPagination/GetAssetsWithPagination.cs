@@ -25,7 +25,7 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
     private readonly IUser _currentUser;
-    
+
     public GetAssetsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper, IUser currentUser)
     {
         _context = context;
@@ -35,7 +35,7 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
     public async Task<PaginatedList<AssetBriefDto>> Handle(GetAssetsWithPaginationQuery request, CancellationToken cancellationToken)
     {
         var query = _context.Assets.AsQueryable();
-        
+
         query = FilterAssets(request, _currentUser.Location, query);
 
 
@@ -52,7 +52,7 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
         {
             query = query.Where(a => a.Location == adminLocation);
         }
-        
+
         if (!string.IsNullOrEmpty(request.CategoryName))
         {
             var categoryNames = request.CategoryName.Split(',')

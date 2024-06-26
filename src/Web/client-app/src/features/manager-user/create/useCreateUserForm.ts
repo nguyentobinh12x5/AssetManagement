@@ -3,9 +3,9 @@ import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import { createUser, setSucceedStatus } from '../reducers/user-slice';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { IUserForm } from './validateSchemas';
+import { IUserForm } from '../components/validateUserSchemas';
 
-const useCreateForm = () => {
+const useCreateUserForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isLoading, succeed, error } = useAppState((state) => state.users);
@@ -41,4 +41,4 @@ const useCreateForm = () => {
   return { user, isLoading, handleSubmit };
 };
 
-export default useCreateForm;
+export default useCreateUserForm;
