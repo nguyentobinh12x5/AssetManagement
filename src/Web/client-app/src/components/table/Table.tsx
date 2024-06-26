@@ -5,6 +5,7 @@ import ISortState from "./interfaces/ISortState";
 import IPagination from "./interfaces/IPagination";
 import Pagination from "./Pagination";
 import { Anchor } from "react-bootstrap";
+import "../table/CustomTable.scss";
 
 interface Props {
   columns: IColumnOption[];
@@ -29,12 +30,15 @@ const Table: React.FC<Props> = ({
             {columns.map((col, i) => (
               <th scope="col" key={i} className={`table-th-${i}`}>
                 {!col.disable ? (
-                  <Anchor className="btn" onClick={() => handleSort(col.value)}>
+                  <Anchor
+                    className="fw-bold p-0 btn"
+                    onClick={() => handleSort(col.value)}
+                  >
                     {col.name}
                     <ColumnICon name={col.value} sortState={sortState} />
                   </Anchor>
                 ) : (
-                  <span className="btn">{col.name}</span>
+                  <span className="fw-bold p-0 btn">{col.name}</span>
                 )}
               </th>
             ))}
