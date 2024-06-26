@@ -34,8 +34,6 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
     }
     public async Task<PaginatedList<AssetBriefDto>> Handle(GetAssetsWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        Guard.Against.NullOrWhiteSpace(_currentUser.Location);
-        
         var query = _context.Assets.AsQueryable();
         
         query = FilterAssets(request, _currentUser.Location, query);
