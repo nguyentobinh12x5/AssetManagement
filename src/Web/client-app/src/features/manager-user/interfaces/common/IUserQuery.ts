@@ -1,7 +1,9 @@
 export interface IUserQuery {
-  location: string;
   pageNumber: number;
   pageSize: number;
   sortColumnName: string;
   sortColumnDirection: string;
+  location: string;
+  searchTerm: string;
+  types: string[];
 }

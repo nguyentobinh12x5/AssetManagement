@@ -18,7 +18,6 @@ public record GetUsersBySearchQuery : IRequest<PaginatedList<UserBriefDto>>
     public string SortColumnName { get; init; } = "StaffCode";
     public string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
     public required string Location { get; init; }
-
 }
 
 

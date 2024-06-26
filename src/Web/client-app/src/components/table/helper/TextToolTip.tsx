@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import "./TextToolTip.scss";
 
 const isTextOverflowing = (element: HTMLElement | null) => {
   if (!element) return false;
@@ -17,16 +18,7 @@ const TextWithTooltip: React.FC<{ text: string }> = ({ text }) => {
   }, [text]);
 
   return (
-    <div
-      ref={textRef}
-      className="text-truncate"
-      style={{
-        maxWidth: "90%",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-      }}
-    >
+    <div ref={textRef} className="text-truncate">
       {isOverflowing ? (
         <OverlayTrigger placement="top" overlay={<Tooltip>{text}</Tooltip>}>
           <span>{text}</span>
