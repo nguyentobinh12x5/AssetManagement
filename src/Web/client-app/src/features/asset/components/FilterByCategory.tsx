@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import { getAssetCategories } from "../reducers/asset-slice";
+import {
+  getAssetCategories,
+  setAssetCategories,
+} from "../reducers/asset-slice";
 
 interface FilterByCategoryProps {
   handleFilterByCategory: (categories: string[]) => void;
@@ -38,7 +41,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
   const handleCategoryChange = (displayCategories: string[]) => {
     if (displayCategories.length === 0) {
       setSelectedCategories(["All"]);
-      handleFilterByCategory(["All"]);
+      handleFilterByCategory([]);
     } else {
       // Convert display categories to actual categories
       const actualCategories: AssetCategory[] = displayCategories.map(
@@ -46,7 +49,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
           (Object.keys(assetCategoriesMap) as AssetCategory[]).find(
             (key) => assetCategoriesMap[key] === displayCategory
           )!
-      );
+      ).filter((category) => category !== "All");
 
       setSelectedCategories(actualCategories);
       handleFilterByCategory(actualCategories);

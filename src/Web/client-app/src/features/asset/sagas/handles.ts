@@ -22,6 +22,7 @@ import { AxiosResponse } from 'axios';
 import { IAssetDetail } from '../interfaces/IAssetDetail';
 import { ASSETS } from '../../../constants/pages';
 import { navigateTo } from '../../../utils/navigateUtils';
+import { getAssetByIdSuccess } from '../reducers/asset-detail-slice';
 
 export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
   try {
@@ -78,7 +79,7 @@ export function* handleGetAssetById(action: PayloadAction<number>) {
   const id = action.payload;
   try {
     const { data } = yield call(getAssetByIdRequest, id);
-    yield put(getAssetsSuccess([data]));
+    yield put(getAssetByIdSuccess(data));
   } catch (error: any) {
     yield put(getAssetsFailure(error.data.detail));
   }

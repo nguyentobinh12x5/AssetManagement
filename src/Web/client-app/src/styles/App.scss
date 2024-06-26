@@ -3,6 +3,13 @@
 @import "../components/DateFilter.scss";
 @import "../components/formInputs/DateField.scss";
 @import "../components/Button.scss";
+@import "../features/layout/Header.scss";
+@import "../features/layout/Sidebar.scss";
+@import "../features/auth/login/LoginForm.scss";
+@import "../features/auth/firstime-login/ChangePasswordFirstTimeForm.scss";
+@import "../features/auth/changepassword/ChangePasswordForm.scss";
+@import "../features/asset/detail/DetailForm.scss";
+
 @import "../components/confirmModal/ConfirmModal.scss";
 @import "../components/formInputs/RadioButtonField.scss";
 @import "../components/formInputs/SelectField.scss";

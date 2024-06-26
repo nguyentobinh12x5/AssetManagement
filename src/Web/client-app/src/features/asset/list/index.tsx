@@ -7,6 +7,7 @@ import FilterByCategory from "../components/FilterByCategory";
 import SearchBox from "../components/SearchBox";
 import useAssetList from "./useAssetList";
 import "./AssetList.scss";
+import DetailForm from "../detail/DetailForm";
 import { CREATE_ASSET_PATH } from "../constants/create-asset";
 
 const AssetList = () => {
@@ -29,7 +30,7 @@ const AssetList = () => {
   };
 
   return (
-    <div className="asset-list">
+    <div className="asset-list offset-1">
       <p className="title">Asset list</p>
 
       <Row className="mb-3">

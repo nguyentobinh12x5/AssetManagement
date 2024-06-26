@@ -1,5 +1,5 @@
 export interface IBriefAsset {
-  id: number;
+  id: string;
   code: string;
   name: string;
   categoryName: string;

@@ -100,7 +100,7 @@ export function* handleGetUserTypes() {
   }
 }
 
-// Handle delete user action
+
 export function* handleDeleteUser(action: PayloadAction<string>) {
   try {
     yield call(deleteUserRequest, action.payload);

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { PencilFill, XCircle } from "react-bootstrap-icons";
 import Loading from "../../../components/Loading";
 import { IBriefAsset } from "../interfaces/IBriefAsset";
+import DetailForm from "../detail/DetailForm";
 
 type AssetTableProps = {
   assets: IPagedModel<IBriefAsset>;
@@ -35,14 +36,14 @@ const AssetTable: React.FC<AssetTableProps> = ({
     { name: "State", value: "AssetStatusName" },
   ];
   const navigate = useNavigate();
-  const handleEditClick = (assetId: number) => {
+  const handleEditClick = (assetId: string) => {
     // Handle navigate(`edit/${assetId}`);
   };
 
-  const [selectedAsset, setSelectedAsset] = useState<number | null>(null);
+  const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
 
-  const handleShowPopup = (assetId: number) => {
+  const handleShowPopup = (assetId: string) => {
     setSelectedAsset(assetId);
     setShowPopup(true);
   };
@@ -87,12 +88,12 @@ const AssetTable: React.FC<AssetTableProps> = ({
         pagination={pagination}
       >
         {items?.map((data) => (
-          <tr key={data.id}>
+          <tr key={data.id} onClick={() => handleShowPopup(data.id)}>
             <td>{data.code}</td>
-            <td onClick={() => handleShowPopup(data.id)}>{data.name}</td>
+            <td>{data.name}</td>
             <td>{data.categoryName}</td>
             <td>{data.assetStatusName}</td>
-            <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0">
+            <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0 action">
               <div>
                 <ButtonIcon
                   onClick={() => {
@@ -113,7 +114,9 @@ const AssetTable: React.FC<AssetTableProps> = ({
           </tr>
         ))}
       </Table>
-      {selectedAsset && <>{/* PopupComponent View Detail */}</>}
+      {selectedAsset && showPopup && (
+        <DetailForm id={selectedAsset} onClose={handleClosePopup} />
+      )}
     </>
   );
 };

@@ -17,14 +17,11 @@ const assetDetailSlice = createSlice({
   name: 'assetDetail',
   initialState,
   reducers: {
-    getAssetById: (state: AssetState, action: PayloadAction<number>) => {
+    getAssetById: (state: AssetState, action: PayloadAction<string>) => {
       state.isLoading = true;
       state.error = null;
     },
-    getAssetByIdSuccess: (
-      state: AssetState,
-      action: PayloadAction<IAssetDetail>
-    ) => {
+    getAssetByIdSuccess: (state: AssetState, action: PayloadAction<IAssetDetail>) => {
       state.isLoading = false;
       state.assetDetail = action.payload;
     },
@@ -35,7 +32,6 @@ const assetDetailSlice = createSlice({
   },
 });
 
-export const { getAssetById, getAssetByIdSuccess, getAssetByIdFailure } =
-  assetDetailSlice.actions;
+export const { getAssetById, getAssetByIdSuccess, getAssetByIdFailure } = assetDetailSlice.actions;
 
 export default assetDetailSlice.reducer;
