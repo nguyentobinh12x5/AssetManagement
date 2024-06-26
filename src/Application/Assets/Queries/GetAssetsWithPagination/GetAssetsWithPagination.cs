@@ -1,7 +1,6 @@
 ﻿using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Mappings;
 using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using AssetManagement.Domain.Constants;
 using AssetManagement.Domain.Entities;
 
@@ -25,17 +24,22 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IUser _currentUser;
     
-    public GetAssetsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetAssetsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper, IUser currentUser)
     {
         _context = context;
         _mapper = mapper;
+        _currentUser = currentUser;
     }
     public async Task<PaginatedList<AssetBriefDto>> Handle(GetAssetsWithPaginationQuery request, CancellationToken cancellationToken)
     {
+        Guard.Against.NullOrWhiteSpace(_currentUser.Location);
+        
         var query = _context.Assets.AsQueryable();
         
-        query = FilterAssets(request, query);
+        query = FilterAssets(request, _currentUser.Location, query);
+
 
         return await query
             //.OrderBy(x => x.Title)
@@ -44,8 +48,13 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 
-    private static IQueryable<Asset> FilterAssets(GetAssetsWithPaginationQuery request, IQueryable<Asset> query)
+    private static IQueryable<Asset> FilterAssets(GetAssetsWithPaginationQuery request, string? adminLocation, IQueryable<Asset> query)
     {
+        if (!string.IsNullOrEmpty(adminLocation))
+        {
+            query = query.Where(a => a.Location == adminLocation);
+        }
+        
         if (!string.IsNullOrEmpty(request.CategoryName))
         {
             var categoryNames = request.CategoryName.Split(',')
