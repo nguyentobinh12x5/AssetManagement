@@ -44,12 +44,14 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
       handleFilterByCategory([]);
     } else {
       // Convert display categories to actual categories
-      const actualCategories: AssetCategory[] = displayCategories.map(
-        (displayCategory) =>
-          (Object.keys(assetCategoriesMap) as AssetCategory[]).find(
-            (key) => assetCategoriesMap[key] === displayCategory
-          )!
-      ).filter((category) => category !== "All");
+      const actualCategories: AssetCategory[] = displayCategories
+        .map(
+          (displayCategory) =>
+            (Object.keys(assetCategoriesMap) as AssetCategory[]).find(
+              (key) => assetCategoriesMap[key] === displayCategory
+            )!
+        )
+        .filter((category) => category !== "All");
 
       setSelectedCategories(actualCategories);
       handleFilterByCategory(actualCategories);

@@ -26,13 +26,13 @@ public class MockIdentityService : IIdentityService
     {
         throw new NotImplementedException();
     }
-    
+
 
     public Task<Result> ChangePasswordFirstTimeAsync(string newPassword)
     {
         throw new NotImplementedException();
     }
-    
+
 
     public Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
     {

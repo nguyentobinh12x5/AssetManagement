@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using System.Threading.Tasks;
 
+using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
+using AssetManagement.Application.Common.Models;
 
 using Web.IntegrationTests.Data;
 using Web.IntegrationTests.Extensions;

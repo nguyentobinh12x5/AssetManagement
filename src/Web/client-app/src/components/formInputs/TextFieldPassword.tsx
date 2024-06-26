@@ -13,7 +13,7 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 
 const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
   const [field, { error, touched }] = useField(props);
-  const { label, required, notvalidate, apiError } = props;
+  const { label, required, notvalidate, apiError, ...rest } = props;
 
   const validateClass = () => {
     if (touched && (error || error === "" || apiError)) return "is-invalid";
@@ -39,7 +39,7 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
             type={showPass ? "password" : "text"}
             className={`form-control ps-2 ${validateClass()}`}
             {...field}
-            {...props}
+            {...rest}
           />
           <div
             className="position-absolute top-50 end-0 translate-middle-y me-2 icon-eye"
@@ -55,7 +55,7 @@ const TextFieldPassword: React.FC<InputFieldProps> = (props) => {
         </div>
         {touched && (apiError || error) && (
           <div className="invalid position-relative mt-2">
-            {apiError ?? error}
+            {apiError ? apiError : error}
           </div>
         )}
       </div>

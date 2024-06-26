@@ -3,6 +3,6 @@
 public interface IUser
 {
     string? Id { get; }
-    
+
     string? Location { get; }
 }

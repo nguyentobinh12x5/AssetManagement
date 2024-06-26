@@ -36,7 +36,7 @@ const TextAreaField: React.FC<InputFieldProps> = (props) => {
 
         {touched && (apiError || error) && (
           <div className="invalid position-relative mt-2">
-            {apiError ?? error}
+            {apiError ? apiError : error}
           </div>
         )}
       </div>

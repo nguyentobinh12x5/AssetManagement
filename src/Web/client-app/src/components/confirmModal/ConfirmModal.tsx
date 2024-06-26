@@ -31,9 +31,11 @@ const ConfirmModal: React.FC<Props> = ({
         <Modal.Title id="login-modal">
           <div className="d-flex align-items-center justify-content-between custom-modal fw-bold">
             {title}
-            {isShowClose && <ButtonIcon  onClick={onHide}>
-              <XSquare color="rgba(207, 35, 56, 1)" />
-            </ButtonIcon>}
+            {isShowClose && (
+              <ButtonIcon onClick={onHide}>
+                <XSquare color="rgba(207, 35, 56, 1)" />
+              </ButtonIcon>
+            )}
           </div>
         </Modal.Title>
       </Modal.Header>

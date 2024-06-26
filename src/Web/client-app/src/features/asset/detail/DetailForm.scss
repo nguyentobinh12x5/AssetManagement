@@ -1,22 +1,21 @@
-.modal-detail.modal-dialog
-{
-    max-width: 800px;
+.modal-detail.modal-dialog {
+  max-width: 800px;
 }
 
 .modal-detail .modal-content {
-    .custom-header {
-        padding: 1rem 2rem;
-    }
+  .custom-header {
+    padding: 1rem 2rem;
+  }
 
-    .modal-body {
-        padding: 1rem 2rem;
-    }
+  .modal-body {
+    padding: 1rem 2rem;
+  }
 
-    .custom-header {
-        #login-modal{
-            padding: 0;
-        }
+  .custom-header {
+    #login-modal {
+      padding: 0;
     }
+  }
 }
 .modal-body .form-detail {
   padding-left: 14px;
@@ -25,6 +24,6 @@
   padding-left: 0px;
 }
 
-.table-detail{
-    padding-left: 2px;
+.table-detail {
+  padding-left: 2px;
 }

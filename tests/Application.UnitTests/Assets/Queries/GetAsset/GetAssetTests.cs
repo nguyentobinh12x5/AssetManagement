@@ -1,18 +1,24 @@
-﻿using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
-using AssetManagement.Application.Common.Exceptions;
-using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Domain.Entities;
-using AutoMapper;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+
 using Ardalis.GuardClauses;
+
+using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
+using AssetManagement.Application.Common.Exceptions;
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.UnitTests.Helpers;
+using AssetManagement.Domain.Entities;
+
+using AutoMapper;
+
+using Microsoft.EntityFrameworkCore;
+
+using Moq;
+
+using NUnit.Framework;
 
 namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAsset
 {

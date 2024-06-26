@@ -35,8 +35,8 @@ public class SignInManager : SignInManager<ApplicationUser>
 
         if (result.Succeeded)
         {
-                var locationClaim = new Claim("Location", user.Location);
-                await UserManager.AddClaimAsync(user, locationClaim);
+            var locationClaim = new Claim("Location", user.Location);
+            await UserManager.AddClaimAsync(user, locationClaim);
         }
         return result;
     }
