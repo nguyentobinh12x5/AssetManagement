@@ -185,9 +185,9 @@ public class IdentityService : IIdentityService
 
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
-        var users = await InitialGetUserBriefAsync(string.Empty, query.Location, query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(query.SearchTerm ?? "", query.Location, query.SortColumnName, query.SortColumnDirection);
 
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types ?? "All");
 
         if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
             userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
@@ -243,7 +243,7 @@ public class IdentityService : IIdentityService
 
     private async Task<List<ApplicationUser>> InitialGetUserBriefAsync(string SearchTerm, string location, string columnName, string columnDirection)
     {
-        var searchTermLower = SearchTerm.ToLower();
+        var searchTermLower = SearchTerm;
         if (!columnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
         {
             return await _userManager.Users

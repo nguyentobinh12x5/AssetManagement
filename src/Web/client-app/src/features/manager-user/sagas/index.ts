@@ -25,8 +25,8 @@ export default function* userSagas() {
   yield takeLatest(getUserById.type, handleGetUserById);
   yield takeLatest(getUsers.type, handleGetUsers);
   yield takeLatest(deleteUser.type, handleDeleteUser);
-  yield takeLatest(getUsersByType.type, handleGetUsersByType);
-  yield takeLatest(getUsersBySearchTerm.type, handleGetUsersBySearchTerm);
+  yield takeLatest(getUsersByType.type, handleGetUsers);
+  yield takeLatest(getUsersBySearchTerm.type, handleGetUsers);
   yield takeLatest(createUser.type, handleCreateUser);
   yield takeLatest(getUserTypes.type, handleGetUserTypes);
 }

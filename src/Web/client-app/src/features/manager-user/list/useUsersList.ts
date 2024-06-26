@@ -5,8 +5,6 @@ import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
 import {
   getUsers,
-  getUsersByType,
-  getUsersBySearchTerm,
   setUserQuery,
   setIsDataFetched,
 } from '../reducers/user-slice';
@@ -52,10 +50,10 @@ const useUserList = () => {
 
   const handleFilterByType = (type: string[]) => {
     setSearchTerm('');
-    setFilterType(type);
     dispatch(
       setUserQuery({
         ...userQuery,
+        types: type,
         pageNumber: 1,
       })
     );
@@ -68,6 +66,7 @@ const useUserList = () => {
     dispatch(
       setUserQuery({
         ...userQuery,
+        searchTerm: searchTerm.trim(),
         pageNumber: 1,
       })
     );
@@ -76,18 +75,10 @@ const useUserList = () => {
 
   // Fetch Data
   useEffect(() => {
-    const fetchData = () => {
-      if (filterType && !searchTerm) {
-        dispatch(getUsersByType({ ...userQuery, type: filterType }));
-      } else if (searchTerm && !filterType) {
-        dispatch(getUsersBySearchTerm({ ...userQuery, searchTerm }));
-      } else {
-        dispatch(getUsers(userQuery));
-      }
-    };
-
+    console.log('test1');
     if (!isDataFetched) {
-      fetchData();
+      console.log('test2' + userQuery.types);
+      dispatch(getUsers(userQuery));
     }
   }, [dispatch, userQuery, isDataFetched, filterType, searchTerm]);
 
