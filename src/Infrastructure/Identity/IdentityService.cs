@@ -72,7 +72,7 @@ public class IdentityService : IIdentityService
     {
         var id = _userManager.Users.Select(e => e.StaffCode).ToList();
 
-        var userName = _userManager.Users.Select(e => e.UserName).ToList();
+        var userName = _userManager.Users.IgnoreQueryFilters().Select(e => e.UserName).ToList();
 
 
         var newUser = new ApplicationUser

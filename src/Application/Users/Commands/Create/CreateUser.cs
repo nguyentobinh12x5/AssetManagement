@@ -39,10 +39,10 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, strin
             DateOfBirth = request.DateOfBirth,
             Role = request.Type,
         };
-        var newUser = _identityService.CreateUserAsync(user);
+        var newUser = await _identityService.CreateUserAsync(user);
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return newUser.Result.Id;
+        return newUser.Id;
     }
 }

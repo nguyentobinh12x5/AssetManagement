@@ -6,3 +6,6 @@ export function formatDate(dateString: string) {
 
   return `${day}/${month}/${year}`;
 }
+export const utcToDateString = (date: string) => {
+  return new Date(new Date(date).setHours(7)).toISOString();
+};

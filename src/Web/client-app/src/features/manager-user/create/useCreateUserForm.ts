@@ -1,14 +1,12 @@
 import { FormikHelpers } from 'formik';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
-import { createUser, setSucceedStatus } from '../reducers/user-slice';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { createUser } from '../reducers/user-slice';
 import { IUserForm } from '../components/validateUserSchemas';
+import { utcToDateString } from '../../../utils/dateUtils';
 
 const useCreateUserForm = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, succeed, error } = useAppState((state) => state.users);
+  const { isLoading } = useAppState((state) => state.users);
   const user: IUserForm = {
     firstName: '',
     lastName: '',
@@ -24,19 +22,12 @@ const useCreateUserForm = () => {
   ) => {
     const payload = {
       ...values,
-      dateOfBirth: new Date(values.dateOfBirth).toISOString(),
-      joinDate: new Date(values.joinDate).toISOString(),
+      dateOfBirth: utcToDateString(values.dateOfBirth),
+      joinDate: utcToDateString(values.joinDate),
     };
     dispatch(createUser(payload));
     actions.setSubmitting(false);
   };
-
-  useEffect(() => {
-    if (succeed && !isLoading && !error) {
-      dispatch(setSucceedStatus(false));
-      navigate('/user');
-    }
-  }, [succeed, navigate, error, isLoading]);
 
   return { user, isLoading, handleSubmit };
 };
