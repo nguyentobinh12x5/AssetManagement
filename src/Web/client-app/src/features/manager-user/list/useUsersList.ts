@@ -45,11 +45,9 @@ const useUserList = () => {
   );
   const { handlePaging } = useAppPaging(updateMainPagingState);
 
-  const [filterType, setFilterType] = useState<string[] | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm] = useState<string>('');
 
   const handleFilterByType = (type: string[]) => {
-    setSearchTerm('');
     dispatch(
       setUserQuery({
         ...userQuery,
@@ -61,8 +59,6 @@ const useUserList = () => {
   };
 
   const handleSearch = (searchTerm: string) => {
-    setFilterType(null);
-    setSearchTerm(searchTerm.trim());
     dispatch(
       setUserQuery({
         ...userQuery,
@@ -78,7 +74,7 @@ const useUserList = () => {
     if (!isDataFetched) {
       dispatch(getUsers(userQuery));
     }
-  }, [dispatch, userQuery, isDataFetched, filterType, searchTerm]);
+  }, [dispatch, userQuery, isDataFetched, searchTerm]);
 
   return {
     hasSortColumn,

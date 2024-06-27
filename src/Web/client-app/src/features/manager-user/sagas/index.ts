@@ -4,8 +4,6 @@ import {
   getUserById,
   getUsers,
   deleteUser,
-  getUsersByType,
-  getUsersBySearchTerm,
   createUser,
   getUserTypes,
 } from '../reducers/user-slice';
@@ -16,8 +14,6 @@ import {
   handleGetUserById,
   handleGetUserTypes,
   handleGetUsers,
-  handleGetUsersBySearchTerm,
-  handleGetUsersByType,
 } from './handles';
 
 export default function* userSagas() {
@@ -25,8 +21,6 @@ export default function* userSagas() {
   yield takeLatest(getUserById.type, handleGetUserById);
   yield takeLatest(getUsers.type, handleGetUsers);
   yield takeLatest(deleteUser.type, handleDeleteUser);
-  yield takeLatest(getUsersByType.type, handleGetUsers);
-  yield takeLatest(getUsersBySearchTerm.type, handleGetUsers);
   yield takeLatest(createUser.type, handleCreateUser);
   yield takeLatest(getUserTypes.type, handleGetUserTypes);
 }

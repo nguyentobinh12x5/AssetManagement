@@ -33,7 +33,6 @@ public class GetUsersQueryHandlerTests
             PageSize = 5,
             SortColumnName = "StaffCode",
             SortColumnDirection = "Descending",
-            Location = "HCM"
         };
 
         var expectedUsers = new PaginatedList<UserBriefDto>(
@@ -66,7 +65,6 @@ public class GetUsersQueryHandlerTests
             PageSize = 5,
             SortColumnName = "StaffCode",
             SortColumnDirection = "Descending",
-            Location = "HCM"
         };
 
         var expectedUsers = new PaginatedList<UserBriefDto>(new List<UserBriefDto>(), 0, 1, 5);
@@ -92,7 +90,6 @@ public class GetUsersQueryHandlerTests
             PageSize = 5,
             SortColumnName = "Type",
             SortColumnDirection = "Ascending",
-            Location = "HCM"
         };
 
         var expectedUsers = new PaginatedList<UserBriefDto>(
@@ -113,5 +110,60 @@ public class GetUsersQueryHandlerTests
         _identityServiceMock.Verify(s => s.GetUserBriefsAsync(query), Times.Once);
     }
 
+    [Test]
+    public async Task Handle_ShouldReturnUsers_WhenSearchTermIsValid()
+    {
+        // Arrange
+        var query = new GetUsersQuery
+        {
+            SearchTerm = "John",
+            PageNumber = 1,
+            PageSize = 5,
+            SortColumnName = "id",
+            SortColumnDirection = "Descending",
+        };
 
+        var expectedUsers = new PaginatedList<UserBriefDto>(
+            new List<UserBriefDto>
+            {
+                new UserBriefDto { UserName = "JohnDoe" }
+            },
+            1, 1, 5);
+
+        _identityServiceMock.Setup(s => s.GetUserBriefsAsync(query))
+            .ReturnsAsync(expectedUsers);
+
+        // Act
+        var result = await _handler.Handle(query, CancellationToken.None);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedUsers);
+        _identityServiceMock.Verify(s => s.GetUserBriefsAsync(query), Times.Once);
+    }
+
+    [Test]
+    public async Task Handle_ShouldReturnEmptyList_WhenSearchTermIsNotFound()
+    {
+        // Arrange
+        var query = new GetUsersQuery
+        {
+            SearchTerm = "NonExistentUser",
+            PageNumber = 1,
+            PageSize = 5,
+            SortColumnName = "id",
+            SortColumnDirection = "Descending",
+        };
+
+        var expectedUsers = new PaginatedList<UserBriefDto>(new List<UserBriefDto>(), 0, 1, 5);
+
+        _identityServiceMock.Setup(s => s.GetUserBriefsAsync(query))
+            .ReturnsAsync(expectedUsers);
+
+        // Act
+        var result = await _handler.Handle(query, CancellationToken.None);
+
+        // Assert
+        result.Items.Should().BeEmpty();
+        _identityServiceMock.Verify(s => s.GetUserBriefsAsync(query), Times.Once);
+    }
 }

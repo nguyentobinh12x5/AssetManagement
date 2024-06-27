@@ -48,5 +48,29 @@ namespace Web.IntegrationTests.Endpoints
             // Assert
             Xunit.Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
+        [Fact]
+        public async Task Get_Users_Endpoint_Returns_Success()
+        {
+            // Arrange
+            var command = new CreateUserCommand
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Location = "New York",
+                DateOfBirth = new DateTime(1990, 1, 1),
+                Gender = Gender.Male,
+                JoinDate = DateTime.UtcNow,
+                Type = "Staff"
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _httpClient.PostAsync("/api/users", content);
+
+            // Assert
+            Xunit.Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }

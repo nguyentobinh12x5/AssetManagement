@@ -4,8 +4,6 @@ import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IBriefUser } from '../interfaces/IBriefUser';
 import { IUserCommand } from '../interfaces/IUserCommand';
 import { IUserDetail } from '../interfaces/IUserDetail';
-import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
-import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 import { APP_DEFAULT_PAGE_SIZE, ASCENDING } from '../../../constants/paging';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
 const defaultUserQuery: IUserQuery = {
@@ -13,7 +11,6 @@ const defaultUserQuery: IUserQuery = {
   pageSize: APP_DEFAULT_PAGE_SIZE,
   sortColumnName: DEFAULT_MANAGE_USER_SORT_COLUMN,
   sortColumnDirection: ASCENDING,
-  location: 'HCM',
   searchTerm: '',
   types: ['All'],
 };
@@ -59,22 +56,6 @@ const UserSlice = createSlice({
     ): UserState => ({
       ...state,
       isLoading: true,
-    }),
-    getUsersByType: (
-      state: UserState,
-      action: PayloadAction<IUserTypeQuery>
-    ): UserState => ({
-      ...state,
-      isLoading: true,
-      isDataFetched: false,
-    }),
-    getUsersBySearchTerm: (
-      state: UserState,
-      action: PayloadAction<IUserSearchQuery>
-    ): UserState => ({
-      ...state,
-      isLoading: true,
-      isDataFetched: false,
     }),
     getUserById: (
       state: UserState,
@@ -230,8 +211,6 @@ const UserSlice = createSlice({
 export const {
   getUsers,
   setUsers,
-  getUsersByType,
-  getUsersBySearchTerm,
   getUserById,
   setUserById,
   setUserByIdError,
