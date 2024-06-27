@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 
 using FluentAssertions;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AssetManagement.Application.Users.Commands.Create
+﻿namespace AssetManagement.Application.Users.Commands.Create
 {
     public class CreateUserValidat : AbstractValidator<CreateUserCommand>
     {

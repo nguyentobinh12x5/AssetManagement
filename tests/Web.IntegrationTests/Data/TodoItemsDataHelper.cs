@@ -1,6 +1,5 @@
 using AssetManagement.Domain.Entities;
 using AssetManagement.Infrastructure.Data;
-using AssetManagement.Web.Endpoints;
 
 using Microsoft.Extensions.DependencyInjection;
 

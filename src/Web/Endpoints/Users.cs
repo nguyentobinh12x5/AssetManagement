@@ -4,10 +4,6 @@ using AssetManagement.Application.Users.Commands.DeleteUser;
 using AssetManagement.Application.Users.Commands.UpdateUser;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Users.Queries.GetUsersBySearch;
-using AssetManagement.Application.Users.Queries.GetUsersByType;
-
-using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManagement.Web.Endpoints;
 

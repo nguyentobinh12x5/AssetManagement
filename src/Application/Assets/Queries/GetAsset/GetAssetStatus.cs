@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using AssetManagement.Application.Common.Interfaces;
 
 namespace AssetManagement.Application.Assets.Queries.GetAsset

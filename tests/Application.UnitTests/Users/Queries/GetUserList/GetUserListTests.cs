@@ -1,11 +1,6 @@
-﻿using Ardalis.GuardClauses;
-
-using AssetManagement.Application.Common.Exceptions;
-using AssetManagement.Application.Common.Interfaces;
+﻿using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Domain.Enums;
 
 using FluentAssertions;
 

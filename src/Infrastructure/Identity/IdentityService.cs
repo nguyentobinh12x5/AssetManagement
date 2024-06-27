@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
 using System.Security.Claims;
 
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
@@ -16,13 +14,11 @@ using AssetManagement.Infrastructure.Data;
 
 
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AssetManagement.Infrastructure.Identity;
 

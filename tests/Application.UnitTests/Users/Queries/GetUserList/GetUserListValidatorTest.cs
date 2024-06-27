@@ -1,20 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection.Metadata;
+﻿using Application.Users.Queries.GetUsers;
 
-using Application.Users.Queries.GetUsers;
-
-using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
 
 using FluentAssertions;
 
 using FluentValidation.TestHelper;
 
-using Moq;
-
 using NUnit.Framework;
-
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace AssetManagement.Application.UnitTests.Users.Queries.GetUserList;
 

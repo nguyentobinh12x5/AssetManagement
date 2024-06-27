@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using AssetManagement.Application.Users.Commands.Create;
+﻿using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Domain.Enums;
 
 using NUnit.Framework;
