@@ -4,7 +4,6 @@ import "./Detail.scss";
 import useDetailUser from "./useDetailModal";
 import Loading from "../../../components/Loading";
 import { formatDate } from "../../../utils/dateUtils";
-import ConfirmModal from "../../../components/confirmModal/ConfirmModal";
 import ButtonIcon from "../../../components/ButtonIcon";
 import { XSquare } from "react-bootstrap-icons";
 
