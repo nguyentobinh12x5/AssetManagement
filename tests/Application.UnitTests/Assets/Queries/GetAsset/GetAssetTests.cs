@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Ardalis.GuardClauses;
 
+using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
@@ -15,6 +16,8 @@ using AssetManagement.Domain.Entities;
 using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
+
+using MockQueryable.Moq;
 
 using Moq;
 
@@ -43,8 +46,6 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAsset
         }
 
         [Test]
-        [Ignore("Skipping this test temporarily")]
-        // [Explicit] // Use this if you want to run the test only explicitly
         public async Task Handle_ShouldReturnAssetDto_WhenAssetExists()
         {
             var assetId = 1;
@@ -60,20 +61,11 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAsset
                 AssetStatus = new AssetStatus { Id = 1, Name = "Available" }
             };
 
-            var assets = new List<Asset> { asset }.AsQueryable();
+            var mockset = new List<Asset> { asset }
+                .AsQueryable()
+                .BuildMockDbSet();
 
-            var mockDbSet = new Mock<DbSet<Asset>>();
-            mockDbSet.As<IAsyncEnumerable<Asset>>()
-                .Setup(m => m.GetAsyncEnumerator(It.IsAny<CancellationToken>()))
-                .Returns(new TestAsyncEnumerator<Asset>(assets.GetEnumerator()));
-            mockDbSet.As<IQueryable<Asset>>()
-                .Setup(m => m.Provider)
-                .Returns(new TestAsyncQueryProvider<Asset>(assets.Provider));
-            mockDbSet.As<IQueryable<Asset>>().Setup(m => m.Expression).Returns(assets.Expression);
-            mockDbSet.As<IQueryable<Asset>>().Setup(m => m.ElementType).Returns(assets.ElementType);
-            mockDbSet.As<IQueryable<Asset>>().Setup(m => m.GetEnumerator()).Returns(assets.GetEnumerator());
-
-            _contextMock.Setup(c => c.Assets).Returns(mockDbSet.Object);
+            _contextMock.Setup(m => m.Assets).Returns(mockset.Object);
 
             // Act
             var result = await _handler.Handle(new GetAssetByIdQuery(assetId), CancellationToken.None);
@@ -89,5 +81,20 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAsset
             Assert.That(result.CategoryName, Is.EqualTo(asset.Category.Name));
             Assert.That(result.AssetStatusName, Is.EqualTo(asset.AssetStatus.Name));
         }
+        [Test]
+        public void Handle_ShouldThrowNotFoundException_WhenAssetNotExists()
+        {
+            var assetId = 100;
+
+            var mockset = new List<Asset>()
+                .AsQueryable()
+                .BuildMockDbSet();
+
+            _contextMock.Setup(m => m.Assets).Returns(mockset.Object);
+
+            Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(new GetAssetByIdQuery(assetId), CancellationToken.None));
+        }
+
+
     }
 }

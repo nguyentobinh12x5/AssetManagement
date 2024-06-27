@@ -1,34 +1,34 @@
 .user-info-header {
-    color: rgb(207, 35, 56);
-    background: rgba(239, 241, 245, 1);
-    border: 1px black solid;
-    border-radius: 10px 10px 0px 0px;
+  color: rgb(207, 35, 56);
+  background: rgba(239, 241, 245, 1);
+  border: 1px black solid;
+  border-radius: 10px 10px 0px 0px;
 
-    width: 100%;
-    padding: 0.75rem 0rem;
+  width: 100%;
+  padding: 0.75rem 0rem;
 }
 .user-info-header .modal-title {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .user-info-header .btn-icon {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .user-info-header {
-    .pointer {
-        stroke-width: 2px;
-        stroke: rgba(207, 35, 56, 1);
-    }
+  .pointer {
+    stroke-width: 2px;
+    stroke: rgba(207, 35, 56, 1);
+  }
 }
 
 .user-info-body .detail-user {
-    margin: 0.5rem 2rem;
-    padding: 0rem 0.65rem;
+  margin: 0.5rem 2rem;
+  padding: 0rem 0.65rem;
 }
 
 .user-info-body {
-    border: 1px black solid;
-    border-radius: 0 0 10px 10px;
+  border: 1px black solid;
+  border-radius: 0 0 10px 10px;
 }
