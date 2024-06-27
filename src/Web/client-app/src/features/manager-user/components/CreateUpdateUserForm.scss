@@ -3,6 +3,11 @@
   margin: auto;
   padding-top: 50px;
 
+  .radio-btn-container {
+    display: flex;
+    align-items: center;
+  }
+
   @media (max-width: 768px) {
     width: 80%;
     padding-top: 50px;
