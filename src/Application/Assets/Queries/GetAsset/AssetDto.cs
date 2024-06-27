@@ -1,4 +1,4 @@
-﻿using AssetManagement.Domain.Entities;
+using AssetManagement.Domain.Entities;
 
 namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets
 {
