@@ -69,7 +69,7 @@ const PopupComponent: React.FC<PopupComponentProps> = ({
           </Row>
           <Row className="mb-3">
             <Col md={4}>Type</Col>
-            <Col md={8}>{user.type}</Col>
+            <Col md={8}>{user.type.slice(0, 5)}</Col>
           </Row>
           <Row className="mb-3">
             <Col md={4}>Location</Col>
