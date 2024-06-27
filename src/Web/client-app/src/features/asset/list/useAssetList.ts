@@ -88,7 +88,7 @@ const useAssetList = () => {
       dispatch(
         getAssets({
           ...assetQuery,
-          category: filterCategory ?? [""],
+          category: filterCategory ?? [''],
           assetStatus: filterStatus ?? [
             'Assigned',
             'Available',

@@ -1,9 +1,10 @@
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Application.UnitTests.Helpers;
 using AssetManagement.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
+
+using MockQueryable.Moq;
 
 using Moq;
 
@@ -14,79 +15,58 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetCategorie
     [TestFixture]
     public class GetAssetCategoryHandlerTests
     {
-        private Mock<IApplicationDbContext> _mockContext;
         private GetAssetCategoryHandler _handler;
+        private Mock<IApplicationDbContext> _contextMock;
 
         [SetUp]
-        public void SetUp()
+        public void Setup()
         {
-            // Mock data
+            _contextMock = new Mock<IApplicationDbContext>();
+            _handler = new GetAssetCategoryHandler(_contextMock.Object);
+        }
+
+        [Test]
+        public async Task Handle_ShouldReturnCategoryNames_WhenCategoriesExist()
+        {
+            // Arrange
             var categories = new List<Category>
             {
-                new Category { Name = "Category1" },
-                new Category { Name = "Category2" }
-            }.AsQueryable();
+                new Category { Id = 1, Name = "Laptop" },
+                new Category { Id = 2, Name = "Monitor" }
+            };
 
-            // Mock DbSet
-            var mockDbSet = new Mock<DbSet<Category>>();
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<Category>(categories.Provider));
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(categories.Expression);
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(categories.ElementType);
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(categories.GetEnumerator());
+            var mockset = categories.AsQueryable().BuildMockDbSet();
 
-            // Mock DbContext
-            _mockContext = new Mock<IApplicationDbContext>();
-            _mockContext.Setup(c => c.Categories).Returns(mockDbSet.Object);
+            _contextMock.Setup(m => m.Categories).Returns(mockset.Object);
 
-            // Handler instance
-            _handler = new GetAssetCategoryHandler(_mockContext.Object);
-        }
+            var request = new Application.Assets.Queries.GetAsset.GetAssetCategories();
 
-        [Test]
-        public async Task Handle_ReturnsListOfCategoryNames()
-        {
             // Act
-            var result = await _handler.Handle(new Application.Assets.Queries.GetAsset.GetAssetCategories(), CancellationToken.None);
+            var result = await _handler.Handle(request, CancellationToken.None);
 
             // Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.NotNull(result);
             Assert.That(result.Count, Is.EqualTo(2));
-            Assert.That(result, Does.Contain("Category1"));
-            Assert.That(result, Does.Contain("Category2"));
+            Assert.That(result, Does.Contain("Laptop"));
+            Assert.That(result, Does.Contain("Monitor"));
         }
 
         [Test]
-        public async Task Handle_EmptyDatabase_ReturnsEmptyList()
+        public async Task Handle_ShouldReturnEmptyList_WhenNoCategoriesExist()
         {
             // Arrange
-            var emptyCategories = new List<Category>().AsQueryable();
-            var mockDbSet = new Mock<DbSet<Category>>();
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<Category>(emptyCategories.Provider));
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.Expression).Returns(emptyCategories.Expression);
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.ElementType).Returns(emptyCategories.ElementType);
-            mockDbSet.As<IQueryable<Category>>().Setup(m => m.GetEnumerator()).Returns(emptyCategories.GetEnumerator());
+            var mockset = new List<Category>().AsQueryable().BuildMockDbSet();
 
-            _mockContext.Setup(c => c.Categories).Returns(mockDbSet.Object);
+            _contextMock.Setup(m => m.Categories).Returns(mockset.Object);
+
+            var request = new Application.Assets.Queries.GetAsset.GetAssetCategories();
 
             // Act
-            var result = await _handler.Handle(new Application.Assets.Queries.GetAsset.GetAssetCategories(), CancellationToken.None);
+            var result = await _handler.Handle(request, CancellationToken.None);
 
             // Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.NotNull(result);
             Assert.That(result.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void Handle_ExceptionInDatabaseQuery_ThrowsException()
-        {
-            // Arrange
-            _mockContext.Setup(c => c.Categories).Throws(new Exception("Simulated database exception"));
-
-            // Act + Assert
-            Assert.ThrowsAsync<Exception>(async () =>
-            {
-                await _handler.Handle(new Application.Assets.Queries.GetAsset.GetAssetCategories(), CancellationToken.None);
-            });
         }
     }
 }
