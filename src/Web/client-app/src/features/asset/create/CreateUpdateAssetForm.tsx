@@ -11,9 +11,10 @@ import { ASSETS } from "../../../constants/pages";
 const CreateUpdateAssetForm = () => {
   const { initialValues, handleSubmit, navigate, categories, statuses } =
     useCreateAsset();
+
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={initialValues as any}
       validationSchema={CreateAssetScheme}
       onSubmit={handleSubmit}
     >

@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import SuspenseLoading from "../components/SuspenseLoading";
-import { HOME, AUTH, ASSETS, USER } from "../constants/pages";
+import { HOME, AUTH, ASSETS, USER, ACCESS_DENIED } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import Assets from "../features/asset";
@@ -9,6 +9,7 @@ import Assets from "../features/asset";
 const Home = lazy(() => import("../features/home"));
 const Auth = lazy(() => import("../features/auth"));
 const Users = lazy(() => import("../features/manager-user"));
+const AccessDenied = lazy(() => import("../features/access-denied"));
 
 const AppRoutes = () => {
   return (
@@ -25,7 +26,7 @@ const AppRoutes = () => {
         <Route
           path={USER}
           element={
-            <PrivateRoute>
+            <PrivateRoute roles={["Administrator"]}>
               <Users />
             </PrivateRoute>
           }
@@ -41,9 +42,17 @@ const AppRoutes = () => {
         <Route
           path={ASSETS}
           element={
-            <PrivateRoute showSidebar={true}>
+            <PrivateRoute roles={["Administrator"]}>
               <Assets />
             </PrivateRoute>
+          }
+        />
+        <Route
+          path={ACCESS_DENIED}
+          element={
+            <PublicRoute showSidebar={false}>
+              <AccessDenied />
+            </PublicRoute>
           }
         />
         <Route path={"*"} element={<div>Notfound</div>} />
