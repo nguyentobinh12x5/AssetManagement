@@ -58,8 +58,8 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
                 PageSize = 10,
                 SortColumnName = "Name",
                 SortColumnDirection = "asc",
-                CategoryName = "Category1",
-                AssetStatusName = "Active",
+                Category= "Category1",
+                AssetStatus = "Active",
                 SearchTerm = "Asset",
             };
 
