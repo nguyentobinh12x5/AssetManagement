@@ -7,6 +7,11 @@ using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
+<<<<<<< HEAD
+=======
+using AssetManagement.Application.Users.Queries.GetUsersBySearch;
+using AssetManagement.Application.Users.Queries.GetUsersByType;
+>>>>>>> 6fef882eb1e586771288481f42acbea2ec0231f2
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
 using AssetManagement.Infrastructure.UnitTests.Extensions;
@@ -644,6 +649,10 @@ public class IdentityServicesTests
         {
             Id = userId,
             UserName = "username",
+<<<<<<< HEAD
+=======
+            Location = "HCM",
+>>>>>>> 6fef882eb1e586771288481f42acbea2ec0231f2
             MustChangePassword = false,
         };
         var roles = new List<string> { "Administrator" };
@@ -657,6 +666,88 @@ public class IdentityServicesTests
         // Assert
         result.Username.Should().Be(expectedUser.UserName);
         result.Roles.Should().BeEquivalentTo(roles);
+<<<<<<< HEAD
         result.MustChangePassword.Should().Be(expectedUser.MustChangePassword);
     }
+=======
+        result.Location.Should().Be(expectedUser.Location);
+        result.MustChangePassword.Should().Be(expectedUser.MustChangePassword);
+    }
+
+    [Ignore("Unsupport async query")]
+    [Test]
+    public async Task GetUsersByTypesAsync_ShouldReturnUserBriefsByTypes()
+    {
+        // Arrange
+        var query = new GetUsersByTypeQuery
+        {
+            Location = "HCM",
+            SortColumnName = "FirstName",
+            SortColumnDirection = "Ascending",
+            Types = "Admin"
+        };
+
+        var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "user1", FirstName = "John", LastName = "Doe" },
+                new ApplicationUser { Id = "user2", FirstName = "Jane", LastName = "Smith" }
+            };
+        _userManagerMock.Setup(um => um.Users).Returns(users.AsQueryable().BuildMock());
+
+        var userBriefs = new List<UserBriefDto>
+            {
+                new UserBriefDto { Id = "user1", FullName = "John Doe", Type = "Admin" },
+            };
+        _mapperMock.Setup(m => m.Map<List<UserBriefDto>>(It.IsAny<List<ApplicationUser>>()))
+            .Returns(userBriefs);
+
+        // Act
+        var result = await _identityService.GetUsersByTypesAsync(query);
+
+        // Assert
+        result.Items.Should().BeEquivalentTo(userBriefs);
+        result.TotalCount.Should().Be(userBriefs.Count);
+        result.PageNumber.Should().Be(query.PageNumber);
+        // result.PageSize.Should().Be(query.PageSize);
+    }
+
+    [Ignore("Unsupport async query")]
+    [Test]
+    public async Task GetUserBriefsBySearchAsync_ShouldReturnUserBriefsBySearch()
+    {
+        // Arrange
+        var query = new GetUsersBySearchQuery
+        {
+            Location = "HCM",
+            SortColumnName = "FirstName",
+            SortColumnDirection = "Ascending",
+            SearchTerm = "John"
+        };
+
+        var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "user1", FirstName = "John", LastName = "Doe" },
+                new ApplicationUser { Id = "user2", FirstName = "Jane", LastName = "Smith" }
+            };
+        _userManagerMock.Setup(um => um.Users).Returns(users.AsQueryable().BuildMock());
+
+        var userBriefs = new List<UserBriefDto>
+            {
+                new UserBriefDto { Id = "user1", FullName = "John Doe", Type = "Admin" },
+            };
+        _mapperMock.Setup(m => m.Map<List<UserBriefDto>>(It.IsAny<List<ApplicationUser>>()))
+            .Returns(userBriefs);
+
+        // Act
+        var result = await _identityService.GetUserBriefsBySearchAsync(query);
+
+        // Assert
+        result.Items.Should().BeEquivalentTo(userBriefs);
+        result.TotalCount.Should().Be(userBriefs.Count);
+        result.PageNumber.Should().Be(query.PageNumber);
+        // result.PageSize.Should().Be(query.PageSize);
+    }
+
+
+>>>>>>> 6fef882eb1e586771288481f42acbea2ec0231f2
 }
