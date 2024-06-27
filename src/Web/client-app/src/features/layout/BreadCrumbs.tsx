@@ -37,7 +37,6 @@ const getCrumbLabel = (path: string) => {
 const BreadCrumbs = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
-  console.log(pathnames);
   const { isAuthenticated } = useAppState((state) => state.auth);
 
   if (!isAuthenticated)

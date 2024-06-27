@@ -32,10 +32,15 @@ const assetDetailSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    resetState: () => initialState,
   },
 });
 
-export const { getAssetById, getAssetByIdSuccess, getAssetByIdFailure } =
-  assetDetailSlice.actions;
+export const {
+  getAssetById,
+  getAssetByIdSuccess,
+  getAssetByIdFailure,
+  resetState,
+} = assetDetailSlice.actions;
 
 export default assetDetailSlice.reducer;

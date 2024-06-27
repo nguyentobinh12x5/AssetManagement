@@ -25,7 +25,6 @@ const DateField: React.FC<InputFieldProps> = (props) => {
 
   const handleDateChange = (date: Date) => {
     setFieldTouched(props.name, true);
-    console.log(date, date.toUTCString());
     if (!date) {
       setError("");
       setValue(undefined);

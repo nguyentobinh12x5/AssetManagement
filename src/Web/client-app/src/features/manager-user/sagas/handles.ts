@@ -116,7 +116,6 @@ export function* handleDeleteUser(action: PayloadAction<string>) {
 export function* handleCreateUser(action: PayloadAction<IUserCommand>) {
   const user = action.payload;
   try {
-    console.log('Sagas', user);
     const { data } = yield call(postNewUserRequest, user);
 
     const { data: createdUser } = yield call(getUserByIdRequest, data);
