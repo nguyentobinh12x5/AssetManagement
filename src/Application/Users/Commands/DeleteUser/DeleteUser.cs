@@ -1,13 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Domain.Common;
-using AssetManagement.Domain.Events;
 
 
 namespace AssetManagement.Application.Users.Commands.DeleteUser;

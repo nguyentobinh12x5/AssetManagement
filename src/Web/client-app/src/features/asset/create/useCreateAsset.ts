@@ -27,7 +27,6 @@ const useCreateAsset = () => {
     values: ICreateAssetForm,
     actions: FormikHelpers<ICreateAssetForm>
   ) => {
-    console.log(values);
     dispatch(
       createAsset({
         ...values,

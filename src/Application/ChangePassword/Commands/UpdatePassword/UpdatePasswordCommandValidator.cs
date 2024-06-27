@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace AssetManagement.Application.ChangePassword.Commands.UpdatePassword
+﻿namespace AssetManagement.Application.ChangePassword.Commands.UpdatePassword
 {
     public class UpdatePasswordCommandValidator : AbstractValidator<UpdatePasswordCommand>
     {

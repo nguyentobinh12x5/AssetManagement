@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using AssetManagement.Application.Common.Exceptions;
+﻿using AssetManagement.Application.Common.Exceptions;
 
 using FluentAssertions;
 

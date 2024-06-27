@@ -54,7 +54,7 @@
             "x-position": 4
           },
           {
-            "name": "CategoryName",
+            "name": "Category",
             "in": "query",
             "schema": {
               "type": "string",
@@ -63,7 +63,7 @@
             "x-position": 5
           },
           {
-            "name": "AssetStatusName",
+            "name": "AssetStatus",
             "in": "query",
             "schema": {
               "type": "string",
@@ -1252,10 +1252,10 @@
           "name": {
             "type": "string"
           },
-          "categoryName": {
+          "category": {
             "type": "string"
           },
-          "assetStatusName": {
+          "assetStatus": {
             "type": "string"
           }
         }

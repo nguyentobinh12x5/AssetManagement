@@ -58,7 +58,6 @@ const UserTable: React.FC<UserTableProps> = ({
   };
 
   const handleShowPopup = (userId: string) => {
-    console.log("ShowPopu");
     setSelectedUser(userId);
     setShowPopup(true);
   };

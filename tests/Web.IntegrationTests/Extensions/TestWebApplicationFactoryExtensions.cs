@@ -1,9 +1,5 @@
 using System.Net.Http.Headers;
 
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Options;
-
 using Web.IntegrationTests.Helpers;
 
 namespace Web.IntegrationTests.Extensions;

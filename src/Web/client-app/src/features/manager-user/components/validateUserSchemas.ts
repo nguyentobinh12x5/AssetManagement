@@ -18,7 +18,7 @@ export const isWeekend = (date: Date) => {
 export const UserSchema = Yup.object().shape({
   firstName: Yup.string()
     .max(256, 'The First Name field must be at most 256 characters')
-    .required('Required')
+    .required('')
     .test(
       'is-alphabetical',
       'The First Name field allows only alphabetical characters. Please remove any numbers, special characters, or spaces',
@@ -26,15 +26,14 @@ export const UserSchema = Yup.object().shape({
     ),
   lastName: Yup.string()
     .max(256, 'The Last Name field must be at most 256 characters')
-    .required('Required')
+    .required('')
     .test(
       'is-alphabetical',
       'The Last Name field allows only alphabetical characters and spaces. Please remove any numbers or special characters',
       (value) => /^\p{L}+(?:\p{Zs}*\p{L})?(?:\p{Zs}\p{L}+)*$/u.test(value)
     ),
   dateOfBirth: Yup.string()
-    .nullable()
-    .required('Required')
+    .required('')
     .test(
       'is-over-18',
       'User is under 18. Please select a different date',
@@ -44,7 +43,15 @@ export const UserSchema = Yup.object().shape({
       }
     ),
   joinDate: Yup.string()
-    .required('Please Select Date of Birth')
+    .required('')
+    .test(
+      'is-date-of-birth-selected',
+      'Please Select Date of Birth',
+      function (value) {
+        const { dateOfBirth } = this.parent;
+        return !!dateOfBirth;
+      }
+    )
     .test(
       'is-valid-join-date',
       'User under the age of 18 may not join company. Please select a different date',
@@ -71,10 +78,10 @@ export const UserSchema = Yup.object().shape({
     ),
   type: Yup.string()
     .max(256, 'The Type field must be at most 256 characters')
-    .required('Required'),
+    .required(''),
   gender: Yup.string()
     .max(256, 'The Gender field must be at most 256 characters')
-    .required('Required'),
+    .required(''),
 });
 
 export interface IUserForm extends Yup.InferType<typeof UserSchema> {}

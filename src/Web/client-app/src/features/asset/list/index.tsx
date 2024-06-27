@@ -4,7 +4,7 @@ import AssetTable from "./AssetTable";
 import { useNavigate } from "react-router-dom";
 import FilterByStatus from "../components/FilterByStatus";
 import FilterByCategory from "../components/FilterByCategory";
-import SearchBox from "../components/SearchBox";
+import SearchBox from "../../../components/SearchBox/SearchBox";
 import useAssetList from "./useAssetList";
 import "./AssetList.scss";
 import DetailForm from "../detail/DetailForm";

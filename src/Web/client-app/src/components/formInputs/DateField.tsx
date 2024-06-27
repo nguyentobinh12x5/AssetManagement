@@ -5,7 +5,7 @@ import { CalendarDateFill } from "react-bootstrap-icons";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-type inputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
+type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   placeholder?: string;
   name: string;
@@ -15,7 +15,7 @@ type inputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   maxDate?: Date | null | undefined;
 };
 
-const DateField: React.FC<inputFieldProps> = (props) => {
+const DateField: React.FC<InputFieldProps> = (props) => {
   const [{ value }, { error, touched }, { setValue, setError }] =
     useField(props);
 
@@ -33,6 +33,13 @@ const DateField: React.FC<inputFieldProps> = (props) => {
     }
   };
 
+  const validateClass = () => {
+    if (touched && (error || apiError)) return "is-invalid";
+    if (props.novalidation) return "";
+    if (touched) return "is-valid";
+    return "";
+  };
+
   return (
     <>
       <div className="form-group row">
@@ -41,7 +48,9 @@ const DateField: React.FC<inputFieldProps> = (props) => {
           {required && <div className="invalid ml-1">*</div>}
         </label>
         <div className="col">
-          <div className="form-control pt-1 pb-1 d-flex justify-content-between align-items-center">
+          <div
+            className={`form-control pt-1 pb-1 d-flex justify-content-between align-items-center ${validateClass()}`}
+          >
             <DatePicker
               id={props.id}
               name={props.name}

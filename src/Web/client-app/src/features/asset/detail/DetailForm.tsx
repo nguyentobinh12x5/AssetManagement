@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ConfirmModal from "../../../components/confirmModal/ConfirmModal";
 import ButtonIcon from "../../../components/ButtonIcon";
 import { XCircle } from "react-bootstrap-icons";
-import { getAssetById } from "../reducers/asset-detail-slice";
+import { getAssetById, resetState } from "../reducers/asset-detail-slice";
 import { RootState } from "../../../redux/store";
 import { Col, Row } from "react-bootstrap";
 import { text } from "stream/consumers";
@@ -32,13 +32,18 @@ const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
     if (isModalOpen) {
       dispatch(getAssetById(id));
     }
-    console.log(assetDetail);
   }, [isModalOpen, dispatch, id]);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     onClose();
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetState());
+    };
+  }, []);
 
   return (
     <div className="container m-auto p-5">
@@ -95,7 +100,9 @@ const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
           <div>
             <Row className="mb-3">
               <Col md={3}>Specification</Col>
-              <Col md={5}>{assetDetail?.specification}</Col>
+              <Col md={5} className="table-detail-word-wrap">
+                {assetDetail?.specification}
+              </Col>
             </Row>
           </div>
           <div>

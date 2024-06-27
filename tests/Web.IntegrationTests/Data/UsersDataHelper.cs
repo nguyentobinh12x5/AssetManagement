@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using AssetManagement.Domain.Entities;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
 

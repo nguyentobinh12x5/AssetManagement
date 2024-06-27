@@ -12,8 +12,8 @@ export function getAssetsRequest(
 ): Promise<AxiosResponse<IPagedModel<IBriefAsset>>> {
   return RequestService.axios.get(
     `${ENDPOINTS.ASSETS}?` +
-      `CategoryName=${assetQuery.categoryName}` +
-      `&AssetStatusName=${assetQuery.assetStatusName}` +
+      `Category=${assetQuery.category}` +
+      `&AssetStatus=${assetQuery.assetStatus}` +
       `&PageNumber=${assetQuery.pageNumber}` +
       `&PageSize=${assetQuery.pageSize}` +
       `&SortColumnName=${assetQuery.sortColumnName}` +

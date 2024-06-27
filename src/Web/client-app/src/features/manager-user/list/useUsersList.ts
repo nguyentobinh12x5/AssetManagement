@@ -75,9 +75,7 @@ const useUserList = () => {
 
   // Fetch Data
   useEffect(() => {
-    console.log('test1');
     if (!isDataFetched) {
-      console.log('test2' + userQuery.types);
       dispatch(getUsers(userQuery));
     }
   }, [dispatch, userQuery, isDataFetched, filterType, searchTerm]);

@@ -1,7 +1,3 @@
-using System;
-
-using Ardalis.GuardClauses;
-
 using AssetManagement.Application.Common.Models;
 
 namespace AssetManagement.Application.Common.Extensions

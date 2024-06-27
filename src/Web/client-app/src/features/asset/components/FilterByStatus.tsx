@@ -10,7 +10,11 @@ interface FilterByStatusProps {
 const FilterByStatus: React.FC<FilterByStatusProps> = ({
   handleFilterByStatus,
 }) => {
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>(["All"]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([
+    "Assigned",
+    "Available",
+    "Not available",
+  ]);
   const { statuses } = useAppState((state) => state.assets);
   const dispatch = useAppDispatch();
 

@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
 using System.Security.Claims;
 
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
@@ -16,13 +14,11 @@ using AssetManagement.Infrastructure.Data;
 
 
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AssetManagement.Infrastructure.Identity;
 
@@ -72,7 +68,7 @@ public class IdentityService : IIdentityService
     {
         var id = _userManager.Users.Select(e => e.StaffCode).ToList();
 
-        var userName = _userManager.Users.Select(e => e.UserName).ToList();
+        var userName = _userManager.Users.IgnoreQueryFilters().Select(e => e.UserName).ToList();
 
 
         var newUser = new ApplicationUser

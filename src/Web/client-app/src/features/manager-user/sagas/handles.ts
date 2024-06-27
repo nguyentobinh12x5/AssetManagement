@@ -27,6 +27,8 @@ import {
 import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
 import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
+import { navigateTo } from '../../../utils/navigateUtils';
+import { USER_LINK } from '../../../constants/pages';
 
 export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
   const userQuery = action.payload;
@@ -68,10 +70,10 @@ export function* handleEditUser(action: PayloadAction<IUserCommand>) {
   try {
     yield call(editUserRequest, user);
     yield put(updateUser(user));
+    navigateTo(USER_LINK);
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(updateUserError(errorResponse.detail));
-    yield;
   }
 }
 
@@ -119,9 +121,9 @@ export function* handleCreateUser(action: PayloadAction<IUserCommand>) {
     const { data: createdUser } = yield call(getUserByIdRequest, data);
 
     yield put(setCreateUser(createdUser));
+    navigateTo(USER_LINK);
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(setCreateUserError(errorResponse.detail));
-    yield;
   }
 }

@@ -12,8 +12,8 @@ const defaultAssetQuery: IAssetQuery = {
   pageSize: APP_DEFAULT_PAGE_SIZE,
   sortColumnName: DEFAULT_MANAGE_ASSET_SORT_COLUMN,
   sortColumnDirection: ASCENDING,
-  categoryName: ['All'],
-  assetStatusName: ['All'],
+  category: ['All'],
+  assetStatus: ['Assigned', 'Available', 'Not available'],
   searchTerm: '',
 };
 
@@ -86,8 +86,8 @@ const AssetSlice = createSlice({
       const { id, categoryName, assetStatusName, code, name } = action.payload;
       const newAsset: IBriefAsset = {
         id: id,
-        categoryName: categoryName,
-        assetStatusName: assetStatusName,
+        category: categoryName,
+        assetStatus: assetStatusName,
         code: code,
         name: name,
       };

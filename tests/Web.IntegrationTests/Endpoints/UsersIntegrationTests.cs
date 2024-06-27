@@ -1,14 +1,9 @@
-using System;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Domain.Enums;
-
-using Microsoft.AspNetCore.Mvc.Testing;
 
 using Web.IntegrationTests.Extensions;
 using Web.IntegrationTests.Helpers;

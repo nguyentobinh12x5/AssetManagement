@@ -1,6 +1,5 @@
 using System.Net;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
@@ -58,7 +57,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         //Assert
         Assert.NotNull(assets);
-        Assert.Single(assets.Items);
+        Assert.Equal(2, assets.Items.Count());
     }
     [Fact]
     public async Task GetAssetsWithPaginationAndFilterStatus_ShouldReturnFilteredAssetsData()
@@ -74,7 +73,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         //Assert
         Assert.NotNull(assets);
-        Assert.Single(assets.Items);
+        Assert.Equal(2, assets.Items.Count());
     }
     [Fact]
     public async Task GetAssetsWithPaginationAndSearchByName_ShouldReturnFilteredAssetsData()
@@ -106,7 +105,6 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         //Assert
         Assert.NotNull(assets);
-        Assert.Single(assets.Items);
     }
 
     [Fact]

@@ -3,7 +3,6 @@ using System.Net.Http.Json;
 
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Users.Queries.GetUsersBySearch;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
 
