@@ -4,7 +4,7 @@ export const CreateAssetScheme = Yup.object().shape({
   name: Yup.string().required(''),
   category: Yup.string().required(''),
   specification: Yup.string().required(''),
-  installedDate: Yup.date().required(''),
+  installedDate: Yup.string().required(''),
   state: Yup.string().required(''),
 });
 

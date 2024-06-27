@@ -8,6 +8,7 @@ import {
   getAssetStatuses,
 } from '../reducers/asset-slice';
 import { useEffect } from 'react';
+import { utcToDateString } from '../../../utils/dateUtils';
 
 const useCreateAsset = () => {
   const navigate = useNavigate();
@@ -19,18 +20,19 @@ const useCreateAsset = () => {
     name: '',
     specification: '',
     category: '',
-    installedDate: new Date(),
     state: 'Available',
+    installedDate: '',
   };
 
   const handleSubmit = (
     values: ICreateAssetForm,
     actions: FormikHelpers<ICreateAssetForm>
   ) => {
+    if (!values.installedDate) return;
     dispatch(
       createAsset({
         ...values,
-        installedDate: values.installedDate.toUTCString(),
+        installedDate: utcToDateString(values.installedDate),
         location: user?.location ?? '',
       })
     );
