@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 
 namespace AssetManagement.Application.Common.Exceptions
 {

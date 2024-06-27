@@ -1,6 +1,5 @@
 using System.Net;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;

@@ -1,7 +1,6 @@
 using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Security;
-using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Domain.Entities;
 
 namespace AssetManagement.Application.Assets.Commands.Create;

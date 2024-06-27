@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
+﻿namespace AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
 public class ChangePasswordFirstTimeCommandValidator : AbstractValidator<ChangePasswordFirstTimeCommand>
 {
     public ChangePasswordFirstTimeCommandValidator()

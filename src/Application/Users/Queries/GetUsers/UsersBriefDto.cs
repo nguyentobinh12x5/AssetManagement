@@ -1,5 +1,3 @@
-using AssetManagement.Application.Common.Interfaces;
-
 namespace AssetManagement.Application.Users.Queries.GetUsers;
 
 public class UserBriefDto

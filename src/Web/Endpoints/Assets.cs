@@ -3,10 +3,6 @@ using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Models;
-using AssetManagement.Application.Common.Security;
-using AssetManagement.Application.Users.Commands.Create;
-
-using Microsoft.AspNetCore.Mvc;
 
 namespace AssetManagement.Web.Endpoints;
 

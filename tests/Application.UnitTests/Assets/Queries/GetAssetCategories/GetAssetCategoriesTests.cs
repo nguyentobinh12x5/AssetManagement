@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.UnitTests.Helpers;

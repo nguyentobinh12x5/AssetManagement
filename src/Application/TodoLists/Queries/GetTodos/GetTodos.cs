@@ -1,7 +1,6 @@
 ﻿using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Common.Security;
-using AssetManagement.Domain.Entities;
 using AssetManagement.Domain.Enums;
 
 namespace AssetManagement.Application.TodoLists.Queries.GetTodos;

@@ -1,19 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.UnitTests.Helpers;
 using AssetManagement.Application.UnitTests.MappingProfiles;
 using AssetManagement.Domain.Entities;
 
 using AutoMapper;
-
-using Microsoft.EntityFrameworkCore;
 
 using Moq;
 

@@ -1,16 +1,6 @@
-﻿using System.Diagnostics.Metrics;
+﻿using AssetManagement.Application.Common.Interfaces;
 
-using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
-using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Domain.Entities;
-
-using AutoMapper;
-
-using MediatR;
-
-using Microsoft.EntityFrameworkCore;
-
-namespace AssetManagement.Application.Assets.Queries.GetAsset;
+namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 
 public record GetAssetByIdQuery(int Id) : IRequest<AssetDto>;
 
@@ -37,5 +27,4 @@ public class GetAssetByIdQueryHandler : IRequestHandler<GetAssetByIdQuery, Asset
 
         return _mapper.Map<AssetDto>(asset);
     }
-
 }

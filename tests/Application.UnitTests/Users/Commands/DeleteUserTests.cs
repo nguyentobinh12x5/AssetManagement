@@ -1,10 +1,3 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-using Ardalis.GuardClauses;
-
-using AssetManagement.Application.Common.Extensions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.DeleteUser;

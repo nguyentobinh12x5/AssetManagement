@@ -95,7 +95,9 @@ const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
           <div>
             <Row className="mb-3">
               <Col md={3}>Specification</Col>
-              <Col md={5}>{assetDetail?.specification}</Col>
+              <Col md={5} className="word-wrap">
+                {assetDetail?.specification}
+              </Col>
             </Row>
           </div>
           <div>

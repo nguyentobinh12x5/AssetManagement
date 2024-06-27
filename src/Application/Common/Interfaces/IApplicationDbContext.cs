@@ -1,5 +1,3 @@
-using System.Dynamic;
-
 using AssetManagement.Domain.Entities;
 
 namespace AssetManagement.Application.Common.Interfaces;
