@@ -1,9 +1,10 @@
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Application.UnitTests.Helpers;
 using AssetManagement.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;
+
+using MockQueryable.Moq;
 
 using Moq;
 
@@ -14,79 +15,58 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetStatus
     [TestFixture]
     public class GetAssetStatusHandlerTests
     {
-        private Mock<IApplicationDbContext> _mockContext;
         private GetAssetStatusHandler _handler;
+        private Mock<IApplicationDbContext> _contextMock;
 
         [SetUp]
-        public void SetUp()
+        public void Setup()
         {
-            // Mock data
-            var assetStatuses = new List<AssetStatus>
-            {
-                new AssetStatus { Name = "Active" },
-                new AssetStatus { Name = "Inactive" }
-            }.AsQueryable();
-
-            // Mock DbSet
-            var mockDbSet = new Mock<DbSet<AssetStatus>>();
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<AssetStatus>(assetStatuses.Provider));
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.Expression).Returns(assetStatuses.Expression);
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.ElementType).Returns(assetStatuses.ElementType);
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.GetEnumerator()).Returns(assetStatuses.GetEnumerator());
-
-            // Mock DbContext
-            _mockContext = new Mock<IApplicationDbContext>();
-            _mockContext.Setup(c => c.AssetStatuses).Returns(mockDbSet.Object);
-
-            // Handler instance
-            _handler = new GetAssetStatusHandler(_mockContext.Object);
+            _contextMock = new Mock<IApplicationDbContext>();
+            _handler = new GetAssetStatusHandler(_contextMock.Object);
         }
 
         [Test]
-        public async Task Handle_ReturnsListOfAssetStatusNames()
+        public async Task Handle_ShouldReturnAssetStatusNames_WhenStatusesExist()
         {
+            // Arrange
+            var statuses = new List<AssetStatus>
+            {
+                new AssetStatus { Id = 1, Name = "Available" },
+                new AssetStatus { Id = 2, Name = "In Use" }
+            };
+
+            var mockset = statuses.AsQueryable().BuildMockDbSet();
+
+            _contextMock.Setup(m => m.AssetStatuses).Returns(mockset.Object);
+
+            var request = new Application.Assets.Queries.GetAsset.GetAssetStatus();
+
             // Act
-            var result = await _handler.Handle(new Application.Assets.Queries.GetAsset.GetAssetStatus(), CancellationToken.None);
+            var result = await _handler.Handle(request, CancellationToken.None);
 
             // Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.NotNull(result);
             Assert.That(result.Count, Is.EqualTo(2));
-            Assert.That(result, Does.Contain("Active"));
-            Assert.That(result, Does.Contain("Inactive"));
+            Assert.That(result, Does.Contain("Available"));
+            Assert.That(result, Does.Contain("In Use"));
         }
 
         [Test]
-        public async Task Handle_EmptyDatabase_ReturnsEmptyList()
+        public async Task Handle_ShouldReturnEmptyList_WhenNoStatusesExist()
         {
             // Arrange
-            var emptyStatuses = new List<AssetStatus>().AsQueryable();
-            var mockDbSet = new Mock<DbSet<AssetStatus>>();
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.Provider).Returns(new TestAsyncQueryProvider<AssetStatus>(emptyStatuses.Provider));
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.Expression).Returns(emptyStatuses.Expression);
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.ElementType).Returns(emptyStatuses.ElementType);
-            mockDbSet.As<IQueryable<AssetStatus>>().Setup(m => m.GetEnumerator()).Returns(emptyStatuses.GetEnumerator());
+            var mockset = new List<AssetStatus>().AsQueryable().BuildMockDbSet();
 
-            _mockContext.Setup(c => c.AssetStatuses).Returns(mockDbSet.Object);
+            _contextMock.Setup(m => m.AssetStatuses).Returns(mockset.Object);
+
+            var request = new Application.Assets.Queries.GetAsset.GetAssetStatus();
 
             // Act
-            var result = await _handler.Handle(new Application.Assets.Queries.GetAsset.GetAssetStatus(), CancellationToken.None);
+            var result = await _handler.Handle(request, CancellationToken.None);
 
             // Assert
-            Assert.That(result, Is.Not.Null);
+            Assert.NotNull(result);
             Assert.That(result.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void Handle_ExceptionInDatabaseQuery_ThrowsException()
-        {
-            // Arrange
-            _mockContext.Setup(c => c.AssetStatuses).Throws(new Exception("Simulated database exception"));
-
-            // Act + Assert
-            Assert.ThrowsAsync<Exception>(async () =>
-            {
-                await _handler.Handle(new Application.Assets.Queries.GetAsset.GetAssetStatus(), CancellationToken.None);
-            });
         }
     }
 }

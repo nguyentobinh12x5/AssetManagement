@@ -16,7 +16,7 @@ public class AssetBriefDto
 
     public string AssetStatus { get; init; } = null!;
 
-    private class Mapping : Profile
+    public class Mapping : Profile
     {
         public Mapping()
         {

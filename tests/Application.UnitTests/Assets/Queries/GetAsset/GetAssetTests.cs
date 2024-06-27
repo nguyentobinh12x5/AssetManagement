@@ -10,7 +10,6 @@ using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
-using AssetManagement.Application.UnitTests.Helpers;
 using AssetManagement.Domain.Entities;
 
 using AutoMapper;
