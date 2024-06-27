@@ -17,6 +17,7 @@
         <PackageReference Include="coverlet.collector" />
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Moq" />
+         <PackageReference Include="MockQueryable.Moq" />
          <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
     </ItemGroup>
 

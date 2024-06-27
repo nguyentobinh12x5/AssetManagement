@@ -43,6 +43,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(assets);
         Assert.Equal(2, assets.Items.Count);
     }
+
     [Fact]
     public async Task GetAssetsWithPaginationAndFilterCategory_ShouldReturnFilteredAssetsData()
     {

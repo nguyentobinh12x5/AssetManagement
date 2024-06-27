@@ -6,8 +6,12 @@ using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
+using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Application.Users.Queries.GetUsersBySearch;
+using AssetManagement.Application.Users.Queries.GetUsersByType;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
+using AssetManagement.Infrastructure.UnitTests.Extensions;
 
 using AutoMapper;
 
@@ -21,6 +25,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+using MockQueryable.EntityFrameworkCore;
 
 using Moq;
 
@@ -110,7 +116,7 @@ public class IdentityServicesTests
     }
 
     [Test]
-    public async Task GetUserNameAsync_ShouldReturnUserName()
+    public async Task GetUserNameAsync_ShouldReturnUserName_UserExist()
     {
         // Arrange
         var userId = "user1";
@@ -122,6 +128,20 @@ public class IdentityServicesTests
 
         // Assert
         result.Should().Be(user.UserName);
+    }
+
+    [Test]
+    public async Task GetUserNameAsync_ShouldReturnNull_UserNotExist()
+    {
+        // Arrange
+        var userId = "user1";
+        _userManagerMock.Setup(u => u.FindByIdAsync(userId)).ReturnsAsync((ApplicationUser?)null);
+
+        // Act
+        var result = await _identityService.GetUserNameAsync(userId);
+
+        // Assert
+        result.Should().Be(null);
     }
 
     [Test]
@@ -318,24 +338,39 @@ public class IdentityServicesTests
         _userManagerMock.Verify(u => u.IsInRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()), Times.Once);
     }
 
-    [Ignore("asd")]
+    [Ignore("Unsupport mock query")]
     [Test]
-    public async Task AuthorizeAsync_ShouldReturnTrueIfAuthorized()
+    public async Task AuthorizeAsync_ShouldReturnTrue_WhenAuthorizationSucceeds()
+    {
+        var userId = "asdasd";
+        var user = new ApplicationUser { Id = "asdasd" };
+        var policyName = "MyPolicy";
+        var claimsPrincipal = new ClaimsPrincipal();
+
+        _authorizationServiceMock.Setup(s => s.AuthorizeAsync(It.IsAny<ClaimsPrincipal>(), policyName))
+            .Returns(Task.FromResult(AuthorizationResult.Success()));
+
+        _userClaimsPrincipalFactoryMock.Setup(f => f.CreateAsync(user)).Returns(Task.FromResult(claimsPrincipal));
+
+
+        var result = await _identityService.AuthorizeAsync(userId, policyName);
+
+        Assert.IsTrue(result);
+    }
+
+    [Test]
+    public async Task AuthorizeAsync_ShouldReturnFalse_WhenUserDoesNotExist()
     {
         // Arrange
-        var userId = "user1";
-        var policyName = "TestPolicy";
-        var user = new ApplicationUser { Id = userId, UserName = "testuser" };
-        var principal = new ClaimsPrincipal();
-        _userManagerMock.Setup(u => u.FindByIdAsync(userId)).ReturnsAsync(user);
-        _userClaimsPrincipalFactoryMock.Setup(f => f.CreateAsync(user)).ReturnsAsync(principal);
-        _authorizationServiceMock.Setup(a => a.AuthorizeAsync(principal, policyName)).ReturnsAsync(AuthorizationResult.Success);
+        var userId = "nonExistentUserId";
+        var policyName = "testPolicy";
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync((ApplicationUser?)null);
 
         // Act
         var result = await _identityService.AuthorizeAsync(userId, policyName);
 
         // Assert
-        Assert.IsTrue(result);
+        result.Should().BeFalse();
     }
 
     [Test]
@@ -354,8 +389,76 @@ public class IdentityServicesTests
         result.Succeeded.Should().BeTrue();
     }
 
+    // [Test]
+    // public async Task GetUserBriefsAsync_ShouldReturnUserBriefs()
+    // {
+    //     // Arrange
+    //     var users = new List<ApplicationUser>
+    //         {
+    //             new ApplicationUser { Id = "user1", FirstName = "John", LastName = "Doe" },
+    //             new ApplicationUser { Id = "user2", FirstName = "Jane", LastName = "Smith" }
+    //         }.AsQueryable();
+
+
+    //     _userManagerMock.Setup(um => um.Users).Returns(users.AsQueryable());
+
+    //     var userBriefs = new List<UserBriefDto>
+    //         {
+    //             new UserBriefDto { Id = "user1", FullName = "John Doe" },
+    //             new UserBriefDto { Id = "user2", FullName = "Jane Smith" }
+    //         };
+    //     _mapperMock.Setup(m => m.Map<List<UserBriefDto>>(It.IsAny<List<ApplicationUser>>()))
+    //         .Returns(userBriefs);
+
+    //     // Act
+    //     var result = await _identityService.GetUserBriefsAsync(Mock.Of<GetUsersQuery>());
+
+    //     // Assert
+    //     result.Should().BeEquivalentTo(userBriefs);
+    // }
+
     [Test]
-    public async Task CheckCurrentPassword_ShouldThrowExceptionIfPasswordIsIncorrect()
+    public async Task ChangePasswordAsync_ShouldReturnSuccessResult_WhenPasswordIsChanged()
+    {
+        // Arrange
+        var userId = "testUserId";
+        var currentPassword = "currentPassword";
+        var newPassword = "newPassword";
+        var user = new ApplicationUser { Id = userId };
+        _currentUserMock.Setup(cu => cu.Id).Returns(userId);
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(um => um.ChangePasswordAsync(user, currentPassword, newPassword))
+            .ReturnsAsync(IdentityResult.Success);
+
+        // Act
+        var result = await _identityService.ChangePasswordAsync(currentPassword, newPassword);
+
+        // Assert
+        result.Succeeded.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task ChangePasswordAsync_ShouldReturnFailureResult_WhenPasswordChangedFail()
+    {
+        // Arrange
+        var userId = "testUserId";
+        var currentPassword = "currentPassword";
+        var newPassword = "newPassword";
+        var user = new ApplicationUser { Id = userId };
+        _currentUserMock.Setup(cu => cu.Id).Returns(userId);
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(um => um.ChangePasswordAsync(user, currentPassword, newPassword))
+            .ReturnsAsync(IdentityResult.Failed(It.IsAny<IdentityError[]>()));
+
+        // Act
+        var result = await _identityService.ChangePasswordAsync(currentPassword, newPassword);
+
+        // Assert
+        result.Succeeded.Should().BeFalse();
+    }
+
+    [Test]
+    public async Task CheckCurrentPassword_ShouldThrowException_WhenPasswordIsIncorrect()
     {
         // Arrange
         var currentPassword = "wrongpassword";
@@ -371,4 +474,269 @@ public class IdentityServicesTests
         // Act & Assert
         await act.Should().ThrowAsync<IncorrectPasswordException>();
     }
+
+    [Test]
+    public async Task CheckCurrentPassword_ShouldReturnTrue_IfPasswordIsCorrect()
+    {
+        // Arrange
+        var currentPassword = "validpassword";
+        var userId = "user1";
+        var user = new ApplicationUser { Id = userId, UserName = "testuser" };
+        _currentUserMock.Setup(c => c.Id).Returns(userId);
+        _userManagerMock.Setup(u => u.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(u => u.CheckPasswordAsync(user, currentPassword)).ReturnsAsync(true);
+
+        // Act
+        var result = await _identityService.CheckCurrentPassword(currentPassword);
+
+        // Act & Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task ChangePasswordFirstTimeAsync_ShouldReturnSuccessResult_WhenPasswordIsChangedFirstTime()
+    {
+        // Arrange
+        var userId = "testUserId";
+        var newPassword = "newPassword";
+        var user = new ApplicationUser { Id = userId, MustChangePassword = true };
+        _currentUserMock.Setup(cu => cu.Id).Returns(userId);
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(um => um.GeneratePasswordResetTokenAsync(user)).ReturnsAsync("resetToken");
+        _userManagerMock.Setup(um => um.ResetPasswordAsync(user, "resetToken", newPassword))
+            .ReturnsAsync(IdentityResult.Success);
+        _userManagerMock.Setup(um => um.UpdateAsync(user)).ReturnsAsync(IdentityResult.Success);
+
+        // Act
+        var result = await _identityService.ChangePasswordFirstTimeAsync(newPassword);
+
+        // Assert
+        result.Succeeded.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task ChangePasswordFirstTimeAsync_ShouldReturnFailResult_WhenResetPasswordFail()
+    {
+        // Arrange
+        var userId = "testUserId";
+        var newPassword = "newPassword";
+        var user = new ApplicationUser { Id = userId, MustChangePassword = true };
+        _currentUserMock.Setup(cu => cu.Id).Returns(userId);
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(um => um.GeneratePasswordResetTokenAsync(user)).ReturnsAsync("resetToken");
+        _userManagerMock.Setup(um => um.ResetPasswordAsync(user, "resetToken", newPassword))
+            .ReturnsAsync(IdentityResult.Failed(It.IsAny<IdentityError[]>()));
+
+        // Act
+        var result = await _identityService.ChangePasswordFirstTimeAsync(newPassword);
+
+        // Assert
+        result.Succeeded.Should().BeFalse();
+        _userManagerMock.Verify(u => u.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+    }
+
+    [Test]
+    public async Task ChangePasswordFirstTimeAsync_ShouldReturnFailResult_WhenUpdateUserFailed()
+    {
+        // Arrange
+        var userId = "testUserId";
+        var newPassword = "newPassword";
+        var user = new ApplicationUser { Id = userId, MustChangePassword = true };
+        _currentUserMock.Setup(cu => cu.Id).Returns(userId);
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(um => um.GeneratePasswordResetTokenAsync(user)).ReturnsAsync("resetToken");
+        _userManagerMock.Setup(um => um.ResetPasswordAsync(user, "resetToken", newPassword))
+            .ReturnsAsync(IdentityResult.Failed(It.IsAny<IdentityError[]>()));
+        _userManagerMock.Setup(um => um.UpdateAsync(user)).ReturnsAsync(IdentityResult.Failed(It.IsAny<IdentityError[]>()));
+
+        // Act
+        var result = await _identityService.ChangePasswordFirstTimeAsync(newPassword);
+
+        // Assert
+        result.Succeeded.Should().BeFalse();
+        _userManagerMock.Verify(u => u.UpdateAsync(It.IsAny<ApplicationUser>()), Times.Never);
+    }
+
+    [Test]
+    public void ChangePasswordFirstTimeAsync_ShouldThrowNotFoundException_WhenUserDoesNotExist()
+    {
+        // Arrange
+        var newPassword = "newPassword";
+        _currentUserMock.Setup(cu => cu.Id).Returns((string?)null);
+
+        // Act
+        Func<Task> act = async () => await _identityService.ChangePasswordFirstTimeAsync(newPassword);
+
+        // Assert
+        act.Should().ThrowAsync<NotFoundException>();
+    }
+
+    [Test]
+    public async Task IsSameOldPassword_ShouldReturnTrue_WhenPasswordIsSameAsCurrent()
+    {
+        // Arrange
+        var userId = "testUserId";
+        var newPassword = "currentPassword";
+        var user = new ApplicationUser { Id = userId };
+        _currentUserMock.Setup(cu => cu.Id).Returns(userId);
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(um => um.CheckPasswordAsync(user, newPassword)).ReturnsAsync(true);
+
+        // Act
+        var result = await _identityService.IsSameOldPassword(newPassword);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task IsSameOldPassword_ShouldReturnFalse_WhenPasswordIsDifferentFromCurrent()
+    {
+        // Arrange
+        var userId = "testUserId";
+        var newPassword = "newPassword";
+        var user = new ApplicationUser { Id = userId };
+        _currentUserMock.Setup(cu => cu.Id).Returns(userId);
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(user);
+        _userManagerMock.Setup(um => um.CheckPasswordAsync(user, newPassword)).ReturnsAsync(false);
+
+        // Act
+        var result = await _identityService.IsSameOldPassword(newPassword);
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public async Task IsUserDisabledAsync_ShouldReturnTrue_WhenUserIsDisabled()
+    {
+        // Arrange
+        var email = "test@example.com";
+        var user = new ApplicationUser { Email = email, IsDelete = true };
+        _userManagerMock.Setup(um => um.FindByEmailAsync(email)).ReturnsAsync(user);
+
+        // Act
+        var result = await _identityService.IsUserDisabledAsync(email);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public async Task IsUserDisabledAsync_ShouldReturnFalse_WhenUserIsNotDisabled()
+    {
+        // Arrange
+        var email = "test@example.com";
+        var user = new ApplicationUser { Email = email, IsDelete = false };
+        _userManagerMock.Setup(um => um.FindByEmailAsync(email)).ReturnsAsync(user);
+
+        // Act
+        var result = await _identityService.IsUserDisabledAsync(email);
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public async Task GetCurrentUserInfo_ShouldReturnUserInfo_WhenUserExist()
+    {
+        // Arrange
+        var userId = "123";
+        var expectedUser = new ApplicationUser
+        {
+            Id = userId,
+            UserName = "username",
+            Location = "HCM",
+            MustChangePassword = false,
+        };
+        var roles = new List<string> { "Administrator" };
+
+        _userManagerMock.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(expectedUser);
+        _userManagerMock.Setup(um => um.GetRolesAsync(expectedUser)).ReturnsAsync(roles);
+
+        // Act
+        var result = await _identityService.GetCurrentUserInfo(userId);
+
+        // Assert
+        result.Username.Should().Be(expectedUser.UserName);
+        result.Roles.Should().BeEquivalentTo(roles);
+        result.Location.Should().Be(expectedUser.Location);
+        result.MustChangePassword.Should().Be(expectedUser.MustChangePassword);
+    }
+
+    [Ignore("Unsupport async query")]
+    [Test]
+    public async Task GetUsersByTypesAsync_ShouldReturnUserBriefsByTypes()
+    {
+        // Arrange
+        var query = new GetUsersByTypeQuery
+        {
+            Location = "HCM",
+            SortColumnName = "FirstName",
+            SortColumnDirection = "Ascending",
+            Types = "Admin"
+        };
+
+        var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "user1", FirstName = "John", LastName = "Doe" },
+                new ApplicationUser { Id = "user2", FirstName = "Jane", LastName = "Smith" }
+            };
+        _userManagerMock.Setup(um => um.Users).Returns(users.AsQueryable().BuildMock());
+
+        var userBriefs = new List<UserBriefDto>
+            {
+                new UserBriefDto { Id = "user1", FullName = "John Doe", Type = "Admin" },
+            };
+        _mapperMock.Setup(m => m.Map<List<UserBriefDto>>(It.IsAny<List<ApplicationUser>>()))
+            .Returns(userBriefs);
+
+        // Act
+        var result = await _identityService.GetUsersByTypesAsync(query);
+
+        // Assert
+        result.Items.Should().BeEquivalentTo(userBriefs);
+        result.TotalCount.Should().Be(userBriefs.Count);
+        result.PageNumber.Should().Be(query.PageNumber);
+        // result.PageSize.Should().Be(query.PageSize);
+    }
+
+    [Ignore("Unsupport async query")]
+    [Test]
+    public async Task GetUserBriefsBySearchAsync_ShouldReturnUserBriefsBySearch()
+    {
+        // Arrange
+        var query = new GetUsersBySearchQuery
+        {
+            Location = "HCM",
+            SortColumnName = "FirstName",
+            SortColumnDirection = "Ascending",
+            SearchTerm = "John"
+        };
+
+        var users = new List<ApplicationUser>
+            {
+                new ApplicationUser { Id = "user1", FirstName = "John", LastName = "Doe" },
+                new ApplicationUser { Id = "user2", FirstName = "Jane", LastName = "Smith" }
+            };
+        _userManagerMock.Setup(um => um.Users).Returns(users.AsQueryable().BuildMock());
+
+        var userBriefs = new List<UserBriefDto>
+            {
+                new UserBriefDto { Id = "user1", FullName = "John Doe", Type = "Admin" },
+            };
+        _mapperMock.Setup(m => m.Map<List<UserBriefDto>>(It.IsAny<List<ApplicationUser>>()))
+            .Returns(userBriefs);
+
+        // Act
+        var result = await _identityService.GetUserBriefsBySearchAsync(query);
+
+        // Assert
+        result.Items.Should().BeEquivalentTo(userBriefs);
+        result.TotalCount.Should().Be(userBriefs.Count);
+        result.PageNumber.Should().Be(query.PageNumber);
+        // result.PageSize.Should().Be(query.PageSize);
+    }
+
+
 }

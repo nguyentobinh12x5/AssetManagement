@@ -30,7 +30,7 @@ const RadioButtonField: React.FC<InputFieldProps> = (props) => {
         {label}
         {required && <div className="invalid ml-1">*</div>}
       </label>
-      <div className="radio-btn-container col">
+      <div className="radio-btn-container col pt-1 pb-1">
         {options.map(({ id, label, value: optionValue }) => (
           <div className={`form-check ${display()}`} key={id}>
             <input

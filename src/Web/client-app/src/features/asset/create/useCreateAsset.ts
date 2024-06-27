@@ -48,7 +48,9 @@ const useCreateAsset = () => {
     handleSubmit,
     navigate,
     categories: categories.filter((c) => c !== 'All'),
-    statuses: statuses.filter((c) => c !== 'All'),
+    statuses: statuses.filter((c) =>
+      ['Available', 'Not available'].includes(c)
+    ),
   };
 };
 

@@ -57,6 +57,7 @@ const CreateUpdateAssetForm = () => {
               label="Installed Date"
               name="installedDate"
               maxDate={new Date()}
+              required
             />
           </div>
           <div className="mb-3">
