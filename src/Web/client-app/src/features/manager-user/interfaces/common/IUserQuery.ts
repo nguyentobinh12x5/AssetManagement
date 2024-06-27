@@ -3,7 +3,6 @@ export interface IUserQuery {
   pageSize: number;
   sortColumnName: string;
   sortColumnDirection: string;
-  location: string;
   searchTerm: string;
   types: string[];
 }

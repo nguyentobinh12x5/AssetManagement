@@ -8,7 +8,6 @@ interface SearchBoxProps {
 
 const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [warningMessage, setWarningMessage] = useState("");
 
   const onSearch = () => {
     handleFilterBySearchTerm(searchTerm);
@@ -22,7 +21,11 @@ const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
   return (
     <>
       <InputGroup className="mb-3">
-        <FormControl value={searchTerm} onChange={handleInputChange} />
+        <FormControl
+          maxLength={256}
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
         <Button
           variant="outline-secondary"
           id="button-addon2"
@@ -32,9 +35,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
           <Search />
         </Button>
       </InputGroup>
-      {warningMessage && (
-        <FormText className="text-danger">{warningMessage}</FormText>
-      )}
     </>
   );
 };

@@ -8,10 +8,7 @@ using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Users.Queries.GetUsersBySearch;
-using AssetManagement.Application.Users.Queries.GetUsersByType;
 using AssetManagement.Infrastructure.Data;
-
 
 using AutoMapper;
 
@@ -181,7 +178,7 @@ public class IdentityService : IIdentityService
 
     public async Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query)
     {
-        var users = await InitialGetUserBriefAsync(query.SearchTerm ?? "", query.Location, query.SortColumnName, query.SortColumnDirection);
+        var users = await InitialGetUserBriefAsync(query.SearchTerm ?? "", _currentUser.Location ?? "", query.SortColumnName, query.SortColumnDirection);
 
         var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types ?? "All");
 
@@ -220,7 +217,7 @@ public class IdentityService : IIdentityService
         {
             var userBriefDto = _mapper.Map<UserBriefDto>(user);
 
-            var userRole = userRoles.FirstOrDefault(ur => ur.UserId == user.Id);
+            var userRole = userRoles.Find(ur => ur.UserId == user.Id);
 
             userBriefDto.Type = userRole?.RoleName ?? "Default";
 
@@ -367,50 +364,9 @@ public class IdentityService : IIdentityService
         {
             Username = user.UserName!,
             Roles = roles,
-            Location = user.Location,
             MustChangePassword = user.MustChangePassword,
         };
     }
-    public async Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
-    {
-        var users = await InitialGetUserBriefAsync(string.Empty, query.Location, query.SortColumnName, query.SortColumnDirection);
-
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types);
-
-        if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
-            userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
-
-        return new PaginatedList<UserBriefDto>(
-            userBriefDtos
-                .Skip((query.PageNumber - 1) * query.PageSize)
-                .Take(query.PageSize)
-                .ToList(),
-            userBriefDtos.Count,
-            query.PageNumber,
-            query.PageSize
-        );
-    }
-
-    public async Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
-    {
-        var users = await InitialGetUserBriefAsync(query.SearchTerm, query.Location, query.SortColumnName, query.SortColumnDirection);
-
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, "All");
-
-        if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
-            userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
-
-        return new PaginatedList<UserBriefDto>(
-             userBriefDtos
-                 .Skip((query.PageNumber - 1) * query.PageSize)
-                 .Take(query.PageSize)
-                 .ToList(),
-             userBriefDtos.Count,
-             query.PageNumber,
-             query.PageSize
-        );
-    }
-
     public async Task<List<string?>> GetUserTypes()
     {
         return await _applicationDbContext.Roles

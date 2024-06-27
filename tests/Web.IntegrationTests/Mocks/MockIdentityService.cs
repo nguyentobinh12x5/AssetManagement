@@ -4,8 +4,6 @@ using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Users.Queries.GetUsersBySearch;
-using AssetManagement.Application.Users.Queries.GetUsersByType;
 
 namespace Web.IntegrationTests.Mocks;
 
@@ -34,11 +32,6 @@ public class MockIdentityService : IIdentityService
     }
 
 
-    public Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<bool> CheckCurrentPassword(string currentPassword)
     {
         throw new NotImplementedException();
@@ -60,11 +53,6 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<string?> GetUserNameAsync(string userId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query)
     {
         throw new NotImplementedException();
     }

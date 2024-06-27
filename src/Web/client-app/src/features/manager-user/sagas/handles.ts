@@ -18,15 +18,11 @@ import {
   deleteUserRequest,
   editUser as editUserRequest,
   getUserById as getUserByIdRequest,
-  getUserBySearchTerm,
   getUsers,
   CreateUser as postNewUserRequest,
-  getUsersByType,
   getUserTypes,
 } from './requests';
 import { IUserQuery } from '../interfaces/common/IUserQuery';
-import { IUserTypeQuery } from '../interfaces/IUserTypeQuery';
-import { IUserSearchQuery } from '../interfaces/IUserSearchQuery';
 import { navigateTo } from '../../../utils/navigateUtils';
 import { USER_LINK } from '../../../constants/pages';
 
@@ -35,30 +31,6 @@ export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
 
   try {
     const { data } = yield call(getUsers, userQuery);
-    yield put(setUsers(data));
-  } catch (error: any) {
-    const msg = error.response.data;
-  }
-}
-
-export function* handleGetUsersByType(action: PayloadAction<IUserTypeQuery>) {
-  const userQuery = action.payload;
-
-  try {
-    const { data } = yield call(getUsersByType, userQuery);
-    yield put(setUsers(data));
-  } catch (error: any) {
-    const msg = error.response.data;
-  }
-}
-
-export function* handleGetUsersBySearchTerm(
-  action: PayloadAction<IUserSearchQuery>
-) {
-  const userQuery = action.payload;
-
-  try {
-    const { data } = yield call(getUserBySearchTerm, userQuery);
     yield put(setUsers(data));
   } catch (error: any) {
     const msg = error.response.data;

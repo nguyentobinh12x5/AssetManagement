@@ -29,8 +29,7 @@ public class GetUserListValidatorTest
             PageNumber = 1,
             PageSize = 5,
             SortColumnName = "UserName",
-            SortColumnDirection = "Ascending",
-            Location = "HCM"
+            SortColumnDirection = "Ascending"
         };
 
         // Act

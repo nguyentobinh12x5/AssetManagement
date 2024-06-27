@@ -367,23 +367,13 @@
             "x-position": 4
           },
           {
-            "name": "Location",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 5
-          },
-          {
             "name": "SearchTerm",
             "in": "query",
             "schema": {
               "type": "string",
               "nullable": true
             },
-            "x-position": 6
+            "x-position": 5
           },
           {
             "name": "Types",
@@ -392,7 +382,7 @@
               "type": "string",
               "nullable": true
             },
-            "x-position": 7
+            "x-position": 6
           }
         ],
         "responses": {
@@ -1052,9 +1042,6 @@
           },
           "mustChangePassword": {
             "type": "boolean"
-          },
-          "location": {
-            "type": "string"
           },
           "roles": {
             "type": "array",

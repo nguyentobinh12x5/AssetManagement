@@ -10,7 +10,6 @@ public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; } = "StaffCode";
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
-    public required string Location { get; init; }
     public string? SearchTerm { get; init; }
     public string? Types { get; init; } = "All";
 }

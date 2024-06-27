@@ -7,6 +7,7 @@ using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 using Web.IntegrationTests.Extensions;
@@ -34,6 +35,30 @@ namespace Web.IntegrationTests.Endpoints
         }
 
         [Fact]
+        public async Task GetUsers_ShouldGetUserPaginatedList_WhenUserExists()
+        {
+            // Arrange
+            await UsersDataHelper.CreateSampleData(_factory);
+
+            using var scope = _factory.Services.CreateScope();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            // Act
+            var response = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
+
+            // Assert
+            var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
+
+            Assert.NotNull(users);
+            Assert.NotEmpty(users.Items);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(userManager.Users.Count(), users.TotalCount);
+            Assert.Equal(3, users.Items.Count());
+            Assert.Equal(1, users.PageNumber);
+        }
+
+
+        [Fact]
         public async Task DeleteUser_ShouldRemoveUser_WhenUserExists()
         {
             // Arrange
@@ -50,7 +75,7 @@ namespace Web.IntegrationTests.Endpoints
             var response = await _httpClient.DeleteAsync($"/api/Users/{user!.Id}");
 
             // Assert
-            var usersResponse = await _httpClient.GetAsync("/api/Users?Location=HCM&PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
+            var usersResponse = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
             var users = await usersResponse.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
 
             Assert.NotNull(users);

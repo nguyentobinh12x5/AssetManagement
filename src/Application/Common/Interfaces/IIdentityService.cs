@@ -3,8 +3,6 @@ using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUser;
 using AssetManagement.Application.Users.Queries.GetUsers;
-using AssetManagement.Application.Users.Queries.GetUsersBySearch;
-using AssetManagement.Application.Users.Queries.GetUsersByType;
 
 namespace AssetManagement.Application.Common.Interfaces;
 
@@ -29,16 +27,12 @@ public interface IIdentityService
     Task<Result> DeleteUserAsync(string userId);
 
     Task<PaginatedList<UserBriefDto>> GetUserBriefsAsync(GetUsersQuery query);
-    Task<PaginatedList<UserBriefDto>> GetUsersByTypesAsync(GetUsersByTypeQuery query);
-    Task<PaginatedList<UserBriefDto>> GetUserBriefsBySearchAsync(GetUsersBySearchQuery query);
 
     Task<bool> CheckCurrentPassword(string currentPassword);
     Task<bool> IsSameOldPassword(string newPassword);
     Task<Result> ChangePasswordFirstTimeAsync(string newPassword);
 
     Task<Result> ChangePasswordAsync(string currentPassword, string newPassword);
-
-
 
     Task<bool> IsUserDisabledAsync(string email);
 

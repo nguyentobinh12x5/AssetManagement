@@ -1,0 +1,119 @@
+﻿<CorruptedSettingsDescription>
+  <Exception Message="The 's:String' start tag on line 4 position 3 does not match the end tag of 'wpf:ResourceDictionary'. Line 9, position 35." Kind="Error">The 's:String' start tag on line 4 position 3 does not match the end tag of 'wpf:ResourceDictionary'. Line 9, position 35.
+
+--- EXCEPTION #1/2 [XmlException]
+Message = “The 's:String' start tag on line 4 position 3 does not match the end tag of 'wpf:ResourceDictionary'. Line 9, position 35.”
+ExceptionPath = Root.InnerException
+ClassName = System.Xml.XmlException
+Data.ThreadLocalDebugInfo = VsInteropController::DispatchActionsUnderReadLock
+HResult = Xml=80131940
+Source = System.Xml
+res = Xml_TagMismatchEx
+args.#0 = s:String
+args.#1 = 4
+args.#2 = 3
+args.#3 = wpf:ResourceDictionary
+lineNumber = 9
+linePosition = 35
+version = 2.0
+StackTraceString = “
+  at System.Xml.XmlTextReaderImpl.Throw(Exception e) in Throw.il:line IL_0027 mvid 9E49
+     at System.Xml.XmlTextReaderImpl.ThrowTagMismatch(NodeData startTag) in ThrowTagMismatch.il:line IL_009E mvid 9E49
+     at System.Xml.XmlTextReaderImpl.ParseEndElement() in ParseEndElement.il:line IL_0000 mvid 9E49
+     at System.Xml.XmlTextReaderImpl.ParseElementContent() in ParseElementContent.il:line IL_0149 mvid 9E49
+     at JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Step_GenericRead() in Step.il:line IL_0000 mvid 1BEA
+”
+
+--- Outer ---
+
+--- EXCEPTION #2/2 [LoggerException]
+Message = “The 's:String' start tag on line 4 position 3 does not match the end tag of 'wpf:ResourceDictionary'. Line 9, position 35.”
+ExceptionPath = Root
+ClassName = JetBrains.Util.LoggerException
+InnerException = “Exception #1 at Root.InnerException”
+HResult = COR_E_APPLICATION=80131600
+StackTraceString = “
+  at JetBrains.Util.ILoggerEx.LogException(ILogger this, LoggingLevel level, Exception exception, ExceptionOrigin exceptionOrigin, String comment) in LogException.il:line IL_0025 mvid FE6A
+     at JetBrains.Util.ILoggerEx.LogOuterDataException(ILogger thіs, Exception ex, String comment) in LogOuterDataException.il:line IL_0009 mvid FE6A
+     at JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Step_GenericRead() in Step.il:line IL_0000 mvid 1BEA or Step.il:line IL_006F mvid 1BEA
+     at JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Step() in Step.il:line IL_0000 mvid 1BEA or Step.il:line IL_006F mvid 1BEA
+     at JetBrains.Application.Settings.Storage.Persistence.EntriesReader.Run(XmlReader reader, EntryPositionsFlag entryPositionsFlag) in Run.il:line IL_006B mvid 1BEA
+     at JetBrains.Util.XmlReaderEx.ReadXml[TResult](Stream stream, Func`2 FRead) in ReadXml.il:line IL_002F mvid E92F
+     at JetBrains.Util.FileSystemPathOpenEx.ReadStream[T,TF,TFile,TDir](FileSystemPathBase`3 path, Func`2 λRead) in ReadStream.il:line IL_0029 mvid FE6A
+     at JetBrains.Application.Settings.Storage.Persistence.SettingsStoreSerializationToXmlDiskFile.&lt;&gt;c__DisplayClass34_1.&lt;Save_WriteFile_BackupOldCorruptedFile&gt;b__2() in SettingsStoreSerializationToXmlDiskFile.il:line IL_0065 mvid 1BEA
+     at JetBrains.Util.Logging.Logger.Catch(Action action) in Catch.il:line IL_000F mvid FE6A
+     at JetBrains.Util.XmlWriterEx.InElement(XmlWriter writer, String name, Action nested, Boolean writeFullEndElement)
+     at JetBrains.Util.XmlWriterEx.WriteXml(Stream stream, Action`1 FWrite) in WriteXml.il:line IL_0023 mvid FE6A
+     at JetBrains.Util.FileSystemPathOpenEx.WriteStream[T,TFile,TDir](FileSystemPathBase`3 path, Action`1 λWrite) in WriteStream.il:line IL_0029 mvid FE6A
+     at JetBrains.Application.Settings.Storage.Persistence.SettingsStoreSerializationToXmlDiskFile.Save_WriteFile_BackupOldCorruptedFile(FileSystemPath path) in Save.il:line IL_00D7 mvid 1BEA or Save.il:line IL_0246 mvid 1BEA
+     at JetBrains.Util.ILoggerEx.Catch(ILogger thіs, Action F, ExceptionOrigin origin, LoggingLevel loggingLevel) in Catch.il:line IL_0060 mvid FE6A
+     at JetBrains.Application.Settings.Storage.Persistence.SettingsStoreSerializationToXmlDiskFile.Save_WriteFile(SaveDiffFlags flagsDiff, SaveForcedFlags flagsForced) in Save.il:line IL_00D7 mvid 1BEA or Save.il:line IL_0246 mvid 1BEA
+     at JetBrains.DataFlow.IPropertySignalEx.&lt;&gt;c__DisplayClass0_0`1.&lt;Advise_FallingFront&gt;b__0(PropertyChangedEventArgs`1 args) in IPropertySignalEx.il:line IL_0033 mvid FE6A
+     at JetBrains.DataFlow.CombinedProperty2`3.&lt;&gt;c__DisplayClass8_0.&lt;AdviseCore&gt;b__1() in CombinedProperty2.il:line IL_0000 mvid FE6A
+     at JetBrains.Lifetimes.LifetimeDefinition.Destruct() in Destruct.il:line IL_00A8 mvid 8CE0
+     at JetBrains.Lifetimes.LifetimeDefinition.Terminate() in Terminate.il:line IL_0183 mvid 8CE0
+     at JetBrains.Application.Components.SingletonDescriptorBindings`1.Dispose() in Dispose.il:line IL_0014 mvid 09EF
+     at JetBrains.Application.Components.SingletonDescriptor`1.DisposeInternalResources() in DisposeInternalResources.il:line IL_004E mvid 09EF
+     at JetBrains.Application.Components.AsyncDescriptorBase.DoDisposeSafe(Object instance) in DoDisposeSafe.il:line IL_0036 mvid 09EF
+     at JetBrains.Application.Components.AsyncDescriptorBase.Dispose() in Dispose.il:line IL_0000 mvid 09EF
+     at JetBrains.Application.Components.ComponentStorage.DisposeDescriptor(IComponentDescriptor descriptor) in DisposeDescriptor.il:line IL_000A mvid 09EF
+     at JetBrains.Application.Components.ComponentStorage.Terminate() in Terminate.il:line IL_009D mvid 09EF
+     at JetBrains.Lifetimes.LifetimeDefinition.Destruct() in Destruct.il:line IL_00A8 mvid 8CE0
+     at JetBrains.Lifetimes.LifetimeDefinition.Terminate() in Terminate.il:line IL_0183 mvid 8CE0
+     at JetBrains.ProjectModel.SolutionInstance.CloseSolutionInstance() in CloseSolutionInstance.il:line IL_0087 mvid 91A0
+     at JetBrains.ProjectModel.SolutionManagerBase.CloseSolutionInstance(SolutionInstance instance) in CloseSolutionInstance.il:line IL_0000 mvid 91A0
+     at JetBrains.VsIntegration.ProjectDocuments.VSSolutionManager.CloseSolutionInstance(SolutionInstance instance) in CloseSolutionInstance.il:line IL_0059 mvid 728F
+     at JetBrains.Util.ILoggerEx.Catch(ILogger thіs, Action F, ExceptionOrigin origin, LoggingLevel loggingLevel) in Catch.il:line IL_0060 mvid FE6A
+     at JetBrains.VsIntegration.Interop.VsInteropController.&lt;&gt;c__DisplayClass27_0.&lt;ExecuteActionsUnderProperLock&gt;b__0() in VsInteropController.il:line IL_0048 mvid 728F or VsInteropController.il:line IL_009F mvid 728F
+     at JetBrains.Util.Logging.Logger.Catch(Action action) in Catch.il:line IL_000F mvid FE6A
+     at JetBrains.VsIntegration.Interop.VsInteropController.ExecuteActionsUnderProperLock(Boolean isWriteLockTaken) in ExecuteActionsUnderProperLock.il:line IL_010C mvid 728F
+     at JetBrains.VsIntegration.Interop.VsInteropController.&lt;ExecuteActionsUnderReadLockOrReschedule&gt;b__25_0() in VsInteropController.il:line IL_0048 mvid 728F or VsInteropController.il:line IL_009F mvid 728F
+     at JetBrains.Application.Threading.IShellLocksEx.ExecuteWithReadLock(IShellLocks thіs, Action F) in ExecuteWithReadLock.il:line IL_0027 mvid 1BEA
+     at JetBrains.Threading.ReentrancyGuard.Execute(String name, Action action) in Execute.il:line IL_014D mvid FE6A
+     at JetBrains.Threading.ReentrancyGuard.TryExecute(String name, Action action) in TryExecute.il:line IL_008F mvid FE6A
+     at JetBrains.Threading.ReentrancyGuardEx.ExecuteOrQueue(ReentrancyGuard thіs, OuterLifetime lifetime, String name, Action F, TaskPriority priority) in ExecuteOrQueue.il:line IL_004F mvid FE6A
+     at JetBrains.Util.Concurrency.UnguardedCallbackMerger.ExecuteOrQueueOrMerge(Lifetime lifetimeQueue, String name, Action F) in ExecuteOrQueueOrMerge.il:line IL_009D mvid FE6A
+     at JetBrains.VsIntegration.Interop.VsInteropController.DispatchActions() in DispatchActions.il:line IL_018D mvid 728F
+     at JetBrains.VsIntegration.Interop.VsInteropController.ExecuteOrQueueOrMergeWithReadLockWhenTalkingToVsAllowed(Lifetime lifetime, String name, Boolean requiresWriteLock, Action action) in ExecuteOrQueueOrMergeWithReadLockWhenTalkingToVsAllowed.il:line IL_008E mvid 728F
+     at JetBrains.VsIntegration.ProjectDocuments.VSSolutionManager.OnBeforeCloseSolution(Object pUnkReserved) in OnBeforeCloseSolution.il:line IL_006B mvid 728F
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.&lt;&gt;c.&lt;NotifyOnBeforeCloseSolutionAsync&gt;b__772_0(SolutionEventsSink sink) in Solution.il:line IL_0000 mvid 755E or Solution.il:line IL_0010 mvid 755E or Solution.il:line IL_0015 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.&lt;&gt;c__733`1.&lt;NotifySolutionEventsSinksAsync&gt;b__733_0(SolutionEventsSink sink, StateAction`2 callback) in Solution.il:line IL_0000 mvid 755E or Solution.il:line IL_0010 mvid 755E or Solution.il:line IL_0015 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.StateAction`2.Invoke(TArg arg)
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.&lt;&gt;c__730`1.&lt;NotifySolutionSinkAsync&gt;b__730_0(SolutionEventsSink sink, StateAction`2 callback, String notificationEventName) in Solution.il:line IL_0000 mvid 755E or Solution.il:line IL_0010 mvid 755E or Solution.il:line IL_0015 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.StateAction`2.&lt;&gt;c__5`1.&lt;WrapWithState&gt;b__5_0(TArg arg, ValueTuple`3 state) in StateAction.il:line IL_0018 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.StateAction`2.Invoke(TArg arg)
+     at Microsoft.VisualStudio.CommonIDE.Solutions.BackgroundSolutionService.&lt;&gt;c__86`1.&lt;NotifyUIThreadSolutionSink&gt;b__86_0(UInt32 _, SolutionEventsSink sink, StateAction`2 callback) in BackgroundSolutionService.il:line IL_0008 mvid 755E
+     at Microsoft.Internal.VisualStudio.PlatformUI.CookieTable`2.ForEach[TState](Action`3 callback, TState state, Boolean skipRemoved) in ForEach.il:line IL_0009 mvid BA3F or ForEach.il:line IL_0090 mvid BA3F
+     at Microsoft.Internal.VisualStudio.PlatformUI.CookieTable`2.ForEach[TState](Action`3 callback, TState state) in ForEach.il:line IL_0009 mvid BA3F or ForEach.il:line IL_0090 mvid BA3F
+     at Microsoft.VisualStudio.CommonIDE.Solutions.BackgroundSolutionService.NotifyUIThreadSolutionSink[TState](StateAction`2 callback) in NotifyUIThreadSolutionSink.il:line IL_002B mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.BackgroundSolutionService.NotifySolutionSinkAsync[TState](StateAction`2 callback) in NotifySolutionSinkAsync.il:line IL_0007 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.NotifySolutionSinkAsync[TState](String notificationEventName, StateAction`2 originalCallback) in NotifySolutionSinkAsync.il:line IL_0000 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.NotifySolutionEventsSinksAsync[TState](String notificationEventName, StateAction`2 callback) in NotifySolutionEventsSinksAsync.il:line IL_0000 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.&lt;NotifyOnBeforeCloseSolutionAsync&gt;d__772.MoveNext() in NotifyOnBeforeCloseSolutionAsync.il:line IL_001C mvid 755E or NotifyOnBeforeCloseSolutionAsync.il:line IL_005A mvid 755E
+     at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[TStateMachine](TStateMachine&amp; stateMachine) in Start.il:line IL_002C mvid B751
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.NotifyOnBeforeCloseSolutionAsync() in NotifyOnBeforeCloseSolutionAsync.il:line IL_001C mvid 755E or NotifyOnBeforeCloseSolutionAsync.il:line IL_005A mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.&lt;HrCloseAsync&gt;d__1022.MoveNext() in HrCloseAsync.il:line IL_004F mvid 755E or HrCloseAsync.il:line IL_079D mvid 755E
+     at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.Start[TStateMachine](TStateMachine&amp; stateMachine) in Start.il:line IL_002C mvid B751
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.HrCloseAsync(Boolean fDoSave, Boolean fSaveAll, Boolean fSaveUserOptsFile, Boolean fUpdateMRU, Boolean fExitApp, CancellationToken cancellationToken) in HrCloseAsync.il:line IL_004F mvid 755E or HrCloseAsync.il:line IL_079D mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.&lt;&gt;c__DisplayClass1021_0.&lt;Close&gt;b__0() in Solution.il:line IL_0000 mvid 755E or Solution.il:line IL_0010 mvid 755E or Solution.il:line IL_0015 mvid 755E
+     at Microsoft.VisualStudio.Threading.JoinableTaskFactory.ExecuteJob[T](Func`1 asyncMethod, JoinableTask job) in ExecuteJob.il:line IL_0009 mvid 5A13
+     at Microsoft.VisualStudio.Threading.JoinableTaskFactory.RunAsync[T](Func`1 asyncMethod, Boolean synchronouslyBlocking, String parentToken, JoinableTaskCreationOptions creationOptions) in RunAsync.il:line IL_0020 mvid 5A13
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.Close(Boolean fDoSave, Boolean fSaveAll, Boolean fUpdateMRU, Boolean fExitApp) in Close.il:line IL_003C mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.ClearTheSolution(Boolean fEndSession) in ClearTheSolution.il:line IL_0024 mvid 755E
+     at Microsoft.VisualStudio.CommonIDE.Solutions.Solution.Microsoft.VisualStudio.CommonIDE.Solutions.Interop.IVsSolutionInternal.ClearTheSolution(Boolean bEndSession)
+”
+</Exception>
+  <!--The backup file has been created before writing in-memory changes to the settings file. As the existing settings file is corrupted, many settings might get lost when writing the new content. If you'd like to restore the settings from the previous version, here're the changes against the backed-up version (note: subsequent changes are not reflected here).-->
+  <InMemoryChanges>
+    <SetValue>
+      <wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=49cee996_002Dcaae_002D4cf1_002Da586_002D19b05abaf6e4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;tests&amp;gt;\&amp;lt;Application.UnitTests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Or&gt;
+    &lt;ProjectFile&gt;B409CA03-16D9-4CB6-82C4-F6108A1ECFA8/d:Endpoints/f:AssetsTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;B409CA03-16D9-4CB6-82C4-F6108A1ECFA8/d:Endpoints/f:UsersTests.cs&lt;/ProjectFile&gt;
+  &lt;/Or&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+    </SetValue>
+    <ClearValue></ClearValue>
+  </InMemoryChanges>
+</CorruptedSettingsDescription>
