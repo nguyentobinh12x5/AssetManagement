@@ -16,6 +16,7 @@ namespace AssetManagement.Application.Assets.Queries.GetAsset
         public async Task<List<string>> Handle(GetAssetStatus request, CancellationToken cancellationToken)
         {
             return await _context.AssetStatuses
+                .OrderBy(e => e.Id)
                 .Select(c => c.Name)
                 .ToListAsync(cancellationToken);
         }

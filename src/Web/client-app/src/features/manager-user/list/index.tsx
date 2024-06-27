@@ -1,10 +1,10 @@
 import { Button, Col, Row } from "react-bootstrap";
 import FilterByRole from "../components/FilterByRole";
-import SearchBox from "../components/SearchBox";
 import UserTable from "./UserTable";
 import useUserList from "./useUsersList";
 import { useNavigate } from "react-router-dom";
 import "./UserList.scss";
+import SearchBox from "../../../components/SearchBox/SearchBox";
 
 const ListUsers = () => {
   const {

@@ -3,7 +3,7 @@ export interface IAssetQuery {
   pageSize: number;
   sortColumnName: string;
   sortColumnDirection: string;
-  categoryName: string[];
-  assetStatusName: string[];
+  category: string[];
+  assetStatus: string[];
   searchTerm: string;
 }

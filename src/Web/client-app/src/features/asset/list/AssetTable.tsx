@@ -32,8 +32,8 @@ const AssetTable: React.FC<AssetTableProps> = ({
   const columns: IColumnOption[] = [
     { name: "Asset Code", value: "Code" },
     { name: "Asset Name", value: "Name" },
-    { name: "Category", value: "CategoryName" },
-    { name: "State", value: "AssetStatusName" },
+    { name: "Category", value: "Category" },
+    { name: "State", value: "AssetStatus" },
   ];
   const navigate = useNavigate();
   const handleEditClick = (assetId: string) => {
@@ -91,8 +91,8 @@ const AssetTable: React.FC<AssetTableProps> = ({
           <tr key={data.id} onClick={() => handleShowPopup(data.id)}>
             <td>{data.code}</td>
             <td>{data.name}</td>
-            <td>{data.categoryName}</td>
-            <td>{data.assetStatusName}</td>
+            <td>{data.category}</td>
+            <td>{data.assetStatus}</td>
             <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0 action">
               <div>
                 <ButtonIcon

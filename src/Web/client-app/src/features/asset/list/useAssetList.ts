@@ -50,8 +50,6 @@ const useAssetList = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const handleFilterByStatus = (status: string[]) => {
-    setSearchTerm('');
-    setFilterCategory(null);
     setFilterStatus(status);
     dispatch(
       setAssetQuery({
@@ -63,8 +61,6 @@ const useAssetList = () => {
   };
 
   const handleFilterByCategory = (category: string[]) => {
-    setSearchTerm('');
-    setFilterStatus(null);
     setFilterCategory(category);
     dispatch(
       setAssetQuery({
@@ -76,8 +72,6 @@ const useAssetList = () => {
   };
 
   const handleSearch = (searchTerm: string) => {
-    setFilterStatus(null);
-    setFilterCategory(null);
     setSearchTerm(searchTerm.trim());
     dispatch(
       setAssetQuery({
@@ -94,8 +88,12 @@ const useAssetList = () => {
       dispatch(
         getAssets({
           ...assetQuery,
-          categoryName: filterCategory ?? [],
-          assetStatusName: filterStatus ?? [],
+          category: filterCategory ?? [""],
+          assetStatus: filterStatus ?? [
+            'Assigned',
+            'Available',
+            'Not available',
+          ],
           searchTerm: searchTerm,
         })
       );
