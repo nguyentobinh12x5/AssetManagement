@@ -10,7 +10,7 @@ public record CreateNewAssetCommand : IRequest<int>
     public string Name { get; init; } = null!;
     public string Category { get; init; } = null!;
     public string Specification { get; init; } = null!;
-    public DateTime InstallDate { get; init; } = DateTime.UtcNow;
+    public DateTime InstalledDate { get; init; } = DateTime.UtcNow;
     public string State { get; init; } = null!;
 }
 [Authorize]
@@ -42,7 +42,7 @@ public class CreateNewAssetCommandHandler : IRequestHandler<CreateNewAssetComman
             Location = _currentUser.Location!,
             Name = request.Name,
             Specification = request.Specification,
-            InstalledDate = request.InstallDate,
+            InstalledDate = request.InstalledDate,
             AssetStatus = state,
             Category = category,
         };

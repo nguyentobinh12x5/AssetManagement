@@ -15,7 +15,7 @@ namespace AssetManagement.Application.Assets.Commands.Create
                 .NotEmpty().WithMessage("Specification is required.")
                 .MaximumLength(1200).WithMessage("Specification cannot be longer than 1200 characters.");
 
-            RuleFor(x => x.InstallDate)
+            RuleFor(x => x.InstalledDate)
                 .NotEmpty().WithMessage("Install date is required.")
                 .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Install date cannot be in the future.");
 
