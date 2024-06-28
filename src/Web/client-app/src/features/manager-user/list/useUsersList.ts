@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
-import {
-  getUsers,
-  setUserQuery,
-  setIsDataFetched,
-} from '../reducers/user-slice';
+import { getUsers, setUserQuery } from '../reducers/user-slice';
 
 const useUserList = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +22,6 @@ const useUserList = () => {
         sortColumnDirection,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   const updateMainPagingState = (page: number) => {
@@ -36,7 +31,6 @@ const useUserList = () => {
         pageNumber: page,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   const { hasSortColumn, handleSort } = useAppSort(
@@ -44,8 +38,6 @@ const useUserList = () => {
     updateMainSortState
   );
   const { handlePaging } = useAppPaging(updateMainPagingState);
-
-  const [searchTerm] = useState<string>('');
 
   const handleFilterByType = (type: string[]) => {
     dispatch(
@@ -55,7 +47,6 @@ const useUserList = () => {
         pageNumber: 1,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -66,7 +57,6 @@ const useUserList = () => {
         pageNumber: 1,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   // Fetch Data
@@ -74,12 +64,12 @@ const useUserList = () => {
     if (!isDataFetched) {
       dispatch(getUsers(userQuery));
     }
-  }, [dispatch, userQuery, isDataFetched, searchTerm]);
+  }, [dispatch, userQuery, isDataFetched]);
 
   return {
     hasSortColumn,
     users,
-    searchTerm,
+    searchTerm: userQuery.searchTerm,
     handleSort,
     handlePaging,
     handleFilterByType,

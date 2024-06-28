@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
 import { getAssetStatuses } from "../reducers/asset-slice";
+import useAssetList from "../list/useAssetList";
 
-interface FilterByStatusProps {
-  handleFilterByStatus: (statuses: string[]) => void;
-}
+interface FilterByStatusProps {}
 
-const FilterByStatus: React.FC<FilterByStatusProps> = ({
-  handleFilterByStatus,
-}) => {
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([
-    "Assigned",
-    "Available",
-    "Not available",
-  ]);
-  const { statuses } = useAppState((state) => state.assets);
+const FilterByStatus: React.FC<FilterByStatusProps> = () => {
+  const {
+    statuses,
+    assetQuery: { assetStatus },
+  } = useAppState((state) => state.assets);
+  const { handleFilterByStatus } = useAssetList();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -39,8 +35,7 @@ const FilterByStatus: React.FC<FilterByStatusProps> = ({
 
   const handleStatusChange = (displayStatuses: string[]) => {
     if (displayStatuses.length === 0) {
-      setSelectedStatuses(["All"]);
-      handleFilterByStatus([]);
+      handleFilterByStatus(["All"]);
     } else {
       // Convert display statuses to actual statuses
       const actualStatuses: AssetStatus[] = displayStatuses
@@ -52,7 +47,6 @@ const FilterByStatus: React.FC<FilterByStatusProps> = ({
         )
         .filter((status) => status !== "All");
 
-      setSelectedStatuses(actualStatuses);
       handleFilterByStatus(actualStatuses);
     }
   };
@@ -62,7 +56,7 @@ const FilterByStatus: React.FC<FilterByStatusProps> = ({
       placeholder="State"
       label="State"
       options={displayAssetStatuses}
-      selectedOptions={selectedStatuses.map(
+      selectedOptions={assetStatus.map(
         (status) => assetStatusesMap[status as AssetStatus]
       )}
       handleOptionChange={handleStatusChange}

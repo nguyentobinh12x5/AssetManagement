@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import { getUserTypes, setUserTypes } from "../reducers/user-slice";
+import { getUserTypes, setUserQuery } from "../reducers/user-slice";
+import useUserList from "../list/useUsersList";
 
-interface FilterByRoleProps {
-  handleFilterByType: (types: string[]) => void;
-}
+interface FilterByRoleProps {}
 
-const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const { types } = useAppState((state) => state.users);
+const FilterByRole: React.FC<FilterByRoleProps> = () => {
+  const {
+    types,
+    userQuery: { types: userTypes },
+  } = useAppState((state) => state.users);
+  const { handleFilterByType } = useUserList();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setSelectedTypes(["All"]);
     if (types.length <= 1) {
       dispatch(getUserTypes());
     }
-  }, [setSelectedTypes, dispatch, types.length]);
+  }, [dispatch, types.length]);
 
   type UserType = (typeof types)[number];
 
@@ -34,7 +35,6 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
 
   const handleTypeChange = (displayTypes: string[]) => {
     if (displayTypes.length === 0) {
-      setSelectedTypes(["All"]);
       handleFilterByType(["All"]);
     } else {
       // Convert display types to actual types
@@ -45,9 +45,8 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
               (key) => userTypesMap[key] === displayType
             )!
         )
-        .filter((category) => category !== "All");
+        .filter((type) => type !== "All");
 
-      setSelectedTypes(actualTypes);
       handleFilterByType(actualTypes);
     }
   };
@@ -56,9 +55,7 @@ const FilterByRole: React.FC<FilterByRoleProps> = ({ handleFilterByType }) => {
     <DropdownFilter
       label="Type"
       options={displayUserTypes}
-      selectedOptions={selectedTypes.map(
-        (type) => userTypesMap[type as UserType]
-      )}
+      selectedOptions={userTypes.map((type) => userTypesMap[type as UserType])}
       handleOptionChange={handleTypeChange}
       placeholder="Type"
     />

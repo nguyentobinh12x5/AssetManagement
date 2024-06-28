@@ -47,6 +47,7 @@ function CreateUpdateUserForm<TVal>({
               type="text"
               required
               disabled={isEdit}
+              maxLength={256}
             />
           </div>
           <div className="mb-3">
@@ -57,6 +58,7 @@ function CreateUpdateUserForm<TVal>({
               type="text"
               required
               disabled={isEdit}
+              maxLength={256}
             />
           </div>
           <div className="mb-3">

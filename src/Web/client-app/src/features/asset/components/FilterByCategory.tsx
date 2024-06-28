@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import {
-  getAssetCategories,
-  setAssetCategories,
-} from "../reducers/asset-slice";
+import { getAssetCategories, setAssetQuery } from "../reducers/asset-slice";
+import useAssetList from "../list/useAssetList";
 
-interface FilterByCategoryProps {
-  handleFilterByCategory: (categories: string[]) => void;
-}
+interface FilterByCategoryProps {}
 
-const FilterByCategory: React.FC<FilterByCategoryProps> = ({
-  handleFilterByCategory,
-}) => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    "All",
-  ]);
-  const { categories } = useAppState((state) => state.assets);
+const FilterByCategory: React.FC<FilterByCategoryProps> = () => {
+  const {
+    categories,
+    assetQuery: { category },
+  } = useAppState((state) => state.assets);
+  const { handleFilterByCategory } = useAssetList();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,8 +35,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
 
   const handleCategoryChange = (displayCategories: string[]) => {
     if (displayCategories.length === 0) {
-      setSelectedCategories(["All"]);
-      handleFilterByCategory([]);
+      handleFilterByCategory(["All"]);
     } else {
       // Convert display categories to actual categories
       const actualCategories: AssetCategory[] = displayCategories
@@ -53,7 +47,6 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
         )
         .filter((category) => category !== "All");
 
-      setSelectedCategories(actualCategories);
       handleFilterByCategory(actualCategories);
     }
   };
@@ -63,7 +56,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({
       placeholder="Category"
       label="Category"
       options={displayAssetCategories}
-      selectedOptions={selectedCategories.map(
+      selectedOptions={category.map(
         (category) => assetCategoriesMap[category as AssetCategory]
       )}
       handleOptionChange={handleCategoryChange}

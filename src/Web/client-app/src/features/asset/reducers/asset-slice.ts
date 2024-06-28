@@ -139,9 +139,7 @@ const AssetSlice = createSlice({
     },
     setAssetQuery: (state: AssetState, action: PayloadAction<IAssetQuery>) => {
       state.assetQuery = action.payload;
-    },
-    setIsDataFetched: (state: AssetState, action: PayloadAction<boolean>) => {
-      state.isDataFetched = action.payload;
+      state.isDataFetched = false;
     },
   },
 });
@@ -157,7 +155,6 @@ export const {
   getAssetCategories,
   setAssetCategories,
   setAssetQuery,
-  setIsDataFetched,
   createAssetFailure,
   createAssetSuccess,
 } = AssetSlice.actions;
