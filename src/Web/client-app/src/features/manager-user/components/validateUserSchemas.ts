@@ -17,7 +17,6 @@ export const isWeekend = (date: Date) => {
 
 export const UserSchema = Yup.object().shape({
   firstName: Yup.string()
-    .max(256, 'The First Name field must be at most 256 characters')
     .required('')
     .test(
       'is-alphabetical',
@@ -25,7 +24,6 @@ export const UserSchema = Yup.object().shape({
       (value) => /^[\p{L}][\p{L}]*[\p{L}]$/u.test(value)
     ),
   lastName: Yup.string()
-    .max(256, 'The Last Name field must be at most 256 characters')
     .required('')
     .test(
       'is-alphabetical',
