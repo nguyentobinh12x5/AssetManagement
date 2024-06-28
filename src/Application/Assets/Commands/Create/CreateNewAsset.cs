@@ -12,15 +12,16 @@ public record CreateNewAssetCommand : IRequest<int>
     public string Specification { get; init; } = null!;
     public DateTime InstallDate { get; init; } = DateTime.UtcNow;
     public string State { get; init; } = null!;
-    public string Location { get; init; } = null!;
 }
 [Authorize]
 public class CreateNewAssetCommandHandler : IRequestHandler<CreateNewAssetCommand, int>
 {
     private readonly IApplicationDbContext _context;
-    public CreateNewAssetCommandHandler(IApplicationDbContext context)
+    private readonly IUser _currentUser;
+    public CreateNewAssetCommandHandler(IApplicationDbContext context, IUser currentUser)
     {
         _context = context;
+        _currentUser = currentUser;
     }
 
     public async Task<int> Handle(CreateNewAssetCommand request, CancellationToken cancellationToken)
@@ -38,7 +39,7 @@ public class CreateNewAssetCommandHandler : IRequestHandler<CreateNewAssetComman
         var newAsset = new Asset
         {
             Code = CodeList.GenerateNewAssetCode(category.Code),
-            Location = request.Location,
+            Location = _currentUser.Location!,
             Name = request.Name,
             Specification = request.Specification,
             InstalledDate = request.InstallDate,

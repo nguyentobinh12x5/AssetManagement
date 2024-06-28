@@ -32,7 +32,6 @@ namespace Web.IntegrationTests.Endpoints
                 Specification = "Test Specification",
                 InstallDate = DateTime.UtcNow,
                 State = "Available",
-                Location = "Test Location"
             };
 
             var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");

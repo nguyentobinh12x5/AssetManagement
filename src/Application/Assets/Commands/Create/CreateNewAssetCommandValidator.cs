@@ -21,10 +21,6 @@ namespace AssetManagement.Application.Assets.Commands.Create
 
             RuleFor(x => x.State)
                 .NotEmpty().WithMessage("State is required.");
-
-            RuleFor(x => x.Location)
-                .NotEmpty().WithMessage("Location is required.")
-                .MaximumLength(256).WithMessage("Location cannot be longer than 256 characters.");
         }
     }
 }
