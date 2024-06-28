@@ -7,7 +7,6 @@ import FilterByCategory from "../components/FilterByCategory";
 import SearchBox from "../../../components/SearchBox/SearchBox";
 import useAssetList from "./useAssetList";
 import "./AssetList.scss";
-import DetailForm from "../detail/DetailForm";
 import { CREATE_ASSET_PATH } from "../constants/create-asset";
 
 const AssetList = () => {
@@ -40,14 +39,14 @@ const AssetList = () => {
           <FilterByCategory />
         </Col>
 
-        <Col md={3} className="ml-auto">
+        <Col md={{ span: 3, offset: 1 }} className="ml-auto">
           <SearchBox
             defaultValue={searchTerm}
             handleFilterBySearchTerm={handleSearch}
           />
         </Col>
 
-        <Col md={3}>
+        <Col md={2}>
           <Button variant="danger" onClick={handleCreateAsset}>
             Create new asset
           </Button>

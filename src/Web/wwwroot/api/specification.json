@@ -8,9 +8,7 @@
   "paths": {
     "/api/Assets": {
       "get": {
-        "tags": [
-          "Assets"
-        ],
+        "tags": ["Assets"],
         "operationId": "GetAssetList",
         "parameters": [
           {
@@ -95,9 +93,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Assets"
-        ],
+        "tags": ["Assets"],
         "operationId": "AddAsset",
         "requestBody": {
           "x-name": "command",
@@ -128,9 +124,7 @@
     },
     "/api/Assets/{id}": {
       "get": {
-        "tags": [
-          "Assets"
-        ],
+        "tags": ["Assets"],
         "operationId": "GetAsset",
         "parameters": [
           {
@@ -160,9 +154,7 @@
     },
     "/api/Assets/Categories": {
       "get": {
-        "tags": [
-          "Assets"
-        ],
+        "tags": ["Assets"],
         "operationId": "GetAssetCategories",
         "responses": {
           "200": {
@@ -173,9 +165,7 @@
     },
     "/api/Assets/Status": {
       "get": {
-        "tags": [
-          "Assets"
-        ],
+        "tags": ["Assets"],
         "operationId": "GetAssetStatus",
         "responses": {
           "200": {
@@ -186,9 +176,7 @@
     },
     "/api/Auth/change-password": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "operationId": "ChangePassword",
         "requestBody": {
           "x-name": "command",
@@ -211,9 +199,7 @@
     },
     "/api/Auth/change-password-first-time": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "operationId": "ChangePasswordFirstTime",
         "requestBody": {
           "x-name": "command",
@@ -236,9 +222,7 @@
     },
     "/api/Auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "operationId": "Login",
         "parameters": [
           {
@@ -288,9 +272,7 @@
     },
     "/api/Auth/manage/info": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "operationId": "GetUserInfo",
         "responses": {
           "200": {
@@ -308,9 +290,7 @@
     },
     "/api/Auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "operationId": "Logout",
         "responses": {
           "200": {
@@ -321,9 +301,7 @@
     },
     "/api/Users": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "GetUserList",
         "parameters": [
           {
@@ -399,9 +377,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "CreateUser",
         "requestBody": {
           "x-name": "command",
@@ -431,9 +407,7 @@
     },
     "/api/Users/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "GetUser",
         "parameters": [
           {
@@ -453,9 +427,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "UpdateUser",
         "parameters": [
           {
@@ -487,9 +459,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "DeleteUser",
         "parameters": [
           {
@@ -511,9 +481,7 @@
     },
     "/api/Users/Types": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "operationId": "GetUserTypes",
         "responses": {
           "200": {
@@ -1137,14 +1105,8 @@
       "Gender": {
         "type": "string",
         "description": "",
-        "x-enumNames": [
-          "Male",
-          "Female"
-        ],
-        "enum": [
-          "Male",
-          "Female"
-        ]
+        "x-enumNames": ["Male", "Female"],
+        "enum": ["Male", "Female"]
       },
       "CreateUserCommand": {
         "type": "object",
