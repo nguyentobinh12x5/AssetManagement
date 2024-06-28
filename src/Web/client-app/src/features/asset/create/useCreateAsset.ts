@@ -14,7 +14,6 @@ const useCreateAsset = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { statuses, categories } = useAppState((state) => state.assets);
-  const { user } = useAppState((state) => state.auth);
 
   const initialValues: ICreateAssetForm = {
     name: '',
@@ -33,7 +32,6 @@ const useCreateAsset = () => {
       createAsset({
         ...values,
         installedDate: utcToDateString(values.installedDate),
-        location: user?.location ?? '',
       })
     );
     actions.setSubmitting(false);
