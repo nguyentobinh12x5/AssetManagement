@@ -4,5 +4,4 @@ export interface ICreateAssetCommand {
   specification: string;
   installedDate: string;
   state: string;
-  location: string;
 }

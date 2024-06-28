@@ -967,9 +967,6 @@
           },
           "state": {
             "type": "string"
-          },
-          "location": {
-            "type": "string"
           }
         }
       },
