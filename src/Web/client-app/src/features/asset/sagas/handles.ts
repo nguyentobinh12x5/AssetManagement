@@ -25,8 +25,21 @@ import { navigateTo } from '../../../utils/navigateUtils';
 import { getAssetByIdSuccess } from '../reducers/asset-detail-slice';
 
 export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
+  let query = action.payload;
+  if (query.assetStatus.includes('All'))
+    query = {
+      ...query,
+      assetStatus: [],
+    };
+
+  if (query.category.includes('All'))
+    query = {
+      ...query,
+      category: [],
+    };
+
   try {
-    const { data } = yield call(getAssetsRequest, action.payload);
+    const { data } = yield call(getAssetsRequest, query);
     yield put(setAssets(data));
     yield put(getAssetsSuccess(data));
   } catch (error: any) {

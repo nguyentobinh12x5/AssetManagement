@@ -115,6 +115,23 @@ option {
   background: none !important;
 }
 
+.form-check-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+  input {
+    width: 100%;
+    max-width: 100%;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+}
+
 .modal-backdrop.show {
   background: none;
 }

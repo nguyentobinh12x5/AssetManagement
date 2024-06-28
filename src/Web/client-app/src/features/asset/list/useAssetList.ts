@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_ASSET_SORT_COLUMN } from '../constants/asset-sort';
-import {
-  getAssets,
-  setAssetQuery,
-  setIsDataFetched,
-} from '../reducers/asset-slice';
+import { getAssets, setAssetQuery } from '../reducers/asset-slice';
 
 const useAssetList = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +22,6 @@ const useAssetList = () => {
         sortColumnDirection,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   const updateMainPagingState = (page: number) => {
@@ -36,7 +31,6 @@ const useAssetList = () => {
         pageNumber: page,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   const { hasSortColumn, handleSort } = useAppSort(
@@ -45,76 +39,47 @@ const useAssetList = () => {
   );
   const { handlePaging } = useAppPaging(updateMainPagingState);
 
-  const [filterStatus, setFilterStatus] = useState<string[] | null>(null);
-  const [filterCategory, setFilterCategory] = useState<string[] | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-
   const handleFilterByStatus = (status: string[]) => {
-    setFilterStatus(status);
     dispatch(
       setAssetQuery({
         ...assetQuery,
         pageNumber: 1,
+        assetStatus: status,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   const handleFilterByCategory = (category: string[]) => {
-    setFilterCategory(category);
     dispatch(
       setAssetQuery({
         ...assetQuery,
         pageNumber: 1,
+        category: category,
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   const handleSearch = (searchTerm: string) => {
-    setSearchTerm(searchTerm.trim());
     dispatch(
       setAssetQuery({
         ...assetQuery,
         pageNumber: 1,
+        searchTerm: searchTerm.trim(),
       })
     );
-    dispatch(setIsDataFetched(false));
   };
 
   // Fetch Data
   useEffect(() => {
-    const fetchData = () => {
-      dispatch(
-        getAssets({
-          ...assetQuery,
-          category: filterCategory ?? [''],
-          assetStatus: filterStatus ?? [
-            'Assigned',
-            'Available',
-            'Not available',
-          ],
-          searchTerm: searchTerm,
-        })
-      );
-    };
-
     if (!isDataFetched) {
-      fetchData();
+      dispatch(getAssets(assetQuery));
     }
-  }, [
-    dispatch,
-    assetQuery,
-    isDataFetched,
-    filterStatus,
-    filterCategory,
-    searchTerm,
-  ]);
+  }, [dispatch, assetQuery, isDataFetched]);
 
   return {
     hasSortColumn,
     assets,
-    searchTerm,
+    searchTerm: assetQuery.searchTerm,
     handleSort,
     handlePaging,
     handleFilterByStatus,

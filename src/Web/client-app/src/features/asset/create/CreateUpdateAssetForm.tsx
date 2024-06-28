@@ -6,7 +6,7 @@ import DateField from "../../../components/formInputs/DateField";
 import RadioButtonField from "../../../components/formInputs/RadioButtonField";
 import { Button, SelectField, TextAreaField } from "../../../components";
 import { CreateAssetScheme } from "./create-asset-scheme";
-import { ASSETS } from "../../../constants/pages";
+import { ASSETS, ASSETS_LINK } from "../../../constants/pages";
 
 const CreateUpdateAssetForm = () => {
   const { initialValues, handleSubmit, navigate, categories, statuses } =
@@ -86,7 +86,7 @@ const CreateUpdateAssetForm = () => {
             <Button
               type="button"
               className="btn btn-secondary"
-              onClick={() => navigate(ASSETS)}
+              onClick={() => navigate(ASSETS_LINK)}
             >
               Cancel
             </Button>

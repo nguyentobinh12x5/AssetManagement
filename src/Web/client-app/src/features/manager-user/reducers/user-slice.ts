@@ -88,6 +88,7 @@ const UserSlice = createSlice({
     },
     setUserQuery: (state: UserState, action: PayloadAction<IUserQuery>) => {
       state.userQuery = action.payload;
+      state.isDataFetched = false;
     },
     setUserByIdError: (state: UserState, action: PayloadAction<string>) => ({
       ...state,

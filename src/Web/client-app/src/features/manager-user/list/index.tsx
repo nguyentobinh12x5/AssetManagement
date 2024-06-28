@@ -13,7 +13,6 @@ const ListUsers = () => {
     searchTerm,
     handleSort,
     handlePaging,
-    handleFilterByType,
     handleSearch,
   } = useUserList();
 
@@ -28,12 +27,15 @@ const ListUsers = () => {
       <p className="title">User list</p>
 
       <Row className="mb-3">
-        <Col md={2}>
-          <FilterByRole handleFilterByType={handleFilterByType} />
+        <Col md={3}>
+          <FilterByRole />
         </Col>
 
-        <Col md={{ span: 4, offset: 4 }} className="ml-auto">
-          <SearchBox handleFilterBySearchTerm={handleSearch} />
+        <Col md={{ span: 4, offset: 3 }} className="ml-auto">
+          <SearchBox
+            defaultValue={searchTerm}
+            handleFilterBySearchTerm={handleSearch}
+          />
         </Col>
 
         <Col md={2}>

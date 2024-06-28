@@ -17,8 +17,6 @@ const AssetList = () => {
     searchTerm,
     handleSort,
     handlePaging,
-    handleFilterByCategory,
-    handleFilterByStatus,
     handleSearch,
   } = useAssetList();
 
@@ -35,15 +33,18 @@ const AssetList = () => {
 
       <Row className="mb-3">
         <Col md={3}>
-          <FilterByStatus handleFilterByStatus={handleFilterByStatus} />
+          <FilterByStatus />
         </Col>
 
         <Col md={3}>
-          <FilterByCategory handleFilterByCategory={handleFilterByCategory} />
+          <FilterByCategory />
         </Col>
 
         <Col md={3} className="ml-auto">
-          <SearchBox handleFilterBySearchTerm={handleSearch} />
+          <SearchBox
+            defaultValue={searchTerm}
+            handleFilterBySearchTerm={handleSearch}
+          />
         </Col>
 
         <Col md={3}>

@@ -3,11 +3,15 @@ import { InputGroup, Button, FormControl, FormText } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 
 interface SearchBoxProps {
+  defaultValue?: string;
   handleFilterBySearchTerm: (searchTerm: string) => void;
 }
 
-const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const SearchBox: React.FC<SearchBoxProps> = ({
+  handleFilterBySearchTerm,
+  defaultValue = "",
+}) => {
+  const [searchTerm, setSearchTerm] = useState(defaultValue);
 
   const onSearch = () => {
     handleFilterBySearchTerm(searchTerm);
@@ -25,6 +29,9 @@ const SearchBox: React.FC<SearchBoxProps> = ({ handleFilterBySearchTerm }) => {
           maxLength={256}
           value={searchTerm}
           onChange={handleInputChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") onSearch();
+          }}
         />
         <Button
           variant="outline-secondary"
