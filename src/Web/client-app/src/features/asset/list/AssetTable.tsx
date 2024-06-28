@@ -93,8 +93,8 @@ const AssetTable: React.FC<AssetTableProps> = ({
             <td>{data.name}</td>
             <td>{data.category}</td>
             <td>{data.assetStatus}</td>
-            <td className="text-center d-flex justify-content-center align-items-center gap-2 border-0 action">
-              <div>
+            <td className="action">
+              <div className="d-flex gap-3 justify-content-evenly align-items-center">
                 <ButtonIcon
                   onClick={() => {
                     handleEditClick(data.id);
@@ -103,9 +103,6 @@ const AssetTable: React.FC<AssetTableProps> = ({
                 >
                   <PencilFill />
                 </ButtonIcon>
-              </div>
-
-              <div>
                 <ButtonIcon>
                   <XCircle color="red" />
                 </ButtonIcon>

@@ -75,6 +75,7 @@ public class IdentityService : IIdentityService
             IsDelete = false,
             DateOfBirth = createUser.DateOfBirth,
             JoinDate = createUser.JoinDate,
+            Gender = createUser.Gender,
             StaffCode = id.GenerateNewStaffCode(),
             Id = Guid.NewGuid().ToString(),
             UserName = userName.GenerateUsername(createUser.FirstName, createUser.LastName),
