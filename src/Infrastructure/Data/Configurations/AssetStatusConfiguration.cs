@@ -14,6 +14,5 @@ public class AssetStatusConfiguration : IEntityTypeConfiguration<AssetStatus>
         builder.Property(t => t.Name)
             .HasMaxLength(256)
             .IsRequired();
-
     }
 }
