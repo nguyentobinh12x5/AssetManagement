@@ -30,7 +30,7 @@ namespace Web.IntegrationTests.Endpoints
                 Name = "Test Asset",
                 Category = "Laptop",
                 Specification = "Test Specification",
-                InstallDate = DateTime.UtcNow,
+                InstalledDate = DateTime.UtcNow,
                 State = "Available",
             };
 

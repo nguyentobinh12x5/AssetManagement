@@ -961,7 +961,7 @@
           "specification": {
             "type": "string"
           },
-          "installDate": {
+          "installedDate": {
             "type": "string",
             "format": "date-time"
           },
