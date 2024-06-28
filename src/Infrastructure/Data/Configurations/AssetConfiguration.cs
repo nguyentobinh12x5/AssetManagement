@@ -18,6 +18,7 @@ public class AssetConfiguration : IEntityTypeConfiguration<Asset>
         builder.Property(t => t.Specification)
             .HasMaxLength(1200)
             .IsRequired();
-
+        builder.HasIndex(t => t.Code)
+            .IsUnique();
     }
 }
