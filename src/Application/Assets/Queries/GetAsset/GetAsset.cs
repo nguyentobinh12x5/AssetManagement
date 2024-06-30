@@ -1,6 +1,6 @@
 ﻿using AssetManagement.Application.Common.Interfaces;
 
-namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets;
+namespace AssetManagement.Application.Assets.Queries.GetAsset;
 
 public record GetAssetByIdQuery(int Id) : IRequest<AssetDto>;
 

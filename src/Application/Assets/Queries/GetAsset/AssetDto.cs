@@ -1,6 +1,6 @@
 using AssetManagement.Domain.Entities;
 
-namespace AssetManagement.Application.Assets.Queries.GetDetailedAssets
+namespace AssetManagement.Application.Assets.Queries.GetAsset
 {
     public class AssetDto
     {

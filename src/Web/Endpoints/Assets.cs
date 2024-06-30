@@ -1,7 +1,6 @@
 using AssetManagement.Application.Assets.Commands.Create;
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
-using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Models;
 
 namespace AssetManagement.Web.Endpoints;
