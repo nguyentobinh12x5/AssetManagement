@@ -1,4 +1,5 @@
 using AssetManagement.Application.Assets.Commands.Create;
+using AssetManagement.Application.Assets.Commands.Delete;
 using AssetManagement.Application.Assets.Commands.Update;
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
@@ -17,7 +18,8 @@ public class Assets : EndpointGroupBase
             .MapGet(GetAssetCategories, "Categories")
             .MapGet(GetAssetStatus, "Status")
             .MapPost(AddAsset)
-            .MapPut(UpdateAsset, "{id}");
+            .MapPut(UpdateAsset, "{id}")
+            .MapDelete(DeleteAsset, "{id}");
     }
 
     public Task<PaginatedList<AssetBriefDto>> GetAssetList(ISender sender, [AsParameters] GetAssetsWithPaginationQuery query)
@@ -59,4 +61,9 @@ public class Assets : EndpointGroupBase
         return Results.NoContent();
     }
 
+    public async Task<IResult> DeleteAsset(ISender sender, int id)
+    {
+        await sender.Send(new DeleteAssetCommand(id));
+        return Results.NoContent();
+    }
 }
