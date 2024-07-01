@@ -3,6 +3,8 @@ import { call, put } from 'redux-saga/effects';
 import {
   createAssetFailure,
   createAssetSuccess,
+  deleteAssetFailure,
+  setDeleteAsset,
   editAssetFailure,
   editAssetSuccess,
   getAssetsFailure,
@@ -20,6 +22,7 @@ import {
   getAssetStatusesRequest,
   getAssetsRequest,
   getAssetByIdRequest,
+  deleteAssetRequest,
 } from './requests';
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 import { AxiosResponse } from 'axios';
@@ -118,4 +121,16 @@ export function* handleGetAssetById(action: PayloadAction<number>) {
   } catch (error: any) {
     yield put(getAssetsFailure(error.data.detail));
   }
+}
+
+export function* handleDeleteAsset(action: PayloadAction<number>) {
+    try {
+        const id  = action.payload;
+        yield call(deleteAssetRequest, id);
+        yield put(setDeleteAsset(id));
+       
+    } catch (error: any) {
+        const errorMsg = error.response.data.detail;
+        yield put(deleteAssetFailure(errorMsg));
+    }
 }

@@ -51,3 +51,8 @@ export function editAssetRequest(
     command
   );
 }
+
+export function deleteAssetRequest(id: number): Promise<AxiosResponse<IAssetDetail>>
+{
+    return RequestService.axios.delete(`${ENDPOINTS.ASSETS}/${id}`);
+}
