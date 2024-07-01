@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
+using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Models;
 
 using Web.IntegrationTests.Data;
@@ -149,6 +150,40 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         // Act
         var response = await _httpClient.GetAsync("/api/Assets/999");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteAsset_ShouldReturnNoContent_WhenAssetExists()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        
+        var asset = await _httpClient.GetFromJsonAsync<AssetDto>("/api/Assets/1");
+        Assert.NotNull(asset);
+
+        // Act
+        var response = await _httpClient.DeleteAsync("/api/Assets/1");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+        
+        var getResponse = await _httpClient.GetAsync("/api/Assets/1");
+        Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteAsset_ShouldReturnNotFound_WhenAssetDoesNotExist()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        // Act
+        var response = await _httpClient.DeleteAsync("/api/Assets/100");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
