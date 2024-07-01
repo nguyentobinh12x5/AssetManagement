@@ -47,43 +47,47 @@ const initialState: AssetState = {
   error: null,
 };
 const AssetSlice = createSlice({
-  initialState,
-  name: 'asset',
-  reducers: {
-    getAssets: (state: AssetState, action: PayloadAction<IAssetQuery>) => ({
-      ...state,
-      isLoading: true,
-      isDataFetched: false,
-    }),
-    createAsset: (
-      state: AssetState,
-      action: PayloadAction<ICreateAssetCommand>
-    ) => ({
-      ...state,
-      isLoading: true,
-      succeed: false,
-    }),
+    initialState,
+    name: 'asset',
+    reducers: {
+        getAssets: (state: AssetState, action: PayloadAction<IAssetQuery>) => ({
+            ...state,
+            isLoading: true,
+            isDataFetched: false,
+        }),
+        createAsset: (
+            state: AssetState,
+            action: PayloadAction<ICreateAssetCommand>
+        ) => ({
+            ...state,
+            isLoading: true,
+            succeed: false,
+        }),
 
-    editAsset: (
-      state: AssetState,
-      action: PayloadAction<IEditAssetCommand>
-    ) => ({
-      ...state,
-      isLoading: true,
-    }),
+        editAsset: (
+            state: AssetState,
+            action: PayloadAction<IEditAssetCommand>
+        ) => ({
+            ...state,
+            isLoading: true,
+        }),
 
-    setAssets: (
-      state: AssetState,
-      action: PayloadAction<IPagedModel<IBriefAsset>>
-    ) => {
-      let assets = action.payload;
-      return {
+        setAssets: (
+            state: AssetState,
+            action: PayloadAction<IPagedModel<IBriefAsset>>
+        ) => {
+            let assets = action.payload;
+            return {
+                ...state,
+                assets: assets,
+                isDataFetched: true,
+            };
+        },
+    deleteAssets: (state: AssetState, action: PayloadAction<number>) => ({
         ...state,
-        assets: assets,
-        isDataFetched: true,
-      };
-    },
-
+        isLoading: true,
+        error: null,
+    }),
     // Success handles
     getAssetsSuccess: (state: AssetState, action: PayloadAction<any>) => ({
       ...state,
@@ -144,7 +148,11 @@ const AssetSlice = createSlice({
         },
       };
     },
-
+    setDeleteAsset: (state:AssetState, action: PayloadAction<number>) => {
+        state.assets.items = state.assets.items.filter((asset) => asset.id !== action.payload.toString());
+        state.isLoading = false;
+        state.isDataFetched = false;
+    },
     // Failure handles
     getAssetsFailure: (state: AssetState, action: PayloadAction<string>) => ({
       ...state,
@@ -183,7 +191,12 @@ const AssetSlice = createSlice({
     setAssetQuery: (state: AssetState, action: PayloadAction<IAssetQuery>) => {
       state.assetQuery = action.payload;
       state.isDataFetched = false;
-    },
+        },
+    deleteAssetFailure: (state: AssetState, action: PayloadAction<string>) => ({
+        ...state,
+        isLoading: false,
+        error: action.payload,
+    }),
   },
 });
 
@@ -202,7 +215,10 @@ export const {
   createAssetFailure,
   createAssetSuccess,
   editAssetSuccess,
-  editAssetFailure,
+    editAssetFailure,
+    deleteAssets,
+    setDeleteAsset,
+    deleteAssetFailure
 } = AssetSlice.actions;
 
 export default AssetSlice.reducer;
