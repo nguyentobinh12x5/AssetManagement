@@ -3,6 +3,8 @@ import { call, put } from 'redux-saga/effects';
 import {
   createAssetFailure,
   createAssetSuccess,
+  editAssetFailure,
+  editAssetSuccess,
   getAssetsFailure,
   getAssetsSuccess,
   setAssetCategories,
@@ -10,8 +12,10 @@ import {
   setAssets,
 } from '../reducers/asset-slice';
 import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
+import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
 import {
   createAssetRequest,
+  editAssetRequest,
   getAssetCategoriesRequest,
   getAssetStatusesRequest,
   getAssetsRequest,
@@ -62,6 +66,24 @@ export function* handleCreateAsset(action: PayloadAction<ICreateAssetCommand>) {
   } catch (error: any) {
     const errorMsg = error.data.detail;
     yield put(createAssetFailure(errorMsg));
+  }
+}
+
+export function* handleEditAsset(action: PayloadAction<IEditAssetCommand>) {
+  try {
+    const { data: updateAssetId }: AxiosResponse<IAssetDetail> = yield call(
+      editAssetRequest,
+      action.payload
+    );
+    const { data: updateAsset }: AxiosResponse<IAssetDetail> = yield call(
+      getAssetByIdRequest,
+      action.payload.id
+    );
+    yield put(editAssetSuccess(updateAsset));
+    yield navigateTo(ASSETS_LINK);
+  } catch (error: any) {
+    const errorMsg = error.data.detail;
+    yield put(editAssetFailure(errorMsg));
   }
 }
 

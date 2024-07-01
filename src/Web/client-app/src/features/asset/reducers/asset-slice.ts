@@ -6,6 +6,9 @@ import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { DEFAULT_MANAGE_ASSET_SORT_COLUMN } from '../constants/asset-sort';
 import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
 import { IAssetDetail } from '../interfaces/IAssetDetail';
+import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
+import { it } from 'node:test';
+import { IEditAssetForm } from '../edit/edit-asset-scheme';
 
 const defaultAssetQuery: IAssetQuery = {
   pageNumber: 1,
@@ -61,6 +64,14 @@ const AssetSlice = createSlice({
       succeed: false,
     }),
 
+    editAsset: (
+      state: AssetState,
+      action: PayloadAction<IEditAssetCommand>
+    ) => ({
+      ...state,
+      isLoading: true,
+    }),
+
     setAssets: (
       state: AssetState,
       action: PayloadAction<IPagedModel<IBriefAsset>>
@@ -107,6 +118,33 @@ const AssetSlice = createSlice({
       };
     },
 
+    editAssetSuccess: (
+      state: AssetState,
+      action: PayloadAction<IAssetDetail>
+    ) => {
+      const { id, categoryName, assetStatusName, code, name } = action.payload;
+      const updatedAsset: IBriefAsset = {
+        id: id,
+        category: categoryName,
+        assetStatus: assetStatusName,
+        code: code,
+        name: name,
+      };
+
+      const items =
+        state.assets?.items.filter((asset) => asset.id !== updatedAsset.id) ??
+        [];
+
+      return {
+        ...state,
+        isLoading: false,
+        assets: {
+          ...state.assets,
+          items: [updatedAsset, ...items],
+        },
+      };
+    },
+
     // Failure handles
     getAssetsFailure: (state: AssetState, action: PayloadAction<string>) => ({
       ...state,
@@ -118,6 +156,11 @@ const AssetSlice = createSlice({
       ...state,
       isLoading: false,
       succeed: false,
+      error: action.payload,
+    }),
+    editAssetFailure: (state: AssetState, action: PayloadAction<string>) => ({
+      ...state,
+      isLoading: false,
       error: action.payload,
     }),
     getAssetStatuses: (state: AssetState) => {
@@ -146,6 +189,7 @@ const AssetSlice = createSlice({
 
 export const {
   createAsset,
+  editAsset,
   getAssets,
   setAssets,
   getAssetsSuccess,
@@ -157,6 +201,8 @@ export const {
   setAssetQuery,
   createAssetFailure,
   createAssetSuccess,
+  editAssetSuccess,
+  editAssetFailure,
 } = AssetSlice.actions;
 
 export default AssetSlice.reducer;

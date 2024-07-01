@@ -36,8 +36,9 @@ const AssetTable: React.FC<AssetTableProps> = ({
     { name: "State", value: "AssetStatus" },
   ];
   const navigate = useNavigate();
+
   const handleEditClick = (assetId: string) => {
-    // Handle navigate(`edit/${assetId}`);
+    navigate(`edit/${assetId}`);
   };
 
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null);

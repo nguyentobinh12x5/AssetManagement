@@ -1,4 +1,5 @@
 using AssetManagement.Application.Assets.Commands.Create;
+using AssetManagement.Application.Assets.Commands.Update;
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Common.Models;
@@ -15,7 +16,8 @@ public class Assets : EndpointGroupBase
             .MapGet(GetAsset, "{id}")
             .MapGet(GetAssetCategories, "Categories")
             .MapGet(GetAssetStatus, "Status")
-            .MapPost(AddAsset);
+            .MapPost(AddAsset)
+            .MapPut(UpdateAsset, "{id}");
     }
 
     public Task<PaginatedList<AssetBriefDto>> GetAssetList(ISender sender, [AsParameters] GetAssetsWithPaginationQuery query)
@@ -43,6 +45,18 @@ public class Assets : EndpointGroupBase
     public Task<int> AddAsset(ISender sender, CreateNewAssetCommand command)
     {
         return sender.Send(command);
+    }
+    public async Task<IResult> UpdateAsset(ISender sender, int id, UpdateAssetCommand command)
+    {
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
+
+        //command.Id = id;
+
+        await sender.Send(command);
+        return Results.NoContent();
     }
 
 }
