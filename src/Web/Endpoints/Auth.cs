@@ -1,10 +1,10 @@
 
 using System.Security.Claims;
 
+using AssetManagement.Application.Auth.Commands.ChangePassword;
 using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
 using AssetManagement.Application.Auth.Commands.Logout;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
-using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
 using AssetManagement.Infrastructure.Identity;
 
 using Microsoft.AspNetCore.Authentication.BearerToken;
@@ -76,13 +76,6 @@ public class Auth : EndpointGroupBase
 
     public async Task<IResult> ChangePassword(ISender sender, [FromBody] UpdatePasswordCommand command, ClaimsPrincipal claimsPrincipal)
     {
-        var userId = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (userId == null)
-        {
-            throw new UnauthorizedAccessException();
-        }
-
         await sender.Send(command);
         return Results.NoContent();
     }

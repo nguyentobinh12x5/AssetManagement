@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
+﻿using AssetManagement.Application.Auth.Commands.ChangePassword;
 
 using FluentValidation.TestHelper;
 
@@ -8,12 +8,12 @@ namespace AssetManagement.Application.UnitTests.ChangePassword.Commands.UpdatePa
 {
     public class UpdatePasswordCommandValidatorTests
     {
-        private UpdatePasswordCommandValidator _validator = null!;
+        private ChangePasswordCommandValidator _validator = null!;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new UpdatePasswordCommandValidator();
+            _validator = new ChangePasswordCommandValidator();
         }
 
         [Test]

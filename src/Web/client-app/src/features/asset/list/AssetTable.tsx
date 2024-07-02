@@ -52,11 +52,11 @@ const AssetTable: React.FC<AssetTableProps> = ({
     const numId = parseInt(id);
     setIdDelete(numId);
     setShowPopup(true);
-  }
-  const handleCloseConfirmDelete=() => {
+  };
+  const handleCloseConfirmDelete = () => {
     setShowPopup(false);
     setIdDelete(null);
-  }
+  };
 
   const handleShowPopup = (assetId: string) => {
     setSelectedAsset(assetId);
@@ -118,7 +118,10 @@ const AssetTable: React.FC<AssetTableProps> = ({
                 >
                   <PencilFill />
                 </ButtonIcon>
-                <ButtonIcon onClick={() => handleConfirmDelete(data.id)} disable={data.assetStatus ==="Assigned" }>
+                <ButtonIcon
+                  onClick={() => handleConfirmDelete(data.id)}
+                  disable={data.assetStatus === "Assigned"}
+                >
                   <XCircle color="red" />
                 </ButtonIcon>
               </div>

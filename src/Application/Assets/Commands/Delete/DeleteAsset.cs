@@ -10,7 +10,7 @@ using AssetManagement.Application.Common.Security;
 namespace AssetManagement.Application.Assets.Commands.Delete;
 
 [Authorize]
-public record DeleteAssetCommand(int id): IRequest;
+public record DeleteAssetCommand(int id) : IRequest;
 
 [Authorize]
 public class DeleteAssetCommandHandler : IRequestHandler<DeleteAssetCommand>
@@ -29,8 +29,7 @@ public class DeleteAssetCommandHandler : IRequestHandler<DeleteAssetCommand>
         Guard.Against.NotFound(request.id, asset);
 
         _context.Assets.Remove(asset);
-        
+
         await _context.SaveChangesAsync(cancellationToken);
     }
 }
-

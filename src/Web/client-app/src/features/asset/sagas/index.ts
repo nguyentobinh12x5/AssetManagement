@@ -24,6 +24,6 @@ export default function* authorizeSagas() {
   yield takeLatest(getAssetStatuses.type, handleGetAssetsStatuses);
   yield takeLatest(getAssetCategories.type, handleGetAssetsCategories);
   yield takeLatest(getAssetById.type, handleGetAssetById);
-    yield takeLatest(editAsset.type, handleEditAsset);
-    yield takeLatest(deleteAssets.type, handleDeleteAsset);
+  yield takeLatest(editAsset.type, handleEditAsset);
+  yield takeLatest(deleteAssets.type, handleDeleteAsset);
 }

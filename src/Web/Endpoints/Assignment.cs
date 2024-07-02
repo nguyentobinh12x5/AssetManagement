@@ -1,5 +1,5 @@
 ﻿namespace AssetManagement.Web.Endpoints;
- 
+
 public class Assignment : EndpointGroupBase
 {
     public override void Map(WebApplication app)
@@ -7,5 +7,5 @@ public class Assignment : EndpointGroupBase
         app.MapGroup(this)
             .AllowAnonymous();
     }
-    
+
 }

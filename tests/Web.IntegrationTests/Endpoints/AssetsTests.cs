@@ -3,7 +3,6 @@ using System.Net.Http.Json;
 
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
-using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Models;
 
 using Web.IntegrationTests.Data;
@@ -161,7 +160,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         // Arrange
         await AssetsDataHelper.CreateSampleData(_factory);
 
-        
+
         var asset = await _httpClient.GetFromJsonAsync<AssetDto>("/api/Assets/1");
         Assert.NotNull(asset);
 
@@ -171,7 +170,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         // Assert
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
-        
+
         var getResponse = await _httpClient.GetAsync("/api/Assets/1");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
