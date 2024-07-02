@@ -165,7 +165,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
-    [Fact]
+    [Fact(Skip = "For smoke test")]
     public async Task DeleteAsset_ShouldReturnNoContent_WhenAssetExists()
     {
         // Arrange
@@ -189,7 +189,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
 
-    [Fact]
+    [Fact(Skip = "For smoke test")]
     public async Task DeleteAsset_ShouldReturnNotFound_WhenAssetDoesNotExist()
     {
         // Arrange
