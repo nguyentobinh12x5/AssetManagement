@@ -52,7 +52,8 @@ export function editAssetRequest(
   );
 }
 
-export function deleteAssetRequest(id: number): Promise<AxiosResponse<IAssetDetail>>
-{
-    return RequestService.axios.delete(`${ENDPOINTS.ASSETS}/${id}`);
+export function deleteAssetRequest(
+  id: number
+): Promise<AxiosResponse<IAssetDetail>> {
+  return RequestService.axios.delete(`${ENDPOINTS.ASSETS}/${id}`);
 }

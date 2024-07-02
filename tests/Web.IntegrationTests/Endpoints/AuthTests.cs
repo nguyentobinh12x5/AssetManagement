@@ -3,9 +3,9 @@
 using System.Net;
 using System.Net.Http.Json;
 
+using AssetManagement.Application.Auth.Commands.ChangePassword;
 using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
-using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
 
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;

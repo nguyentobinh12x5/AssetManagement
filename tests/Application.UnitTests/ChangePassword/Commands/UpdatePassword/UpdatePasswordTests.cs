@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.ChangePassword.Commands.UpdatePassword;
+﻿using AssetManagement.Application.Auth.Commands.ChangePassword;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;

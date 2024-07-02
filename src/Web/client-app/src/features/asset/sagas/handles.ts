@@ -124,13 +124,12 @@ export function* handleGetAssetById(action: PayloadAction<number>) {
 }
 
 export function* handleDeleteAsset(action: PayloadAction<number>) {
-    try {
-        const id  = action.payload;
-        yield call(deleteAssetRequest, id);
-        yield put(setDeleteAsset(id));
-       
-    } catch (error: any) {
-        const errorMsg = error.response.data.detail;
-        yield put(deleteAssetFailure(errorMsg));
-    }
+  try {
+    const id = action.payload;
+    yield call(deleteAssetRequest, id);
+    yield put(setDeleteAsset(id));
+  } catch (error: any) {
+    const errorMsg = error.response.data.detail;
+    yield put(deleteAssetFailure(errorMsg));
+  }
 }
