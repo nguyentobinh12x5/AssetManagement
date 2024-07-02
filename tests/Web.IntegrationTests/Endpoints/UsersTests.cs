@@ -1,8 +1,12 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
 
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Users.Commands.Create;
 using AssetManagement.Application.Users.Queries.GetUsers;
+using AssetManagement.Domain.Enums;
 using AssetManagement.Infrastructure.Data;
 using AssetManagement.Infrastructure.Identity;
 
@@ -94,6 +98,29 @@ namespace Web.IntegrationTests.Endpoints
 
             // Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+        [Fact]
+        public async Task Create_User_Endpoint_Returns_Success()
+        {
+            // Arrange
+            var command = new CreateUserCommand
+            {
+                FirstName = "John",
+                LastName = "Doe",
+                Location = "New York",
+                DateOfBirth = new DateTime(1990, 1, 1),
+                Gender = Gender.Male,
+                JoinDate = DateTime.UtcNow,
+                Type = "Staff"
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _httpClient.PostAsync("/api/users", content);
+
+            // Assert
+            Xunit.Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
