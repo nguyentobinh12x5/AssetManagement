@@ -54,7 +54,7 @@
             "x-position": 4
           },
           {
-            "name": "Category",
+            "name": "SearchTerm",
             "in": "query",
             "schema": {
               "type": "string",
@@ -63,20 +63,30 @@
             "x-position": 5
           },
           {
-            "name": "AssetStatus",
+            "name": "Category",
             "in": "query",
+            "style": "form",
+            "explode": true,
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
             },
             "x-position": 6
           },
           {
-            "name": "SearchTerm",
+            "name": "AssetStatus",
             "in": "query",
+            "style": "form",
+            "explode": true,
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "array",
+              "nullable": true,
+              "items": {
+                "type": "string"
+              }
             },
             "x-position": 7
           }
@@ -436,6 +446,7 @@
           {
             "name": "Types",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "string",
               "nullable": true

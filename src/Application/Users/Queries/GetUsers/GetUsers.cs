@@ -11,7 +11,7 @@ public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
     public required string SortColumnName { get; init; } = "StaffCode";
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
     public string? SearchTerm { get; init; }
-    public string? Types { get; init; } = "All";
+    public string Types { get; init; } = String.Empty;
 }
 
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserBriefDto>>

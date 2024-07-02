@@ -7,20 +7,15 @@ import { AxiosResponse } from 'axios';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IBriefAsset } from '../interfaces/IBriefAsset';
 import { IAssetDetail } from '../interfaces/IAssetDetail';
+import { paramsSerializer } from '../../../utils/appUtils';
 
 export function getAssetsRequest(
   assetQuery: IAssetQuery
 ): Promise<AxiosResponse<IPagedModel<IBriefAsset>>> {
-  return RequestService.axios.get(
-    `${ENDPOINTS.ASSETS}?` +
-      `Category=${assetQuery.category}` +
-      `&AssetStatus=${assetQuery.assetStatus}` +
-      `&PageNumber=${assetQuery.pageNumber}` +
-      `&PageSize=${assetQuery.pageSize}` +
-      `&SortColumnName=${assetQuery.sortColumnName}` +
-      `&SortColumnDirection=${assetQuery.sortColumnDirection}` +
-      `&SearchTerm=${assetQuery.searchTerm}`
-  );
+  return RequestService.axios.get(`${ENDPOINTS.ASSETS}?`, {
+    params: assetQuery,
+    paramsSerializer: paramsSerializer,
+  });
 }
 
 export function getAssetStatusesRequest(): Promise<AxiosResponse<string[]>> {

@@ -34,21 +34,33 @@ const FilterByStatus: React.FC<FilterByStatusProps> = () => {
   const displayAssetStatuses = Object.values(assetStatusesMap);
 
   const handleStatusChange = (displayStatuses: string[]) => {
-    if (displayStatuses.length === 0) {
-      handleFilterByStatus(["All"]);
-    } else {
-      // Convert display statuses to actual statuses
-      const actualStatuses: AssetStatus[] = displayStatuses
-        .map(
-          (displayStatus) =>
-            (Object.keys(assetStatusesMap) as AssetStatus[]).find(
-              (key) => assetStatusesMap[key] === displayStatus
-            )!
-        )
-        .filter((status) => status !== "All");
+    if (displayStatuses.includes("All")) {
+      // If "All" is selected and it's the only selection, set actualStatuses to ["All"]
+      if (displayStatuses.length === 1) {
+        handleFilterByStatus(["All"]);
+      } else {
+        // Check the position of "All" in the array
+        const allIndex = displayStatuses.indexOf("All");
 
-      handleFilterByStatus(actualStatuses);
+        if (allIndex === 0) {
+          // If "All" is at the beginning, remove "All"
+          displayStatuses = displayStatuses.slice(1);
+        } else if (allIndex === displayStatuses.length - 1) {
+          // If "All" is at the end, keep only "All"
+          displayStatuses = ["All"];
+          handleFilterByStatus(displayStatuses);
+        }
+      }
     }
+
+    const actualStatuses: AssetStatus[] = displayStatuses.map(
+      (displayStatus) =>
+        (Object.keys(assetStatusesMap) as AssetStatus[]).find(
+          (key) => assetStatusesMap[key] === displayStatus
+        )!
+    );
+
+    handleFilterByStatus(actualStatuses);
   };
 
   return (

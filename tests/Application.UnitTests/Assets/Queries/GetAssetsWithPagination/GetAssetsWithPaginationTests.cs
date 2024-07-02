@@ -123,7 +123,7 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
                 PageSize = 10,
                 SortColumnName = "Name",
                 SortColumnDirection = "asc",
-                Category = "Laptop"
+                Category = ["Laptop"]
             };
 
             var result = await _handler.Handle(request, CancellationToken.None);
@@ -173,7 +173,7 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
                 PageSize = 10,
                 SortColumnName = "Name",
                 SortColumnDirection = "asc",
-                AssetStatus = "Available"
+                AssetStatus = ["Available"]
             };
 
             var result = await _handler.Handle(request, CancellationToken.None);

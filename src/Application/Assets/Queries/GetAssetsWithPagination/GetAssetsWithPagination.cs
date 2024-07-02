@@ -12,12 +12,11 @@ public class GetAssetsWithPaginationQuery : IRequest<PaginatedList<AssetBriefDto
     public int PageSize { get; init; } = AppPagingConstants.DefaultPageSize;
     public required string SortColumnName { get; init; }
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
-
-    public string? Category { get; init; }
-
-    public string? AssetStatus { get; init; }
-
     public string? SearchTerm { get; init; }
+
+    public string[]? Category { get; set; } = [];
+
+    public string[]? AssetStatus { get; set; } = [];
 }
 
 public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWithPaginationQuery, PaginatedList<AssetBriefDto>>
@@ -53,9 +52,9 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
             query = query.Where(a => a.Location == adminLocation);
         }
 
-        if (!string.IsNullOrEmpty(request.Category))
+        if (request.Category != null && request.Category.Any())
         {
-            var categoryNames = request.Category.Split(',')
+            var categoryNames = request.Category
                 .Select(c => c.Trim())
                 .Where(c => !string.IsNullOrEmpty(c))
                 .ToList();
@@ -66,9 +65,9 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
             }
         }
 
-        if (!string.IsNullOrEmpty(request.AssetStatus))
+        if (request.AssetStatus != null && request.AssetStatus.Any())
         {
-            var assetStatusNames = request.AssetStatus.Split(',')
+            var assetStatusNames = request.AssetStatus
                 .Select(c => c.Trim())
                 .Where(c => !string.IsNullOrEmpty(c))
                 .ToList();

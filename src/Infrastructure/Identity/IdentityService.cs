@@ -16,6 +16,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AssetManagement.Infrastructure.Identity;
 
@@ -181,7 +182,7 @@ public class IdentityService : IIdentityService
     {
         var users = await InitialGetUserBriefAsync(query.SearchTerm ?? "", _currentUser.Location ?? "", query.SortColumnName, query.SortColumnDirection);
 
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types ?? "All");
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types.IsNullOrEmpty() ? "All" : query.Types);
 
         if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
             userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);
