@@ -177,7 +177,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
         
-        var getResponse = await _httpClient.GetAsync("/api/Assets/1");
+        var getResponse = await _httpClient.GetAsync("/api/Assets/3");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
 
