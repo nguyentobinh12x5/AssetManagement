@@ -11,6 +11,9 @@ import { PencilFill, XCircle } from "react-bootstrap-icons";
 import Loading from "../../../components/Loading";
 import { IBriefAsset } from "../interfaces/IBriefAsset";
 import DetailForm from "../detail/DetailForm";
+import DeleteAsset from "../delete/deleteAssetModal";
+import ConfirmDisable from "../../manager-user/components/ConfirmDisable";
+import ConfirmDelete from "../delete/deleteAssetModal";
 
 type AssetTableProps = {
   assets: IPagedModel<IBriefAsset>;
@@ -36,12 +39,24 @@ const AssetTable: React.FC<AssetTableProps> = ({
     { name: "State", value: "AssetStatus" },
   ];
   const navigate = useNavigate();
+
   const handleEditClick = (assetId: string) => {
-    // Handle navigate(`edit/${assetId}`);
+    navigate(`edit/${assetId}`);
   };
 
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [idDelete, setIdDelete] = useState<number | null>(null);
+
+  const handleConfirmDelete = (id: string) => {
+    const numId = parseInt(id);
+    setIdDelete(numId);
+    setShowPopup(true);
+  };
+  const handleCloseConfirmDelete = () => {
+    setShowPopup(false);
+    setIdDelete(null);
+  };
 
   const handleShowPopup = (assetId: string) => {
     setSelectedAsset(assetId);
@@ -103,7 +118,10 @@ const AssetTable: React.FC<AssetTableProps> = ({
                 >
                   <PencilFill />
                 </ButtonIcon>
-                <ButtonIcon>
+                <ButtonIcon
+                  onClick={() => handleConfirmDelete(data.id)}
+                  disable={data.assetStatus === "Assigned"}
+                >
                   <XCircle color="red" />
                 </ButtonIcon>
               </div>
@@ -111,6 +129,9 @@ const AssetTable: React.FC<AssetTableProps> = ({
           </tr>
         ))}
       </Table>
+      {idDelete && showPopup && (
+        <ConfirmDelete Id={idDelete} hideModal={handleCloseConfirmDelete} />
+      )}
       {selectedAsset && showPopup && (
         <DetailForm id={selectedAsset} onClose={handleClosePopup} />
       )}

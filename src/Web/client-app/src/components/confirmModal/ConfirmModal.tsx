@@ -39,7 +39,7 @@ const ConfirmModal: React.FC<Props> = ({
           </div>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="custom-body">
         <Fragment>{children}</Fragment>
       </Modal.Body>
     </Modal>

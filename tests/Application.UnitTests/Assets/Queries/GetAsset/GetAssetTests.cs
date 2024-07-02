@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Ardalis.GuardClauses;
 
 using AssetManagement.Application.Assets.Queries.GetAsset;
-using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Entities;

@@ -1,12 +1,14 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\dinhv\AppData\Local\Temp\JetBrains\ReSharperPlatformVs17\vAny_f9c50c9d\CoverageData\_AssetManagement.-54601344\Snapshot\snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\admin\AppData\Local\Temp\JetBrains\ReSharperPlatformVs17\vAny_d84e3469\CoverageData\_AssetManagement.-2060031504\Snapshot\snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c6f23dac_002Da78c_002D4f0a_002Dbe98_002D3fdbfbf79bde/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;tests&amp;gt;\&amp;lt;Web.IntegrationTests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Solution /&gt;&#xD;
+	
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=49cee996_002Dcaae_002D4cf1_002Da586_002D19b05abaf6e4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;tests&amp;gt;\&amp;lt;Application.UnitTests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;ProjectFile&gt;B409CA03-16D9-4CB6-82C4-F6108A1ECFA8/d:Endpoints/f:AssetsTests.cs&lt;/ProjectFile&gt;&#xD;
     &lt;ProjectFile&gt;B409CA03-16D9-4CB6-82C4-F6108A1ECFA8/d:Endpoints/f:UsersTests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;DEFF4009-1FAB-4392-80B6-707E2DC5C00B/d:Assets/d:Queries/d:GetAsset/f:GetAssetTests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;DEFF4009-1FAB-4392-80B6-707E2DC5C00B/d:Assets/d:Commands/d:Update/f:UpdateAssetTests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;DEFF4009-1FAB-4392-80B6-707E2DC5C00B/d:Assets/d:Commands/d:Update/f:UpdateAssetCommandValidatorTests.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFolder&gt;DEFF4009-1FAB-4392-80B6-707E2DC5C00B/d:Assets&lt;/ProjectFolder&gt;&#xD;
+    &lt;Project Location="E:\Study\Rookie\FinalAssignment\tests\Web.IntegrationTests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;Web.IntegrationTests&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
-&lt;/SessionState&gt;</s:String></s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

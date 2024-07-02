@@ -1,6 +1,7 @@
 import RequestService from '../../../services/request';
 import ENDPOINTS from '../../../constants/endpoints';
 import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
+import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 import { AxiosResponse } from 'axios';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
@@ -40,4 +41,19 @@ export function getAssetByIdRequest(
   id: number
 ): Promise<AxiosResponse<IAssetDetail>> {
   return RequestService.axios.get<IAssetDetail>(`${ENDPOINTS.ASSETS}/${id}`);
+}
+
+export function editAssetRequest(
+  command: IEditAssetCommand
+): Promise<AxiosResponse<IAssetDetail>> {
+  return RequestService.axios.put<IAssetDetail>(
+    `${ENDPOINTS.ASSETS}/${command.id}`,
+    command
+  );
+}
+
+export function deleteAssetRequest(
+  id: number
+): Promise<AxiosResponse<IAssetDetail>> {
+  return RequestService.axios.delete(`${ENDPOINTS.ASSETS}/${id}`);
 }

@@ -3,6 +3,10 @@ import { call, put } from 'redux-saga/effects';
 import {
   createAssetFailure,
   createAssetSuccess,
+  deleteAssetFailure,
+  setDeleteAsset,
+  editAssetFailure,
+  editAssetSuccess,
   getAssetsFailure,
   getAssetsSuccess,
   setAssetCategories,
@@ -10,12 +14,15 @@ import {
   setAssets,
 } from '../reducers/asset-slice';
 import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
+import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
 import {
   createAssetRequest,
+  editAssetRequest,
   getAssetCategoriesRequest,
   getAssetStatusesRequest,
   getAssetsRequest,
   getAssetByIdRequest,
+  deleteAssetRequest,
 } from './requests';
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 import { AxiosResponse } from 'axios';
@@ -65,6 +72,24 @@ export function* handleCreateAsset(action: PayloadAction<ICreateAssetCommand>) {
   }
 }
 
+export function* handleEditAsset(action: PayloadAction<IEditAssetCommand>) {
+  try {
+    const { data: updateAssetId }: AxiosResponse<IAssetDetail> = yield call(
+      editAssetRequest,
+      action.payload
+    );
+    const { data: updateAsset }: AxiosResponse<IAssetDetail> = yield call(
+      getAssetByIdRequest,
+      action.payload.id
+    );
+    yield put(editAssetSuccess(updateAsset));
+    yield navigateTo(ASSETS_LINK);
+  } catch (error: any) {
+    const errorMsg = error.data.detail;
+    yield put(editAssetFailure(errorMsg));
+  }
+}
+
 export function* handleGetAssetsStatuses() {
   try {
     const { data } = yield call(getAssetStatusesRequest);
@@ -95,5 +120,16 @@ export function* handleGetAssetById(action: PayloadAction<number>) {
     yield put(getAssetByIdSuccess(data));
   } catch (error: any) {
     yield put(getAssetsFailure(error.data.detail));
+  }
+}
+
+export function* handleDeleteAsset(action: PayloadAction<number>) {
+  try {
+    const id = action.payload;
+    yield call(deleteAssetRequest, id);
+    yield put(setDeleteAsset(id));
+  } catch (error: any) {
+    const errorMsg = error.response.data.detail;
+    yield put(deleteAssetFailure(errorMsg));
   }
 }
