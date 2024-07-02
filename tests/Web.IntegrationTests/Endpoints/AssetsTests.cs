@@ -1,10 +1,12 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
-using AssetManagement.Application.Assets.Queries.GetDetailedAssets;
 using AssetManagement.Application.Common.Models;
+
+using Microsoft.AspNetCore.Identity.Data;
 
 using Web.IntegrationTests.Data;
 using Web.IntegrationTests.Extensions;
@@ -161,18 +163,21 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         // Arrange
         await AssetsDataHelper.CreateSampleData(_factory);
 
-        
-        var asset = await _httpClient.GetFromJsonAsync<AssetDto>("/api/Assets/1");
+
+        var token = await GetAuthTokenAsync();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var asset = await _httpClient.GetFromJsonAsync<AssetDto>("/api/Assets/3");
         Assert.NotNull(asset);
 
         // Act
-        var response = await _httpClient.DeleteAsync("/api/Assets/1");
+        var response = await _httpClient.DeleteAsync("/api/Assets/3");
 
         // Assert
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
         
-        var getResponse = await _httpClient.GetAsync("/api/Assets/1");
+        var getResponse = await _httpClient.GetAsync("/api/Assets/3");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
     }
 
@@ -181,11 +186,24 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
     {
         // Arrange
         await AssetsDataHelper.CreateSampleData(_factory);
-
+        var token = await GetAuthTokenAsync();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         // Act
         var response = await _httpClient.DeleteAsync("/api/Assets/100");
 
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+    private async Task<string> GetAuthTokenAsync()
+    {
+        var loginRequest = new LoginRequest
+        {
+            Email = "administrator@localhost",
+            Password = "Administrator1!"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+        return await response.Content.ReadAsStringAsync();
     }
 }
