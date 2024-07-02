@@ -55,8 +55,6 @@ public class Assets : EndpointGroupBase
             return Results.BadRequest();
         }
 
-        //command.Id = id;
-
         await sender.Send(command);
         return Results.NoContent();
     }

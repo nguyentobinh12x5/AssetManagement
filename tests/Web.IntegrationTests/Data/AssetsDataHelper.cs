@@ -19,8 +19,10 @@ namespace Web.IntegrationTests.Data
         private static readonly List<AssetStatus> AssetStatuses = new()
         {
             new AssetStatus() {  Name = "Available" },
+            new AssetStatus() { Name = "Not Available"},
             new AssetStatus() { Name = "Assigned" },
-            new AssetStatus() {  Name = "Under Maintenance" }
+            new AssetStatus() {  Name = "Under Maintenance" },
+            new AssetStatus() { Name = "Waiting for Recycling"}
         };
 
         private static readonly List<Asset> AssetsLists = new()
@@ -30,7 +32,7 @@ namespace Web.IntegrationTests.Data
                 Code = "ASSET-00001",
                 Name = "Laptop HP",
                 Category = Categories[0],
-                Location = "Office",
+                Location = "HCM",
                 Specification = "HP EliteBook 840 G7",
                 InstalledDate = DateTime.UtcNow,
                 AssetStatus = AssetStatuses[0]
@@ -40,7 +42,7 @@ namespace Web.IntegrationTests.Data
                 Code = "ASSET-00002",
                 Name = "Desktop Dell",
                 Category = Categories[1],
-                Location = "Office",
+                Location = "HCM",
                 Specification = "Dell OptiPlex 7070",
                 InstalledDate = DateTime.UtcNow,
                 AssetStatus = AssetStatuses[1]
@@ -50,7 +52,7 @@ namespace Web.IntegrationTests.Data
                 Code = "ASSET-00003",
                 Name = "Monitor Samsung",
                 Category = Categories[2],
-                Location = "Office",
+                Location = "HCM",
                 Specification = "Samsung 27\" Curved",
                 InstalledDate = DateTime.UtcNow,
                 AssetStatus = AssetStatuses[2]

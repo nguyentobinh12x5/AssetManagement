@@ -17,11 +17,7 @@ const EditAssetForm: React.FC = () => {
   const { assetDetail, handleSubmit, navigate, categories, statuses } =
     useEditAsset(assetId!);
 
-  if (!assetDetail) {
-    return <div>Loading...</div>;
-  }
-
-  return (
+  return assetDetail ? (
     <Formik
       initialValues={{
         id: assetDetail.id,
@@ -111,6 +107,8 @@ const EditAssetForm: React.FC = () => {
         </Form>
       )}
     </Formik>
+  ) : (
+    <></>
   );
 };
 

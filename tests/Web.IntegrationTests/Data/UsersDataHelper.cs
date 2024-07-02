@@ -8,11 +8,12 @@ namespace Web.IntegrationTests.Helpers
 {
     public static class UsersDataHelper
     {
+        public static readonly string TestUserId = Guid.NewGuid().ToString();
         private static readonly List<ApplicationUser> UsersList = new()
         {
             new ApplicationUser
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = TestUserId,
                 UserName = "user1@test.com",
                 Email = "user1@test.com",
                 FirstName = "John",
