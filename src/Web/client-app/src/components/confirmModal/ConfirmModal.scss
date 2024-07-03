@@ -24,6 +24,11 @@
   border-bottom-left-radius: var(--bs-modal-inner-border-radius);
   border-bottom-right-radius: var(--bs-modal-inner-border-radius);
 }
+.custom-body.modal-body {
+  border: 1px solid black;
+  border-bottom-left-radius: var(--bs-modal-inner-border-radius);
+  border-bottom-right-radius: var(--bs-modal-inner-border-radius);
+}
 .modal-body-content {
   align-items: flex-start;
   padding-left: 10px;

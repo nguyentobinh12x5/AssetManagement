@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Security;
 
 namespace AssetManagement.Application.Auth.Commands.ChangePassword;

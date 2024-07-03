@@ -1,4 +1,4 @@
-﻿using Ardalis.GuardClauses;
+using Ardalis.GuardClauses;
 
 using AssetManagement.Application.Assets.Commands.Delete;
 using AssetManagement.Application.Common.Interfaces;

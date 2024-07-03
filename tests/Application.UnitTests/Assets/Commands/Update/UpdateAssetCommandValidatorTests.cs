@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using AssetManagement.Application.Assets.Commands.Update;
 

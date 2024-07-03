@@ -1,4 +1,4 @@
-﻿namespace AssetManagement.Application.Assets.Commands.Update;
+namespace AssetManagement.Application.Assets.Commands.Update;
 
 public class UpdateAssetCommandValidator : AbstractValidator<UpdateAssetCommand>
 {

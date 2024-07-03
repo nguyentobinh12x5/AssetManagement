@@ -19,6 +19,7 @@ using Xunit;
 
 using YamlDotNet.Core.Tokens;
 
+
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 using Assert = Xunit.Assert;
@@ -35,6 +36,9 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
     {
         _factory = factory;
         _httpClient = _factory.GetApplicationHttpClient();
+        _factory.TestUserId = UsersDataHelper.TestUserId;
+        _factory.TestUserLocation = "HCM";
+        _factory.TestUserName = "Jay";
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme");
     }
 
