@@ -78,18 +78,10 @@ const AssetTable: React.FC<AssetTableProps> = ({
     return <Loading />;
   }
 
-  if (items?.length === 0 && searchTerm) {
-    return (
-      <div className="text-center">
-        <p>There's no data, please adjust your search condition</p>
-      </div>
-    );
-  }
-
   if (items?.length === 0) {
     return (
       <div className="text-center">
-        <p>No data available</p>
+        <p>There's no data, please adjust your search condition</p>
       </div>
     );
   }
