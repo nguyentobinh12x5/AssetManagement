@@ -1,9 +1,11 @@
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Common.Security;
 using AssetManagement.Domain.Constants;
 
 namespace AssetManagement.Application.Users.Queries.GetUsers;
 
+[Authorize]
 public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
 {
     public int PageNumber { get; init; } = AppPagingConstants.DefaultPageNumber;
@@ -11,7 +13,7 @@ public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
     public required string SortColumnName { get; init; } = "StaffCode";
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
     public string? SearchTerm { get; init; }
-    public string? Types { get; init; } = "All";
+    public string Types { get; init; } = String.Empty;
 }
 
 public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, PaginatedList<UserBriefDto>>

@@ -10,6 +10,8 @@ const ENDPOINTS = {
   DELETE_USER: '/api/users',
 
   ASSETS: '/api/Assets',
+  ASSIGNMENTS: '/api/Assignments',
+  MY_ASSIGNMENTS: '/api/Assignments/me',
 };
 
 export default ENDPOINTS;

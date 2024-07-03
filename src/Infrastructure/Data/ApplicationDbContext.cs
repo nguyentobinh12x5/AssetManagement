@@ -2,6 +2,7 @@ using System.Reflection;
 
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Entities;
+using AssetManagement.Domain.Enums;
 using AssetManagement.Infrastructure.Identity;
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -21,6 +22,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     public DbSet<AssetStatus> AssetStatuses => Set<AssetStatus>();
 
+    public DbSet<Assignment> Assignments => Set<Assignment>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -28,5 +31,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
         builder.Entity<ApplicationUser>()
             .HasQueryFilter(x => x.IsDelete == false);
+        builder.Entity<Assignment>()
+            .HasQueryFilter(x => x.State != AssignmentState.Declined);
     }
 }

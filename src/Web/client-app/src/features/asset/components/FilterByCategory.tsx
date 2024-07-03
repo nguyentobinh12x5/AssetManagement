@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import { getAssetCategories, setAssetQuery } from "../reducers/asset-slice";
+import { getAssetCategories } from "../reducers/asset-slice";
 import useAssetList from "../list/useAssetList";
 
 interface FilterByCategoryProps {}
@@ -34,21 +34,32 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = () => {
   const displayAssetCategories = Object.values(assetCategoriesMap);
 
   const handleCategoryChange = (displayCategories: string[]) => {
-    if (displayCategories.length === 0) {
-      handleFilterByCategory(["All"]);
-    } else {
-      // Convert display categories to actual categories
-      const actualCategories: AssetCategory[] = displayCategories
-        .map(
-          (displayCategory) =>
-            (Object.keys(assetCategoriesMap) as AssetCategory[]).find(
-              (key) => assetCategoriesMap[key] === displayCategory
-            )!
-        )
-        .filter((category) => category !== "All");
+    if (displayCategories.includes("All")) {
+      if (displayCategories.length === 1) {
+        handleFilterByCategory(["All"]);
+        return;
+      } else {
+        const allIndex = displayCategories.indexOf("All");
 
-      handleFilterByCategory(actualCategories);
+        if (allIndex === 0) {
+          displayCategories = displayCategories.slice(1);
+        } else if (allIndex === displayCategories.length - 1) {
+          displayCategories = ["All"];
+          handleFilterByCategory(displayCategories);
+          return;
+        }
+      }
     }
+
+    // Convert display categories to actual categories
+    const actualCategories: AssetCategory[] = displayCategories.map(
+      (displayCategory) =>
+        (Object.keys(assetCategoriesMap) as AssetCategory[]).find(
+          (key) => assetCategoriesMap[key] === displayCategory
+        )!
+    );
+
+    handleFilterByCategory(actualCategories);
   };
 
   return (

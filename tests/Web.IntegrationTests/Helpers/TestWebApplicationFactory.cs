@@ -12,13 +12,11 @@ namespace Web.IntegrationTests.Helpers;
 public class TestWebApplicationFactory<TProgram>
     : WebApplicationFactory<TProgram> where TProgram : class
 {
-    public string TestUserId { get; set; } = String.Empty;
+    public string TestUserId { get; set; } = UsersDataHelper.TestUserId;
 
-    public string TestUserName { get; set; } = String.Empty;
+    public string TestUserName { get; set; } = "test-user-username";
 
-    public string TestUserLocation { get; set; } = String.Empty;
-
-    public bool TestIsLogin { get; set; }
+    public string TestUserLocation { get; set; } = "test-user-location";
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
@@ -67,7 +65,6 @@ public class TestWebApplicationFactory<TProgram>
                 options.DefaultChallengeScheme = "TestScheme";
             }).AddScheme<TestAuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options =>
             {
-                options.IsLogin = TestIsLogin;
                 options.UserId = TestUserId;
                 options.UserName = TestUserName;
                 options.Location = TestUserLocation;

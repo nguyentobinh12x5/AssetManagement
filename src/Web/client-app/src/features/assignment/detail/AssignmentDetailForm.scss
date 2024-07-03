@@ -1,0 +1,29 @@
+.modal-detail-assignment.modal-dialog {
+  max-width: 600px;
+}
+
+.modal-detail-assignment .modal-content {
+  .custom-header {
+    padding: 1rem 2rem;
+  }
+
+  .modal-body {
+    padding: 1rem 2rem;
+    .form-detail div.mb-3.row div.col-md-9.multi-line-text {
+      text-align: justify;
+      max-height: 240px;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      word-wrap: break-word;
+    }
+  }
+
+  .custom-header {
+    #login-modal {
+      padding: 0;
+    }
+  }
+}

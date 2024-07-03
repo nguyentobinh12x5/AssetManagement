@@ -43,7 +43,7 @@ const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
     return () => {
       dispatch(resetState());
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="container m-auto p-5">
@@ -100,7 +100,7 @@ const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
           <div>
             <Row className="mb-3">
               <Col md={3}>Specification</Col>
-              <Col md={5} className="table-detail-word-wrap">
+              <Col md={5} className="table-detail-word-wrap multi-line-text">
                 {assetDetail?.specification}
               </Col>
             </Row>

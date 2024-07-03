@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -36,6 +37,8 @@ namespace Web.IntegrationTests.Endpoints
         {
             _factory = factory;
             _httpClient = _factory.GetApplicationHttpClient();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme");
+
         }
 
         [Fact]
@@ -48,7 +51,7 @@ namespace Web.IntegrationTests.Endpoints
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             // Act
-            var response = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
+            var response = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending&Types=");
 
             // Assert
             var users = await response.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
@@ -78,7 +81,7 @@ namespace Web.IntegrationTests.Endpoints
             var response = await _httpClient.DeleteAsync($"/api/Users/{user!.Id}");
 
             // Assert
-            var usersResponse = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending");
+            var usersResponse = await _httpClient.GetAsync("/api/Users?PageNumber=1&PageSize=5&SortColumnName=StaffCode&SortColumnDirection=Ascending&Types=");
             var users = await usersResponse.Content.ReadFromJsonAsync<PaginatedList<UserBriefDto>>();
 
             Assert.NotNull(users);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import DropdownFilter from "../../../components/dropdownFilter/DropDownFilter";
 import { useAppDispatch, useAppState } from "../../../redux/redux-hooks";
-import { getUserTypes, setUserQuery } from "../reducers/user-slice";
+import { getUserTypes } from "../reducers/user-slice";
 import useUserList from "../list/useUsersList";
 
 interface FilterByRoleProps {}
@@ -34,21 +34,32 @@ const FilterByRole: React.FC<FilterByRoleProps> = () => {
   const displayUserTypes = Object.values(userTypesMap);
 
   const handleTypeChange = (displayTypes: string[]) => {
-    if (displayTypes.length === 0) {
-      handleFilterByType(["All"]);
-    } else {
-      // Convert display types to actual types
-      const actualTypes: UserType[] = displayTypes
-        .map(
-          (displayType) =>
-            (Object.keys(userTypesMap) as UserType[]).find(
-              (key) => userTypesMap[key] === displayType
-            )!
-        )
-        .filter((type) => type !== "All");
+    if (displayTypes.includes("All")) {
+      if (displayTypes.length === 1) {
+        handleFilterByType(["All"]);
+        return;
+      } else {
+        const allIndex = displayTypes.indexOf("All");
 
-      handleFilterByType(actualTypes);
+        if (allIndex === 0) {
+          displayTypes = displayTypes.slice(1);
+        } else if (allIndex === displayTypes.length - 1) {
+          displayTypes = ["All"];
+          handleFilterByType(displayTypes);
+          return;
+        }
+      }
     }
+
+    // Convert display types to actual types
+    const actualTypes: UserType[] = displayTypes.map(
+      (displayType) =>
+        (Object.keys(userTypesMap) as UserType[]).find(
+          (key) => userTypesMap[key] === displayType
+        )!
+    );
+
+    handleFilterByType(actualTypes);
   };
 
   return (

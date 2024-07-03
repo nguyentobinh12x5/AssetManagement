@@ -1,0 +1,24 @@
+.form-btn-select__modal {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.radio-select-modal {
+  max-width: 640px;
+
+  tr {
+    td:first-of-type {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  th {
+    &::after {
+      display: none;
+    }
+  }
+}

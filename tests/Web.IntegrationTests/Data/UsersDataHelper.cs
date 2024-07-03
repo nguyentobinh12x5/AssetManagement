@@ -49,23 +49,25 @@ namespace Web.IntegrationTests.Helpers
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-                foreach (var user in UsersList)
+                var userNames = UsersList.Select(u => u.UserName);
+                if (dbContext != null && !dbContext.Users.Any(u => userNames.Contains(u.UserName)))
                 {
-                    if (!string.IsNullOrEmpty(user.Email))
+                    foreach (var user in UsersList)
                     {
-                        var existingUser = await userManager.FindByEmailAsync(user.Email);
-                        if (existingUser == null)
+                        if (!string.IsNullOrEmpty(user.Email))
                         {
-                            var result = await userManager.CreateAsync(user, "Password123!");
-                            if (!result.Succeeded)
+                            var existingUser = await userManager.FindByEmailAsync(user.Email);
+                            if (existingUser == null)
                             {
-                                throw new Exception($"Failed to create user {user.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                                var result = await userManager.CreateAsync(user, "Password123!");
+                                if (!result.Succeeded)
+                                {
+                                    throw new Exception($"Failed to create user {user.Email}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                                }
                             }
                         }
                     }
                 }
-
             }
         }
     }

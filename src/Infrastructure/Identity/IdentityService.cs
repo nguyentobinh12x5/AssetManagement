@@ -1,5 +1,6 @@
 using System.Security.Claims;
 
+using AssetManagement.Application.Auth.Commands.Login;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Extensions;
@@ -16,6 +17,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AssetManagement.Infrastructure.Identity;
 
@@ -52,6 +54,50 @@ public class IdentityService : IIdentityService
     public async Task Logout()
     {
         await _signInManager.SignOutAsync();
+    }
+
+    public async Task<Result> Login(LoginCommand request)
+    {
+
+        var useCookieScheme = (request.UseCookies == true) || (request.UseSessionCookies == true);
+        var isPersistent = (request.UseCookies == true) && (request.UseSessionCookies != true);
+        _signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
+
+        // Login user
+        var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, isPersistent, lockoutOnFailure: true);
+
+        if (result.RequiresTwoFactor)
+        {
+            result = await TwoFactorSignIn(request, isPersistent, result);
+        }
+
+        if (!result.Succeeded)
+        {
+            if (result.IsLockedOut)
+            {
+                throw new InvalidAuthenticationException("Your account is disabled. Please contact with IT Team");
+            }
+
+            throw new InvalidAuthenticationException("Username or password is incorrect. Please try again");
+        }
+
+        // The signInManager already produced the needed response in the form of a cookie or bearer token.
+        var success = IdentityResult.Success;
+        return success.ToApplicationResult();
+    }
+
+    private async Task<SignInResult> TwoFactorSignIn(LoginCommand request, bool isPersistent, SignInResult result)
+    {
+        if (!string.IsNullOrEmpty(request.TwoFactorCode))
+        {
+            result = await _signInManager.TwoFactorAuthenticatorSignInAsync(request.TwoFactorCode, isPersistent, rememberClient: isPersistent);
+        }
+        else if (!string.IsNullOrEmpty(request.TwoFactorRecoveryCode))
+        {
+            result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(request.TwoFactorRecoveryCode);
+        }
+
+        return result;
     }
 
     public async Task<string?> GetUserNameAsync(string userId)
@@ -181,7 +227,7 @@ public class IdentityService : IIdentityService
     {
         var users = await InitialGetUserBriefAsync(query.SearchTerm ?? "", _currentUser.Location ?? "", query.SortColumnName, query.SortColumnDirection);
 
-        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types ?? "All");
+        var userBriefDtos = await GetUserBriefDtosWithRoleAsync(users, query.Types.IsNullOrEmpty() ? "All" : query.Types);
 
         if (query.SortColumnName.Equals("Type", StringComparison.OrdinalIgnoreCase))
             userBriefDtos = FinalGetUserBriefAsync(userBriefDtos, query.SortColumnDirection);

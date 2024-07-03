@@ -3,9 +3,26 @@
   color: rgba(207, 35, 56, 1);
   border: 1px solid black;
 }
-.modal-header.custom-header .modal-title {
+.modal-content {
+  border-color: rgb(22, 22, 22);
+}
+.modal-header .modal-title {
   color: rgba(207, 35, 56, 1);
   padding-left: 10px;
+  width: 100%;
+}
+
+.modal-header {
+  .pointer {
+    stroke-width: 2px;
+    stroke: rgba(207, 35, 56, 1);
+  }
+}
+
+.custom-body.modal-body {
+  border: 1px solid black;
+  border-bottom-left-radius: var(--bs-modal-inner-border-radius);
+  border-bottom-right-radius: var(--bs-modal-inner-border-radius);
 }
 .custom-body.modal-body {
   border: 1px solid black;

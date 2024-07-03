@@ -20,7 +20,8 @@ public class CustomExceptionHandler : IExceptionHandler
                 { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
                 { typeof(IncorrectPasswordException), HandleIncorrectPasswordValidation },
                 { typeof(BadRequestException), HandleBadRequestException },
-
+                { typeof(InvalidAuthenticationException), HandleInvalidAuthenticationException},
+                { typeof(Exception), HandleUnknownException}
             };
     }
 
@@ -110,6 +111,32 @@ public class CustomExceptionHandler : IExceptionHandler
             Status = StatusCodes.Status400BadRequest,
             Detail = exception.Message,
             Title = "Bad input"
+        });
+    }
+
+    private async Task HandleInvalidAuthenticationException(HttpContext httpContext, Exception ex)
+    {
+        var exception = (InvalidAuthenticationException)ex;
+
+        httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+        await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
+        {
+            Status = StatusCodes.Status401Unauthorized,
+            Detail = exception.Message,
+            Title = "Authentication failed"
+        });
+    }
+
+    private async Task HandleUnknownException(HttpContext httpContext, Exception ex)
+    {
+        httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+        await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
+        {
+            Status = StatusCodes.Status500InternalServerError,
+            Title = "Internal Server Error",
+            Detail = "Something went wrong"
         });
     }
 }

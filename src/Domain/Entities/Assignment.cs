@@ -1,4 +1,4 @@
-﻿namespace AssetManagement.Domain.Entities;
+namespace AssetManagement.Domain.Entities;
 
 public class Assignment : BaseAuditableEntity
 {

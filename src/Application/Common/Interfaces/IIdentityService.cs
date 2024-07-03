@@ -1,3 +1,4 @@
+using AssetManagement.Application.Auth.Commands.Login;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Users.Commands.Create;
@@ -9,6 +10,7 @@ namespace AssetManagement.Application.Common.Interfaces;
 public interface IIdentityService
 {
     Task Logout();
+    Task<Result> Login(LoginCommand request);
 
     Task<string?> GetUserNameAsync(string userId);
 

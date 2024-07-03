@@ -9,7 +9,6 @@ namespace Web.IntegrationTests.Helpers;
 
 public class TestAuthenticationSchemeOptions : AuthenticationSchemeOptions
 {
-    public bool IsLogin { get; set; } = true;
     public string UserId { get; set; } = null!;
     public string Location { get; set; } = null!;
     public string UserName { get; set; } = null!;
@@ -37,9 +36,7 @@ public class TestAuthHandler : AuthenticationHandler<TestAuthenticationSchemeOpt
         var principal = new ClaimsPrincipal(identity);
         var ticket = new AuthenticationTicket(principal, "Test");
 
-        var result = AuthenticateResult.NoResult();
-        if (Options.IsLogin)
-            result = AuthenticateResult.Success(ticket);
+        var result = AuthenticateResult.Success(ticket);
 
         return Task.FromResult(result);
     }

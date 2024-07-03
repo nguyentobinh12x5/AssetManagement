@@ -1,4 +1,4 @@
-﻿namespace AssetManagement.Application.Auth.Commands.ChangePassword
+namespace AssetManagement.Application.Auth.Commands.ChangePassword
 {
     public class ChangePasswordCommandValidator : AbstractValidator<UpdatePasswordCommand>
     {

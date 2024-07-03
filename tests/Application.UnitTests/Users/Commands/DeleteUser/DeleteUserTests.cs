@@ -8,7 +8,7 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace AssetManagement.Application.UnitTests.Users.Commands
+namespace AssetManagement.Application.UnitTests.Users.Commands.DeleteUser
 {
     public class DeleteUserCommandHandlerTests
     {

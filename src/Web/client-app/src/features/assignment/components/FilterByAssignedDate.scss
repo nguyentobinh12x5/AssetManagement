@@ -1,0 +1,14 @@
+.assignment-datepicker-wrapper {
+  padding: 0 !important;
+  display: flex;
+  align-items: stretch;
+
+  .react-datepicker-wrapper {
+    padding: 6px 12px !important;
+  }
+
+  .assignment-datepicker-label {
+    padding: 0px 10px !important;
+    border-left: 1px solid gray;
+  }
+}

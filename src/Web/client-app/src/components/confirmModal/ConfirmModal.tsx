@@ -27,9 +27,9 @@ const ConfirmModal: React.FC<Props> = ({
       aria-labelledby="login-modal"
       centered
     >
-      <Modal.Header className="custom-header">
+      <Modal.Header className="modal-title">
         <Modal.Title id="login-modal">
-          <div className="d-flex align-items-center justify-content-between custom-modal fw-bold">
+          <div className="d-flex align-items-center justify-content-between fw-bold">
             {title}
             {isShowClose && (
               <ButtonIcon onClick={onHide}>
@@ -39,7 +39,7 @@ const ConfirmModal: React.FC<Props> = ({
           </div>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="custom-body">
+      <Modal.Body className="modal-body">
         <Fragment>{children}</Fragment>
       </Modal.Body>
     </Modal>
