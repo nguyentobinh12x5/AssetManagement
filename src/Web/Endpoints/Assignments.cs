@@ -1,4 +1,5 @@
 using AssetManagement.Application.Assignments.Commands.Create;
+using AssetManagement.Application.Assignments.Commands.Update;
 using AssetManagement.Application.Assignments.Queries.GetAssignment;
 using AssetManagement.Application.Assignments.Queries.GetAssignmentsWithPagination;
 using AssetManagement.Application.Assignments.Queries.GetMyAssignments;
@@ -15,7 +16,8 @@ public class Assignments : EndpointGroupBase
             .MapGet(GetAssignmentList)
             .MapGet(GetMyAssignments, "me")
             .MapPost(AddAssignment)
-            .MapGet(GetAssignmentById, "{id}");
+            .MapGet(GetAssignmentById, "{id}")
+            .MapPatch(UpdateMyAssignmentState, "{id}");
     }
 
     public Task<PaginatedList<AssignmentBriefDto>> GetAssignmentList(ISender sender, [AsParameters] GetAssignmentsWithPaginationQuery query)
@@ -35,5 +37,15 @@ public class Assignments : EndpointGroupBase
     public async Task<AssignmentDto> GetAssignmentById(ISender sender, int id)
     {
         return await sender.Send(new GetAssignmentByIdQuery(id));
+    }
+
+    public async Task<IResult> UpdateMyAssignmentState(ISender sender, int id, UpdateMyAssignmentStateCommand command)
+    {
+        if (id != command.Id)
+        {
+            return Results.BadRequest();
+        }
+        await sender.Send(command);
+        return Results.NoContent();
     }
 }

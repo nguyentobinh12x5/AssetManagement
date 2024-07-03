@@ -12,6 +12,8 @@ const ENDPOINTS = {
   ASSETS: '/api/Assets',
   ASSIGNMENTS: '/api/Assignments',
   MY_ASSIGNMENTS: '/api/Assignments/me',
+
+  UPDATE_STATE_ASSIGNMENT: '/api/Assignments',
 };
 
 export default ENDPOINTS;

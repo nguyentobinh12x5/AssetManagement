@@ -5,13 +5,7 @@ import IColumnOption from "../../../components/table/interfaces/IColumnOption";
 import Table from "../../../components/table/Table";
 import IPagination from "../../../components/table/interfaces/IPagination";
 import ButtonIcon from "../../../components/ButtonIcon";
-import {
-  ArrowCounterclockwise,
-  CheckLg,
-  PencilFill,
-  XCircle,
-  XLg,
-} from "react-bootstrap-icons";
+import { ArrowCounterclockwise, CheckLg, XLg } from "react-bootstrap-icons";
 import { IMyAssignmentBrief } from "../interfaces/IMyAssignment";
 import { formatDate } from "../../../utils/dateUtils";
 import "./MyAssignmentsTable.scss";
@@ -19,6 +13,7 @@ import DetailForm from "../../assignment/detail/DetailForm";
 import { AssignmentState } from "../../assignment/constants/assignment-state";
 import useResponseAssignment from "./useResponseAssignment";
 import useDetailAssignment from "./useDetailAssignment";
+import ConfirmAssignmentModal from "../components/ConfirmAssignmentModal";
 
 interface Props {
   assignments: IPagedModel<IMyAssignmentBrief>;
@@ -45,10 +40,11 @@ const MyAssignmentsTable: React.FC<Props> = ({
   const { handleClosePopup, handleShowDetail, selectedAssignment } =
     useDetailAssignment();
   const {
-    handleAcceptAssignment,
-    handleDeclineAssignment,
+    currentSelectedAssignment,
+    isAcceptModal,
     handleShowAcceptModal,
     handleShowDeclineModal,
+    hideDisableModal,
   } = useResponseAssignment();
 
   const pagination = useMemo<IPagination>(
@@ -85,7 +81,14 @@ const MyAssignmentsTable: React.FC<Props> = ({
             <td>{AssignmentState[data.state]}</td>
             <td className="action" onClick={(e) => e.stopPropagation()}>
               <div className="d-flex gap-2 justify-content-evenly align-items-center">
-                <ButtonIcon onClick={() => {}} disable={true}>
+                <ButtonIcon
+                  onClick={() => {
+                    handleShowAcceptModal(data.id);
+                  }}
+                  disable={
+                    !(data.state === AssignmentState["Waiting for acceptance"])
+                  }
+                >
                   <CheckLg
                     color="#cf2338"
                     stroke="#cf2338"
@@ -93,7 +96,12 @@ const MyAssignmentsTable: React.FC<Props> = ({
                     size={20}
                   />
                 </ButtonIcon>
-                <ButtonIcon disable={true}>
+                <ButtonIcon
+                  disable={
+                    !(data.state === AssignmentState["Waiting for acceptance"])
+                  }
+                  onClick={() => handleShowDeclineModal(data.id)}
+                >
                   <XLg color="gray" stroke="gray" strokeWidth={1.5} size={20} />
                 </ButtonIcon>
                 <ButtonIcon>
@@ -109,6 +117,13 @@ const MyAssignmentsTable: React.FC<Props> = ({
           </tr>
         ))}
       </Table>
+
+      <ConfirmAssignmentModal
+        assignmentId={currentSelectedAssignment}
+        hideModal={hideDisableModal}
+        isAcceptModal={isAcceptModal}
+      />
+
       {selectedAssignment && (
         <DetailForm id={selectedAssignment} onClose={handleClosePopup} />
       )}

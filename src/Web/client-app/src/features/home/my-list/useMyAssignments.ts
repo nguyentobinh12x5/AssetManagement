@@ -10,7 +10,9 @@ import {
 
 const useMyAssignments = () => {
   const dispatch = useAppDispatch();
-  const { query, assignments } = useAppState((state) => state.myAssignments);
+  const { query, assignments, isDataFetched } = useAppState(
+    (state) => state.myAssignments
+  );
 
   const updateMainSortState = (
     sortColumnName: string,
@@ -42,8 +44,8 @@ const useMyAssignments = () => {
 
   // Fetch Data
   useEffect(() => {
-    dispatch(getMyAssignments(query));
-  }, [dispatch, query]);
+    if (!isDataFetched) dispatch(getMyAssignments(query));
+  }, [dispatch, query, isDataFetched]);
 
   return {
     assignments,

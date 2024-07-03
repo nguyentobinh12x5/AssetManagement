@@ -1,20 +1,30 @@
+import { useState } from 'react';
+
 const useResponseAssignment = () => {
-  const handleShowAcceptModal = () => {
-    // Show approve modal
+  const [currentSelectedAssignment, setCurrentSelectedAssignment] = useState<
+    number | null
+  >(null);
+  const [isAcceptModal, setIsAcceptModal] = useState(true);
+
+  const handleShowAcceptModal = (id: number) => {
+    setCurrentSelectedAssignment(id);
+    setIsAcceptModal(true);
   };
-  const handleShowDeclineModal = () => {
-    // Show decline modal
+  const handleShowDeclineModal = (id: number) => {
+    setCurrentSelectedAssignment(id);
+    setIsAcceptModal(false);
   };
 
-  const handleAcceptAssignment = () => {};
-
-  const handleDeclineAssignment = () => {};
+  const hideDisableModal = () => {
+    setCurrentSelectedAssignment(null);
+  };
 
   return {
     handleShowAcceptModal,
     handleShowDeclineModal,
-    handleAcceptAssignment,
-    handleDeclineAssignment,
+    currentSelectedAssignment,
+    isAcceptModal,
+    hideDisableModal,
   };
 };
 

@@ -1,6 +1,7 @@
 export enum AssignmentState {
-  'Accepted' = 0,
-  'Waiting for acceptance' = 1,
+  'Accepted',
+  'Waiting for acceptance',
+  'Declined',
 }
 
 export type AssignmentStateKey = keyof typeof AssignmentState;
