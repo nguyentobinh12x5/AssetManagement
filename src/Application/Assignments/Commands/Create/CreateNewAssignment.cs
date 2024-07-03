@@ -2,7 +2,6 @@ using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Security;
 using AssetManagement.Domain.Entities;
-using AssetManagement.Domain.Enums;
 
 namespace AssetManagement.Application.Assignments.Commands.Create;
 [Authorize]
@@ -13,6 +12,7 @@ public record CreateNewAssignmentCommand : IRequest<int>
     public DateTime AssignedDate { get; init; } = DateTime.UtcNow;
     public string Note { get; init; } = null!;
 }
+[Authorize]
 public class CreateNewAssignmentCommandHandler : IRequestHandler<CreateNewAssignmentCommand, int>
 {
     private readonly IApplicationDbContext _context;
@@ -41,9 +41,9 @@ public class CreateNewAssignmentCommandHandler : IRequestHandler<CreateNewAssign
             throw new BadRequestException("asset is unavailable, please refresh the page and try again");
         }
 
-        var user = await _identityService.GetUserNameAsync(request.UserId);
+        var assignedUserName = await _identityService.GetUserNameAsync(request.UserId);
 
-        Guard.Against.NotFound(request.UserId, user);
+        Guard.Against.NotFound(request.UserId, assignedUserName);
 
         Guard.Against.NullOrEmpty(_currentUser.UserName);
 
@@ -52,8 +52,8 @@ public class CreateNewAssignmentCommandHandler : IRequestHandler<CreateNewAssign
             Asset = asset,
             AssignedBy = _currentUser.UserName,
             AssignedDate = request.AssignedDate,
-            AssignedTo = user,
-            State = AssignmentState.WaitingForAcceptance,
+            AssignedTo = assignedUserName,
+            State = Domain.Enums.AssignmentState.WaitingForAcceptance,
             Note = request.Note
         };
 

@@ -157,15 +157,12 @@ const UserSlice = createSlice({
         userName: action.payload.username,
         isDelete: false,
       };
-      const users =
-        state.users.items.length === state.userQuery.pageSize
-          ? state.users.items.slice(0, state.userQuery.pageSize - 1)
-          : state.users.items;
+
       return {
         ...state,
         users: {
           ...state.users!,
-          items: [newUser, ...users],
+          items: [newUser, ...state.users.items],
         },
         isLoading: false,
         error: null,
@@ -206,6 +203,7 @@ const UserSlice = createSlice({
       state.types = ['All', ...action.payload];
       state.isLoading = false;
     },
+    resetUserSlice: () => initialState,
   },
 });
 
@@ -229,6 +227,7 @@ export const {
   getUserTypes,
   setUserTypes,
   removeUser,
+  resetUserSlice,
 } = UserSlice.actions;
 
 export default UserSlice.reducer;

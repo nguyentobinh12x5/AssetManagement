@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
-import { getAssets, setAssetQuery } from '../../../asset/reducers/asset-slice';
+import {
+  getAssets,
+  resetAssetSlice,
+  setAssetQuery,
+} from '../../../asset/reducers/asset-slice';
 import useAppPaging from '../../../../hooks/paging/useAppPaging';
 import { DEFAULT_MANAGE_ASSET_SORT_COLUMN } from '../../../asset/constants/asset-sort';
 import useAppSort from '../../../../hooks/paging/useAppSort';
@@ -58,6 +62,12 @@ const useAssetRadioSelect = () => {
       })
     );
   }, [dispatch, assetQuery]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetAssetSlice());
+    };
+  }, [dispatch]);
 
   return {
     hasSortColumn,

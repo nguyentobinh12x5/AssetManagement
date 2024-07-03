@@ -68,6 +68,7 @@ const AssignmentSlice = createSlice({
     ) => ({
       ...state,
       isLoading: false,
+      isDataFetched: true,
       assignments: action.payload,
     }),
     createAssignmentSuccess: (

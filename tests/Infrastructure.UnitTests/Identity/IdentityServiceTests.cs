@@ -157,6 +157,7 @@ public class IdentityServicesTests
         var expectedResult = IdentityResult.Success;
         _userManagerMock.Setup(u => u.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(expectedResult);
         _userManagerMock.Setup(u => u.AddToRoleAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(IdentityResult.Success);
+        _currentUserMock.Setup(u => u.Location).Returns("HCM");
 
         // Act
         var (result, userId) = await _identityService.CreateUserAsync(createUserDto);

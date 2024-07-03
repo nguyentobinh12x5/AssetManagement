@@ -108,7 +108,7 @@ const UserTable: React.FC<UserTableProps> = ({
             <td>
               <TextWithTooltip text={data.type.slice(0, 5)} />
             </td>
-            <td className="action">
+            <td className="action" onClick={(e) => e.stopPropagation()}>
               <div className="d-flex flex-shrink-0 gap-3 justify-content-evenly align-items-center">
                 <ButtonIcon
                   onClick={() => handleEditClick(data.id)}

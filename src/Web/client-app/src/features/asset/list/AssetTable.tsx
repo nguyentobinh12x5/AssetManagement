@@ -100,7 +100,7 @@ const AssetTable: React.FC<AssetTableProps> = ({
             <td>{data.name}</td>
             <td>{data.category}</td>
             <td>{data.assetStatus}</td>
-            <td className="action">
+            <td className="action" onClick={(e) => e.stopPropagation()}>
               <div className="d-flex gap-3 justify-content-evenly align-items-center">
                 <ButtonIcon
                   onClick={() => {

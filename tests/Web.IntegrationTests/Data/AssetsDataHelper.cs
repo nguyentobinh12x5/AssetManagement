@@ -19,7 +19,7 @@ namespace Web.IntegrationTests.Data
         private static readonly List<AssetStatus> AssetStatuses = new()
         {
             new AssetStatus() {  Name = "Available" },
-            new AssetStatus() { Name = "Not Available"},
+            new AssetStatus() { Name = "Not Available" },
             new AssetStatus() { Name = "Assigned" },
             new AssetStatus() {  Name = "Under Maintenance" },
             new AssetStatus() { Name = "Waiting for Recycling"}
