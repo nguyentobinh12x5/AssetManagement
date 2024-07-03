@@ -14,9 +14,10 @@ import {
 } from "react-bootstrap-icons";
 import Loading from "../../../components/Loading";
 import { IBriefAssignment } from "../interfaces/IBriefAssignment";
-import { AssignmentState } from "../constants/assignment-state";
+import { AssignmentState, WATTING_FOR_ACCEPTANCE } from "../constants/assignment-state";
 import { formatDate } from "../../../utils/dateUtils";
 import DetailForm from "../detail/DetailForm";
+import ConfirmDelete from "../delete/deleteAssignmentModal";
 
 type AssignmentTableProps = {
   assignments: IPagedModel<IBriefAssignment>;
@@ -47,11 +48,17 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
   const handleEditClick = (assetId: string) => {
     // Handle navigate(`edit/${assetId}`);
   };
-
+  const [idDelete, setIdDelete] = useState<number | null>(null);
   const [selectedAssignment, setSelectedAssignment] = useState<string | null>(
     null
   );
-
+  const handleConfirmDelete = (id: string) => {
+    const numId = parseInt(id);
+    setIdDelete(numId);
+  };
+  const handleCloseConfirmDelete = () => {
+    setIdDelete(null);
+  };
   const handleShowDetail = (id: string) => {
     setSelectedAssignment(id);
   };
@@ -113,7 +120,10 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
                 >
                   <PencilFill />
                 </ButtonIcon>
-                <ButtonIcon>
+                <ButtonIcon
+                  onClick={() => handleConfirmDelete(data.id)}
+                  disable={AssignmentState[data.state] === WATTING_FOR_ACCEPTANCE}
+                >
                   <XCircle color="red" />
                 </ButtonIcon>
                 <ButtonIcon>
@@ -124,6 +134,9 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
           </tr>
         ))}
       </Table>
+      {idDelete && (
+        <ConfirmDelete Id={idDelete} hideModal={handleCloseConfirmDelete} />
+      )}
       {selectedAssignment && (
         <DetailForm
           id={parseInt(selectedAssignment)}

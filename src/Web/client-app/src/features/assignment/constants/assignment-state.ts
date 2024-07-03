@@ -5,3 +5,5 @@ export enum AssignmentState {
 }
 
 export type AssignmentStateKey = keyof typeof AssignmentState;
+
+export const WATTING_FOR_ACCEPTANCE = 'Waiting for acceptance';

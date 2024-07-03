@@ -1,6 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import {
   createAssignmentRequest,
+  deleteAssigmentRequest,
   getAssignmentByIdRequest,
   getAssignmentsRequest,
 } from './requests';
@@ -8,8 +9,10 @@ import { call, put } from 'redux-saga/effects';
 import {
   createAssignmentFailure,
   createAssignmentSuccess,
+  deleteAssignmentFailure,
   getAssignmentsFailure,
   getAssignmentsSuccess,
+  setDeleteAssignment,
 } from '../reducers/assignment-slice';
 import {
   getAssignmentByIdFailure,
@@ -72,4 +75,14 @@ export function* handleCreateAssignment(
 
     showErrorToast(message);
   }
+}
+export function* handleDeleteAssignment(action: PayloadAction<number>) {
+    try {
+        const id = action.payload;
+        yield call(deleteAssigmentRequest, id);
+        yield put(setDeleteAssignment(id));
+    } catch (error: any) {
+        const errorMsg = error.response.data.detail;
+        yield put(deleteAssignmentFailure(errorMsg));
+    }
 }

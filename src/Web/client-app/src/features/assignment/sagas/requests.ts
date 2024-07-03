@@ -30,3 +30,11 @@ export function createAssignmentRequest(
 ): Promise<AxiosResponse<number>> {
   return RequestService.axios.post(`${ENDPOINTS.ASSIGNMENTS}`, request);
 }
+
+export function deleteAssigmentRequest(
+    id: number
+): Promise<AxiosResponse<IAssignmentDetail>> {
+    return RequestService.axios.delete(
+        `${ENDPOINTS.ASSIGNMENTS}/${id}`
+    );
+}
