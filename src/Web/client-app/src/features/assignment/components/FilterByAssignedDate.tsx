@@ -33,7 +33,6 @@ const FilterByAssignedDate: React.FC<FilterByAssignedDateProps> = () => {
         showYearDropdown
         showMonthDropdown
         dropdownMode="select"
-        maxDate={new Date()}
         id="filter-date-assignment-list"
         name="filter-date-assignment-list"
       />

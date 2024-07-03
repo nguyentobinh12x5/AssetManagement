@@ -1,10 +1,13 @@
 import RequestService from '../../../services/request';
 import ENDPOINTS from '../../../constants/endpoints';
+
 import {
   IMyAssignmentBrief,
   IMyAssignmentQuery,
+  IMySelectedAssignment,
 } from '../interfaces/IMyAssignment';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
+import { AxiosResponse } from 'axios';
 
 export function getMyAssignmentsRequest(
   query: IMyAssignmentQuery
@@ -12,4 +15,13 @@ export function getMyAssignmentsRequest(
   return RequestService.axios.get(ENDPOINTS.MY_ASSIGNMENTS, {
     params: query,
   });
+}
+
+export function updateStateAssignmentRequest(
+  assignment: IMySelectedAssignment
+): Promise<AxiosResponse<IMySelectedAssignment>> {
+  return RequestService.axios.patch(
+    `${ENDPOINTS.UPDATE_STATE_ASSIGNMENT}/${assignment.id}`,
+    assignment
+  );
 }

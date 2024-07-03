@@ -5,9 +5,11 @@ using System.Text;
 using System.Text.Json;
 
 using AssetManagement.Application.Assignments.Commands.Create;
+using AssetManagement.Application.Assignments.Commands.Update;
 using AssetManagement.Application.Assignments.Queries.GetAssignment;
 using AssetManagement.Application.Assignments.Queries.GetMyAssignments;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Domain.Enums;
 using AssetManagement.Infrastructure.Identity;
 
 using FluentValidation.Results;
@@ -141,4 +143,55 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(assignments);
         Assert.Equal(2, assignments.Items.Count);
     }
+
+    [Fact]
+    public async Task UpdateMyAssignment_ValidCommand_ShouldReturnNoContent()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        var loginRequest = new LoginRequest { Email = "user2@test.com", Password = "Password123!" };
+
+        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+        // Act
+        var command = new UpdateMyAssignmentStateCommand
+        {
+            Id = 1,
+            State = AssignmentState.Accepted
+        };
+
+        var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PatchAsync("/api/Assignments/1", content);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateMyAssignment_InvalidId_ShouldReturnBadRequest()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        var loginRequest = new LoginRequest { Email = "user2@test.com", Password = "Password123!" };
+
+        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+        // Act
+        var command = new UpdateMyAssignmentStateCommand
+        {
+            Id = 2,
+            State = AssignmentState.Accepted
+        };
+
+        var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PatchAsync("/api/Assignments/1", content);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
 }

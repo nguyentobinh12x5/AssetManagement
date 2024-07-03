@@ -12,3 +12,7 @@ export interface IMyAssignmentQuery {
   sortColumnName: string;
   sortColumnDirection: string;
 }
+export interface IMySelectedAssignment {
+  id: number;
+  state: number;
+}

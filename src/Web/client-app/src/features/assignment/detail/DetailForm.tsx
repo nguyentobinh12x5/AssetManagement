@@ -15,6 +15,12 @@ type AssignmentID = {
   id: number;
   onClose: () => void;
 };
+const stateLabels: Record<number, string> = {
+  0: "Waiting For Acceptance",
+  1: "In Progress",
+  2: "Completed",
+  3: "Rejected",
+};
 
 const DetailForm: React.FC<AssignmentID> = ({ id, onClose }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
@@ -37,6 +43,12 @@ const DetailForm: React.FC<AssignmentID> = ({ id, onClose }) => {
     setIsModalOpen(false);
     onClose();
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetState());
+    };
+  }, [dispatch]);
 
   return (
     <div className="container m-auto p-5">
