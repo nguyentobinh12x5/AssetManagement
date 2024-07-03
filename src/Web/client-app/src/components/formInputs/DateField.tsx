@@ -13,13 +13,14 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   novalidation?: boolean;
   apiError?: string;
   maxDate?: Date | null | undefined;
+  minDate?: Date | null | undefined;
 };
 
 const DateField: React.FC<InputFieldProps> = (props) => {
   const [{ value }, { error, touched }, { setValue, setError }] =
     useField(props);
 
-  const { label, required, apiError, maxDate } = props;
+  const { label, required, apiError, maxDate, minDate } = props;
 
   const { setFieldTouched } = useFormikContext();
 
@@ -61,6 +62,7 @@ const DateField: React.FC<InputFieldProps> = (props) => {
               showMonthDropdown
               dropdownMode="select"
               maxDate={maxDate}
+              minDate={minDate}
             />
             <label htmlFor={props.name} className="date-icon p-1 pointer">
               <CalendarDateFill />

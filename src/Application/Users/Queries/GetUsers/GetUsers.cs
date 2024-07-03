@@ -1,9 +1,11 @@
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.Common.Security;
 using AssetManagement.Domain.Constants;
 
 namespace AssetManagement.Application.Users.Queries.GetUsers;
 
+[Authorize]
 public record GetUsersQuery : IRequest<PaginatedList<UserBriefDto>>
 {
     public int PageNumber { get; init; } = AppPagingConstants.DefaultPageNumber;

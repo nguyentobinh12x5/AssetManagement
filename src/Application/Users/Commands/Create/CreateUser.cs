@@ -1,7 +1,9 @@
 ﻿using AssetManagement.Application.Common.Interfaces;
+using AssetManagement.Application.Common.Security;
 using AssetManagement.Domain.Enums;
 
 namespace AssetManagement.Application.Users.Commands.Create;
+[Authorize]
 public record CreateUserCommand : IRequest<string>
 {
     public string FirstName { get; init; } = null!;

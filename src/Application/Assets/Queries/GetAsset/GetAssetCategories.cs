@@ -1,5 +1,6 @@
 using AssetManagement.Application.Common.Interfaces;
 
+
 namespace AssetManagement.Application.Assets.Queries.GetAsset
 {
     public record GetAssetCategories : IRequest<List<string>> { }

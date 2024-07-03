@@ -1,3 +1,4 @@
+using AssetManagement.Application.Auth.Commands.Login;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
@@ -93,6 +94,11 @@ public class MockIdentityService : IIdentityService
     }
 
     public Task<bool> IsUserDisabledAsync(string email)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result> Login(LoginCommand loginCommand)
     {
         throw new NotImplementedException();
     }

@@ -176,8 +176,6 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
     public async Task ChangePassword_ShouldReturnUnauthorized_WhenNotLoggedIn()
     {
         // Arrange
-        await UsersDataHelper.CreateSampleData(_factory);
-
         var updatePasswordCommand = new UpdatePasswordCommand("Password123!", "NewPassword123!");
 
         // Act

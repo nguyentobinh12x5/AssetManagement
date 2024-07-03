@@ -9,6 +9,8 @@
 @import "../features/auth/firstime-login/ChangePasswordFirstTimeForm.scss";
 @import "../features/auth/changepassword/ChangePasswordForm.scss";
 @import "../features/asset/detail/DetailForm.scss";
+@import "../features/assignment/components/UserSelectionModal.scss";
+@import "../features/assignment/components/FilterByAssignedDate.scss";
 
 @import "../components/confirmModal/ConfirmModal.scss";
 @import "../components/formInputs/RadioButtonField.scss";
@@ -113,6 +115,7 @@ option {
 .form-control.is-invalid,
 .form-control.is-valid {
   background: none !important;
+  padding-right: 12px;
 }
 
 .form-check-label {
@@ -138,4 +141,21 @@ option {
 
 .fade.modal-backdrop {
   background: none;
+}
+
+.table-title {
+  color: rgba(207, 35, 56, 1);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.multi-line-text {
+  text-align: justify;
+  max-height: 240px;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  word-wrap: break-word;
 }

@@ -33,11 +33,6 @@ public class SignInManager : SignInManager<ApplicationUser>
         // Continue with the regular password sign-in
         var result = await PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
 
-        if (result.Succeeded)
-        {
-            var locationClaim = new Claim("Location", user.Location);
-            await UserManager.AddClaimAsync(user, locationClaim);
-        }
         return result;
     }
 

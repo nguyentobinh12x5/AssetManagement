@@ -3,6 +3,8 @@ import userSagas from '../features/manager-user/sagas';
 import authSagas from '../features/auth/sagas';
 import changePasswordSagas from '../features/auth/changepassword/sagas';
 import assetSagas from '../features/asset/sagas';
+import assignmentSagas from '../features/assignment/sagas';
+import myAssignmentSagas from '../features/home/sagas';
 
 const rootSagas = [
   todoItemSagas,
@@ -10,5 +12,7 @@ const rootSagas = [
   changePasswordSagas,
   userSagas,
   assetSagas,
+  assignmentSagas,
+  myAssignmentSagas,
 ];
 export default rootSagas;

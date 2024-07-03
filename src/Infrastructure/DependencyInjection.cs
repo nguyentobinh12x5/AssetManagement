@@ -45,6 +45,7 @@ public static class DependencyInjection
             .AddSignInManager<SignInManager>()
             .AddUserStore<UserStore>()
             .AddRoles<IdentityRole>()
+            .AddClaimsPrincipalFactory<CustomClaimsPrincipalFactory>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         services.AddSingleton(TimeProvider.System);

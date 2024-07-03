@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -36,6 +37,8 @@ namespace Web.IntegrationTests.Endpoints
         {
             _factory = factory;
             _httpClient = _factory.GetApplicationHttpClient();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme");
+
         }
 
         [Fact]

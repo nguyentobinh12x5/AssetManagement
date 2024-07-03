@@ -47,7 +47,7 @@ const Table: React.FC<Props> = ({
         <tbody>{children}</tbody>
       </table>
 
-      {!!(pagination && pagination.totalPage && pagination?.totalPage > 0) && (
+      {!!(pagination && pagination.totalPage && pagination.totalPage > 1) && (
         <Pagination {...pagination} />
       )}
     </>

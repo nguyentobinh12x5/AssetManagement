@@ -17,6 +17,8 @@ const crumbsMap = new Map<string, string>([
   ["/user/create", "Create User"],
   ["/assets", "Manage Asset"],
   ["/assets/create", "Create New Asset"],
+  ["/assignments", "Manage Assignment"],
+  ["/assignments/create", "Create New Assignment"],
   ["/assets/edit/:id", "Edit Asset"],
 ]);
 

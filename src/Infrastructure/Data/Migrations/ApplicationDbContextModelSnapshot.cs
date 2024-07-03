@@ -149,7 +149,7 @@ namespace AssetManagement.Infrastructure.Data.Migrations
 
                     b.HasIndex("AssetId");
 
-                    b.ToTable("Assignment");
+                    b.ToTable("Assignments");
                 });
 
             modelBuilder.Entity("AssetManagement.Domain.Entities.Category", b =>

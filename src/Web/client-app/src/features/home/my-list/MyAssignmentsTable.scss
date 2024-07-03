@@ -1,0 +1,19 @@
+.assignment-cross-btn {
+  svg {
+    stroke-width: 1.5;
+    stroke: grey;
+  }
+}
+
+.assignment-check-btn {
+  svg {
+    stroke-width: 1.5;
+    stroke: var(--primary-color);
+  }
+}
+.assignment-return_btn {
+  svg {
+    stroke-width: 1.5;
+    color: blue;
+  }
+}

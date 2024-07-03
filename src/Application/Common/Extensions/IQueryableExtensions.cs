@@ -16,7 +16,7 @@ public static class IQueryableExtensions
         }
 
         var parameter = Expression.Parameter(typeof(T), "x");
-        Expression? property = null;
+        Expression? property;
 
         // Check if sorting by AssetStatus and default to AssetStatus.Name
         if (sortColumnName == nameof(Asset.AssetStatus))
@@ -26,7 +26,7 @@ public static class IQueryableExtensions
         }
         else
         {
-            property = Expression.Property(parameter, sortColumnName);
+            property = GetOrderProperty(parameter, sortColumnName);
         }
         var lambda = Expression.Lambda(property, parameter);
 
@@ -41,4 +41,19 @@ public static class IQueryableExtensions
 
         return query.Provider.CreateQuery<T>(resultExpression);
     }
+
+    private static Expression GetOrderProperty(ParameterExpression parameter, string sortColumnName)
+    {
+        // Split the property path into parts
+        var properties = sortColumnName.Split('.');
+        Expression property = parameter;
+
+        foreach (var prop in properties)
+        {
+            property = Expression.Property(property, prop);
+        }
+
+        return property;
+    }
+
 }

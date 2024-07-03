@@ -1,5 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { ASSETS_LINK, HOME_LINK, USER_LINK } from "../../constants/pages";
+import {
+  ASSETS_LINK,
+  HOME_LINK,
+  USER_LINK,
+  ASSIGNMENTS_LINK,
+} from "../../constants/pages";
 import { useAppState } from "../../redux/redux-hooks";
 import { isAdminUser } from "../../utils/authUtils";
 
@@ -19,6 +24,9 @@ const Sidebar = () => {
           </NavLink>
           <NavLink className="navItem intro-x" to={ASSETS_LINK}>
             <button className="btnCustom">Manage Asset</button>
+          </NavLink>
+          <NavLink className="navItem intro-x" to={ASSIGNMENTS_LINK}>
+            <button className="btnCustom">Manage Assignment</button>
           </NavLink>
         </>
       )}

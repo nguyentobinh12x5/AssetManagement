@@ -1,5 +1,6 @@
 using System.Security.Claims;
 
+using AssetManagement.Application.Auth.Commands.Login;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Application.Common.Extensions;
@@ -53,6 +54,50 @@ public class IdentityService : IIdentityService
     public async Task Logout()
     {
         await _signInManager.SignOutAsync();
+    }
+
+    public async Task<Result> Login(LoginCommand request)
+    {
+
+        var useCookieScheme = (request.UseCookies == true) || (request.UseSessionCookies == true);
+        var isPersistent = (request.UseCookies == true) && (request.UseSessionCookies != true);
+        _signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
+
+        // Login user
+        var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, isPersistent, lockoutOnFailure: true);
+
+        if (result.RequiresTwoFactor)
+        {
+            result = await TwoFactorSignIn(request, isPersistent, result);
+        }
+
+        if (!result.Succeeded)
+        {
+            if (result.IsLockedOut)
+            {
+                throw new InvalidAuthenticationException("Your account is disabled. Please contact with IT Team");
+            }
+
+            throw new InvalidAuthenticationException("Username or password is incorrect. Please try again");
+        }
+
+        // The signInManager already produced the needed response in the form of a cookie or bearer token.
+        var success = IdentityResult.Success;
+        return success.ToApplicationResult();
+    }
+
+    private async Task<SignInResult> TwoFactorSignIn(LoginCommand request, bool isPersistent, SignInResult result)
+    {
+        if (!string.IsNullOrEmpty(request.TwoFactorCode))
+        {
+            result = await _signInManager.TwoFactorAuthenticatorSignInAsync(request.TwoFactorCode, isPersistent, rememberClient: isPersistent);
+        }
+        else if (!string.IsNullOrEmpty(request.TwoFactorRecoveryCode))
+        {
+            result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(request.TwoFactorRecoveryCode);
+        }
+
+        return result;
     }
 
     public async Task<string?> GetUserNameAsync(string userId)

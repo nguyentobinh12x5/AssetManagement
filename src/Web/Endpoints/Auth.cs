@@ -3,6 +3,7 @@ using System.Security.Claims;
 
 using AssetManagement.Application.Auth.Commands.ChangePassword;
 using AssetManagement.Application.Auth.Commands.ChangePasswordFirstTime;
+using AssetManagement.Application.Auth.Commands.Login;
 using AssetManagement.Application.Auth.Commands.Logout;
 using AssetManagement.Application.Auth.Queries.GetCurrentUserInfo;
 using AssetManagement.Infrastructure.Identity;
@@ -29,44 +30,21 @@ public class Auth : EndpointGroupBase
             .MapPost(Logout, "logout");
     }
 
-    public async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>> Login(
+    public async Task<IResult> Login(
+        ISender sender,
         [FromBody] LoginRequest loginRequest,
         [FromQuery] bool? useCookies,
-        [FromQuery] bool? useSessionCookies,
-        [FromServices] IServiceProvider sp)
+        [FromQuery] bool? useSessionCookies)
     {
-        var signInManager = sp.GetRequiredService<SignInManager>();
-
-        var useCookieScheme = (useCookies == true) || (useSessionCookies == true);
-        var isPersistent = (useCookies == true) && (useSessionCookies != true);
-        signInManager.AuthenticationScheme = useCookieScheme ? IdentityConstants.ApplicationScheme : IdentityConstants.BearerScheme;
-
-        // Login user
-        var result = await signInManager.PasswordSignInAsync(loginRequest.Email, loginRequest.Password, isPersistent, lockoutOnFailure: true);
-
-        if (result.RequiresTwoFactor)
-        {
-            if (!string.IsNullOrEmpty(loginRequest.TwoFactorCode))
-            {
-                result = await signInManager.TwoFactorAuthenticatorSignInAsync(loginRequest.TwoFactorCode, isPersistent, rememberClient: isPersistent);
-            }
-            else if (!string.IsNullOrEmpty(loginRequest.TwoFactorRecoveryCode))
-            {
-                result = await signInManager.TwoFactorRecoveryCodeSignInAsync(loginRequest.TwoFactorRecoveryCode);
-            }
-        }
-
-        if (!result.Succeeded)
-        {
-            if (result.IsLockedOut)
-            {
-                return TypedResults.Problem("Your account is disabled. Please contact with IT Team", statusCode: StatusCodes.Status401Unauthorized);
-            }
-            return TypedResults.Problem("Username or password is incorrect. Please try again", statusCode: StatusCodes.Status401Unauthorized);
-        }
-
-        // The signInManager already produced the needed response in the form of a cookie or bearer token.
-        return TypedResults.Empty;
+        await sender.Send(new LoginCommand(
+            loginRequest.Email,
+            loginRequest.Password,
+            loginRequest.TwoFactorCode,
+            loginRequest.TwoFactorRecoveryCode,
+            useCookies,
+            useSessionCookies
+        ));
+        return Results.Ok();
     }
 
     public async Task<UserInfoDto> GetUserInfo(ISender sender, [AsParameters] GetCurrentUserInfoQuery query)
