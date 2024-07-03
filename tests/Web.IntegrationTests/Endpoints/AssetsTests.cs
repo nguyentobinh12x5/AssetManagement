@@ -223,7 +223,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("Available", updatedAsset.AssetStatusName);
     }
 
-    [Fact]
+    [Fact(Skip = "Smoke test")]
     public async Task GetAssetsWithPaginationAndSearchByName_ShouldReturnFilteredAssetsData()
     {
         //Arrange

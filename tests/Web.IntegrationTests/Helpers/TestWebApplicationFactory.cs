@@ -13,9 +13,7 @@ public class TestWebApplicationFactory<TProgram>
     : WebApplicationFactory<TProgram> where TProgram : class
 {
     public string TestUserId { get; set; } = UsersDataHelper.TestUserId;
-
     public string TestUserName { get; set; } = UsersDataHelper.TestUserName;
-
     public string TestUserLocation { get; set; } = UsersDataHelper.TestLocation;
 
     protected override IHost CreateHost(IHostBuilder builder)
