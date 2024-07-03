@@ -29,20 +29,20 @@ const AssignmentList = () => {
       <p className="title">Assignment list</p>
 
       <Row className="mb-3">
-        <Col md={2}>
+        <Col md={3}>
           <FilterByState />
         </Col>
-        <Col md={2}>
+        <Col md={3}>
           <FilterByAssignedDate />
         </Col>
-        <Col md={{ span: 3, offset: 2 }} className="ml-auto">
+        <Col md={{ span: 3, offset: 1 }} className="ml-auto">
           <SearchBox
             defaultValue={searchTerm}
             handleFilterBySearchTerm={handleSearch}
           />
         </Col>
 
-        <Col md={3} className="d-flex justify-content-end align-items-start">
+        <Col className="text-end pe-0 ps-0 create-new-assignment_btn">
           <Button variant="danger" onClick={handleCreateAsset}>
             Create new assignment
           </Button>

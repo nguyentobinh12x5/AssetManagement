@@ -117,11 +117,11 @@ const SelectModal: React.FC<SelectModalProps> = ({
     <Modal
       show={isShow}
       dialogClassName={`radio-select-modal ${dialogClassName}`}
-      aria-labelledby="login-modal"
+      aria-labelledby="select-asset-modal"
       centered
     >
-      <Modal.Header className="custom-header">
-        <Modal.Title id="login-modal">
+      <Modal.Header>
+        <Modal.Title id="select-asset-modal">
           <Row>
             <Col md={4}>Select Asset</Col>
             <Col md={{ span: 5, offset: 3 }}>

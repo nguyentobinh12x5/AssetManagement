@@ -14,9 +14,9 @@ public class TestWebApplicationFactory<TProgram>
 {
     public string TestUserId { get; set; } = UsersDataHelper.TestUserId;
 
-    public string TestUserName { get; set; } = "test-user-username";
+    public string TestUserName { get; set; } = UsersDataHelper.TestUserName;
 
-    public string TestUserLocation { get; set; } = "test-user-location";
+    public string TestUserLocation { get; set; } = UsersDataHelper.TestLocation;
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
@@ -38,6 +38,14 @@ public class TestWebApplicationFactory<TProgram>
             if (dbConnectionDescriptor != null)
             {
                 services.Remove(dbConnectionDescriptor);
+            }
+
+            // Remove existing authentication services
+            var authServiceDescriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(Microsoft.AspNetCore.Authentication.IAuthenticationService));
+            if (authServiceDescriptor != null)
+            {
+                services.Remove(authServiceDescriptor);
             }
 
             services.AddDbContext<ApplicationDbContext>((container, options) =>
@@ -65,14 +73,13 @@ public class TestWebApplicationFactory<TProgram>
                 options.DefaultChallengeScheme = "TestScheme";
             }).AddScheme<TestAuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options =>
             {
-                options.UserId = TestUserId;
-                options.UserName = TestUserName;
-                options.Location = TestUserLocation;
+                options.UserId = UsersDataHelper.TestUserId;
+                options.UserName = TestUserName ?? String.Empty;
+                options.Location = TestUserLocation ?? String.Empty;
             });
         });
 
+
         return base.CreateHost(builder);
     }
-
-
 }

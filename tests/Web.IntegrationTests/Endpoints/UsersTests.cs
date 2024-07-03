@@ -59,7 +59,7 @@ namespace Web.IntegrationTests.Endpoints
             Assert.NotNull(users);
             Assert.NotEmpty(users.Items);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(userManager.Users.Count(), users.TotalCount);
+            Assert.Equal(userManager.Users.Where(u => u.Location.Equals(_factory.TestUserLocation)).Count(), users.TotalCount);
             Assert.Equal(1, users.PageNumber);
         }
 

@@ -21,4 +21,28 @@
       display: none;
     }
   }
+
+  .modal-header {
+    background-color: transparent;
+    border-bottom: none;
+
+    .input-group {
+      margin-bottom: 0 !important;
+      input {
+        border-color: #6c757d;
+      }
+    }
+
+    .modal-title {
+      font-weight: bold;
+      .row {
+        align-items: center;
+      }
+    }
+  }
+
+  .modal-footer {
+    border-top: none;
+    padding-bottom: 32px;
+  }
 }

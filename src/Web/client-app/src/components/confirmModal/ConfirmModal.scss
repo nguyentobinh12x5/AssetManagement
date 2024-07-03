@@ -13,17 +13,13 @@
 }
 
 .modal-header {
+  background-color: #f1f1f1;
   .pointer {
     stroke-width: 2px;
     stroke: rgba(207, 35, 56, 1);
   }
 }
 
-.custom-body.modal-body {
-  border: 1px solid black;
-  border-bottom-left-radius: var(--bs-modal-inner-border-radius);
-  border-bottom-right-radius: var(--bs-modal-inner-border-radius);
-}
 .custom-body.modal-body {
   border: 1px solid black;
   border-bottom-left-radius: var(--bs-modal-inner-border-radius);

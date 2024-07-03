@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
+using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 
 namespace AssetManagement.Application.Assignments.Queries.GetAssignmentsWithPagination;
 

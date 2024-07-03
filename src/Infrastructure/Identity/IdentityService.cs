@@ -109,6 +109,7 @@ public class IdentityService : IIdentityService
 
     public async Task<(Result Result, string Id)> CreateUserAsync(CreateUserDto createUser)
     {
+        Guard.Against.NullOrEmpty(_currentUser.Location);
         var id = _userManager.Users.Select(e => e.StaffCode).ToList();
 
         var userName = _userManager.Users.IgnoreQueryFilters().Select(e => e.UserName).ToList();
@@ -125,7 +126,7 @@ public class IdentityService : IIdentityService
             StaffCode = id.GenerateNewStaffCode(),
             Id = Guid.NewGuid().ToString(),
             UserName = userName.GenerateUsername(createUser.FirstName, createUser.LastName),
-            Location = "HCM"
+            Location = _currentUser.Location
         };
         var password = newUser.UserName.GeneratePassword(createUser.DateOfBirth);
 
@@ -288,8 +289,8 @@ public class IdentityService : IIdentityService
         {
             return await _userManager.Users
                 .Where(u => u.Location == location &&
-                    EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
-                    u.StaffCode.ToLower().Contains(searchTermLower))
+                    (EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
+                    u.StaffCode.ToLower().Contains(searchTermLower)))
                 .OrderByDynamic(columnName, columnDirection)
                 .ToListAsync();
         }
@@ -297,8 +298,8 @@ public class IdentityService : IIdentityService
         {
             return await _userManager.Users
                 .Where(u => u.Location == location &&
-                    EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
-                    u.StaffCode.ToLower().Contains(searchTermLower))
+                    (EF.Functions.Like((u.FirstName + " " + u.LastName).ToLower(), $"%{searchTermLower}%") ||
+                    u.StaffCode.ToLower().Contains(searchTermLower)))
                 .OrderByDynamic("StaffCode", columnDirection)
                 .ToListAsync();
         }

@@ -37,7 +37,11 @@ const FilterByState: React.FC<FilterByStateProps> = () => {
   const displayAssetStatuses: string[] = ["All", ...StateKeys];
 
   const handleStateChange = (displayStatuses: string[]) => {
-    if (displayStatuses.includes("All") && displayStatuses.length === 1) {
+    if (
+      displayStatuses.includes("All") &&
+      (displayStatuses.length === 1 ||
+        displayStatuses[displayStatuses.length - 1] === "All")
+    ) {
       handleFilterByState(["All"]);
     } else {
       const actualStatuses: AssignmentState[] = displayStatuses

@@ -38,7 +38,7 @@ export function* handleGetAssignments(action: PayloadAction<IAssignmentQuery>) {
         ),
       };
     }
-    const { data } = yield call(getAssignmentsRequest, action.payload);
+    const { data } = yield call(getAssignmentsRequest, query);
     yield put(getAssignmentsSuccess(data));
   } catch (error: any) {
     console.error(error);

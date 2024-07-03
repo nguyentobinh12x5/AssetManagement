@@ -36,13 +36,9 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
     {
         _factory = factory;
         _httpClient = _factory.GetApplicationHttpClient();
-        _factory.TestUserId = UsersDataHelper.TestUserId;
-        _factory.TestUserLocation = "HCM";
-        _factory.TestUserName = "Jay";
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme");
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task GetAssetsWithPagination_ShouldReturnAssetsData()
     {
         //Arrange
@@ -60,7 +56,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(2, assets.Items.Count);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task GetAssetsWithPaginationAndFilterCategory_ShouldReturnFilteredAssetsData()
     {
         //Arrange
@@ -77,7 +73,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(assets);
         Assert.Equal(2, assets.Items.Count());
     }
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task GetAssetsWithPaginationAndFilterStatus_ShouldReturnFilteredAssetsData()
     {
         //Arrange
@@ -212,7 +208,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
             Name = "Macbook",
             Specification = "MacOS",
             InstalledDate = DateTime.UtcNow.AddDays(-5),
-            State = "Not Available"
+            State = "Available"
         };
 
         var response = await _httpClient.PutAsJsonAsync($"/api/Assets/{asset.Id}", updateCommand);
@@ -224,10 +220,10 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("Macbook", updatedAsset.Name);
         Assert.Equal("MacOS", updatedAsset.Specification);
         Assert.Equal(updateCommand.InstalledDate, updatedAsset.InstalledDate);
-        Assert.Equal("Not Available", updatedAsset.AssetStatusName);
+        Assert.Equal("Available", updatedAsset.AssetStatusName);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task GetAssetsWithPaginationAndSearchByName_ShouldReturnFilteredAssetsData()
     {
         //Arrange

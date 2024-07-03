@@ -35,7 +35,7 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
 }) => {
   const { items, pageNumber, totalPages } = assignments;
   const columns: IColumnOption[] = [
-    { name: "No.", value: "1" },
+    { name: "No.", value: "1", disable: true },
     { name: "Asset Code", value: "Asset.Code" },
     { name: "Asset Name", value: "Asset.Name" },
     { name: "Assigned To", value: "AssignedTo" },
@@ -103,7 +103,7 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
             <td>{data.assignedBy}</td>
             <td>{formatDate(data.assignedDate)}</td>
             <td>{AssignmentState[data.state]}</td>
-            <td className="action">
+            <td className="action" onClick={(e) => e.stopPropagation()}>
               <div className="d-flex gap-3 justify-content-evenly align-items-center">
                 <ButtonIcon
                   onClick={() => {

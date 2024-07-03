@@ -11,7 +11,6 @@ import {
   getAssetsSuccess,
   setAssetCategories,
   setAssetStatuses,
-  setAssets,
 } from '../reducers/asset-slice';
 import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
 import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
@@ -47,7 +46,6 @@ export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
 
   try {
     const { data } = yield call(getAssetsRequest, query);
-    yield put(setAssets(data));
     yield put(getAssetsSuccess(data));
   } catch (error: any) {
     yield put(getAssetsFailure(error.data.detail));
@@ -74,10 +72,7 @@ export function* handleCreateAsset(action: PayloadAction<ICreateAssetCommand>) {
 
 export function* handleEditAsset(action: PayloadAction<IEditAssetCommand>) {
   try {
-    const { data: updateAssetId }: AxiosResponse<IAssetDetail> = yield call(
-      editAssetRequest,
-      action.payload
-    );
+    yield call(editAssetRequest, action.payload);
     const { data: updateAsset }: AxiosResponse<IAssetDetail> = yield call(
       getAssetByIdRequest,
       action.payload.id

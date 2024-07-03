@@ -10,3 +10,10 @@
   background-color: red !important;
   border-color: red !important;
 }
+
+.create-new-assignment_btn {
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 10%;
+  white-space: nowrap;
+}

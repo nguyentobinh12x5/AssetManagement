@@ -9,12 +9,16 @@ namespace Web.IntegrationTests.Helpers
     public static class UsersDataHelper
     {
         public static readonly string TestUserId = Guid.NewGuid().ToString();
+        public static readonly string TestLocation = "HCM";
+        public static readonly string TestUserName = "user1@test.com";
+
+
         private static readonly List<ApplicationUser> UsersList = new()
         {
             new ApplicationUser
             {
                 Id = TestUserId,
-                UserName = "user1@test.com",
+                UserName = TestUserName,
                 Email = "user1@test.com",
                 FirstName = "John",
                 LastName = "Doe",
@@ -33,7 +37,7 @@ namespace Web.IntegrationTests.Helpers
                 Email = "user2@test.com",
                 FirstName = "Jane",
                 LastName = "Smith",
-                Location = "HCM",
+                Location = TestLocation,
                 StaffCode = "SC002",
                 DateOfBirth = DateTime.UtcNow.AddYears(-25),
                 JoinDate = DateTime.UtcNow.AddMonths(-6),

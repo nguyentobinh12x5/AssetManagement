@@ -34,7 +34,10 @@ const SelectField: React.FC<SelectFieldProps> = (props) => {
     return "";
   };
 
-  const handleToggle = () => setIsOpen(!isOpen);
+  const handleToggle = () => {
+    if (props.disabled) return;
+    setIsOpen(!isOpen);
+  };
 
   const handleOptionClick = (option: Option) => {
     setSelectedOption(option);

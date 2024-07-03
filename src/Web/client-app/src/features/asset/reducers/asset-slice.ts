@@ -71,27 +71,19 @@ const AssetSlice = createSlice({
       isLoading: true,
     }),
 
-    setAssets: (
-      state: AssetState,
-      action: PayloadAction<IPagedModel<IBriefAsset>>
-    ) => {
-      let assets = action.payload;
-      return {
-        ...state,
-        assets: assets,
-        isDataFetched: true,
-      };
-    },
     deleteAssets: (state: AssetState, action: PayloadAction<number>) => ({
       ...state,
       isLoading: true,
       error: null,
     }),
     // Success handles
-    getAssetsSuccess: (state: AssetState, action: PayloadAction<any>) => ({
+    getAssetsSuccess: (
+      state: AssetState,
+      action: PayloadAction<IPagedModel<IBriefAsset>>
+    ) => ({
       ...state,
-      isLoading: true,
       assets: action.payload,
+      isDataFetched: true,
     }),
     createAssetSuccess: (
       state: AssetState,
@@ -105,10 +97,6 @@ const AssetSlice = createSlice({
         code: code,
         name: name,
       };
-      const items =
-        state.assets.items.length === state.assetQuery.pageSize
-          ? state.assets.items.slice(0, state.assetQuery.pageSize - 1)
-          : state.assets.items;
 
       return {
         ...state,
@@ -116,7 +104,7 @@ const AssetSlice = createSlice({
         succeed: true,
         assets: {
           ...state.assets,
-          items: [newAsset, ...items],
+          items: [newAsset, ...state.assets.items],
         },
       };
     },
@@ -198,6 +186,7 @@ const AssetSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
+    resetAssetSlice: () => initialState,
   },
 });
 
@@ -205,7 +194,6 @@ export const {
   createAsset,
   editAsset,
   getAssets,
-  setAssets,
   getAssetsSuccess,
   getAssetsFailure,
   getAssetStatuses,
@@ -220,6 +208,7 @@ export const {
   deleteAssets,
   setDeleteAsset,
   deleteAssetFailure,
+  resetAssetSlice,
 } = AssetSlice.actions;
 
 export default AssetSlice.reducer;
