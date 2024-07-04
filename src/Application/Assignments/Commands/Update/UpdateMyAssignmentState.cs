@@ -29,10 +29,9 @@ public class UpdateMyAssignmentStateCommandHandler : IRequestHandler<UpdateMyAss
 
         Guard.Against.NotFound(assignment.Asset.Id, asset);
 
+        assignment.State = request.State;
         if (request.State == AssignmentState.Accepted)
         {
-            assignment.State = request.State;
-
             var state = await _context.AssetStatuses.FirstOrDefaultAsync(e => e.Name == "Assigned", cancellationToken);
 
             Guard.Against.NotFound("Assigned", state);
@@ -41,7 +40,11 @@ public class UpdateMyAssignmentStateCommandHandler : IRequestHandler<UpdateMyAss
         }
         else if (request.State == AssignmentState.Declined)
         {
-            assignment.State = request.State;
+            var state = await _context.AssetStatuses.FirstOrDefaultAsync(e => e.Name == "Available", cancellationToken);
+
+            Guard.Against.NotFound("Available", state);
+
+            asset.AssetStatus = state;
         }
 
         await _context.SaveChangesAsync(cancellationToken);
