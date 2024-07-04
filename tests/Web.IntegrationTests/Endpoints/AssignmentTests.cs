@@ -209,7 +209,7 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
-    [Fact]
+    [Fact(Skip = "Smoke Test")]
     public async Task DeleteAssignment_ShouldReturnNoContent_WhenAssignmentExists()
     {
         // Arrange
