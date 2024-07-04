@@ -1,6 +1,6 @@
 namespace AssetManagement.Domain.Entities;
 
-public class Asset : BaseAuditableEntity
+public class Asset : BaseAuditableEntity, ISoftDeletable
 {
     public string Code { get; set; } = null!;
     public string Name { get; set; } = null!;
@@ -10,4 +10,5 @@ public class Asset : BaseAuditableEntity
 
     public virtual Category Category { get; set; } = null!;
     public virtual AssetStatus AssetStatus { get; set; } = null!;
+    public bool IsDelete { get; set; }
 }

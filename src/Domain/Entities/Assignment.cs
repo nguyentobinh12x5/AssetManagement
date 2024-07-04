@@ -1,6 +1,6 @@
 namespace AssetManagement.Domain.Entities;
 
-public class Assignment : BaseAuditableEntity
+public class Assignment : BaseAuditableEntity, ISoftDeletable
 {
 
     public DateTime AssignedDate { get; set; } = DateTime.UtcNow;
@@ -14,4 +14,5 @@ public class Assignment : BaseAuditableEntity
     public string AssignedBy { get; set; } = null!;
 
     public virtual Asset Asset { get; set; } = null!;
+    public bool IsDelete { get; set; }
 }
