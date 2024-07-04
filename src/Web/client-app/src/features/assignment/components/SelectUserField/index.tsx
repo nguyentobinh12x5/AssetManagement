@@ -106,6 +106,12 @@ const SelectModal: React.FC<SelectModalProps> = ({
     closeDialog();
   };
 
+  useEffect(() => {
+    return () => {
+      setValue(undefined);
+    };
+  }, []);
+
   return (
     <Modal
       show={isShow}

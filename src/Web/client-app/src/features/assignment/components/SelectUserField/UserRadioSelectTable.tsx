@@ -27,6 +27,7 @@ const UserRadioSelectTable: React.FC<Props> = ({
   const {
     handlePaging,
     sortState,
+    searchTerm,
     handleSort,
     users: { items, pageNumber, totalPages },
   } = useUserRadioSelect();
@@ -44,8 +45,22 @@ const UserRadioSelectTable: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    if (items.length > 0 && !selectedValue) onSelect(items[0]);
+    if (items.length > 0 && !selectedValue)
+      onSelect({
+        id: items[0].id,
+        fullName: items[0].fullName,
+      });
   }, [selectedValue, items, onSelect]);
+
+  if (!items.length) return <div>No Available Asset</div>;
+
+  if (items.length === 0 && searchTerm) {
+    return (
+      <div className="text-center">
+        <p>There's no data, please adjust your search condition</p>
+      </div>
+    );
+  }
 
   return (
     <Table
@@ -62,7 +77,7 @@ const UserRadioSelectTable: React.FC<Props> = ({
               type="radio"
               name={"select-user"}
               title="select-user"
-              defaultChecked={
+              checked={
                 selectedValue ? selectedValue.id === data.id : index === 0
               }
               onChange={(e) => {

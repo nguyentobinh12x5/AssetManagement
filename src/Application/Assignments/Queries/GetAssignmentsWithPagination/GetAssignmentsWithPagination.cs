@@ -89,7 +89,8 @@ public class GetAssignmentsWithPaginationQueryHandler : IRequestHandler<GetAssig
         {
             query = query.Where(a => a.Asset.Name.Contains(request.SearchTerm)
                                      || a.Asset.Code.Contains(request.SearchTerm)
-                                     || a.AssignedTo.Contains(request.SearchTerm));
+                                     || a.AssignedTo.Contains(request.SearchTerm)
+                                     || a.AssignedBy.Contains(request.SearchTerm));
         }
 
         return query;

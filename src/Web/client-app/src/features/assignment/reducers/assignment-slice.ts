@@ -96,12 +96,18 @@ const AssignmentSlice = createSlice({
         ...action.payload,
         id: action.payload.id.toString(),
       };
+
+      const restAssignments =
+        state.assignments.items.length < state.assignmentQuery.pageSize
+          ? state.assignments.items
+          : state.assignments.items.slice(1);
+
       return {
         ...state,
         isLoading: false,
         assignments: {
           ...state.assignments,
-          items: [newAssignment, ...state.assignments.items],
+          items: [newAssignment, ...restAssignments],
         },
       };
     },

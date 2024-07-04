@@ -22,6 +22,7 @@ import { formatDate } from "../../../utils/dateUtils";
 import DetailForm from "../detail/DetailForm";
 import ConfirmDelete from "../delete/deleteAssignmentModal";
 import { calculateNo, PaginationInfo } from "../../../utils/appUtils";
+import TextWithTooltip from "../../../components/table/helper/TextToolTip";
 
 const columns: IColumnOption[] = [
   { name: "No.", value: "Id" },
@@ -119,12 +120,24 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
           return (
             <tr key={data.id} onClick={handleShowDetail.bind(null, data.id)}>
               <td>{calculateNo(index, paginationInfo)}</td>
-              <td>{data.assetCode}</td>
-              <td>{data.assetName}</td>
-              <td>{data.assignedTo}</td>
-              <td>{data.assignedBy}</td>
-              <td>{formatDate(data.assignedDate)}</td>
-              <td>{AssignmentState[data.state]}</td>
+              <td>
+                <TextWithTooltip text={data.assetCode} />
+              </td>
+              <td>
+                <TextWithTooltip text={data.assetName} />
+              </td>
+              <td>
+                <TextWithTooltip text={data.assignedTo} />
+              </td>
+              <td>
+                <TextWithTooltip text={data.assignedBy} />
+              </td>
+              <td>
+                <TextWithTooltip text={formatDate(data.assignedDate)} />
+              </td>
+              <td>
+                <TextWithTooltip text={AssignmentState[data.state]} />
+              </td>
               <td className="action" onClick={(e) => e.stopPropagation()}>
                 <div className="d-flex gap-3 justify-content-evenly align-items-center">
                   <ButtonIcon
@@ -135,7 +148,12 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
                   >
                     <PencilFill />
                   </ButtonIcon>
-                  <ButtonIcon>
+                  <ButtonIcon
+                    onClick={() => handleConfirmDelete(data.id)}
+                    disable={
+                      AssignmentState[data.state] === WATTING_FOR_ACCEPTANCE
+                    }
+                  >
                     <XCircle color="red" />
                   </ButtonIcon>
                   <ButtonIcon>

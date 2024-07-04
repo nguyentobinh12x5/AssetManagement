@@ -98,13 +98,18 @@ const AssetSlice = createSlice({
         name: name,
       };
 
+      const restAssets =
+        state.assets.items.length < state.assetQuery.pageSize
+          ? state.assets.items
+          : state.assets.items.slice(1);
+
       return {
         ...state,
         isLoading: false,
         succeed: true,
         assets: {
           ...state.assets,
-          items: [newAsset, ...state.assets.items],
+          items: [newAsset, ...restAssets],
         },
       };
     },

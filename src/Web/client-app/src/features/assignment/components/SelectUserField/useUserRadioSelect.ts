@@ -55,9 +55,7 @@ const useUserRadioSelect = () => {
 
   // Fetch Data
   useEffect(() => {
-    if (!isDataFetched) {
-      dispatch(getUsers(userQuery));
-    }
+    if (!isDataFetched) dispatch(getUsers(userQuery));
   }, [dispatch, userQuery, isDataFetched]);
 
   useEffect(() => {
