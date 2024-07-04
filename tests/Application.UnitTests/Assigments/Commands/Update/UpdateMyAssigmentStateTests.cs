@@ -27,15 +27,58 @@ public class UpdateMyAssigmentStateTests
     }
 
     [Test]
-    public async Task Handle_ShouldUpdateMyAssignmentState_WhenAssignmentExists()
+    public async Task Handle_ShouldUpdateMyAssignmentStateWithAccepted_WhenAssignmentExists()
     {
         var assignment = new Assignment
         {
             Id = 1,
-            State = AssignmentState.Accepted,
-            Asset = new Asset { Id = 1, Code = "A1" },
+            State = AssignmentState.WaitingForAcceptance,
+            Asset = new Asset { Id = 1, Code = "A1"},
         };
 
+
+        var assignedStatus = new AssetStatus { Id = 1, Name = "Assigned" };
+        
+        var mockAssignmentSet = new List<Assignment> { assignment }
+            .AsQueryable()
+            .BuildMockDbSet();
+        var mockAssetSet = new List<Asset> { assignment.Asset }
+            .AsQueryable()
+            .BuildMockDbSet();
+        var mockAssetStatusSet = new List<AssetStatus> { assignedStatus }
+            .AsQueryable()
+            .BuildMockDbSet();
+
+        _contextMock.Setup(m => m.Assignments).Returns(mockAssignmentSet.Object);
+        _contextMock.Setup(m => m.Assets).Returns(mockAssetSet.Object);
+        _contextMock.Setup(m => m.AssetStatuses).Returns(mockAssetStatusSet.Object);
+
+        var command = new UpdateMyAssignmentStateCommand()
+        {
+            Id = assignment.Id,
+            State = AssignmentState.Accepted
+        };
+
+        var result = await _handler.Handle(command, CancellationToken.None);
+
+        result.Should().Be(assignment.Id);
+        assignment.State.Should().Be(AssignmentState.Accepted);
+        assignment.Asset.AssetStatus.Should().Be(assignedStatus);
+
+        _contextMock.Verify(m => m.SaveChangesAsync(CancellationToken.None), Times.Once);
+
+    }
+    
+    [Test]
+    public async Task Handle_ShouldUpdateMyAssignmentStateWithDeclined_WhenAssignmentExists()
+    {
+        var assignment = new Assignment
+        {
+            Id = 1,
+            State = AssignmentState.WaitingForAcceptance,
+            Asset = new Asset { Id = 1, Code = "A1"},
+        };
+        
         var mockAssignmentSet = new List<Assignment> { assignment }
             .AsQueryable()
             .BuildMockDbSet();
@@ -49,18 +92,18 @@ public class UpdateMyAssigmentStateTests
         var command = new UpdateMyAssignmentStateCommand()
         {
             Id = assignment.Id,
-            State = AssignmentState.WaitingForAcceptance
+            State = AssignmentState.Declined
         };
 
         var result = await _handler.Handle(command, CancellationToken.None);
 
         result.Should().Be(assignment.Id);
-        assignment.State.Should().Be(AssignmentState.WaitingForAcceptance);
+        assignment.State.Should().Be(AssignmentState.Declined);
 
         _contextMock.Verify(m => m.SaveChangesAsync(CancellationToken.None), Times.Once);
 
     }
-
+    
     [Test]
     public void Handle_ShouldThrowNotFoundException_WhenAssignmentNotExist()
     {
