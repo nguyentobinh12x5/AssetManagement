@@ -10,7 +10,7 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace AssetManagement.Application.UnitTests.Assets.Commands
+namespace AssetManagement.Application.UnitTests.Assets.Commands.Delete
 {
     [TestFixture]
     public class DeleteAssetCommandHandlerTests
