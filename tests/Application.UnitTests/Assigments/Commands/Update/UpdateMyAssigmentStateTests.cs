@@ -79,15 +79,21 @@ public class UpdateMyAssigmentStateTests
             Asset = new Asset { Id = 1, Code = "A1" },
         };
 
+        var availableStatus = new AssetStatus { Id = 1, Name = "Available" };
+
         var mockAssignmentSet = new List<Assignment> { assignment }
             .AsQueryable()
             .BuildMockDbSet();
         var mockAssetSet = new List<Asset> { assignment.Asset }
             .AsQueryable()
             .BuildMockDbSet();
+        var mockAssetStatusSet = new List<AssetStatus> { availableStatus }
+            .AsQueryable()
+            .BuildMockDbSet();
 
         _contextMock.Setup(m => m.Assignments).Returns(mockAssignmentSet.Object);
         _contextMock.Setup(m => m.Assets).Returns(mockAssetSet.Object);
+        _contextMock.Setup(m => m.AssetStatuses).Returns(mockAssetStatusSet.Object);
 
         var command = new UpdateMyAssignmentStateCommand()
         {
@@ -99,6 +105,7 @@ public class UpdateMyAssigmentStateTests
 
         result.Should().Be(assignment.Id);
         assignment.State.Should().Be(AssignmentState.Declined);
+        assignment.Asset.AssetStatus.Should().Be(availableStatus);
 
         _contextMock.Verify(m => m.SaveChangesAsync(CancellationToken.None), Times.Once);
 
