@@ -1,5 +1,8 @@
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
+
+using Ardalis.GuardClauses;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
@@ -25,12 +28,43 @@ public class TestAuthHandler : AuthenticationHandler<TestAuthenticationSchemeOpt
 
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        // Add more option later
+        if (!Request.Headers.TryGetValue("Authorization", out var authorizationHeader))
+        {
+            return Task.FromResult(AuthenticateResult.Fail("Authorization header not found"));
+        }
+
+        if (!AuthenticationHeaderValue.TryParse(authorizationHeader, out var authHeader))
+        {
+            return Task.FromResult(AuthenticateResult.Fail("Invalid authorization header format"));
+        }
+
+        // Extract parameters from authHeader.Parameter and validate them
+        var parameters = authHeader?.Parameter?.Split(';')
+            .Select(p => p.Split('='))
+            .ToDictionary(kv => kv[0].Trim(), kv => kv[1].Trim());
+
+        Guard.Against.Null(parameters);
+
+        if (!parameters.TryGetValue("UserId", out var userId) || string.IsNullOrEmpty(userId))
+        {
+            return Task.FromResult(AuthenticateResult.NoResult());
+        }
+
+        if (!parameters.TryGetValue("UserName", out var userName))
+        {
+            userName = string.Empty;
+        }
+
+        if (!parameters.TryGetValue("Location", out var location))
+        {
+            location = string.Empty;
+        }
+
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, Options.UserId),
-            new Claim("UserName",Options.UserName),
-            new Claim("Location",Options.Location)
+            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim("UserName",userName),
+            new Claim("Location",location)
         };
 
         var identity = new ClaimsIdentity(claims, "Test");
@@ -41,6 +75,4 @@ public class TestAuthHandler : AuthenticationHandler<TestAuthenticationSchemeOpt
 
         return Task.FromResult(result);
     }
-
-
 }

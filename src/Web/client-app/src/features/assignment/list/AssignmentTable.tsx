@@ -51,7 +51,7 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
   handlePaging,
   sortColumnDirection,
 }) => {
-  const { items, pageNumber, totalPages } = assignments;
+  const { items, pageNumber, totalPages, totalCount } = assignments;
 
   const navigate = useNavigate();
   const handleEditClick = (assetId: string) => {
@@ -114,7 +114,7 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
           const paginationInfo: PaginationInfo = {
             pageNumber: pageNumber,
             pageSize: 5,
-            totalPages: totalPages,
+            totalCount: totalCount,
             sortDirection: sortColumnDirection,
           };
           return (

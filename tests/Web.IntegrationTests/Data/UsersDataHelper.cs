@@ -12,7 +12,6 @@ namespace Web.IntegrationTests.Helpers
         public static readonly string TestLocation = "HCM";
         public static readonly string TestUserName = "user1@test.com";
 
-
         private static readonly List<ApplicationUser> UsersList = new()
         {
             new ApplicationUser

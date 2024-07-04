@@ -20,6 +20,8 @@ const crumbsMap = new Map<string, string>([
   ["/assignments", "Manage Assignment"],
   ["/assignments/create", "Create New Assignment"],
   ["/assets/edit/:id", "Edit Asset"],
+  ["/assignments", "Manage Assignment"],
+  ["/assignments/create", "Create New Assignment"],
 ]);
 
 const getCrumbLabel = (path: string) => {

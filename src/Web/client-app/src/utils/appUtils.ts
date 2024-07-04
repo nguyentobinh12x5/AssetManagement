@@ -28,18 +28,18 @@ const paramsSerializer = (params: any) => {
 export interface PaginationInfo {
   pageNumber: number;
   pageSize: number;
-  totalPages: number; // or totalPages, depending on your setup
+  totalCount: number; // or totalCount, depending on your setup
   sortDirection: string;
 }
 
 function calculateNo(
   index: number,
-  { pageNumber, pageSize, totalPages, sortDirection }: PaginationInfo
+  { pageNumber, pageSize, totalCount, sortDirection }: PaginationInfo
 ): number {
   if (sortDirection === SORT_TYPE.ASCENDING) {
     return (pageNumber - 1) * pageSize + index + 1;
   } else {
-    return totalPages * pageSize - ((pageNumber - 1) * pageSize + index);
+    return totalCount - ((pageNumber - 1) * pageSize + index);
   }
 }
 
