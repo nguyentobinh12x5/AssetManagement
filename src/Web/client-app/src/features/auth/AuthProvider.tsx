@@ -25,10 +25,8 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <>
-      {shouldRenderChangePassword && <FirstTimeLoginChangePassword />}
-      {user ? (
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-      ) : null}
+      {user && shouldRenderChangePassword && <FirstTimeLoginChangePassword />}
+      <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
     </>
   );
 };
