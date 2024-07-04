@@ -151,7 +151,7 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
                   <ButtonIcon
                     onClick={() => handleConfirmDelete(data.id)}
                     disable={
-                      AssignmentState[data.state] === WATTING_FOR_ACCEPTANCE
+                      AssignmentState[data.state] !== WATTING_FOR_ACCEPTANCE
                     }
                   >
                     <XCircle color="red" />

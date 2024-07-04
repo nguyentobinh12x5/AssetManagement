@@ -9,9 +9,9 @@ using Moq;
 
 using NUnit.Framework;
 
-namespace AssetManagement.Application.UnitTests.ChangePassword.Commands.UpdatePassword
+namespace AssetManagement.Application.UnitTests.Auth.Commands.ChangePassword
 {
-    public class UpdatePasswordTests
+    public class ChangePasswordTests
     {
         private Mock<IIdentityService> _mockIdentityService = null!;
         private UpdatePasswordCommandHandler _handler = null!;

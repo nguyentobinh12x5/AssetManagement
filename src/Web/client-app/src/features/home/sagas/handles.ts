@@ -3,12 +3,13 @@ import {
   getMyAssignmentsRequest,
   updateStateAssignmentRequest,
 } from './requests';
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import {
   IMyAssignmentQuery,
   IMySelectedAssignment,
 } from '../interfaces/IMyAssignment';
 import {
+  getMyAssignments,
   getMyAssignmentsFailure,
   getMyAssignmentsSuccess,
   setIsDataFetched,
@@ -16,6 +17,8 @@ import {
   updateStateAssignmentSuccess,
 } from '../reducers/my-assignment-slice';
 import { AssignmentState } from '../../assignment/constants/assignment-state';
+import { RootState } from '../../../redux/store';
+import { getMyAssignmentsQuery } from './selectors';
 
 export function* handleGetMyAssignments(
   action: PayloadAction<IMyAssignmentQuery>
@@ -35,9 +38,11 @@ export function* handleUpdateStateAssignment(
   try {
     yield call(updateStateAssignmentRequest, assignment);
 
-    if (assignment.state === AssignmentState.Declined)
-      yield put(setIsDataFetched(false));
-    else yield put(updateStateAssignmentSuccess(assignment));
+    if (assignment.state === AssignmentState.Declined) {
+      const query: IMyAssignmentQuery = yield select(getMyAssignmentsQuery);
+      const { data } = yield call(getMyAssignmentsRequest, query);
+      yield put(getMyAssignmentsSuccess(data));
+    } else yield put(updateStateAssignmentSuccess(assignment));
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(setUpdateStateAssignmentError(errorResponse.detail));

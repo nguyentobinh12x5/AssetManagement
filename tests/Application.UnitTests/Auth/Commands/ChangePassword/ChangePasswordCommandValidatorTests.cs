@@ -4,9 +4,9 @@ using FluentValidation.TestHelper;
 
 using NUnit.Framework;
 
-namespace AssetManagement.Application.UnitTests.ChangePassword.Commands.UpdatePassword
+namespace AssetManagement.Application.UnitTests.Auth.Commands.ChangePassword
 {
-    public class UpdatePasswordCommandValidatorTests
+    public class ChangePasswordCommandValidatorTests
     {
         private ChangePasswordCommandValidator _validator = null!;
 
