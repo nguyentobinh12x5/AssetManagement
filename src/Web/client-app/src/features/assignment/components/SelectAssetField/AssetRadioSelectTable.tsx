@@ -42,12 +42,10 @@ const AssetRadioSelectTable: React.FC<Props> = ({
 
   useEffect(() => {
     if (items.length > 0 && !selectedValue)
-      onSelect(
-        onSelect({
-          id: items[0].id,
-          name: items[0].name,
-        })
-      );
+      onSelect({
+        id: items[0].id,
+        name: items[0].name,
+      });
   }, [selectedValue, items, onSelect]);
 
   if (!items.length) return <div>No Available Asset</div>;

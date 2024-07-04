@@ -36,6 +36,8 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
     {
         _factory = factory;
         _httpClient = _factory.GetApplicationHttpClient();
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}");
     }
 
     [Fact]
@@ -192,7 +194,7 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
-    [Fact(Skip = "Smoke test")]
+    [Fact]
     public async Task UpdateAsset_ShouldReturnNoContent()
     {
         // Arrange
@@ -221,9 +223,10 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("MacOS", updatedAsset.Specification);
         Assert.Equal(updateCommand.InstalledDate, updatedAsset.InstalledDate);
         Assert.Equal("Available", updatedAsset.AssetStatusName);
+        Assert.Equal("Available", updatedAsset.AssetStatusName);
     }
 
-    [Fact(Skip = "Smoke test")]
+    [Fact]
     public async Task GetAssetsWithPaginationAndSearchByName_ShouldReturnFilteredAssetsData()
     {
         //Arrange

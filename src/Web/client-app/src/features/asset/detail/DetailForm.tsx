@@ -10,6 +10,7 @@ import { text } from "stream/consumers";
 import Table from "../../../components/table/Table";
 import IColumnOption from "../../../components/table/interfaces/IColumnOption";
 import { formatDate } from "../../../utils/dateUtils";
+import convertnewlinesUtils from "../../../utils/convertnewlinesUtils";
 
 type AssetID = {
   id: string;
@@ -101,7 +102,13 @@ const DetailForm: React.FC<AssetID> = ({ id, onClose }) => {
             <Row className="mb-3">
               <Col md={3}>Specification</Col>
               <Col md={5} className="table-detail-word-wrap multi-line-text">
-                {assetDetail?.specification}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: convertnewlinesUtils(
+                      assetDetail?.specification || ""
+                    ),
+                  }}
+                />
               </Col>
             </Row>
           </div>

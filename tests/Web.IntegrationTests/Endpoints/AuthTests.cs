@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 using AssetManagement.Application.Auth.Commands.ChangePassword;
@@ -28,18 +29,18 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
     {
         _factory = factory;
         _httpClient = _factory.GetApplicationHttpClient();
-        _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
-        _factory.TestUserId = UsersDataHelper.TestUserId;
+        //_httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("TestScheme");
     }
 
     [Fact]
     public async Task Login_ShouldReturnEmpty_WhenValidLoginRequest()
     {
         // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
         var loginRequest = new LoginRequest
         {
-            Email = "administrator@localhost",
-            Password = "Administrator1!"
+            Email = "user1@test.com",
+            Password = "Password123!"
         };
 
         // Act
@@ -92,16 +93,13 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("Your account is disabled. Please contact with IT Team", problemDetails.Detail);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task GetUserInfo_ShouldReturnUserInfo()
     {
         // Arrange
-        var loginRequest = new LoginRequest
-        {
-            Email = "administrator@localhost",
-            Password = "Administrator1!"
-        };
-        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+        await UsersDataHelper.CreateSampleData(_factory);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}");
 
         // Act
         var response = await _httpClient.GetAsync("/api/auth/manage/info");
@@ -112,11 +110,13 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.NotNull(userInfo);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task ChangePasswordFirstTime_ShouldReturnBadRequest_OnInputOldPassword()
     {
         // Arrange
         await UsersDataHelper.CreateSampleData(_factory);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}");
 
         var command = new ChangePasswordFirstTimeCommand("Password123!");
 
@@ -130,11 +130,13 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("New password must not the same as old one.", problemDetails.Detail);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task ChangePasswordFirstTime_ShouldReturnSuccessStatus_OnValidNewPassword()
     {
         // Arrange
         await UsersDataHelper.CreateSampleData(_factory);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+                    $"UserId={UsersDataHelper.TestUserId}");
 
         var command = new ChangePasswordFirstTimeCommand("NewPassword123!");
         var resetPasswordCommand = new ChangePasswordFirstTimeCommand("Administrator1!");
@@ -146,16 +148,20 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
 
         await _httpClient.PostAsJsonAsync("/api/auth/change-password-first-time", resetPasswordCommand);
+
+        _factory.ResetDatabase();
     }
 
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task ChangePassword_ShouldReturnNoContent_OnSuccessfulChange()
     {
         // Arrange
         await UsersDataHelper.CreateSampleData(_factory);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}");
 
-        var currentPassword = "Administrator1!";
+        var currentPassword = "Password123!";
         var newPassword = "NewPassword123!";
 
         var updatePasswordCommand = new UpdatePasswordCommand(currentPassword, newPassword);
@@ -172,10 +178,13 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.NoContent, resetResponse.StatusCode);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task ChangePassword_ShouldReturnUnauthorized_WhenNotLoggedIn()
     {
         // Arrange
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+                    $"UserId=");
+
         var updatePasswordCommand = new UpdatePasswordCommand("Password123!", "NewPassword123!");
 
         // Act
@@ -185,11 +194,13 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task ChangePassword_ShouldReturnBadRequest_WhenIncorrectPassword()
     {
         // Arrange
         await UsersDataHelper.CreateSampleData(_factory);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}");
 
         var currentPassword = "IncorrectPassword";
         var newPassword = "NewPassword123!";
@@ -206,16 +217,13 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("Password is incorrect", problemDetails.Detail);
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task Logout_ShouldReturnNoContent_WhenAuthorizedUserLogout()
     {
         // Arrange
-        var loginRequest = new LoginRequest
-        {
-            Email = "administrator@localhost",
-            Password = "Administrator1!",
-        };
-        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
+        await UsersDataHelper.CreateSampleData(_factory);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+                    $"UserId={UsersDataHelper.TestUserId}");
 
         // Act
         var response = await _httpClient.PostAsJsonAsync("/api/auth/logout", new { });
@@ -233,11 +241,12 @@ public class AuthTests : IClassFixture<TestWebApplicationFactory<Program>>
 
     }
 
-    [Fact(Skip = "For smoke test")]
+    [Fact]
     public async Task Logout_ShouldReturnUnauthorized_WhenUserNotLoggedIn()
     {
         // Arrange
-
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+                    $"UserId=");
         // Act
         var response = await _httpClient.PostAsJsonAsync("/api/auth/logout", new { });
 

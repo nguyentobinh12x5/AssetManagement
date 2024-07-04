@@ -7,15 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using Web.IntegrationTests.Data;
+
 namespace Web.IntegrationTests.Helpers;
 
 public class TestWebApplicationFactory<TProgram>
     : WebApplicationFactory<TProgram> where TProgram : class
 {
-    public string TestUserId { get; set; } = UsersDataHelper.TestUserId;
-    public string TestUserName { get; set; } = UsersDataHelper.TestUserName;
-    public string TestUserLocation { get; set; } = UsersDataHelper.TestLocation;
-
     protected override IHost CreateHost(IHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -38,19 +36,6 @@ public class TestWebApplicationFactory<TProgram>
                 services.Remove(dbConnectionDescriptor);
             }
 
-            // Remove existing authentication services
-            var authServiceDescriptor = services.SingleOrDefault(
-                d => d.ServiceType == typeof(Microsoft.AspNetCore.Authentication.IAuthenticationService));
-            if (authServiceDescriptor != null)
-            {
-                services.Remove(authServiceDescriptor);
-            }
-
-            services.AddDbContext<ApplicationDbContext>((container, options) =>
-            {
-                options.UseInMemoryDatabase(databaseName: "AssetManagement_Integration_Tests");
-            });
-
             // // Remove the existing UserManager registration
             // var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(UserManager<ApplicationUser>));
             // if (descriptor != null)
@@ -69,15 +54,22 @@ public class TestWebApplicationFactory<TProgram>
             {
                 options.DefaultAuthenticateScheme = "TestScheme";
                 options.DefaultChallengeScheme = "TestScheme";
-            }).AddScheme<TestAuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options =>
+            }).AddScheme<TestAuthenticationSchemeOptions, TestAuthHandler>("TestScheme", options => { });
+
+            services.AddDbContext<ApplicationDbContext>((container, options) =>
             {
-                options.UserId = UsersDataHelper.TestUserId;
-                options.UserName = TestUserName ?? String.Empty;
-                options.Location = TestUserLocation ?? String.Empty;
+                options.UseInMemoryDatabase(databaseName: "AssetManagement_Integration_Tests");
             });
         });
 
 
         return base.CreateHost(builder);
+    }
+    public void ResetDatabase()
+    {
+        using var scope = Services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.EnsureDeleted();
+        dbContext.SaveChanges();
     }
 }

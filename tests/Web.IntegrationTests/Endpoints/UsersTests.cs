@@ -37,7 +37,6 @@ namespace Web.IntegrationTests.Endpoints
         {
             _factory = factory;
             _httpClient = _factory.GetApplicationHttpClient();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme");
 
         }
 
@@ -46,6 +45,9 @@ namespace Web.IntegrationTests.Endpoints
         {
             // Arrange
             await UsersDataHelper.CreateSampleData(_factory);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+                $"UserId={UsersDataHelper.TestUserId};" +
+                $"Location={UsersDataHelper.TestLocation}");
 
             using var scope = _factory.Services.CreateScope();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -59,7 +61,7 @@ namespace Web.IntegrationTests.Endpoints
             Assert.NotNull(users);
             Assert.NotEmpty(users.Items);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(userManager.Users.Where(u => u.Location.Equals(_factory.TestUserLocation)).Count(), users.TotalCount);
+            Assert.Equal(userManager.Users.Where(u => u.Location.Equals(UsersDataHelper.TestLocation)).Count(), users.TotalCount);
             Assert.Equal(1, users.PageNumber);
         }
 
@@ -69,6 +71,8 @@ namespace Web.IntegrationTests.Endpoints
         {
             // Arrange
             await UsersDataHelper.CreateSampleData(_factory);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+                $"UserId={UsersDataHelper.TestUserId}");
 
             using var scope = _factory.Services.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -106,6 +110,11 @@ namespace Web.IntegrationTests.Endpoints
         public async Task Create_User_Endpoint_Returns_Success()
         {
             // Arrange
+            await UsersDataHelper.CreateSampleData(_factory);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+                $"UserId={UsersDataHelper.TestUserId};" +
+                $"Location={UsersDataHelper.TestLocation}");
+
             var command = new CreateUserCommand
             {
                 FirstName = "John",
@@ -123,7 +132,7 @@ namespace Web.IntegrationTests.Endpoints
             var response = await _httpClient.PostAsync("/api/users", content);
 
             // Assert
-            Xunit.Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
