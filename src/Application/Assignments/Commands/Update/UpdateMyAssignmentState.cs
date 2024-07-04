@@ -24,22 +24,28 @@ public class UpdateMyAssignmentStateCommandHandler : IRequestHandler<UpdateMyAss
             .FirstOrDefaultAsync(a => a.Id == request.Id, cancellationToken);
 
         Guard.Against.NotFound(request.Id, assignment);
-
-        assignment.State = request.State;
-
+        
         var asset = await _context.Assets.FirstOrDefaultAsync(a => a.Id == assignment.Asset.Id, cancellationToken);
-
+        
         Guard.Against.NotFound(assignment.Asset.Id, asset);
-
+        
         if (request.State == AssignmentState.Accepted)
         {
-            var state = await _context.AssetStatuses.FirstOrDefaultAsync(e => e.Name == "Assigned");
+            assignment.State = request.State;
+                
+            var state = await _context.AssetStatuses.FirstOrDefaultAsync(e => e.Name == "Assigned", cancellationToken);
+                
             Guard.Against.NotFound("Assigned", state);
+                
             asset.AssetStatus = state;
+        } 
+        else if (request.State == AssignmentState.Declined)
+        {
+            assignment.State = request.State;
         }
-
+            
         await _context.SaveChangesAsync(cancellationToken);
-
+            
         return assignment.Id;
     }
 }
