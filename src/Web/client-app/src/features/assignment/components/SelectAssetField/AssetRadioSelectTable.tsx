@@ -48,15 +48,16 @@ const AssetRadioSelectTable: React.FC<Props> = ({
       });
   }, [selectedValue, items, onSelect]);
 
-  if (!items.length) return <div>No Available Asset</div>;
-
-  if (items.length === 0 && searchTerm) {
+  if (!items.length && searchTerm) {
     return (
       <div className="text-center">
         <p>There's no data, please adjust your search condition</p>
       </div>
     );
   }
+
+  if (!items.length) return <div>No Available Asset</div>;
+
   return (
     <Table
       columns={columns}

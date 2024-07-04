@@ -4,12 +4,15 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
+using AssetManagement.Application.Assets.Commands.Create;
 using AssetManagement.Application.Assets.Commands.Update;
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Domain.Entities;
 
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 
 using Web.IntegrationTests.Data;
 using Web.IntegrationTests.Extensions;
@@ -144,6 +147,207 @@ public class AssetTests : IClassFixture<TestWebApplicationFactory<Program>>
         Assert.Equal("ASSET-00002", asset.Code);
         Assert.Equal("Desktop Dell", asset.Name);
     }
+
+    [Fact]
+    public async Task CreateAsset_ValidCommand_ShouldReturnAssetData()
+    {
+        // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        var command = new CreateNewAssetCommand
+        {
+            Name = "Desktop Hp",
+            Category = "Desktop",
+            InstalledDate = DateTime.UtcNow,
+            Specification = "Spec for asset",
+            State = "Available"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/Assets", command);
+
+        var assetId = await response.Content.ReadFromJsonAsync<int>();
+
+        var actualResponse = await _httpClient.GetAsync($"/api/Assets/{assetId}");
+
+        var actualAsset = await actualResponse.Content.ReadFromJsonAsync<Asset>();
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.NotNull(actualAsset);
+        Assert.Equal(actualAsset.Name, command.Name);
+    }
+
+    [Fact]
+    public async Task CreateAsset_InvalidName_ShouldReturnValidationError()
+    {
+        // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        var command = new CreateNewAssetCommand
+        {
+            Name = "",
+            Category = "Desktop",
+            InstalledDate = DateTime.UtcNow,
+            Specification = "Spec for asset",
+            State = "Available"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/Assets", command);
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("Name", validationErrors.Errors.Keys);
+    }
+
+    [Fact]
+    public async Task CreateAsset_NameTooLong_ShouldReturnValidationError()
+    {
+        // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        var command = new CreateNewAssetCommand
+        {
+            Name = new string('a', 257),
+            Category = "Desktop",
+            InstalledDate = DateTime.UtcNow,
+            Specification = "Spec for asset",
+            State = "Available"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/Assets", command);
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("Name", validationErrors.Errors.Keys);
+    }
+
+    [Fact]
+    public async Task CreateAsset_InvalidCategory_ShouldReturnValidationError()
+    {
+        // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        var command = new CreateNewAssetCommand
+        {
+            Name = "Desktop Hp",
+            Category = "",
+            InstalledDate = DateTime.UtcNow,
+            Specification = "Spec for asset",
+            State = "Available"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/Assets", command);
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("Category", validationErrors.Errors.Keys);
+    }
+
+    [Fact]
+    public async Task CreateAsset_SpecificationTooLong_ShouldReturnValidationError()
+    {
+        // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        var command = new CreateNewAssetCommand
+        {
+            Name = "Desktop Hp",
+            Category = "Desktop",
+            InstalledDate = DateTime.UtcNow,
+            Specification = new string('a', 1201),
+            State = "Available"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/Assets", command);
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("Specification", validationErrors.Errors.Keys);
+    }
+
+    [Fact]
+    public async Task CreateAsset_InstallDateInFuture_ShouldReturnValidationError()
+    {
+        // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        var command = new CreateNewAssetCommand
+        {
+            Name = "Desktop Hp",
+            Category = "Desktop",
+            InstalledDate = DateTime.UtcNow.AddDays(1),
+            Specification = "Spec for asset",
+            State = "Available"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/Assets", command);
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("InstalledDate", validationErrors.Errors.Keys);
+    }
+
+    [Fact]
+    public async Task CreateAsset_InvalidState_ShouldReturnValidationError()
+    {
+        // Arrange
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssetsDataHelper.CreateSampleData(_factory);
+
+        var command = new CreateNewAssetCommand
+        {
+            Name = "Desktop Hp",
+            Category = "Desktop",
+            InstalledDate = DateTime.UtcNow,
+            Specification = "Spec for asset",
+            State = ""
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/Assets", command);
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("State", validationErrors.Errors.Keys);
+    }
+
 
     [Fact]
     public async Task GetAsset_InvalidId_ShouldReturnNotFound()
