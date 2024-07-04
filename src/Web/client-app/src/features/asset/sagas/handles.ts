@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { call, put } from 'redux-saga/effects';
+import { call, delay, put } from 'redux-saga/effects';
 import {
   createAssetFailure,
   createAssetSuccess,
@@ -29,6 +29,11 @@ import { IAssetDetail } from '../interfaces/IAssetDetail';
 import { ASSETS_LINK } from '../../../constants/pages';
 import { navigateTo } from '../../../utils/navigateUtils';
 import { getAssetByIdSuccess } from '../reducers/asset-detail-slice';
+import { showSuccessToast } from '../../../components/toastify/toast-helper';
+import {
+  CREATE_ASSET_SUCCESS,
+  EDIT_ASSET_SUCCESS,
+} from '../constants/asset-toast-message';
 
 export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
   let query = action.payload;
@@ -63,6 +68,8 @@ export function* handleCreateAsset(action: PayloadAction<ICreateAssetCommand>) {
       createdAssetId
     );
     yield put(createAssetSuccess(createdAsset));
+    yield showSuccessToast(CREATE_ASSET_SUCCESS);
+    yield delay(500);
     yield navigateTo(ASSETS_LINK);
   } catch (error: any) {
     const errorMsg = error.data.detail;
@@ -78,6 +85,8 @@ export function* handleEditAsset(action: PayloadAction<IEditAssetCommand>) {
       action.payload.id
     );
     yield put(editAssetSuccess(updateAsset));
+    yield showSuccessToast(EDIT_ASSET_SUCCESS);
+    yield delay(500);
     yield navigateTo(ASSETS_LINK);
   } catch (error: any) {
     const errorMsg = error.data.detail;

@@ -15,6 +15,7 @@ const AssignmentList = () => {
     handlePaging,
     handleSearch,
     assignments,
+    sortColumnDirection,
   } = useAssignmentList();
 
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const AssignmentList = () => {
           name: hasSortColumn.sortColumn,
           orderBy: hasSortColumn.sortOrder,
         }}
+        sortColumnDirection={sortColumnDirection}
         handleSort={handleSort}
         handlePaging={handlePaging}
       />

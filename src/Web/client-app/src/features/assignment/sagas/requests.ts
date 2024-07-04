@@ -32,9 +32,7 @@ export function createAssignmentRequest(
 }
 
 export function deleteAssigmentRequest(
-    id: number
+  id: number
 ): Promise<AxiosResponse<IAssignmentDetail>> {
-    return RequestService.axios.delete(
-        `${ENDPOINTS.ASSIGNMENTS}/${id}`
-    );
+  return RequestService.axios.delete(`${ENDPOINTS.ASSIGNMENTS}/${id}`);
 }

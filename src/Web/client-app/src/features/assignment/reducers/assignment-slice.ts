@@ -46,6 +46,16 @@ const AssignmentSlice = createSlice({
   initialState,
   name: 'assignment',
   reducers: {
+    setAssignmentQuery: (
+      state: AssignmentState,
+      action: PayloadAction<IAssignmentQuery>
+    ) => {
+      return {
+        ...state,
+        assignmentQuery: action.payload,
+        isDataFetched: false,
+      };
+    },
     getAssignments: (
       state: AssignmentState,
       action: PayloadAction<IAssignmentQuery>
@@ -60,10 +70,13 @@ const AssignmentSlice = createSlice({
       ...state,
       isLoading: true,
     }),
-    deleteAssginments: (state: AssignmentState, action: PayloadAction<number>) => ({
-        ...state,
-        isLoading: true,
-        error: null,
+    deleteAssginments: (
+      state: AssignmentState,
+      action: PayloadAction<number>
+    ) => ({
+      ...state,
+      isLoading: true,
+      error: null,
     }),
     // Success handles
     getAssignmentsSuccess: (
@@ -92,12 +105,15 @@ const AssignmentSlice = createSlice({
         },
       };
     },
-      setDeleteAssignment: (state: AssignmentState, action: PayloadAction<number>) => {
-          state.assignments.items = state.assignments.items.filter(
-              (assignments) => assignments.id !== action.payload.toString()
-        );
-        state.isLoading = false;
-        state.isDataFetched = false;
+    setDeleteAssignment: (
+      state: AssignmentState,
+      action: PayloadAction<number>
+    ) => {
+      state.assignments.items = state.assignments.items.filter(
+        (assignments) => assignments.id !== action.payload.toString()
+      );
+      state.isLoading = false;
+      state.isDataFetched = false;
     },
     // Failure handles
     getAssignmentsFailure: (
@@ -108,26 +124,6 @@ const AssignmentSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    getAssignmentStatuses: (state: AssignmentState) => {
-      state.isLoading = true;
-    },
-    setAssignmentStatuses: (
-      state: AssignmentState,
-      action: PayloadAction<string[]>
-    ) => {
-      state.states = ['All', ...action.payload];
-      state.isLoading = false;
-    },
-    setAssignmentQuery: (
-      state: AssignmentState,
-      action: PayloadAction<IAssignmentQuery>
-    ) => {
-      return {
-        ...state,
-        assignmentQuery: action.payload,
-        isDataFetched: false,
-      };
-    },
     createAssignmentFailure: (
       state: AssignmentState,
       action: PayloadAction<string>
@@ -135,11 +131,14 @@ const AssignmentSlice = createSlice({
       ...state,
       isLoading: false,
       error: action.payload,
-      }),
-    deleteAssignmentFailure: (state: AssignmentState, action: PayloadAction<string>) => ({
-        ...state,
-        isLoading: false,
-        error: action.payload,
+    }),
+    deleteAssignmentFailure: (
+      state: AssignmentState,
+      action: PayloadAction<string>
+    ) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
     }),
     resetAssetSlice: () => initialState,
   },
@@ -153,9 +152,9 @@ export const {
   createAssignment,
   createAssignmentSuccess,
   createAssignmentFailure,
-    deleteAssginments,
-    setDeleteAssignment,
-    deleteAssignmentFailure,
+  deleteAssginments,
+  setDeleteAssignment,
+  deleteAssignmentFailure,
 } = AssignmentSlice.actions;
 
 export default AssignmentSlice.reducer;

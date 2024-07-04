@@ -193,7 +193,7 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
     public async Task UpdateMyAssignment_InvalidId_ShouldReturnBadRequest()
     {
         // Arrange
-       
+
         await UsersDataHelper.CreateSampleData(_factory);
         await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
         // Act

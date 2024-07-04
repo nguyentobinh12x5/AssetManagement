@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PayloadAction } from '@reduxjs/toolkit';
-import { call, put } from 'redux-saga/effects';
+import { call, delay, put } from 'redux-saga/effects';
 import { IUserCommand } from '../interfaces/IUserCommand';
 import {
   setCreateUser,
@@ -25,6 +25,11 @@ import {
 import { IUserQuery } from '../interfaces/common/IUserQuery';
 import { navigateTo } from '../../../utils/navigateUtils';
 import { USER_LINK } from '../../../constants/pages';
+import { showSuccessToast } from '../../../components/toastify/toast-helper';
+import {
+  CREATE_USER_SUCCESS,
+  EDIT_USER_SUCCESS,
+} from '../constants/user-toast-message';
 
 export function* handleGetUsers(action: PayloadAction<IUserQuery>) {
   const userQuery = action.payload;
@@ -42,6 +47,8 @@ export function* handleEditUser(action: PayloadAction<IUserCommand>) {
   try {
     yield call(editUserRequest, user);
     yield put(updateUser(user));
+    yield showSuccessToast(EDIT_USER_SUCCESS);
+    yield delay(300);
     navigateTo(USER_LINK);
   } catch (error: any) {
     const errorResponse = error.response.data;
@@ -93,6 +100,8 @@ export function* handleCreateUser(action: PayloadAction<IUserCommand>) {
     const { data: createdUser } = yield call(getUserByIdRequest, data);
 
     yield put(setCreateUser(createdUser));
+    yield showSuccessToast(CREATE_USER_SUCCESS);
+    yield delay(300);
     navigateTo(USER_LINK);
   } catch (error: any) {
     const errorResponse = error.response.data;

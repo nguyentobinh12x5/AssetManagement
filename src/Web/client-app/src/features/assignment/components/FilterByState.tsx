@@ -8,7 +8,9 @@ import {
 } from "../constants/assignment-state";
 
 interface FilterByStateProps {}
-const StateKeys = Object.keys(AssignmentState).filter((_) => isNaN(Number(_)));
+const StateKeys = Object.keys(AssignmentState)
+  .filter((_) => isNaN(Number(_)))
+  .filter((_) => _ !== "Declined");
 
 const FilterByState: React.FC<FilterByStateProps> = () => {
   const {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { setNavigate } from "../../utils/navigateUtils";
 
 interface IProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const NavigateContext: React.FC<IProps> = ({ children }) => {

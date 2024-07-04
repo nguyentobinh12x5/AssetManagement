@@ -5,7 +5,7 @@ import {
   getAssignmentByIdRequest,
   getAssignmentsRequest,
 } from './requests';
-import { call, put } from 'redux-saga/effects';
+import { call, delay, put } from 'redux-saga/effects';
 import {
   createAssignmentFailure,
   createAssignmentSuccess,
@@ -19,7 +19,10 @@ import {
   getAssignmentByIdSuccess,
 } from '../reducers/assignment-detail-slice';
 import { ICreateAssignmentCommand } from '../interfaces/ICreateAssignmentCommand';
-import { showErrorToast } from '../../../components/toastify/toast-helper';
+import {
+  showErrorToast,
+  showSuccessToast,
+} from '../../../components/toastify/toast-helper';
 import { IAssignmentQuery } from '../interfaces/commom/IAssigmentQuery';
 import {
   AssignmentState,
@@ -27,6 +30,7 @@ import {
 } from '../constants/assignment-state';
 import { ASSIGNMENTS_LINK } from '../../../constants/pages';
 import { navigateTo } from '../../../utils/navigateUtils';
+import { CREATE_ASSIGNMENT_SUCCESS } from '../constants/assignment-toast-message';
 
 export function* handleGetAssignments(action: PayloadAction<IAssignmentQuery>) {
   try {
@@ -67,6 +71,8 @@ export function* handleCreateAssignment(
     );
     const { data } = yield call(getAssignmentByIdRequest, assignmentId);
     yield put(createAssignmentSuccess(data));
+    yield showSuccessToast(CREATE_ASSIGNMENT_SUCCESS);
+    yield delay(500);
     yield navigateTo(ASSIGNMENTS_LINK);
   } catch (error: any) {
     const errorResponse = error.response.data;
@@ -77,12 +83,12 @@ export function* handleCreateAssignment(
   }
 }
 export function* handleDeleteAssignment(action: PayloadAction<number>) {
-    try {
-        const id = action.payload;
-        yield call(deleteAssigmentRequest, id);
-        yield put(setDeleteAssignment(id));
-    } catch (error: any) {
-        const errorMsg = error.response.data.detail;
-        yield put(deleteAssignmentFailure(errorMsg));
-    }
+  try {
+    const id = action.payload;
+    yield call(deleteAssigmentRequest, id);
+    yield put(setDeleteAssignment(id));
+  } catch (error: any) {
+    const errorMsg = error.response.data.detail;
+    yield put(deleteAssignmentFailure(errorMsg));
+  }
 }

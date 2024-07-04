@@ -1,4 +1,4 @@
-﻿using AssetManagement.Application.Assignments.Commands.Update;
+using AssetManagement.Application.Assignments.Commands.Update;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Entities;
 using AssetManagement.Domain.Enums;
@@ -33,12 +33,12 @@ public class UpdateMyAssigmentStateTests
         {
             Id = 1,
             State = AssignmentState.WaitingForAcceptance,
-            Asset = new Asset { Id = 1, Code = "A1"},
+            Asset = new Asset { Id = 1, Code = "A1" },
         };
 
 
         var assignedStatus = new AssetStatus { Id = 1, Name = "Assigned" };
-        
+
         var mockAssignmentSet = new List<Assignment> { assignment }
             .AsQueryable()
             .BuildMockDbSet();
@@ -68,7 +68,7 @@ public class UpdateMyAssigmentStateTests
         _contextMock.Verify(m => m.SaveChangesAsync(CancellationToken.None), Times.Once);
 
     }
-    
+
     [Test]
     public async Task Handle_ShouldUpdateMyAssignmentStateWithDeclined_WhenAssignmentExists()
     {
@@ -76,9 +76,9 @@ public class UpdateMyAssigmentStateTests
         {
             Id = 1,
             State = AssignmentState.WaitingForAcceptance,
-            Asset = new Asset { Id = 1, Code = "A1"},
+            Asset = new Asset { Id = 1, Code = "A1" },
         };
-        
+
         var mockAssignmentSet = new List<Assignment> { assignment }
             .AsQueryable()
             .BuildMockDbSet();
@@ -103,7 +103,7 @@ public class UpdateMyAssigmentStateTests
         _contextMock.Verify(m => m.SaveChangesAsync(CancellationToken.None), Times.Once);
 
     }
-    
+
     [Test]
     public void Handle_ShouldThrowNotFoundException_WhenAssignmentNotExist()
     {

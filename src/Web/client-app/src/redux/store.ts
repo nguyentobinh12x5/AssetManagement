@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './rootReducer';
-import rootSaga from './rootSagas';
+import rootSagas from './rootSagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
@@ -12,7 +12,7 @@ export const store = configureStore({
     getDefaultMiddleware().concat(middleware),
 });
 
-rootSaga.map((saga) => sagaMiddleware.run(saga));
+sagaMiddleware.run(rootSagas);
 
 export type RootDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

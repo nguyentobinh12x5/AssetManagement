@@ -5,14 +5,16 @@ import changePasswordSagas from '../features/auth/changepassword/sagas';
 import assetSagas from '../features/asset/sagas';
 import assignmentSagas from '../features/assignment/sagas';
 import myAssignmentSagas from '../features/home/sagas';
+import { all } from 'redux-saga/effects';
 
-const rootSagas = [
-  todoItemSagas,
-  authSagas,
-  changePasswordSagas,
-  userSagas,
-  assetSagas,
-  assignmentSagas,
-  myAssignmentSagas,
-];
-export default rootSagas;
+export default function* rootSagas() {
+  yield all([
+    todoItemSagas(),
+    authSagas(),
+    changePasswordSagas(),
+    userSagas(),
+    assetSagas(),
+    assignmentSagas(),
+    myAssignmentSagas(),
+  ]);
+}

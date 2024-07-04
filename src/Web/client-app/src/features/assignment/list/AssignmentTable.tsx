@@ -14,10 +14,24 @@ import {
 } from "react-bootstrap-icons";
 import Loading from "../../../components/Loading";
 import { IBriefAssignment } from "../interfaces/IBriefAssignment";
-import { AssignmentState, WATTING_FOR_ACCEPTANCE } from "../constants/assignment-state";
+import {
+  AssignmentState,
+  WATTING_FOR_ACCEPTANCE,
+} from "../constants/assignment-state";
 import { formatDate } from "../../../utils/dateUtils";
 import DetailForm from "../detail/DetailForm";
 import ConfirmDelete from "../delete/deleteAssignmentModal";
+import { calculateNo, PaginationInfo } from "../../../utils/appUtils";
+
+const columns: IColumnOption[] = [
+  { name: "No.", value: "Id" },
+  { name: "Asset Code", value: "Asset.Code" },
+  { name: "Asset Name", value: "Asset.Name" },
+  { name: "Assigned To", value: "AssignedTo" },
+  { name: "Assigned By", value: "AssignedBy" },
+  { name: "Assigned Date", value: "AssignedDate" },
+  { name: "State", value: "State" },
+];
 
 type AssignmentTableProps = {
   assignments: IPagedModel<IBriefAssignment>;
@@ -25,6 +39,7 @@ type AssignmentTableProps = {
   handlePaging: (page: number) => void;
   sortState: ISortState;
   searchTerm: string;
+  sortColumnDirection: string;
 };
 
 const AssignmentTable: React.FC<AssignmentTableProps> = ({
@@ -33,17 +48,10 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
   searchTerm,
   handleSort,
   handlePaging,
+  sortColumnDirection,
 }) => {
   const { items, pageNumber, totalPages } = assignments;
-  const columns: IColumnOption[] = [
-    { name: "No.", value: "1", disable: true },
-    { name: "Asset Code", value: "Asset.Code" },
-    { name: "Asset Name", value: "Asset.Name" },
-    { name: "Assigned To", value: "AssignedTo" },
-    { name: "Assigned By", value: "AssignedBy" },
-    { name: "Assigned Date", value: "AssignedDate" },
-    { name: "State", value: "State" },
-  ];
+
   const navigate = useNavigate();
   const handleEditClick = (assetId: string) => {
     // Handle navigate(`edit/${assetId}`);
@@ -101,38 +109,43 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
         handleSort={handleSort}
         pagination={pagination}
       >
-        {items?.map((data, index) => (
-          <tr key={data.id} onClick={handleShowDetail.bind(null, data.id)}>
-            <td>{(pageNumber - 1) * 5 + index + 1}</td>
-            <td>{data.assetCode}</td>
-            <td>{data.assetName}</td>
-            <td>{data.assignedTo}</td>
-            <td>{data.assignedBy}</td>
-            <td>{formatDate(data.assignedDate)}</td>
-            <td>{AssignmentState[data.state]}</td>
-            <td className="action" onClick={(e) => e.stopPropagation()}>
-              <div className="d-flex gap-3 justify-content-evenly align-items-center">
-                <ButtonIcon
-                  onClick={() => {
-                    handleEditClick(data.id);
-                  }}
-                  disable={false}
-                >
-                  <PencilFill />
-                </ButtonIcon>
-                <ButtonIcon
-                  onClick={() => handleConfirmDelete(data.id)}
-                  disable={AssignmentState[data.state] === WATTING_FOR_ACCEPTANCE}
-                >
-                  <XCircle color="red" />
-                </ButtonIcon>
-                <ButtonIcon>
-                  <ArrowCounterclockwise color="blue" />
-                </ButtonIcon>
-              </div>
-            </td>
-          </tr>
-        ))}
+        {items?.map((data, index) => {
+          const paginationInfo: PaginationInfo = {
+            pageNumber: pageNumber,
+            pageSize: 5,
+            totalPages: totalPages,
+            sortDirection: sortColumnDirection,
+          };
+          return (
+            <tr key={data.id} onClick={handleShowDetail.bind(null, data.id)}>
+              <td>{calculateNo(index, paginationInfo)}</td>
+              <td>{data.assetCode}</td>
+              <td>{data.assetName}</td>
+              <td>{data.assignedTo}</td>
+              <td>{data.assignedBy}</td>
+              <td>{formatDate(data.assignedDate)}</td>
+              <td>{AssignmentState[data.state]}</td>
+              <td className="action" onClick={(e) => e.stopPropagation()}>
+                <div className="d-flex gap-3 justify-content-evenly align-items-center">
+                  <ButtonIcon
+                    onClick={() => {
+                      handleEditClick(data.id);
+                    }}
+                    disable={false}
+                  >
+                    <PencilFill />
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <XCircle color="red" />
+                  </ButtonIcon>
+                  <ButtonIcon>
+                    <ArrowCounterclockwise color="blue" />
+                  </ButtonIcon>
+                </div>
+              </td>
+            </tr>
+          );
+        })}
       </Table>
       {idDelete && (
         <ConfirmDelete Id={idDelete} hideModal={handleCloseConfirmDelete} />

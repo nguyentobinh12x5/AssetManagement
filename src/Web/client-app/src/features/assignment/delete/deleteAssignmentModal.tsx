@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import ConfirmModal from "../../../components/confirmModal/ConfirmModal";
 import { deleteAssginments } from "../reducers/assignment-slice";
 
-
 interface Props {
   Id: number | null;
   hideModal: () => void;
