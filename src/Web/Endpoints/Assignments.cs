@@ -1,4 +1,6 @@
+using AssetManagement.Application.Assets.Commands.Delete;
 using AssetManagement.Application.Assignments.Commands.Create;
+using AssetManagement.Application.Assignments.Commands.Delete;
 using AssetManagement.Application.Assignments.Commands.Update;
 using AssetManagement.Application.Assignments.Queries.GetAssignment;
 using AssetManagement.Application.Assignments.Queries.GetAssignmentsWithPagination;
@@ -17,7 +19,8 @@ public class Assignments : EndpointGroupBase
             .MapGet(GetMyAssignments, "me")
             .MapPost(AddAssignment)
             .MapGet(GetAssignmentById, "{id}")
-            .MapPatch(UpdateMyAssignmentState, "{id}");
+            .MapPatch(UpdateMyAssignmentState, "{id}")
+            .MapDelete(DeleteAssignment, "{id}");
     }
 
     public Task<PaginatedList<AssignmentBriefDto>> GetAssignmentList(ISender sender, [AsParameters] GetAssignmentsWithPaginationQuery query)
@@ -46,6 +49,11 @@ public class Assignments : EndpointGroupBase
             return Results.BadRequest();
         }
         await sender.Send(command);
+        return Results.NoContent();
+    }
+    public async Task<IResult> DeleteAssignment(ISender sender, int id)
+    {
+        await sender.Send(new DeleteAssignmentCommand(id));
         return Results.NoContent();
     }
 }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
@@ -7,6 +7,7 @@ import {
   getAssignments,
   setAssignmentQuery,
 } from '../reducers/assignment-slice';
+import { IAssignmentQuery } from '../interfaces/commom/IAssigmentQuery';
 
 const useAssignmentList = () => {
   const dispatch = useAppDispatch();
@@ -14,69 +15,61 @@ const useAssignmentList = () => {
     (state) => state.assignments
   );
 
-  const updateMainSortState = (
-    sortColumnName: string,
-    sortColumnDirection: string
-  ) => {
-    dispatch(
-      setAssignmentQuery({
-        ...assignmentQuery,
-        sortColumnName,
-        sortColumnDirection,
-      })
-    );
-  };
-
-  const updateMainPagingState = (page: number) => {
-    dispatch(
-      setAssignmentQuery({
-        ...assignmentQuery,
-        pageNumber: page,
-      })
-    );
-  };
-
-  const { hasSortColumn, handleSort } = useAppSort(
-    DEFAULT_MANAGE_ASSIGNMENT_SORT_COLUMN,
-    updateMainSortState
+  const updateQuery = useCallback(
+    (newQuery: Partial<IAssignmentQuery>) => {
+      dispatch(setAssignmentQuery({ ...assignmentQuery, ...newQuery }));
+    },
+    [dispatch, assignmentQuery]
   );
-  const { handlePaging } = useAppPaging(updateMainPagingState);
 
-  const handleFilterByState = (status: string[]) => {
-    dispatch(
-      setAssignmentQuery({
-        ...assignmentQuery,
-        pageNumber: 1,
-        state: status,
-      })
-    );
-  };
+  const updateMainSortState = useCallback(
+    (sortColumnName: string, sortColumnDirection: string) => {
+      updateQuery({ sortColumnName, sortColumnDirection });
+    },
+    [updateQuery]
+  );
 
-  const handleSearch = (searchTerm: string) => {
-    dispatch(
-      setAssignmentQuery({
-        ...assignmentQuery,
-        pageNumber: 1,
-        searchTerm: searchTerm.trim(),
-      })
-    );
-  };
+  const updateMainPagingState = useCallback(
+    (page: number) => {
+      updateQuery({ pageNumber: page });
+    },
+    [updateQuery]
+  );
 
-  const handleFilterByAssignedDate = (assignedDate: string) => {
-    dispatch(
-      setAssignmentQuery({
-        ...assignmentQuery,
-        pageNumber: 1,
-        assignedDate,
-      })
-    );
-  };
+  const handleFilterByState = useCallback(
+    (status: string[]) => {
+      updateQuery({ pageNumber: 1, state: status });
+    },
+    [updateQuery]
+  );
+
+  const handleSearch = useCallback(
+    (searchTerm: string) => {
+      updateQuery({ pageNumber: 1, searchTerm: searchTerm.trim() });
+    },
+    [updateQuery]
+  );
+
+  const handleFilterByAssignedDate = useCallback(
+    (assignedDate: string) => {
+      updateQuery({ pageNumber: 1, assignedDate });
+    },
+    [updateQuery]
+  );
+
   // Fetch Data
   useEffect(() => {
     if (!isDataFetched) {
       dispatch(getAssignments(assignmentQuery));
     }
   }, [dispatch, assignmentQuery, isDataFetched]);
+
+  // Pagination and Sorting hooks
+  const { hasSortColumn, handleSort } = useAppSort(
+    DEFAULT_MANAGE_ASSIGNMENT_SORT_COLUMN,
+    updateMainSortState
+  );
+  const { handlePaging } = useAppPaging(updateMainPagingState);
 
   return {
     hasSortColumn,
@@ -87,6 +80,7 @@ const useAssignmentList = () => {
     handleFilterByState,
     handleSearch,
     handleFilterByAssignedDate,
+    sortColumnDirection: assignmentQuery.sortColumnDirection,
   };
 };
 

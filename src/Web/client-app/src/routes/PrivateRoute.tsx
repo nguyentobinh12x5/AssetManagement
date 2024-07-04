@@ -22,27 +22,26 @@ const PrivateRoute: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    if (!isCheckingSession && !isAuthenticated) navigate(LOGIN_LINK);
-  }, [isAuthenticated, isCheckingSession, navigate]);
+    if (isCheckingSession) return;
 
-  useEffect(() => {
-    if (user) {
-      const isInRole = roles && roles.some((r) => user.roles.includes(r));
-      if (!isInRole) {
-        navigate(ACCESS_DENIED_LINK);
-      }
+    if (!isAuthenticated) {
+      navigate(LOGIN_LINK);
+      return;
     }
-  }, [navigate, roles, user]);
+
+    if (user && roles && !roles.some((r) => user.roles.includes(r))) {
+      navigate(ACCESS_DENIED_LINK);
+    }
+  }, [isAuthenticated, isCheckingSession, navigate, roles, user]);
+
+  const isInRole = useMemo(
+    () => user && roles && roles.some((r) => user.roles.includes(r)),
+    [roles, user]
+  );
 
   if (isCheckingSession) return <InlineLoader />;
-
   if (!isAuthenticated) return <Navigate to={LOGIN_LINK} />;
-
-  if (user) {
-    if (!(roles && roles.some((r) => user.roles.includes(r)))) {
-      return <Navigate to={ACCESS_DENIED_LINK} />;
-    }
-  }
+  if (!isInRole) return <Navigate to={ACCESS_DENIED_LINK} />;
 
   return <Layout showSidebar={showSidebar}>{children}</Layout>;
 };

@@ -90,10 +90,8 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   }, []);
 
-  // Set the toast instance in the helper
-  useEffect(() => {
-    setToast(toast);
-  }, [toast]);
+  setToast(toast);
+
   return (
     <ToastContext.Provider value={{ toasts, toast, removeToast }}>
       {children}

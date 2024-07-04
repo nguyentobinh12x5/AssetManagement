@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
+using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assignments.Commands.Create;
 using AssetManagement.Application.Assignments.Commands.Update;
 using AssetManagement.Application.Assignments.Queries.GetAssignment;
@@ -192,13 +193,9 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
     public async Task UpdateMyAssignment_InvalidId_ShouldReturnBadRequest()
     {
         // Arrange
-        await AssetsDataHelper.CreateSampleData(_factory);
+
         await UsersDataHelper.CreateSampleData(_factory);
         await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
-
-        var loginRequest = new LoginRequest { Email = "user2@test.com", Password = "Password123!" };
-
-        await _httpClient.PostAsJsonAsync("/api/auth/login?useCookies=true", loginRequest);
         // Act
         var command = new UpdateMyAssignmentStateCommand
         {
@@ -212,5 +209,36 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
+    [Fact(Skip = "Smoke Test")]
+    public async Task DeleteAssignment_ShouldReturnNoContent_WhenAssignmentExists()
+    {
+        // Arrange
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
 
+        var assignment = await _httpClient.GetFromJsonAsync<AssignmentDto>("/api/Assignments/1");
+        Assert.NotNull(assignment);
+
+        // Act
+        var response = await _httpClient.DeleteAsync("/api/Assignments/1");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+
+
+        var getResponse = await _httpClient.GetAsync("/api/Assignments/1");
+        Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteAssignment_ShouldReturnNotFound_WhenAssignmentDoesNotExist()
+    {
+        // Arrange
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        // Act
+        var response = await _httpClient.DeleteAsync("/api/Assignments/100");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }

@@ -1,7 +1,8 @@
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
+import { Suspense } from "react";
 import { useAppDispatch, useAppState } from "../../redux/redux-hooks";
 import { getUserInfo } from "./reducers/auth-slice";
-import FirtimeLoginChangePassword from "./firstime-login";
+import FirstTimeLoginChangePassword from "./firstime-login";
 
 interface Props {
   children: React.ReactNode;
@@ -12,16 +13,23 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const checkAuthSession = () => {
+    if (!user) {
       dispatch(getUserInfo());
-    };
-    if (!user) checkAuthSession();
+    }
   }, [dispatch, user]);
+
+  const shouldRenderChangePassword = useMemo(
+    () => user && user.mustChangePassword,
+    [user]
+  );
+
   return (
-    <Suspense>
-      {user && user.mustChangePassword && <FirtimeLoginChangePassword />}
-      {children}
-    </Suspense>
+    <>
+      {shouldRenderChangePassword && <FirstTimeLoginChangePassword />}
+      {user ? (
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+      ) : null}
+    </>
   );
 };
 

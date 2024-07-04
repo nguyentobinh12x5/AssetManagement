@@ -1,3 +1,4 @@
+import SORT_TYPE from '../components/table/constants/SortType';
 import { ASCENDING, DESCENDING } from '../constants/paging';
 import ISort from '../interfaces/ISort';
 
@@ -24,8 +25,26 @@ const paramsSerializer = (params: any) => {
   return searchParams.toString();
 };
 
+export interface PaginationInfo {
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number; // or totalPages, depending on your setup
+  sortDirection: string;
+}
+
+function calculateNo(
+  index: number,
+  { pageNumber, pageSize, totalPages, sortDirection }: PaginationInfo
+): number {
+  if (sortDirection === SORT_TYPE.ASCENDING) {
+    return (pageNumber - 1) * pageSize + index + 1;
+  } else {
+    return totalPages * pageSize - ((pageNumber - 1) * pageSize + index);
+  }
+}
+
 const serilizeArrayQuery = (values: any[], key: string) => {
   return values.reduce((accum, curr) => accum + `&${key}=${curr}`, '');
 };
 
-export { getSortOrder, paramsSerializer, serilizeArrayQuery };
+export { getSortOrder, paramsSerializer, serilizeArrayQuery, calculateNo };
