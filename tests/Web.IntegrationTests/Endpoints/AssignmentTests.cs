@@ -4,10 +4,13 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 
+using Ardalis.GuardClauses;
+
 using AssetManagement.Application.Assets.Queries.GetAsset;
 using AssetManagement.Application.Assignments.Commands.Create;
 using AssetManagement.Application.Assignments.Commands.Update;
 using AssetManagement.Application.Assignments.Queries.GetAssignment;
+using AssetManagement.Application.Assignments.Queries.GetAssignmentsWithPagination;
 using AssetManagement.Application.Assignments.Queries.GetMyAssignments;
 using AssetManagement.Application.Common.Models;
 using AssetManagement.Domain.Enums;
@@ -17,6 +20,7 @@ using FluentValidation.Results;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
 using Web.IntegrationTests.Data;
@@ -143,6 +147,145 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         // Assert
         Assert.NotNull(assignments);
         Assert.Equal(2, assignments.Items.Count);
+    }
+
+    [Fact]
+    public async Task GetAssignments_WithMixedFilter_ShouldReturnAssignments()
+    {
+        // Arrange
+        _factory.ResetDatabase();
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName=user2@test.com");
+
+        var query = new GetAssignmentsWithPaginationQuery
+        {
+            PageNumber = 1,
+            PageSize = 5,
+            SortColumnName = "Asset.Code",
+            SortColumnDirection = "Ascending",
+            State = ["Accepted"],
+            AssignedDate = DateTime.UtcNow.ToShortDateString(),
+            SearchTerm = "user1"
+        };
+
+        var queryString = $"pageNumber={query.PageNumber}&pageSize={query.PageSize}&sortColumnName={query.SortColumnName}&sortColumnDirection={query.SortColumnDirection}" +
+            $"&state={string.Join(",", query.State)}" +
+            $"&assignedDate={query.AssignedDate}" +
+            $"&searchTerm={query.SearchTerm}";
+
+        // Act
+        var response = await _httpClient.GetAsync($"/api/Assignments?{queryString}");
+
+        // Assert
+        var assignments = await response.Content.ReadFromJsonAsync<PaginatedList<AssignmentBriefDto>>();
+
+        Guard.Against.Null(assignments);
+        var expectedAssignment = assignments.Items.First();
+        Assert.NotNull(assignments);
+        Assert.True(assignments.Items.Count > 0);
+        Assert.Contains("user1", expectedAssignment.AssignedBy);
+        Assert.Equal(DateTime.UtcNow.Date, expectedAssignment.AssignedDate.Date);
+        Assert.Equal(AssignmentState.Accepted, expectedAssignment.State);
+    }
+
+    [Fact]
+    public async Task GetAssignments_InvalidPageNumber_ShouldReturnValidationError()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}" +
+            ";UserName=user2@test.com");
+
+        // Act
+        var response = await _httpClient.GetAsync("/api/Assignments?pageNumber=0&pageSize=5&sortColumnName=Asset.Code&sortColumnDirection=Ascending");
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("PageNumber", validationErrors.Errors.Keys);
+    }
+    [Fact]
+    public async Task GetAssignments_InvalidPageSize_ShouldReturnValidationError()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}" +
+            ";UserName=user2@test.com");
+
+        // Act
+        var response = await _httpClient.GetAsync("/api/Assignments?pageNumber=1&pageSize=0&sortColumnName=Asset.Code&sortColumnDirection=Ascending");
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("PageSize", validationErrors.Errors.Keys);
+    }
+
+    [Fact]
+    public async Task GetAssignments_EmptySortColumnName_ShouldReturnValidationError()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}" +
+            ";UserName=user2@test.com");
+
+        // Act
+        var response = await _httpClient.GetAsync("/api/Assignments?pageNumber=1&pageSize=5&sortColumnName=&sortColumnDirection=Ascending");
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("SortColumnName", validationErrors.Errors.Keys);
+    }
+
+    [Fact]
+    public async Task GetAssignments_EmptySortColumnDirection_ShouldReturnValidationError()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId}" +
+            ";UserName=user2@test.com");
+
+        // Act
+        var response = await _httpClient.GetAsync("/api/Assignments?pageNumber=1&pageSize=5&sortColumnName=Asset.Code&sortColumnDirection=");
+
+        // Assert
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        var validationErrors = await response.Content.ReadFromJsonAsync<ValidationProblemDetails>();
+        Assert.NotNull(validationErrors);
+        Assert.Contains("SortColumnDirection", validationErrors.Errors.Keys);
     }
 
     [Fact]
