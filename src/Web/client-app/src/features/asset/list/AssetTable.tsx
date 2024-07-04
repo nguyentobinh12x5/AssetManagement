@@ -14,6 +14,7 @@ import DetailForm from "../detail/DetailForm";
 import DeleteAsset from "../delete/deleteAssetModal";
 import ConfirmDisable from "../../manager-user/components/ConfirmDisable";
 import ConfirmDelete from "../delete/deleteAssetModal";
+import TextWithTooltip from "../../../components/table/helper/TextToolTip";
 
 type AssetTableProps = {
   assets: IPagedModel<IBriefAsset>;
@@ -96,10 +97,18 @@ const AssetTable: React.FC<AssetTableProps> = ({
       >
         {items?.map((data) => (
           <tr key={data.id} onClick={() => handleShowPopup(data.id)}>
-            <td>{data.code}</td>
-            <td>{data.name}</td>
-            <td>{data.category}</td>
-            <td>{data.assetStatus}</td>
+            <td>
+              <TextWithTooltip text={data.code} />
+            </td>
+            <td>
+              <TextWithTooltip text={data.name} />
+            </td>
+            <td>
+              <TextWithTooltip text={data.category} />
+            </td>
+            <td>
+              <TextWithTooltip text={data.assetStatus} />
+            </td>
             <td className="action" onClick={(e) => e.stopPropagation()}>
               <div className="d-flex gap-3 justify-content-evenly align-items-center">
                 <ButtonIcon

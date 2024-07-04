@@ -24,6 +24,7 @@ const AssetRadioSelectTable: React.FC<Props> = ({
     handlePaging,
     sortState,
     handleSort,
+    searchTerm,
     assets: { items, pageNumber, totalPages },
   } = useAssetRadioSelect();
   const pagination: IPagination = {
@@ -40,11 +41,24 @@ const AssetRadioSelectTable: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    if (items.length > 0 && !selectedValue) onSelect(items[0]);
+    if (items.length > 0 && !selectedValue)
+      onSelect(
+        onSelect({
+          id: items[0].id,
+          name: items[0].name,
+        })
+      );
   }, [selectedValue, items, onSelect]);
 
   if (!items.length) return <div>No Available Asset</div>;
 
+  if (items.length === 0 && searchTerm) {
+    return (
+      <div className="text-center">
+        <p>There's no data, please adjust your search condition</p>
+      </div>
+    );
+  }
   return (
     <Table
       columns={columns}
@@ -60,7 +74,7 @@ const AssetRadioSelectTable: React.FC<Props> = ({
               type="radio"
               name={"select-asset"}
               title="select-asset"
-              defaultChecked={
+              checked={
                 selectedValue ? selectedValue.id === data.id : index === 0
               }
               onChange={(e) => {

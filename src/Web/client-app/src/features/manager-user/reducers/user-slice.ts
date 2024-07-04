@@ -157,12 +157,16 @@ const UserSlice = createSlice({
         userName: action.payload.username,
         isDelete: false,
       };
+      const restUsers =
+        state.users.items.length < state.userQuery.pageSize
+          ? state.users.items
+          : state.users.items.slice(1);
 
       return {
         ...state,
         users: {
           ...state.users!,
-          items: [newUser, ...state.users.items],
+          items: [newUser, ...restUsers],
         },
         isLoading: false,
         error: null,
