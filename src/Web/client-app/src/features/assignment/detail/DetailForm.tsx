@@ -10,6 +10,7 @@ import {
 } from "../reducers/assignment-detail-slice";
 import "./AssignmentDetailForm.scss";
 import { AssignmentState } from "../constants/assignment-state";
+import convertnewlinesUtils from "../../../utils/convertnewlinesUtils";
 
 type AssignmentID = {
   id: number;
@@ -76,7 +77,13 @@ const DetailForm: React.FC<AssignmentID> = ({ id, onClose }) => {
             <Row className="mb-3">
               <Col md={3}>Specification</Col>
               <Col md={9} className="multi-line-text">
-                {AssignmentDetail?.specification}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: convertnewlinesUtils(
+                      AssignmentDetail?.specification || ""
+                    ),
+                  }}
+                />
               </Col>
             </Row>
           </div>
@@ -118,7 +125,11 @@ const DetailForm: React.FC<AssignmentID> = ({ id, onClose }) => {
             <Row className="mb-3">
               <Col md={3}>Note</Col>
               <Col md={9} className="multi-line-text">
-                {AssignmentDetail?.note}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: convertnewlinesUtils(AssignmentDetail?.note || ""),
+                  }}
+                />
               </Col>
             </Row>
           </div>
