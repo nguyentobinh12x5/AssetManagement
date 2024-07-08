@@ -181,7 +181,7 @@ public class ReturningRequestsTests : IClassFixture<TestWebApplicationFactory<Pr
             "Assignment.AssignedDate" => ReturningRequestsDataHelper.ReturningRequests.Select(rr => (object)rr.Assignment.AssignedDate).OrderBy(date => date),
             "AcceptedBy" => ReturningRequestsDataHelper.ReturningRequests.Select(rr => rr.AcceptedBy ?? String.Empty).Order(),
             "ReturnedDate" => ReturningRequestsDataHelper.ReturningRequests.Select(rr => rr.ReturnedDate ?? (object)(new DateTime(0, 1, 1))).OrderBy(date => date),
-            "State" => ReturningRequestsDataHelper.ReturningRequests.Select(rr => (object)rr.Assignment.State).OrderBy(state => state),
+            "State" => ReturningRequestsDataHelper.ReturningRequests.Select(rr => (object)rr.State).OrderBy(state => state),
             _ => throw new ArgumentException($"Invalid sort column name: {sortColumnName}")
         };
 
@@ -203,7 +203,7 @@ public class ReturningRequestsTests : IClassFixture<TestWebApplicationFactory<Pr
             "Assignment.AssignedDate" => ReturningRequestsDataHelper.ReturningRequests.Select(m => (object)m.Assignment.AssignedDate).OrderBy(date => date),
             "AcceptedBy" => ReturningRequestsDataHelper.ReturningRequests.Select(m => m.AcceptedBy ?? String.Empty).Order(),
             "ReturnedDate" => ReturningRequestsDataHelper.ReturningRequests.Select(m => m.ReturnedDate ?? (object)(new DateTime(0, 1, 1))).OrderBy(date => date),
-            "State" => ReturningRequestsDataHelper.ReturningRequests.Select(m => (object)m.Assignment.State).OrderBy(state => state),
+            "State" => ReturningRequestsDataHelper.ReturningRequests.Select(m => (object)m.State).OrderBy(state => state),
             _ => throw new ArgumentException($"Invalid sort column name: {sortColumnName}")
         };
 
