@@ -10,21 +10,21 @@ namespace Web.IntegrationTests.Data
 {
     public static class AssignmentsDataHelper
     {
-        private static readonly List<Category> Categories = new()
+        public static readonly List<Category> Categories = new()
         {
             new Category() { Name = "Laptop", Code = "LAPTOP"},
             new Category() { Name = "Desktop", Code = "DESKTOP"},
             new Category() {  Name = "Monitor", Code = "MONITOR"}
         };
 
-        private static readonly List<AssetStatus> AssetStatuses = new()
+        public static readonly List<AssetStatus> AssetStatuses = new()
         {
             new AssetStatus() {  Name = "Available" },
             new AssetStatus() { Name = "Assigned" },
             new AssetStatus() {  Name = "Under Maintenance" }
         };
 
-        private static readonly List<Asset> AssetsLists = new()
+        public static readonly List<Asset> AssetsLists = new()
         {
             new Asset()
             {
@@ -58,7 +58,7 @@ namespace Web.IntegrationTests.Data
             }
         };
 
-        private static readonly List<Assignment> AssignmentLists = new()
+        public static readonly List<Assignment> AssignmentLists = new()
         {
             new Assignment()
             {
