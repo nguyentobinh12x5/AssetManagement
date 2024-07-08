@@ -41,10 +41,11 @@ const MyAssignmentsTable: React.FC<Props> = ({
     useDetailAssignment();
   const {
     currentSelectedAssignment,
-    isAcceptModal,
+    typeModal,
     handleShowAcceptModal,
     handleShowDeclineModal,
     hideDisableModal,
+    handleShowReturningRequestModal,
   } = useResponseAssignment();
 
   const pagination = useMemo<IPagination>(
@@ -104,7 +105,12 @@ const MyAssignmentsTable: React.FC<Props> = ({
                 >
                   <XLg color="gray" stroke="gray" strokeWidth={1.5} size={20} />
                 </ButtonIcon>
-                <ButtonIcon>
+                <ButtonIcon
+                  disable={
+                    !(data.state === AssignmentState.Accepted)
+                  }
+                  onClick={() => handleShowReturningRequestModal(data.id)}
+                >
                   <ArrowCounterclockwise
                     color="blue"
                     stroke="blue"
@@ -121,7 +127,7 @@ const MyAssignmentsTable: React.FC<Props> = ({
       <ConfirmAssignmentModal
         assignmentId={currentSelectedAssignment}
         hideModal={hideDisableModal}
-        isAcceptModal={isAcceptModal}
+        typeModal={typeModal}
       />
 
       {selectedAssignment && (

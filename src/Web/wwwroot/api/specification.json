@@ -1427,12 +1427,14 @@
         "x-enumNames": [
           "Accepted",
           "WaitingForAcceptance",
-          "Declined"
+          "Declined",
+          "WaitingForReturning"
         ],
         "enum": [
           0,
           1,
-          2
+          2,
+          3
         ]
       },
       "PaginatedListOfMyAssignmentDto": {

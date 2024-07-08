@@ -15,6 +15,7 @@ const ENDPOINTS = {
   MY_ASSIGNMENTS: '/api/Assignments/me',
 
   UPDATE_STATE_ASSIGNMENT: '/api/Assignments',
+  CREATE_RETURNING_REQUEST: '/api/ReturningRequests/Create',
 };
 
 export default ENDPOINTS;

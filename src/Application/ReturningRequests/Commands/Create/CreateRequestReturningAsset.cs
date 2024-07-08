@@ -47,6 +47,9 @@ public class CreateRequestReturningAssetCommandHandler : IRequestHandler<CreateR
         };
 
         _context.ReturningRequests.Add(returningRequest);
+
+        assignment.State = AssignmentState.WaitingForReturning;
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return returningRequest.Id;
