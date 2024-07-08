@@ -106,9 +106,7 @@ const MyAssignmentsTable: React.FC<Props> = ({
                   <XLg color="gray" stroke="gray" strokeWidth={1.5} size={20} />
                 </ButtonIcon>
                 <ButtonIcon
-                  disable={
-                    !(data.state === AssignmentState.Accepted)
-                  }
+                  disable={!(data.state === AssignmentState.Accepted)}
                   onClick={() => handleShowReturningRequestModal(data.id)}
                 >
                   <ArrowCounterclockwise

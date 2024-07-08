@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import {
   getMyAssignmentsRequest,
   updateStateAssignmentRequest,
-  returningAssignmentRequest
+  returningAssignmentRequest,
 } from './requests';
 import { call, put, select } from 'redux-saga/effects';
 import {
@@ -14,7 +14,7 @@ import {
   getMyAssignmentsSuccess,
   setUpdateStateAssignmentError,
   updateStateAssignmentSuccess,
-  updateReturningSuccess
+  updateReturningSuccess,
 } from '../reducers/my-assignment-slice';
 import { AssignmentState } from '../../assignment/constants/assignment-state';
 import { getMyAssignmentsQuery } from './selectors';
@@ -48,9 +48,7 @@ export function* handleUpdateStateAssignment(
   }
 }
 
-export function* handleReturningAssignment(
-  action: PayloadAction<number>
-) {
+export function* handleReturningAssignment(action: PayloadAction<number>) {
   const assignment = action.payload;
   try {
     yield call(returningAssignmentRequest, assignment);

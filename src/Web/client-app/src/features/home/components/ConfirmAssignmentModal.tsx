@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import ConfirmModal from "../../../components/confirmModal/ConfirmModal";
-import { updateStateAssignment, returningAssignment } from "../reducers/my-assignment-slice";
+import {
+  updateStateAssignment,
+  returningAssignment,
+} from "../reducers/my-assignment-slice";
 import { AssignmentState } from "../../assignment/constants/assignment-state";
 
 interface Props {
@@ -33,10 +36,8 @@ const ConfirmAssignmentModal: React.FC<Props> = ({
           state: AssignmentState.Declined,
         })
       );
-    } else if (typeModal ===  AssignmentState["Waiting for returning"]) {
-      dispatch(
-        returningAssignment(assignmentId)
-      );
+    } else if (typeModal === AssignmentState["Waiting for returning"]) {
+      dispatch(returningAssignment(assignmentId));
     }
     hideModal();
   };
@@ -45,22 +46,20 @@ const ConfirmAssignmentModal: React.FC<Props> = ({
     <div>
       <ConfirmModal title="Are you sure?" isShow={assignmentId !== null}>
         <div className="modal-body-content">
-        <p>
-          {typeModal === AssignmentState.Accepted
-            ? "Do you want to accept this assignment?"
-            : typeModal === AssignmentState.Declined
-            ? "Do you want to decline this assignment?"
-            : "Do you want to create a returning request for this asset?"
-          }
-        </p>
+          <p>
+            {typeModal === AssignmentState.Accepted
+              ? "Do you want to accept this assignment?"
+              : typeModal === AssignmentState.Declined
+                ? "Do you want to decline this assignment?"
+                : "Do you want to create a returning request for this asset?"}
+          </p>
           <div className="modal-buttons">
             <button className="btn btn-danger" onClick={handleClick}>
               {typeModal === AssignmentState.Accepted
                 ? "Accept"
                 : typeModal === AssignmentState.Declined
-                ? "Decline"
-                : "Yes"
-              }
+                  ? "Decline"
+                  : "Yes"}
             </button>
             <button
               className="btn btn-light btn-outline-secondary"
@@ -69,7 +68,9 @@ const ConfirmAssignmentModal: React.FC<Props> = ({
                 hideModal();
               }}
             >
-              { typeModal ===  AssignmentState["Waiting for returning"] ? "No" : "Cancel" }
+              {typeModal === AssignmentState["Waiting for returning"]
+                ? "No"
+                : "Cancel"}
             </button>
           </div>
         </div>

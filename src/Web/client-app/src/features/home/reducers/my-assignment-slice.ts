@@ -169,7 +169,7 @@ export const {
   updateStateAssignmentSuccess,
   setIsDataFetched,
   returningAssignment,
-  updateReturningSuccess
+  updateReturningSuccess,
 } = AssignmentSlice.actions;
 
 export default AssignmentSlice.reducer;
