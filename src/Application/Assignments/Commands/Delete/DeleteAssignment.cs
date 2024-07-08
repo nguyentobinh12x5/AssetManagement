@@ -32,15 +32,15 @@ public class DeleteAssignmentCommandHandler : IRequestHandler<DeleteAssignmentCo
         Guard.Against.NotFound(request.Id, assignment);
 
         _context.Assignments.Remove(assignment);
-        
+
         var asset = await _context.Assets.FirstOrDefaultAsync(a => a.Id == assignment.Asset.Id, cancellationToken);
-        
+
         Guard.Against.NotFound(assignment.Asset.Id, asset);
-        
+
         var state = await _context.AssetStatuses.FirstOrDefaultAsync(e => e.Name == "Available", cancellationToken);
-        
+
         Guard.Against.NotFound("Available", state);
-        
+
         asset.AssetStatus = state;
 
         await _context.SaveChangesAsync(cancellationToken);
