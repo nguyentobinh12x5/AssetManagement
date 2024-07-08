@@ -20,14 +20,20 @@ const ReturningSlice = createSlice({
     }),
 
     // Success handles
-    getReturningsSuccess: (state: ReturningState, action: PayloadAction<any>) => ({
+    getReturningsSuccess: (
+      state: ReturningState,
+      action: PayloadAction<any>
+    ) => ({
       ...state,
       isLoading: false,
       returnings: action.payload,
     }),
 
     // Failure handles
-    getReturningsFailure: (state: ReturningState, action: PayloadAction<string>) => ({
+    getReturningsFailure: (
+      state: ReturningState,
+      action: PayloadAction<string>
+    ) => ({
       ...state,
       isLoading: false,
       error: action.payload,
@@ -36,6 +42,6 @@ const ReturningSlice = createSlice({
 });
 
 export const { getReturnings, getReturningsSuccess, getReturningsFailure } =
-ReturningSlice.actions;
+  ReturningSlice.actions;
 
 export default ReturningSlice.reducer;

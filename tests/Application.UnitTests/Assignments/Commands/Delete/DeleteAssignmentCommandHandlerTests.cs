@@ -1,4 +1,5 @@
 ﻿using Ardalis.GuardClauses;
+
 using AssetManagement.Application.Assignments.Commands.Delete;
 using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Domain.Entities;
@@ -40,7 +41,7 @@ namespace AssetManagement.Application.UnitTests.Assignments.Commands.Delete
                 State = AssignmentState.WaitingForAcceptance,
                 Asset = new Asset { Id = 1, Code = "A1" },
             };
-            
+
             var availableStatus = new AssetStatus { Id = 1, Name = "Available" };
             var mockAssignmentSet = new List<Assignment> { assignment }
                 .AsQueryable()
@@ -51,13 +52,13 @@ namespace AssetManagement.Application.UnitTests.Assignments.Commands.Delete
             var mockAssetStatusSet = new List<AssetStatus> { availableStatus }
                 .AsQueryable()
                 .BuildMockDbSet();
-            
+
             _contextMock.Setup(m => m.Assignments).Returns(mockAssignmentSet.Object);
             _contextMock.Setup(m => m.Assets).Returns(mockAssetSet.Object);
             _contextMock.Setup(m => m.AssetStatuses).Returns(mockAssetStatusSet.Object);
-            
+
             var command = new DeleteAssignmentCommand(assignment.Id);
-            
+
             // Act
             await _handler.Handle(command, CancellationToken.None);
             // Assert
@@ -72,13 +73,13 @@ namespace AssetManagement.Application.UnitTests.Assignments.Commands.Delete
             var mockAssignmentSet = new List<Assignment>().AsQueryable().BuildMockDbSet();
 
             _contextMock.Setup(x => x.Assignments).Returns(mockAssignmentSet.Object);
-            
+
             var command = new DeleteAssignmentCommand(1);
-            
+
             Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
             // Act & Assert
-            
+
             act.Should().ThrowAsync<NotFoundException>();
         }
     }

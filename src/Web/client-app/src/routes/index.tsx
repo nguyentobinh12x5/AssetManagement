@@ -8,7 +8,7 @@ import {
   USER,
   ACCESS_DENIED,
   ASSIGNMENTS,
-  RETURNINGS
+  RETURNINGS,
 } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
