@@ -6,11 +6,13 @@ export const AUTH = 'auth/*';
 export const USER = 'user/*';
 export const ACCESS_DENIED = 'access-denied/*';
 export const ASSIGNMENTS = 'assignments/*';
+export const RETURNINGS = 'returnings/*';
 
 export const HOME_LINK = '/';
 export const TODO_ITEM_LINK = '/todoitem';
 export const ASSETS_LINK = '/assets';
 export const ASSIGNMENTS_LINK = '/assignments';
+export const RETURNINGS_LINK = '/returnings';
 
 export const AUTH_LINK = '/auth';
 export const LOGIN_LINK = '/auth/login';
