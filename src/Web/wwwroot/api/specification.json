@@ -654,6 +654,39 @@
         }
       }
     },
+    "/api/ReturningRequests/Create": {
+      "post": {
+        "tags": [
+          "ReturningRequests"
+        ],
+        "operationId": "CreateReturningRequest",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestReturningAssetCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Users": {
       "get": {
         "tags": [
@@ -1582,6 +1615,16 @@
             "items": {
               "type": "string"
             }
+          }
+        }
+      },
+      "CreateRequestReturningAssetCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "assignmentId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
