@@ -48,6 +48,10 @@
     <None Remove="client-app\src\features\manager-user\create\validateSchema.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="client-app\src\features\returning\interfaces\Common\" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <Exec Command="node --version" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
