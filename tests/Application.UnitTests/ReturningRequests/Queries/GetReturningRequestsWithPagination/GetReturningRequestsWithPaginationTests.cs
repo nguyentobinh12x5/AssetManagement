@@ -135,7 +135,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
             PageSize = 10,
             SortColumnName = "Id",
             SortColumnDirection = "asc",
-            ReturnedDate = new DateTime(2024, 7, 13)
+            ReturnedDate = "2024-07-13",
         };
 
         // Act

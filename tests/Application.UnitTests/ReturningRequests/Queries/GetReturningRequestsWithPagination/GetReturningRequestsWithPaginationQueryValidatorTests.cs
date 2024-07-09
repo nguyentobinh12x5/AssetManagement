@@ -1,5 +1,5 @@
 
-using AssetManagement.Application.ReturningRequests.Queries.GetReturningRequestsWithPagination;
+namespace AssetManagement.Application.ReturningRequests.Queries.GetReturningRequestsWithPagination;
 
 using FluentValidation.TestHelper;
 
