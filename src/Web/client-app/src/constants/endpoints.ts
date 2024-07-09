@@ -10,7 +10,7 @@ const ENDPOINTS = {
   DELETE_USER: '/api/users',
 
   ASSETS: '/api/Assets',
-    RETURNINGS: '/api/ReturningRequests',
+  RETURNINGS: '/api/ReturningRequests',
   ASSIGNMENTS: '/api/Assignments',
   MY_ASSIGNMENTS: '/api/Assignments/me',
 

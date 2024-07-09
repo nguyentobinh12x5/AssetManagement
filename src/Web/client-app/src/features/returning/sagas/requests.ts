@@ -6,9 +6,11 @@ import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { AxiosResponse } from 'axios';
 import { paramsSerializer } from '../../../utils/appUtils';
 
-export function getReturingsRequest(returningQuery: IReturningQuery): Promise<AxiosResponse<IPagedModel<IBriefReturning>>> {
-    return RequestService.axios.get(ENDPOINTS.RETURNINGS, {
-        params: returningQuery,
-        paramsSerializer: paramsSerializer,
-    });
+export function getReturingsRequest(
+  returningQuery: IReturningQuery
+): Promise<AxiosResponse<IPagedModel<IBriefReturning>>> {
+  return RequestService.axios.get(ENDPOINTS.RETURNINGS, {
+    params: returningQuery,
+    paramsSerializer: paramsSerializer,
+  });
 }

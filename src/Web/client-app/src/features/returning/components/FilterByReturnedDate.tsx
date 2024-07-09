@@ -5,7 +5,7 @@ import { useAppState } from "../../../redux/redux-hooks";
 import { utcToDateString } from "../../../utils/dateUtils";
 import useReturningList from "../list/useReturningList";
 
-interface FilterByReturnedDateProps { }
+interface FilterByReturnedDateProps {}
 
 const FilterByReturnedDate: React.FC<FilterByReturnedDateProps> = () => {
   const {

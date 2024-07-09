@@ -4,8 +4,7 @@ import { useAppState } from "../../../redux/redux-hooks";
 import { ReturningState } from "../constants/returning-state";
 import useReturningList from "../list/useReturningList";
 
-
-interface FilterByStateProps { }
+interface FilterByStateProps {}
 const StateKeys = Object.keys(ReturningState)
   .filter((_) => isNaN(Number(_)))
   .filter((_) => _ !== "Declined");
@@ -23,9 +22,7 @@ const FilterByState: React.FC<FilterByStateProps> = () => {
           return state;
         }
 
-        return ReturningState[
-          state as keyof typeof ReturningState
-        ].toString();
+        return ReturningState[state as keyof typeof ReturningState].toString();
       }),
     [returningState]
   );

@@ -28,7 +28,7 @@ const ReturningList = () => {
         <Col md={3}>
           <FilterByReturnedDate />
         </Col>
-        <Col md={3 }></Col>
+        <Col md={3}></Col>
         <Col md={3}>
           <SearchBox
             defaultValue={searchTerm}

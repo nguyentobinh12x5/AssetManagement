@@ -4,10 +4,7 @@ import ISortState from "../../../components/table/interfaces/ISortState";
 import { IPagedModel } from "../../../interfaces/IPagedModel";
 import Table from "../../../components/table/Table";
 import ButtonIcon from "../../../components/ButtonIcon";
-import {
-  CheckLg,
-  XLg,
-} from "react-bootstrap-icons";
+import { CheckLg, XLg } from "react-bootstrap-icons";
 import Loading from "../../../components/Loading";
 import { formatDate } from "../../../utils/dateUtils";
 import { calculateNo, PaginationInfo } from "../../../utils/appUtils";
@@ -87,7 +84,7 @@ const ReturningTable: React.FC<ReturningTableProps> = ({
             sortDirection: sortColumnDirection,
           };
           return (
-            <tr key={data.id} >
+            <tr key={data.id}>
               <td>{calculateNo(index, paginationInfo)}</td>
               <td>
                 <TextWithTooltip text={data.assetCode} />
@@ -121,7 +118,12 @@ const ReturningTable: React.FC<ReturningTableProps> = ({
                     />
                   </ButtonIcon>
                   <ButtonIcon>
-                    <XLg color="gray" stroke="gray" strokeWidth={1.5} size={20} />
+                    <XLg
+                      color="gray"
+                      stroke="gray"
+                      strokeWidth={1.5}
+                      size={20}
+                    />
                   </ButtonIcon>
                 </div>
               </td>
