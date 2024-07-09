@@ -1,38 +1,77 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ConfirmModal from "../../../components/confirmModal/ConfirmModal";
-import { deleteAssets } from "../reducers/asset-slice";
+import {
+  deleteAssets,
+  checkHistoricalAssignment,
+  resetHistoricalAssignment,
+} from "../reducers/asset-slice";
+import { RootState } from "../../../redux/store";
 
 interface Props {
-  Id: number | null;
+  Id: number;
   hideModal: () => void;
+  typePopup: "edit" | "delete";
 }
 
-const ConfirmDelete: React.FC<Props> = ({ Id, hideModal }) => {
+const ConfirmDelete: React.FC<Props> = ({ Id, hideModal, typePopup }) => {
   const dispatch = useDispatch();
+
+  const { isBelongToHistoricalAssignment, isLoading } = useSelector(
+    (state: RootState) => state.assets
+  );
 
   const handleDelete = (e: any) => {
     e.stopPropagation();
-    if (!Id) return;
     dispatch(deleteAssets(Id));
+    dispatch(resetHistoricalAssignment());
     hideModal();
   };
 
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    hideModal();
+  };
+
+  useEffect(() => {
+    dispatch(
+      checkHistoricalAssignment({
+        id: Id,
+        typePopup,
+      })
+    );
+  }, [Id, dispatch, typePopup]);
+
   return (
     <div>
-      <ConfirmModal title="Are you sure?" isShow={Id !== null}>
+      <ConfirmModal
+        title="Are you sure?"
+        isShow={
+          Id !== null &&
+          !isLoading &&
+          !(!isBelongToHistoricalAssignment && typePopup === "edit")
+        }
+      >
         <div className="modal-body-content">
-          <p>Do you want to delete this asset?</p>
+          <p>
+            {isBelongToHistoricalAssignment ? (
+              <>
+                Cannot {typePopup} the asset because it belongs to one or more
+                historical assignments.
+              </>
+            ) : (
+              "Do you want to delete this asset?"
+            )}
+          </p>
           <div className="modal-buttons">
-            <button className="btn btn-danger" onClick={handleDelete}>
-              Delete
-            </button>
+            {!isBelongToHistoricalAssignment && (
+              <button className="btn btn-danger" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
             <button
               className="btn btn-light btn-outline-secondary"
-              onClick={(e: { stopPropagation: () => void }) => {
-                e.stopPropagation();
-                hideModal();
-              }}
+              onClick={handleCancel}
             >
               Cancel
             </button>

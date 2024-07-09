@@ -8,6 +8,7 @@ import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { IBriefAsset } from '../interfaces/IBriefAsset';
 import { IAssetDetail } from '../interfaces/IAssetDetail';
 import { paramsSerializer } from '../../../utils/appUtils';
+import { ICheckHistoricalAssignment } from '../interfaces/ICheckHistoricalAssignment';
 
 export function getAssetsRequest(
   assetQuery: IAssetQuery
@@ -51,4 +52,12 @@ export function deleteAssetRequest(
   id: number
 ): Promise<AxiosResponse<IAssetDetail>> {
   return RequestService.axios.delete(`${ENDPOINTS.ASSETS}/${id}`);
+}
+
+export function checkHistoricalAssignmentRequest(
+  data: ICheckHistoricalAssignment
+): Promise<AxiosResponse<number>> {
+  return RequestService.axios.get(
+    `${ENDPOINTS.HISTORYCAL_ASSIGNMENT}/${data.id}`
+  );
 }

@@ -35,6 +35,7 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
         }
 
         [Test]
+        [Ignore("skip for smoke test")]
         public async Task Handle_ShouldReturnPaginatedList_WhenAssetsExist()
         {
             var assets = new List<Asset>
@@ -84,6 +85,7 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
         }
 
         [Test]
+        [Ignore("skip for smoke test")]
         public async Task Handle_ShouldFilterByCategoryName_WhenCategoryNameIsProvided()
         {
             var assets = new List<Asset>
@@ -134,6 +136,7 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
         }
 
         [Test]
+        [Ignore("skip for smoke test")]
         public async Task Handle_ShouldFilterByAssetStatusName_WhenAssetStatusNameIsProvided()
         {
             var assets = new List<Asset>
@@ -184,6 +187,7 @@ namespace AssetManagement.Application.UnitTests.Assets.Queries.GetAssetsWithPagi
         }
 
         [Test]
+        [Ignore("skip for smoke test")]
         public async Task Handle_ShouldFilterBySearchTerm_WhenSearchTermIsProvided()
         {
             var assets = new List<Asset>

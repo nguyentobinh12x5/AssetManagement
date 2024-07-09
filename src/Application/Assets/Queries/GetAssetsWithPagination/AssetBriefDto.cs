@@ -16,13 +16,15 @@ public class AssetBriefDto
 
     public string AssetStatus { get; init; } = null!;
 
+    public bool IsEnableAction { get; init; } = true;
     public class Mapping : Profile
     {
         public Mapping()
         {
             CreateMap<Asset, AssetBriefDto>()
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
-                .ForMember(dest => dest.AssetStatus, opt => opt.MapFrom(src => src.AssetStatus.Name));
+                .ForMember(dest => dest.AssetStatus, opt => opt.MapFrom(src => src.AssetStatus.Name))
+                .ForMember(dest => dest.IsEnableAction, opt => opt.Ignore());
         }
     }
 }

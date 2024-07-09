@@ -7,6 +7,7 @@ import {
   getAssetCategories,
   editAsset,
   deleteAssets,
+  checkHistoricalAssignment,
 } from '../reducers/asset-slice';
 import {
   handleCreateAsset,
@@ -16,6 +17,7 @@ import {
   handleGetAssetById,
   handleEditAsset,
   handleDeleteAsset,
+  handlecheckHistoricalAssignment,
 } from './handles';
 
 export default function* authorizeSagas() {
@@ -26,4 +28,8 @@ export default function* authorizeSagas() {
   yield takeLatest(getAssetById.type, handleGetAssetById);
   yield takeLatest(editAsset.type, handleEditAsset);
   yield takeLatest(deleteAssets.type, handleDeleteAsset);
+  yield takeLatest(
+    checkHistoricalAssignment.type,
+    handlecheckHistoricalAssignment
+  );
 }

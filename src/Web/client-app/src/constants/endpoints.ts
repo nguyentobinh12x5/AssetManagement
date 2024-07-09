@@ -16,6 +16,7 @@ const ENDPOINTS = {
 
   UPDATE_STATE_ASSIGNMENT: '/api/Assignments',
   CREATE_RETURNING_REQUEST: '/api/ReturningRequests/Create',
+  HISTORYCAL_ASSIGNMENT: 'api/Assignments/asset',
 };
 
 export default ENDPOINTS;
