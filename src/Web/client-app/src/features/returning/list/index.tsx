@@ -28,7 +28,8 @@ const ReturningList = () => {
         <Col md={3}>
           <FilterByReturnedDate />
         </Col>
-        <Col md={{ span: 3, offset: 1 }} className="ml-auto">
+        <Col md={3 }></Col>
+        <Col md={3}>
           <SearchBox
             defaultValue={searchTerm}
             handleFilterBySearchTerm={handleSearch}

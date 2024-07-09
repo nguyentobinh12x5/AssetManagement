@@ -17,13 +17,13 @@ import { ReturningState } from "../constants/returning-state";
 
 const columns: IColumnOption[] = [
   { name: "No.", value: "Id" },
-  { name: "Asset Code", value: "Asset.Code" },
-  { name: "Asset Name", value: "Asset.Name" },
-  { name: "Requested by", value: "RequestedBy" },
-  { name: "Assigned Date", value: "AssignedDate" },
-  { name: "Accepted by", value: "AcceptedBy" },
-  { name: "Returned Date", value: "ReturningDate" },
-  { name: "State", value: "State" },
+  { name: "Asset Code", value: "assignment.Asset.Code" },
+  { name: "Asset Name", value: "assignment.Asset.Name" },
+  { name: "Requested by", value: "requestedBy" },
+  { name: "Assigned Date", value: "assignment.assignedDate" },
+  { name: "Accepted by", value: "acceptedBy" },
+  { name: "Returned Date", value: "returnedDate" },
+  { name: "State", value: "state" },
 ];
 
 type ReturningTableProps = {

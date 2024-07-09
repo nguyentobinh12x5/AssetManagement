@@ -1,19 +1,12 @@
-.assignment-list {
+
     .title {
         color: rgba(207, 35, 56, 1);
         font-size: 20px;
         font-weight: bold;
     }
-}
 
 .form-check-input:checked {
     background-color: red !important;
     border-color: red !important;
 }
 
-.create-new-assignment_btn {
-    width: -moz-fit-content;
-    width: fit-content;
-    max-width: 10%;
-    white-space: nowrap;
-}
