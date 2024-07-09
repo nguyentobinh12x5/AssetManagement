@@ -762,7 +762,6 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "format": "date-time",
               "nullable": true
             },
             "x-position": 7
