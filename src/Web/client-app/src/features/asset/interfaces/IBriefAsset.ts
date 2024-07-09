@@ -4,4 +4,5 @@ export interface IBriefAsset {
   name: string;
   category: string;
   assetStatus: string;
+  isEnableAction: boolean;
 }

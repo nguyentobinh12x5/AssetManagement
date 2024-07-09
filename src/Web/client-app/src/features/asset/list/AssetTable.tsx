@@ -39,24 +39,28 @@ const AssetTable: React.FC<AssetTableProps> = ({
     { name: "Category", value: "Category" },
     { name: "State", value: "AssetStatus" },
   ];
-  const navigate = useNavigate();
 
   const handleEditClick = (assetId: string) => {
-    navigate(`edit/${assetId}`);
+    setIdAsset(parseInt(assetId));
+    setShowPopup(true);
+    setTypePopup("edit");
   };
 
   const [selectedAsset, setSelectedAsset] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
-  const [idDelete, setIdDelete] = useState<number | null>(null);
+  const [idAsset, setIdAsset] = useState<number | null>(null);
+  const [typePopup, setTypePopup] = useState<("edit" | "delete") | null>(null);
 
   const handleConfirmDelete = (id: string) => {
     const numId = parseInt(id);
-    setIdDelete(numId);
+    setIdAsset(numId);
     setShowPopup(true);
+    setTypePopup("delete");
   };
   const handleCloseConfirmDelete = () => {
     setShowPopup(false);
-    setIdDelete(null);
+    setIdAsset(null);
+    setTypePopup(null);
   };
 
   const handleShowPopup = (assetId: string) => {
@@ -115,13 +119,13 @@ const AssetTable: React.FC<AssetTableProps> = ({
                   onClick={() => {
                     handleEditClick(data.id);
                   }}
-                  disable={false}
+                  disable={!data.isEnableAction}
                 >
                   <PencilFill />
                 </ButtonIcon>
                 <ButtonIcon
                   onClick={() => handleConfirmDelete(data.id)}
-                  disable={data.assetStatus === "Assigned"}
+                  disable={!data.isEnableAction}
                 >
                   <XCircle color="red" />
                 </ButtonIcon>
@@ -130,8 +134,12 @@ const AssetTable: React.FC<AssetTableProps> = ({
           </tr>
         ))}
       </Table>
-      {idDelete && showPopup && (
-        <ConfirmDelete Id={idDelete} hideModal={handleCloseConfirmDelete} />
+      {idAsset && showPopup && typePopup && (
+        <ConfirmDelete
+          Id={idAsset}
+          hideModal={handleCloseConfirmDelete}
+          typePopup={typePopup}
+        />
       )}
       {selectedAsset && showPopup && (
         <DetailForm id={selectedAsset} onClose={handleClosePopup} />

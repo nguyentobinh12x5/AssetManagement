@@ -11,6 +11,8 @@ import {
   getAssetsSuccess,
   setAssetCategories,
   setAssetStatuses,
+  checkHistoricalAssignmentSuccess,
+  checkHistoricalAssignmentFail,
 } from '../reducers/asset-slice';
 import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
 import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
@@ -22,6 +24,7 @@ import {
   getAssetsRequest,
   getAssetByIdRequest,
   deleteAssetRequest,
+  checkHistoricalAssignmentRequest,
 } from './requests';
 import { IAssetQuery } from '../interfaces/common/IAssetQuery';
 import { AxiosResponse } from 'axios';
@@ -34,6 +37,7 @@ import {
   CREATE_ASSET_SUCCESS,
   EDIT_ASSET_SUCCESS,
 } from '../constants/asset-toast-message';
+import { ICheckHistoricalAssignment } from '../interfaces/ICheckHistoricalAssignment';
 
 export function* handleGetAssets(action: PayloadAction<IAssetQuery>) {
   let query = action.payload;
@@ -132,6 +136,30 @@ export function* handleDeleteAsset(action: PayloadAction<number>) {
     const id = action.payload;
     yield call(deleteAssetRequest, id);
     yield put(setDeleteAsset(id));
+  } catch (error: any) {
+    const errorMsg = error.response.data.detail;
+    yield put(deleteAssetFailure(errorMsg));
+  }
+}
+
+export function* handlecheckHistoricalAssignment(
+  action: PayloadAction<ICheckHistoricalAssignment>
+) {
+  try {
+    const id = action.payload.id;
+    const { data } = yield call(
+      checkHistoricalAssignmentRequest,
+      action.payload
+    );
+
+    if (data.length === 0) {
+      yield put(checkHistoricalAssignmentFail());
+      if (action.payload.typePopup === 'edit') {
+        navigateTo(`assets/edit/${id}`);
+      }
+    } else {
+      yield put(checkHistoricalAssignmentSuccess());
+    }
   } catch (error: any) {
     const errorMsg = error.response.data.detail;
     yield put(deleteAssetFailure(errorMsg));

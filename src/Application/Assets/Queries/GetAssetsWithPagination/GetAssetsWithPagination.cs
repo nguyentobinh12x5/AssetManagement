@@ -4,6 +4,7 @@ using AssetManagement.Application.Common.Models;
 using AssetManagement.Application.Common.Security;
 using AssetManagement.Domain.Constants;
 using AssetManagement.Domain.Entities;
+using AssetManagement.Domain.Enums;
 
 namespace AssetManagement.Application.Assets.Queries.GetAssetsWithPagination;
 
@@ -39,12 +40,22 @@ public class GetAssetsWithPaginationQueryHandler : IRequestHandler<GetAssetsWith
 
         query = FilterAssets(request, _currentUser.Location, query);
 
-
-        return await query
-            //.OrderBy(x => x.Title)
+        var assetDtosQuery = query
             .OrderByDynamic(request.SortColumnName, request.SortColumnDirection)
             .ProjectTo<AssetBriefDto>(_mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+            .Select(assetDto => new AssetBriefDto
+            {
+                Id = assetDto.Id,
+                Code = assetDto.Code,
+                Name = assetDto.Name,
+                Category = assetDto.Category,
+                AssetStatus = assetDto.AssetStatus,
+                IsEnableAction = !_context.Assignments
+                    .Where(a => a.Asset.Id == assetDto.Id)
+                    .Any(a => a.State == AssignmentState.WaitingForAcceptance || a.State == AssignmentState.Accepted)
+            });
+
+        return await assetDtosQuery.PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 
     private static IQueryable<Asset> FilterAssets(GetAssetsWithPaginationQuery request, string? adminLocation, IQueryable<Asset> query)

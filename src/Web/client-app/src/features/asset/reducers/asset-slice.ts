@@ -8,6 +8,7 @@ import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
 import { IAssetDetail } from '../interfaces/IAssetDetail';
 import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
 import { IEditAssetForm } from '../edit/edit-asset-scheme';
+import { ICheckHistoricalAssignment } from '../interfaces/ICheckHistoricalAssignment';
 
 const defaultAssetQuery: IAssetQuery = {
   pageNumber: 1,
@@ -27,6 +28,7 @@ interface AssetState {
   categories: string[];
   assetQuery: IAssetQuery;
   isDataFetched: boolean;
+  isBelongToHistoricalAssignment: boolean;
 }
 
 const initialState: AssetState = {
@@ -44,6 +46,7 @@ const initialState: AssetState = {
   assetQuery: defaultAssetQuery,
   isDataFetched: false,
   error: null,
+  isBelongToHistoricalAssignment: false,
 };
 const AssetSlice = createSlice({
   initialState,
@@ -53,6 +56,7 @@ const AssetSlice = createSlice({
       ...state,
       isLoading: true,
       isDataFetched: false,
+      isBelongToHistoricalAssignment: false,
     }),
     createAsset: (
       state: AssetState,
@@ -96,6 +100,7 @@ const AssetSlice = createSlice({
         assetStatus: assetStatusName,
         code: code,
         name: name,
+        isEnableAction: true,
       };
 
       const restAssets =
@@ -125,6 +130,7 @@ const AssetSlice = createSlice({
         assetStatus: assetStatusName,
         code: code,
         name: name,
+        isEnableAction: true,
       };
 
       const items =
@@ -192,6 +198,27 @@ const AssetSlice = createSlice({
       error: action.payload,
     }),
     resetAssetSlice: () => initialState,
+    checkHistoricalAssignment: (
+      state: AssetState,
+      action: PayloadAction<ICheckHistoricalAssignment>
+    ) => ({
+      ...state,
+      isLoading: true,
+    }),
+    checkHistoricalAssignmentSuccess: (state: AssetState) => ({
+      ...state,
+      isBelongToHistoricalAssignment: true,
+      isLoading: false,
+    }),
+    checkHistoricalAssignmentFail: (state: AssetState) => ({
+      ...state,
+      isBelongToHistoricalAssignment: false,
+      isLoading: false,
+    }),
+    resetHistoricalAssignment: (state: AssetState) => ({
+      ...state,
+      isBelongToHistoricalAssignment: false,
+    }),
   },
 });
 
@@ -214,6 +241,10 @@ export const {
   setDeleteAsset,
   deleteAssetFailure,
   resetAssetSlice,
+  checkHistoricalAssignment,
+  resetHistoricalAssignment,
+  checkHistoricalAssignmentSuccess,
+  checkHistoricalAssignmentFail,
 } = AssetSlice.actions;
 
 export default AssetSlice.reducer;

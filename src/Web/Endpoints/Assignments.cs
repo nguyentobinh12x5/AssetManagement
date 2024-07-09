@@ -20,7 +20,8 @@ public class Assignments : EndpointGroupBase
             .MapPost(AddAssignment)
             .MapGet(GetAssignmentById, "{id}")
             .MapPatch(UpdateMyAssignmentState, "{id}")
-            .MapDelete(DeleteAssignment, "{id}");
+            .MapDelete(DeleteAssignment, "{id}")
+            .MapGet(GetAssignmentsByAssetId, "asset/{assetId}");
     }
 
     public Task<PaginatedList<AssignmentBriefDto>> GetAssignmentList(ISender sender, [AsParameters] GetAssignmentsWithPaginationQuery query)
@@ -55,5 +56,9 @@ public class Assignments : EndpointGroupBase
     {
         await sender.Send(new DeleteAssignmentCommand(id));
         return Results.NoContent();
+    }
+    public async Task<List<AssignmentDto>> GetAssignmentsByAssetId(ISender sender, int assetId)
+    {
+        return await sender.Send(new GetAssignmentsByAssetIdQuery(assetId));
     }
 }
