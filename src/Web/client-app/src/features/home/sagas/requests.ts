@@ -25,3 +25,11 @@ export function updateStateAssignmentRequest(
     assignment
   );
 }
+
+export function returningAssignmentRequest(
+  assignment: number
+): Promise<AxiosResponse<number>> {
+  return RequestService.axios.post(ENDPOINTS.CREATE_RETURNING_REQUEST, {
+    assignmentId: assignment,
+  });
+}

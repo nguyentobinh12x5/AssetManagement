@@ -4,5 +4,6 @@ public enum AssignmentState
 {
     Accepted,
     WaitingForAcceptance,
-    Declined
+    Declined,
+    WaitingForReturning
 }

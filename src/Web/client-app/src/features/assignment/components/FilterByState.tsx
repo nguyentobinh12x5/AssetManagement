@@ -4,13 +4,14 @@ import { useAppState } from "../../../redux/redux-hooks";
 import useAssignmentList from "../list/useAssignmentList";
 import {
   AssignmentState,
-  AssignmentStateKey,
+  WATTING_FOR_RETURNING,
 } from "../constants/assignment-state";
 
 interface FilterByStateProps {}
 const StateKeys = Object.keys(AssignmentState)
   .filter((_) => isNaN(Number(_)))
-  .filter((_) => _ !== "Declined");
+  .filter((_) => _ !== "Declined")
+  .filter((_) => _ !== WATTING_FOR_RETURNING);
 
 const FilterByState: React.FC<FilterByStateProps> = () => {
   const {

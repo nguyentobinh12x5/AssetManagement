@@ -4,6 +4,7 @@ import {
   HOME_LINK,
   USER_LINK,
   ASSIGNMENTS_LINK,
+  RETURNINGS_LINK,
 } from "../../constants/pages";
 import { useAppState } from "../../redux/redux-hooks";
 import { isAdminUser } from "../../utils/authUtils";
@@ -27,6 +28,9 @@ const Sidebar = () => {
           </NavLink>
           <NavLink className="navItem intro-x" to={ASSIGNMENTS_LINK}>
             <button className="btnCustom">Manage Assignment</button>
+          </NavLink>
+          <NavLink className="navItem intro-x" to={RETURNINGS_LINK}>
+            <button className="btnCustom">Request for Returning</button>
           </NavLink>
         </>
       )}

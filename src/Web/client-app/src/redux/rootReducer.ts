@@ -8,6 +8,7 @@ import assetDetailReducer from '../features/asset/reducers/asset-detail-slice';
 import assignmentReducer from '../features/assignment/reducers/assignment-slice';
 import myAssignmentReducer from '../features/home/reducers/my-assignment-slice';
 import assignmentDetailReducer from '../features/assignment/reducers/assignment-detail-slice';
+import returningReducer from '../features/returning/reducers/returning-slice';
 
 const rootReducer = {
   counter: counterReducer,
@@ -20,5 +21,6 @@ const rootReducer = {
   assignments: assignmentReducer,
   myAssignments: myAssignmentReducer,
   assignmentDetail: assignmentDetailReducer,
+  returnings: returningReducer,
 };
 export default rootReducer;

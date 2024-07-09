@@ -8,11 +8,13 @@ import {
   USER,
   ACCESS_DENIED,
   ASSIGNMENTS,
+  RETURNINGS,
 } from "../constants/pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import Assets from "../features/asset";
 import Assignments from "../features/assignment";
+import Returnings from "../features/returning";
 
 const Home = lazy(() => import("../features/home"));
 const Auth = lazy(() => import("../features/auth"));
@@ -60,6 +62,14 @@ const AppRoutes = () => {
           element={
             <PrivateRoute roles={["Administrator"]}>
               <Assignments />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={RETURNINGS}
+          element={
+            <PrivateRoute roles={["Administrator"]}>
+              <Returnings />
             </PrivateRoute>
           }
         />

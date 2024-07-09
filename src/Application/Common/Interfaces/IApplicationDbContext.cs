@@ -8,6 +8,7 @@ public interface IApplicationDbContext
     DbSet<Category> Categories { get; }
     DbSet<AssetStatus> AssetStatuses { get; }
     DbSet<Assignment> Assignments { get; }
+    DbSet<ReturningRequest> ReturningRequests { get; }
 
     DbSet<TEntity> Set<TEntity>() where TEntity : class;
 

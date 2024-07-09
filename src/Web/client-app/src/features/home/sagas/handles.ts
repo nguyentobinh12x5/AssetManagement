@@ -2,6 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import {
   getMyAssignmentsRequest,
   updateStateAssignmentRequest,
+  returningAssignmentRequest,
 } from './requests';
 import { call, put, select } from 'redux-saga/effects';
 import {
@@ -9,15 +10,13 @@ import {
   IMySelectedAssignment,
 } from '../interfaces/IMyAssignment';
 import {
-  getMyAssignments,
   getMyAssignmentsFailure,
   getMyAssignmentsSuccess,
-  setIsDataFetched,
   setUpdateStateAssignmentError,
   updateStateAssignmentSuccess,
+  updateReturningSuccess,
 } from '../reducers/my-assignment-slice';
 import { AssignmentState } from '../../assignment/constants/assignment-state';
-import { RootState } from '../../../redux/store';
 import { getMyAssignmentsQuery } from './selectors';
 
 export function* handleGetMyAssignments(
@@ -43,6 +42,18 @@ export function* handleUpdateStateAssignment(
       const { data } = yield call(getMyAssignmentsRequest, query);
       yield put(getMyAssignmentsSuccess(data));
     } else yield put(updateStateAssignmentSuccess(assignment));
+  } catch (error: any) {
+    const errorResponse = error.response.data;
+    yield put(setUpdateStateAssignmentError(errorResponse.detail));
+  }
+}
+
+export function* handleReturningAssignment(action: PayloadAction<number>) {
+  const assignment = action.payload;
+  try {
+    yield call(returningAssignmentRequest, assignment);
+
+    yield put(updateReturningSuccess(assignment));
   } catch (error: any) {
     const errorResponse = error.response.data;
     yield put(setUpdateStateAssignmentError(errorResponse.detail));

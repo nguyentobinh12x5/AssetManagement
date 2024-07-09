@@ -23,6 +23,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<AssetStatus> AssetStatuses => Set<AssetStatus>();
 
     public DbSet<Assignment> Assignments => Set<Assignment>();
+    public DbSet<ReturningRequest> ReturningRequests => Set<ReturningRequest>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -33,6 +34,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
             .HasQueryFilter(x => x.IsDelete == false);
         builder.Entity<Asset>()
             .HasQueryFilter(x => x.IsDelete == false);
+        builder.Entity<ReturningRequest>()
+        .HasQueryFilter(x => x.IsDelete == false)
+        .HasQueryFilter(x => x.Assignment.State != AssignmentState.Declined && x.Assignment.IsDelete == false);
         builder.Entity<Assignment>()
             .HasQueryFilter(x => x.State != AssignmentState.Declined && x.IsDelete == false);
 

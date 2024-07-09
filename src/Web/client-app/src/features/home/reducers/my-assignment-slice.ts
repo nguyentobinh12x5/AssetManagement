@@ -7,6 +7,7 @@ import {
   IMySelectedAssignment,
 } from '../interfaces/IMyAssignment';
 import { DEFAULT_MY_ASSIGNMENT_SORT_COL } from '../constants/my-assignment-query';
+import { AssignmentState } from '../../assignment/constants/assignment-state';
 
 const defaultAssetQuery: IMyAssignmentQuery = {
   pageNumber: 1,
@@ -117,12 +118,43 @@ const AssignmentSlice = createSlice({
       ...state,
       isLoading: false,
     }),
-
     setIsDataFetched: (
       state: MyAssignmentState,
       action: PayloadAction<boolean>
     ) => {
       state.isDataFetched = action.payload;
+    },
+    returningAssignment: (
+      state: MyAssignmentState,
+      action: PayloadAction<number>
+    ) => ({
+      ...state,
+      isLoading: true,
+    }),
+    updateReturningSuccess: (
+      state: MyAssignmentState,
+      action: PayloadAction<number>
+    ) => {
+      const index = state.assignments!.items.findIndex(
+        (u) => u.id === action.payload
+      );
+      const updatedAssignments = [...state.assignments?.items];
+
+      if (index !== -1) {
+        updatedAssignments[index] = {
+          ...updatedAssignments[index],
+          state: AssignmentState['Waiting for returning'],
+        };
+      }
+
+      return {
+        ...state,
+        assignments: {
+          ...state.assignments!,
+          items: [...updatedAssignments],
+        },
+        isLoading: false,
+      };
     },
   },
 });
@@ -136,6 +168,8 @@ export const {
   setUpdateStateAssignmentError,
   updateStateAssignmentSuccess,
   setIsDataFetched,
+  returningAssignment,
+  updateReturningSuccess,
 } = AssignmentSlice.actions;
 
 export default AssignmentSlice.reducer;

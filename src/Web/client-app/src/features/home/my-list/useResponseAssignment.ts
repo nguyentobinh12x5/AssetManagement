@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import { AssignmentState } from '../../assignment/constants/assignment-state';
 
 const useResponseAssignment = () => {
   const [currentSelectedAssignment, setCurrentSelectedAssignment] = useState<
     number | null
   >(null);
-  const [isAcceptModal, setIsAcceptModal] = useState(true);
+  const [typeModal, setTypeModal] = useState(AssignmentState.Accepted);
 
   const handleShowAcceptModal = (id: number) => {
     setCurrentSelectedAssignment(id);
-    setIsAcceptModal(true);
+    setTypeModal(AssignmentState.Accepted);
   };
   const handleShowDeclineModal = (id: number) => {
     setCurrentSelectedAssignment(id);
-    setIsAcceptModal(false);
+    setTypeModal(AssignmentState.Declined);
+  };
+  const handleShowReturningRequestModal = (id: number) => {
+    setCurrentSelectedAssignment(id);
+    setTypeModal(AssignmentState['Waiting for returning']);
   };
 
   const hideDisableModal = () => {
@@ -23,8 +28,9 @@ const useResponseAssignment = () => {
     handleShowAcceptModal,
     handleShowDeclineModal,
     currentSelectedAssignment,
-    isAcceptModal,
+    typeModal,
     hideDisableModal,
+    handleShowReturningRequestModal,
   };
 };
 
