@@ -29,7 +29,7 @@ const FilterByReturnedDate: React.FC<FilterByReturnedDateProps> = () => {
         selected={selectedDate}
         onChange={handleDateChange}
         dateFormat="dd/MM/yyyy"
-        placeholderText="Assigned Date"
+        placeholderText="Returned Date"
         showYearDropdown
         showMonthDropdown
         dropdownMode="select"
