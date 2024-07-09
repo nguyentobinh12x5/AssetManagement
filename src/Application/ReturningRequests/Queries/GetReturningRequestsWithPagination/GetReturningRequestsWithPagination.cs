@@ -18,7 +18,7 @@ public class GetReturningRequestsWithPaginationQuery : IRequest<PaginatedList<Re
     public required string SortColumnDirection { get; init; } = AppPagingConstants.DefaultSortDirection;
     public string? SearchTerm { get; init; }
     public string[]? State { get; init; } = [];
-    public DateTime? ReturnedDate { get; init; }
+    public string? ReturnedDate { get; init; }
 }
 
 public class GetReturningRequestsWithPaginationQueryHandler : IRequestHandler<GetReturningRequestsWithPaginationQuery, PaginatedList<ReturningRequestBriefDto>>
@@ -71,11 +71,12 @@ public class GetReturningRequestsWithPaginationQueryHandler : IRequestHandler<Ge
             }
         }
 
-        if (request.ReturnedDate != null)
+        if (!string.IsNullOrEmpty(request.ReturnedDate))
         {
-            query = query.Where(a => a.ReturnedDate != null
-                                    ? a.ReturnedDate.Value.Date == request.ReturnedDate.Value.Date
-                                    : false);
+            if (DateTime.TryParse(request.ReturnedDate, out var ReturnedDate))
+            {
+                query = query.Where(a => a.ReturnedDate!.Value.Date == ReturnedDate.Date);
+            }
         }
 
         if (!string.IsNullOrEmpty(request.SearchTerm))
