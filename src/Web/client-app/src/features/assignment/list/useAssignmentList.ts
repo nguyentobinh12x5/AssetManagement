@@ -1,17 +1,14 @@
-import { useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_ASSIGNMENT_SORT_COLUMN } from '../constants/assignment-sort';
-import {
-  getAssignments,
-  setAssignmentQuery,
-} from '../reducers/assignment-slice';
+import { setAssignmentQuery } from '../reducers/assignment-slice';
 import { IAssignmentQuery } from '../interfaces/commom/IAssigmentQuery';
 
 const useAssignmentList = () => {
   const dispatch = useAppDispatch();
-  const { assignments, assignmentQuery, isDataFetched } = useAppState(
+  const { assignments, assignmentQuery } = useAppState(
     (state) => state.assignments
   );
 
@@ -57,13 +54,6 @@ const useAssignmentList = () => {
     [updateQuery]
   );
 
-  // Fetch Data
-  useEffect(() => {
-    if (!isDataFetched) {
-      dispatch(getAssignments(assignmentQuery));
-    }
-  }, [dispatch, assignmentQuery, isDataFetched]);
-
   // Pagination and Sorting hooks
   const { hasSortColumn, handleSort } = useAppSort(
     DEFAULT_MANAGE_ASSIGNMENT_SORT_COLUMN,
@@ -73,8 +63,6 @@ const useAssignmentList = () => {
 
   return {
     hasSortColumn,
-    assignments,
-    searchTerm: assignmentQuery.searchTerm,
     handleSort,
     handlePaging,
     handleFilterByState,

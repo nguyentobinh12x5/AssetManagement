@@ -160,7 +160,8 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
             $"UserId={UsersDataHelper.TestUserId};" +
-            $"UserName=user2@test.com");
+            $"UserName=user2@test.com;" +
+            $"Location={UsersDataHelper.TestLocation}");
 
         var query = new GetAssignmentsWithPaginationQuery
         {

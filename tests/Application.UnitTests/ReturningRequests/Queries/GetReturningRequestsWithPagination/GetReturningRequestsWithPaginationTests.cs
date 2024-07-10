@@ -35,7 +35,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin",
                     AssignedBy = "Admin",
-                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop" }
+                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop", Location = "HCM" }
                 }
             },
             new ReturningRequest
@@ -52,12 +52,13 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin2",
                     AssignedBy = "Admin2",
-                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor" }
+                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor", Location = "HCM" }
                 }
             }
         };
     private Mock<IApplicationDbContext> _contextMock;
     private IMapper _mapperMock;
+    private Mock<IUser> _userMock;
     private GetReturningRequestsWithPaginationQueryHandler _handler;
 
     [SetUp]
@@ -70,9 +71,11 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
                cfg.AddProfile(new ReturningRequestBriefDto.Mapping());
            });
         _mapperMock = mockMapper.CreateMapper();
+        _userMock = new Mock<IUser>();
         _handler = new GetReturningRequestsWithPaginationQueryHandler(
             _contextMock.Object,
-            _mapperMock
+            _mapperMock,
+            _userMock.Object
         );
     }
 
@@ -81,6 +84,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
     {
         var mockDbSet = mockDatas.AsQueryable().BuildMockDbSet();
         _contextMock.Setup(c => c.ReturningRequests).Returns(mockDbSet.Object);
+        _userMock.Setup(u => u.Location).Returns("HCM");
 
         var request = new GetReturningRequestsWithPaginationQuery
         {
@@ -104,6 +108,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
     {
         var mockDbSet = mockDatas.AsQueryable().BuildMockDbSet();
         _contextMock.Setup(c => c.ReturningRequests).Returns(mockDbSet.Object);
+        _userMock.Setup(u => u.Location).Returns("HCM");
 
         var request = new GetReturningRequestsWithPaginationQuery
         {
@@ -128,6 +133,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
     {
         var mockDbSet = mockDatas.AsQueryable().BuildMockDbSet();
         _contextMock.Setup(c => c.ReturningRequests).Returns(mockDbSet.Object);
+        _userMock.Setup(u => u.Location).Returns("HCM");
 
         var request = new GetReturningRequestsWithPaginationQuery
         {
@@ -155,6 +161,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
     {
         var mockDbSet = mockDatas.AsQueryable().BuildMockDbSet();
         _contextMock.Setup(c => c.ReturningRequests).Returns(mockDbSet.Object);
+        _userMock.Setup(u => u.Location).Returns("HCM");
 
         var request = new GetReturningRequestsWithPaginationQuery
         {
@@ -202,6 +209,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
         var mockset = new List<ReturningRequest>().AsQueryable().BuildMockDbSet();
 
         _contextMock.Setup(m => m.ReturningRequests).Returns(mockset.Object);
+        _userMock.Setup(u => u.Location).Returns("HCM");
 
         var request = new GetReturningRequestsWithPaginationQuery
         {
@@ -233,6 +241,7 @@ public class GetReturningRequestsWithPaginationQueryHandlerTests
 
         var mockDbSet = mockDatas.AsQueryable().BuildMockDbSet();
         _contextMock.Setup(c => c.ReturningRequests).Returns(mockDbSet.Object);
+        _userMock.Setup(u => u.Location).Returns("HCM");
 
         IEnumerable<object> expected = sortColumn switch
         {

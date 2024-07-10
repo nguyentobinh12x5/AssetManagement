@@ -32,7 +32,7 @@ namespace Web.IntegrationTests.Data
                 Code = "ASSET-00001",
                 Name = "Laptop HP",
                 Category = Categories[0],
-                Location = "HCM",
+                Location = UsersDataHelper.TestLocation,
                 Specification = "HP EliteBook 840 G7",
                 InstalledDate = DateTime.UtcNow,
                 AssetStatus = AssetStatuses[0]
@@ -42,7 +42,7 @@ namespace Web.IntegrationTests.Data
                 Code = "ASSET-00002",
                 Name = "Desktop Dell",
                 Category = Categories[1],
-                Location = "HCM",
+                Location = UsersDataHelper.TestLocation,
                 Specification = "Dell OptiPlex 7070",
                 InstalledDate = DateTime.UtcNow,
                 AssetStatus = AssetStatuses[1]
@@ -52,7 +52,7 @@ namespace Web.IntegrationTests.Data
                 Code = "ASSET-00003",
                 Name = "Monitor Samsung",
                 Category = Categories[2],
-                Location = "HCM",
+                Location = UsersDataHelper.TestLocation,
                 Specification = "Samsung 27\" Curved",
                 InstalledDate = DateTime.UtcNow,
                 AssetStatus = AssetStatuses[2]

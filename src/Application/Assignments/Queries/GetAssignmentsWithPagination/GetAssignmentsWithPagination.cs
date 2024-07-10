@@ -34,16 +34,18 @@ public class GetAssignmentsWithPaginationQueryHandler : IRequestHandler<GetAssig
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
+    private readonly IUser _user;
 
-    public GetAssignmentsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetAssignmentsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper, IUser user)
     {
         _context = context;
         _mapper = mapper;
+        _user = user;
     }
 
     public async Task<PaginatedList<AssignmentBriefDto>> Handle(GetAssignmentsWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        var query = _context.Assignments.AsQueryable();
+        var query = _context.Assignments.Where(asign => asign.Asset.Location == _user.Location);
 
         query = FilterAssignments(request, query);
 

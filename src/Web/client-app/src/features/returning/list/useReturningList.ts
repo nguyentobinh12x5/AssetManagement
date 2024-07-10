@@ -8,7 +8,7 @@ import { getReturnings, setReturningQuery } from '../reducers/returning-slice';
 
 const useReturningList = () => {
   const dispatch = useAppDispatch();
-  const { returnings, returningQuery, isDataFetched } = useAppState(
+  const { returnings, returningQuery } = useAppState(
     (state) => state.returnings
   );
 
@@ -54,13 +54,6 @@ const useReturningList = () => {
     [updateQuery]
   );
 
-  // Fetch Data
-  useEffect(() => {
-    if (!isDataFetched) {
-      dispatch(getReturnings(returningQuery));
-    }
-  }, [dispatch, returningQuery, isDataFetched]);
-
   // Pagination and Sorting hooks
   const { hasSortColumn, handleSort } = useAppSort(
     DEFAULT_MANAGE_RETURNING_SORT_COLUMN,
@@ -71,7 +64,6 @@ const useReturningList = () => {
   return {
     hasSortColumn,
     returnings,
-    searchTerm: returningQuery.searchTerm,
     handleSort,
     handlePaging,
     handleFilterByState,

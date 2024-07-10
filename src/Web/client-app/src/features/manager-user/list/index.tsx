@@ -5,16 +5,15 @@ import useUserList from "./useUsersList";
 import { useNavigate } from "react-router-dom";
 import "./UserList.scss";
 import SearchBox from "../../../components/SearchBox/SearchBox";
+import useFetchUserList from "./useFetchUserList";
 
 const ListUsers = () => {
   const {
-    hasSortColumn,
+    userQuery: { searchTerm },
     users,
-    searchTerm,
-    handleSort,
-    handlePaging,
-    handleSearch,
-  } = useUserList();
+  } = useFetchUserList();
+  const { hasSortColumn, handleSort, handlePaging, handleSearch } =
+    useUserList();
 
   const navigate = useNavigate();
 

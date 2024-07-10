@@ -1,15 +1,12 @@
-import { useEffect } from 'react';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_ASSET_SORT_COLUMN } from '../constants/asset-sort';
-import { getAssets, setAssetQuery } from '../reducers/asset-slice';
+import { setAssetQuery } from '../reducers/asset-slice';
 
 const useAssetList = () => {
   const dispatch = useAppDispatch();
-  const { assets, assetQuery, isDataFetched } = useAppState(
-    (state) => state.assets
-  );
+  const { assetQuery } = useAppState((state) => state.assets);
 
   const updateMainSortState = (
     sortColumnName: string,
@@ -69,17 +66,8 @@ const useAssetList = () => {
     );
   };
 
-  // Fetch Data
-  useEffect(() => {
-    if (!isDataFetched) {
-      dispatch(getAssets(assetQuery));
-    }
-  }, [dispatch, assetQuery, isDataFetched]);
-
   return {
     hasSortColumn,
-    assets,
-    searchTerm: !isDataFetched ? assetQuery.searchTerm : ``,
     handleSort,
     handlePaging,
     handleFilterByStatus,

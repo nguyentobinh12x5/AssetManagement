@@ -58,7 +58,6 @@ const DropdownFilter: React.FC<Props> = ({
     handleCheckboxChange(option);
     setDropdownOpen(true);
   };
-
   return (
     <InputGroup
       className="custom-input-group d-inline-flex align-items-center mb-3"

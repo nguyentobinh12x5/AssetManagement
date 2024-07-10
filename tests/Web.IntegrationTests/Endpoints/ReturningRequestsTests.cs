@@ -25,7 +25,8 @@ public class ReturningRequestsTests : IClassFixture<TestWebApplicationFactory<Pr
         _factory = factory;
         _httpClient = _factory.GetApplicationHttpClient();
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
-            $"UserId={UsersDataHelper.TestUserId}");
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"Location={UsersDataHelper.TestLocation}");
     }
 
     [Fact]

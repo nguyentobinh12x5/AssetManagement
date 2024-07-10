@@ -5,15 +5,15 @@ import ReturningTable from "./ReturingTable";
 import useReturningList from "./useReturningList";
 import FilterByState from "../components/FilterByState";
 import FilterByReturnedDate from "../components/FilterByReturnedDate";
+import useFetchReturningList from "./useFetchReturningList";
 
 const ReturningList = () => {
+  const { returningQuery, returnings } = useFetchReturningList();
   const {
     hasSortColumn,
-    searchTerm,
     handleSort,
     handlePaging,
     handleSearch,
-    returnings,
     sortColumnDirection,
   } = useReturningList();
 
@@ -31,7 +31,7 @@ const ReturningList = () => {
         <Col md={3}></Col>
         <Col md={3}>
           <SearchBox
-            defaultValue={searchTerm}
+            defaultValue={returningQuery.searchTerm}
             handleFilterBySearchTerm={handleSearch}
           />
         </Col>
@@ -39,7 +39,7 @@ const ReturningList = () => {
 
       <ReturningTable
         returnings={returnings}
-        searchTerm={searchTerm}
+        searchTerm={returningQuery.searchTerm}
         sortState={{
           name: hasSortColumn.sortColumn,
           orderBy: hasSortColumn.sortOrder,

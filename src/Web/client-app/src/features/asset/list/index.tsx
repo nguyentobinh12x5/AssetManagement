@@ -8,16 +8,15 @@ import SearchBox from "../../../components/SearchBox/SearchBox";
 import useAssetList from "./useAssetList";
 import "./AssetList.scss";
 import { CREATE_ASSET_PATH } from "../constants/create-asset";
+import useFetchAssetList from "./useFetchAssetList";
 
 const AssetList = () => {
   const {
-    hasSortColumn,
     assets,
-    searchTerm,
-    handleSort,
-    handlePaging,
-    handleSearch,
-  } = useAssetList();
+    assetQuery: { searchTerm },
+  } = useFetchAssetList();
+  const { hasSortColumn, handleSort, handlePaging, handleSearch } =
+    useAssetList();
 
   const navigate = useNavigate();
 

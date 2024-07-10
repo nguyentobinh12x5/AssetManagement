@@ -15,5 +15,6 @@ public class ReturningRequestConfiguration : IEntityTypeConfiguration<ReturningR
 
         builder.Property(t => t.AcceptedBy)
             .HasMaxLength(256);
+
     }
 }
