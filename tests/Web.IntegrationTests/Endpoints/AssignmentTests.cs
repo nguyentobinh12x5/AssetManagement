@@ -160,7 +160,8 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
             $"UserId={UsersDataHelper.TestUserId};" +
-            $"UserName=user2@test.com");
+            $"UserName=user2@test.com;" +
+            $"Location={UsersDataHelper.TestLocation}");
 
         var query = new GetAssignmentsWithPaginationQuery
         {
@@ -396,7 +397,7 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
             Id = 1,
             UserId = UsersDataHelper.TestUserId,
             AssetId = 2,
-            AssignedDate = DateTime.UtcNow,
+            AssignedDate = DateTime.UtcNow.Date,
             Note = "Updated note"
         };
 
@@ -484,7 +485,7 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
             Id = 1,
             UserId = "InvalidUserId",
             AssetId = 1,
-            AssignedDate = DateTime.UtcNow,
+            AssignedDate = DateTime.UtcNow.Date,
             Note = "Updated note"
         };
 

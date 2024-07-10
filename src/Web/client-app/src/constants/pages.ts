@@ -1,4 +1,4 @@
-export const HOME = '/';
+export const HOME = '/*';
 export const TODO_ITEM = 'todoitem/*';
 export const ASSETS = 'assets/*';
 export const MANAGE_USER = 'manageuser/*';

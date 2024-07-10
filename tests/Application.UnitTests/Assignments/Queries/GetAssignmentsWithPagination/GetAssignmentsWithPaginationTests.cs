@@ -25,6 +25,7 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
         private GetAssignmentsWithPaginationQueryHandler _handler;
         private Mock<IApplicationDbContext> _contextMock;
         private IMapper _mapper;
+        private Mock<IUser> _userMock;
 
         [SetUp]
         public void Setup()
@@ -36,8 +37,9 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                 cfg.AddProfile(new AssignmentBriefDto.Mapping());
             });
             _mapper = mockMapper.CreateMapper();
+            _userMock = new Mock<IUser>();
 
-            _handler = new GetAssignmentsWithPaginationQueryHandler(_contextMock.Object, _mapper);
+            _handler = new GetAssignmentsWithPaginationQueryHandler(_contextMock.Object, _mapper, _userMock.Object);
         }
 
         [Test]
@@ -52,7 +54,7 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin",
                     AssignedBy = "Admin",
-                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop" }
+                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop", Location = "HCM" }
                 },
                 new Assignment
                 {
@@ -61,10 +63,11 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin2",
                     AssignedBy = "Admin2",
-                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor" }
+                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor", Location = "HCM" }
                 }
             };
 
+            _userMock.Setup(u => u.Location).Returns("HCM");
             var mockset = assignments.AsQueryable().BuildMockDbSet();
 
             _contextMock.Setup(m => m.Assignments).Returns(mockset.Object);
@@ -96,7 +99,7 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin",
                     AssignedBy = "Admin",
-                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop" }
+                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop", Location = "HCM" }
                 },
                 new Assignment
                 {
@@ -105,9 +108,10 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.WaitingForAcceptance,
                     AssignedTo = "Admin2",
                     AssignedBy = "Admin2",
-                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor" }
+                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor", Location = "HCM" }
                 }
             };
+            _userMock.Setup(u => u.Location).Returns("HCM");
 
             var mockset = assignments.AsQueryable().BuildMockDbSet();
 
@@ -141,7 +145,7 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin",
                     AssignedBy = "Admin",
-                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop" }
+                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop", Location = "HCM" }
                 },
                 new Assignment
                 {
@@ -150,9 +154,10 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin2",
                     AssignedBy = "Admin2",
-                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor" }
+                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor", Location = "HCM" }
                 }
             };
+            _userMock.Setup(u => u.Location).Returns("HCM");
 
             var mockset = assignments.AsQueryable().BuildMockDbSet();
 
@@ -186,7 +191,7 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin",
                     AssignedBy = "Admin",
-                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop" }
+                    Asset = new Asset { Id = 1, Code = "ASSET-0001", Name = "Laptop", Location = "HCM" }
                 },
                 new Assignment
                 {
@@ -195,9 +200,10 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
                     State = AssignmentState.Accepted,
                     AssignedTo = "Admin2",
                     AssignedBy = "Admin2",
-                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor" }
+                    Asset = new Asset { Id = 2, Code = "ASSET-0002", Name = "Monitor", Location = "HCM" }
                 }
             };
+            _userMock.Setup(u => u.Location).Returns("HCM");
 
             var mockset = assignments.AsQueryable().BuildMockDbSet();
 
@@ -222,6 +228,7 @@ namespace AssetManagement.Application.UnitTests.Assignments.Queries.GetAssignmen
         [Test]
         public void Handle_ShouldReturnEmptyPaginatedList_WhenNoAssignmentsExist()
         {
+            _userMock.Setup(u => u.Location).Returns("HCM");
             var mockset = new List<Assignment>().AsQueryable().BuildMockDbSet();
 
             _contextMock.Setup(m => m.Assignments).Returns(mockset.Object);

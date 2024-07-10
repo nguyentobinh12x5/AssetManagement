@@ -35,10 +35,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
         builder.Entity<Asset>()
             .HasQueryFilter(x => x.IsDelete == false);
         builder.Entity<ReturningRequest>()
-        .HasQueryFilter(x => x.IsDelete == false)
-        .HasQueryFilter(x => x.Assignment.State != AssignmentState.Declined && x.Assignment.IsDelete == false);
+            .HasQueryFilter(x => x.IsDelete == false);
         builder.Entity<Assignment>()
-            .HasQueryFilter(x => x.State != AssignmentState.Declined && x.IsDelete == false && x.State != AssignmentState.WaitingForReturning);
+            .HasQueryFilter(x => x.State != AssignmentState.Declined && x.IsDelete == false);
 
     }
 }

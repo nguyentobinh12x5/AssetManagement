@@ -1,15 +1,12 @@
-import { useEffect } from 'react';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
 import useAppPaging from '../../../hooks/paging/useAppPaging';
 import useAppSort from '../../../hooks/paging/useAppSort';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../constants/user-sort';
-import { getUsers, setUserQuery } from '../reducers/user-slice';
+import { setUserQuery } from '../reducers/user-slice';
 
 const useUserList = () => {
   const dispatch = useAppDispatch();
-  const { users, userQuery, isDataFetched } = useAppState(
-    (state) => state.users
-  );
+  const { userQuery } = useAppState((state) => state.users);
 
   const updateMainSortState = (
     sortColumnName: string,
@@ -59,17 +56,8 @@ const useUserList = () => {
     );
   };
 
-  // Fetch Data
-  useEffect(() => {
-    if (!isDataFetched) {
-      dispatch(getUsers(userQuery));
-    }
-  }, [dispatch, userQuery, isDataFetched]);
-
   return {
     hasSortColumn,
-    users,
-    searchTerm: !isDataFetched ? userQuery.searchTerm : ``,
     handleSort,
     handlePaging,
     handleFilterByType,

@@ -13,6 +13,8 @@ public class Assignment : BaseAuditableEntity, ISoftDeletable
 
     public string AssignedBy { get; set; } = null!;
 
-    public virtual Asset Asset { get; set; } = null!;
     public bool IsDelete { get; set; }
+
+    public virtual Asset Asset { get; set; } = null!;
+
 }

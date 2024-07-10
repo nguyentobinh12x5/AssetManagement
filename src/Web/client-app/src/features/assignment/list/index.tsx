@@ -7,14 +7,17 @@ import "./AssignmentList.scss";
 import { CREATE_ASSIGNMENT_PATH } from "../constants/create-assignment";
 import FilterByState from "../components/FilterByState";
 import FilterByAssignedDate from "../components/FilterByAssignedDate";
+import useFetchAssignmentList from "./useFetchAssignmentList";
 const AssignmentList = () => {
   const {
+    assignmentQuery: { searchTerm },
+    assignments,
+  } = useFetchAssignmentList();
+  const {
     hasSortColumn,
-    searchTerm,
     handleSort,
     handlePaging,
     handleSearch,
-    assignments,
     sortColumnDirection,
   } = useAssignmentList();
 

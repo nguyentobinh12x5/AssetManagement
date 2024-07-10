@@ -25,16 +25,19 @@ public class GetReturningRequestsWithPaginationQueryHandler : IRequestHandler<Ge
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
-    public GetReturningRequestsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
+    private readonly IUser _user;
+    public GetReturningRequestsWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper, IUser user)
     {
         _context = context;
         _mapper = mapper;
+        _user = user;
     }
     public async Task<PaginatedList<ReturningRequestBriefDto>> Handle(
         GetReturningRequestsWithPaginationQuery request,
         CancellationToken cancellationToken)
     {
-        var query = _context.ReturningRequests.AsQueryable();
+        var query = _context.ReturningRequests.Where(q => q.Assignment.Asset.Location == _user.Location).AsQueryable();
+        // query = query.Where(q => q.Assignment.Asset.Location == _user.Location);
 
         query = FilterReturningRequests(request, query);
 
@@ -49,6 +52,7 @@ public class GetReturningRequestsWithPaginationQueryHandler : IRequestHandler<Ge
         GetReturningRequestsWithPaginationQuery request,
         IQueryable<ReturningRequest> query)
     {
+
         if (request.State != null && request.State.Any())
         {
             var states = request.State
@@ -75,7 +79,7 @@ public class GetReturningRequestsWithPaginationQueryHandler : IRequestHandler<Ge
         {
             if (DateTime.TryParse(request.ReturnedDate, out var ReturnedDate))
             {
-                query = query.Where(a => a.ReturnedDate!.Value.Date == ReturnedDate.Date);
+                query = query.Where(a => ((DateTime)a.ReturnedDate!).Date == ReturnedDate.Date);
             }
         }
 
@@ -86,6 +90,7 @@ public class GetReturningRequestsWithPaginationQueryHandler : IRequestHandler<Ge
                             || q.Assignment.Asset.Name.Contains(request.SearchTerm)
                             || q.RequestedBy.Contains(request.SearchTerm));
         }
+
 
         return query;
     }

@@ -23,7 +23,6 @@ const PrivateRoute: React.FC<Props> = ({
 
   useEffect(() => {
     if (isCheckingSession) return;
-
     if (!isAuthenticated) {
       navigate(LOGIN_LINK);
       return;
@@ -46,4 +45,4 @@ const PrivateRoute: React.FC<Props> = ({
   return <Layout showSidebar={showSidebar}>{children}</Layout>;
 };
 
-export default PrivateRoute;
+export default React.memo(PrivateRoute);

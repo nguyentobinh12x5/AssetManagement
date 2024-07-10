@@ -12,5 +12,6 @@ public class AssignmentConfiguration : IEntityTypeConfiguration<Assignment>
         builder.Property(t => t.Note)
             .HasMaxLength(1200)
             .IsRequired();
+
     }
 }
