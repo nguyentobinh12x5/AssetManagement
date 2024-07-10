@@ -87,7 +87,7 @@ export function* handleGetAssignmentByIdWhenEdit(action: PayloadAction<any>) {
     yield put(
       setUserQuery({
         ...userQuery,
-        searchTerm: `${usersData?.items[0].fullName.trim()}`,
+        searchTerm: `${(usersData?.items[0]?.fullName ?? '').trim()}`,
       })
     );
     yield put(getAssignmentByIdSuccess(query));

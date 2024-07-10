@@ -64,5 +64,5 @@ export function* handleLogout() {
     if (errorResponse.detail) yield showErrorToast(errorResponse.detail);
   }
   yield put(setLogout());
-  navigateTo(`/auth/${AUTH_LOGIN}`);
+  window.location.href = `/auth/${AUTH_LOGIN}`;
 }
