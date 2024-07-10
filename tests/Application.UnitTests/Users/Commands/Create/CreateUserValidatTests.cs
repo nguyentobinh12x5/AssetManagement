@@ -79,7 +79,7 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
         [Test]
         public void JoinDate_Valid()
         {
-            var command = new CreateUserComm_and { DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = new DateTime(2024, 6, 27) };
+            var command = new CreateUserCommand { DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = new DateTime(2024, 6, 27) };
             var result = validator.TestValidate(command);
             Assert.That(result.IsValid);
         }
