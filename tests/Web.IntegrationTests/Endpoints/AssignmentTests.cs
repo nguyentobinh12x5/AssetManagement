@@ -396,7 +396,7 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
             Id = 1,
             UserId = UsersDataHelper.TestUserId,
             AssetId = 2,
-            AssignedDate = DateTime.UtcNow,
+            AssignedDate = DateTime.UtcNow.Date,
             Note = "Updated note"
         };
 
@@ -484,7 +484,7 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
             Id = 1,
             UserId = "InvalidUserId",
             AssetId = 1,
-            AssignedDate = DateTime.UtcNow,
+            AssignedDate = DateTime.UtcNow.Date,
             Note = "Updated note"
         };
 
