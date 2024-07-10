@@ -146,7 +146,7 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         // Assert
         Assert.NotNull(assignments);
-        Assert.Equal(2, assignments.Items.Count);
+        Assert.Equal(3, assignments.Items.Count);
     }
 
     [Fact]
@@ -496,5 +496,55 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
 
         //Assert 
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetAssignmentsByAssetId_InvalidAssetId_ShouldReturnEmptyList()
+    {
+        // Arrange
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        var invalidAssetId = int.MaxValue;
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName=user2@test.com");
+
+        var query = new GetAssignmentsByAssetIdQuery(invalidAssetId);
+
+        // Act
+        var response = await _httpClient.GetAsync($"/api/Assignments/asset/{query.AssetId}");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var assignments = await response.Content.ReadFromJsonAsync<List<AssignmentDto>>();
+        Assert.NotNull(assignments);
+        Assert.Empty(assignments);
+    }
+
+    [Fact]
+    public async Task GetAssignmentsByAssetId_ValidAssetId_ShouldReturnAssignments()
+    {
+        // Arrange
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        var validAssetId = AssignmentsDataHelper.AssetsLists[0].Id;
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName=user2@test.com");
+
+        var query = new GetAssignmentsByAssetIdQuery(validAssetId);
+
+        // Act
+        var response = await _httpClient.GetAsync($"/api/Assignments/asset/{query.AssetId}");
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var assignments = await response.Content.ReadFromJsonAsync<List<AssignmentDto>>();
+        Assert.NotNull(assignments);
+        Assert.NotEmpty(assignments);
     }
 }

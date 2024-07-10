@@ -81,6 +81,16 @@ namespace Web.IntegrationTests.Data
                 Note = "Some note2",
                 Asset = AssetsLists[1]
 
+            },
+            new Assignment()
+            {
+                Id = 3,
+                AssignedDate = DateTime.UtcNow,
+                State = AssignmentState.Accepted,
+                AssignedBy = "user1@test.com",
+                AssignedTo = "user2@test.com",
+                Note = "Some note3",
+                Asset = AssetsLists[2]
             }
         };
 

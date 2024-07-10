@@ -37,7 +37,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
         builder.Entity<ReturningRequest>()
             .HasQueryFilter(x => x.IsDelete == false);
         builder.Entity<Assignment>()
-            .HasQueryFilter(x => x.State != AssignmentState.Declined && x.IsDelete == false);
+            .HasQueryFilter(x => x.State != AssignmentState.Declined && x.IsDelete == false && x.State != AssignmentState.WaitingForReturning);
 
     }
 }

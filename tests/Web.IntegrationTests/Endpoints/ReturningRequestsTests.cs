@@ -1,8 +1,15 @@
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
+using AssetManagement.Application.Common.Interfaces;
 using AssetManagement.Application.Common.Models;
+using AssetManagement.Application.ReturningRequests.Commands.Create;
 using AssetManagement.Application.ReturningRequests.Queries.GetReturningRequestsWithPagination;
+using AssetManagement.Domain.Entities;
+using AssetManagement.Domain.Enums;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using Web.IntegrationTests.Data;
 using Web.IntegrationTests.Extensions;
@@ -209,5 +216,69 @@ public class ReturningRequestsTests : IClassFixture<TestWebApplicationFactory<Pr
         };
 
         Assert.True(sortedValues.SequenceEqual(expected));
+    }
+
+    [Fact]
+    public async Task CreateReturningRequest_ShouldFail_WhenAssignmentNotFound()
+    {
+        // Arrange
+        var command = new CreateRequestReturningAssetCommand
+        {
+            AssignmentId = int.MaxValue
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/ReturningRequests/Create", command);
+
+        // Assert
+        Assert.False(response.IsSuccessStatusCode);
+    }
+
+    [Fact]
+    public async Task CreateReturningRequest_ShouldFail_WhenUserNotAuthenticated()
+    {
+        // Arrange
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+        var assignmentId = AssignmentsDataHelper.AssignmentLists[0].Id;
+
+        var command = new CreateRequestReturningAssetCommand
+        {
+            AssignmentId = assignmentId
+        };
+
+        // Act
+        var unauthenticatedClient = _factory.GetApplicationHttpClient();
+        var response = await unauthenticatedClient.PostAsJsonAsync("/api/ReturningRequests/Create", command);
+
+        // Assert
+        Assert.Equal(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task CreateReturningRequest_ShouldSucceed_WhenAssignmentFound()
+    {
+        // Arrange
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+
+        var validAssignmentId = AssignmentsDataHelper.AssignmentLists[2].Id;
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName=user2@test.com");
+
+        var command = new CreateRequestReturningAssetCommand
+        {
+            AssignmentId = validAssignmentId
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/ReturningRequests/Create", command);
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+
+        var returningRequestId = await response.Content.ReadFromJsonAsync<int>();
+        Assert.True(returningRequestId > 0);
     }
 }
