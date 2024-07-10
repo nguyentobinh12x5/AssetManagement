@@ -7,6 +7,7 @@ import UserRadioSelectTable from "./UserRadioSelectTable";
 import { Button } from "../../../../components";
 import SearchBox from "../../../../components/SearchBox/SearchBox";
 import useUserRadioSelect from "./useUserRadioSelect";
+import { useAppState } from "../../../../redux/redux-hooks";
 
 type ModalRadioSelectProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -75,6 +76,8 @@ const SelectUserField: React.FC<ModalRadioSelectProps> = (props) => {
       </div>
       <SelectModal
         isShow={showModal}
+        defaultUserSearch={"Test"}
+        isEditing={true}
         closeDialog={() => setShowModal(false)}
         handleSelect={handleSelect}
       />
@@ -86,6 +89,8 @@ export default SelectUserField;
 
 interface SelectModalProps {
   isShow: boolean;
+  isEditing: boolean;
+  defaultUserSearch: string;
   dialogClassName?: string;
   closeDialog: () => void;
   handleSelect: (value: any) => void;
@@ -98,6 +103,7 @@ const SelectModal: React.FC<SelectModalProps> = ({
 }) => {
   const [value, setValue] = useState();
   const { handleSearch, searchTerm } = useUserRadioSelect();
+  //const { searchTerm } = useAppState((state) => state.users.userQuery);
 
   const handleSelectValue = () => {
     if (!value) return;
@@ -133,10 +139,12 @@ const SelectModal: React.FC<SelectModalProps> = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <UserRadioSelectTable
-          selectedValue={value}
-          handleSelect={(value) => setValue(value)}
-        />
+        {isShow && (
+          <UserRadioSelectTable
+            selectedValue={value}
+            handleSelect={(value) => setValue(value)}
+          />
+        )}
       </Modal.Body>
       <Modal.Footer>
         <div className="d-flex justify-content-end">

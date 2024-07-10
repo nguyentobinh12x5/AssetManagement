@@ -1,6 +1,5 @@
 import React from "react";
 import { useAppState } from "../../redux/redux-hooks";
-import { Breadcrumb } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { ChevronRight } from "react-bootstrap-icons";
 
@@ -22,6 +21,7 @@ const crumbsMap = new Map<string, string>([
   ["/assets/edit/:id", "Edit Asset"],
   ["/assignments", "Manage Assignment"],
   ["/assignments/create", "Create New Assignment"],
+  ["/assignments/edit/:id", "Edit Assignment"],
   ["/returnings", "Request for Returning"],
 ]);
 

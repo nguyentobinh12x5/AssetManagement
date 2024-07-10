@@ -76,7 +76,6 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
             Assert.That(result.Errors.Any(e => e.ErrorMessage == "User is under 18. Please select a different date"));
         }
 
-        [Ignore("This test is not working as expected")]
         [Test]
         public void JoinDate_Valid()
         {

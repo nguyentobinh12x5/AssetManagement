@@ -5,7 +5,6 @@ import { useAppDispatch, useAppState } from '../../../../redux/redux-hooks';
 import { DEFAULT_MANAGE_USER_SORT_COLUMN } from '../../../manager-user/constants/user-sort';
 import {
   getUsers,
-  resetUserSlice,
   setUserQuery,
 } from '../../../manager-user/reducers/user-slice';
 
@@ -58,11 +57,11 @@ const useUserRadioSelect = () => {
     if (!isDataFetched) dispatch(getUsers(userQuery));
   }, [dispatch, userQuery, isDataFetched]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetUserSlice());
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetUserSlice());
+  //   };
+  // }, [dispatch]);
 
   return {
     hasSortColumn,

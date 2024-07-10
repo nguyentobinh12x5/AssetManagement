@@ -7,6 +7,7 @@ import { IAssignmentQuery } from '../interfaces/commom/IAssigmentQuery';
 import { IBriefAssignment } from '../interfaces/IBriefAssignment';
 import { IPagedModel } from '../../../interfaces/IPagedModel';
 import { paramsSerializer } from '../../../utils/appUtils';
+import { IEditAssignmentCommand } from '../interfaces/IEditAssignmentCommand';
 
 export function getAssignmentsRequest(
   assignmentQuery: IAssignmentQuery
@@ -35,4 +36,13 @@ export function deleteAssigmentRequest(
   id: number
 ): Promise<AxiosResponse<IAssignmentDetail>> {
   return RequestService.axios.delete(`${ENDPOINTS.ASSIGNMENTS}/${id}`);
+}
+
+export function editAssignmentRequest(
+  request: IEditAssignmentCommand
+): Promise<AxiosResponse<number>> {
+  return RequestService.axios.put(
+    `${ENDPOINTS.ASSIGNMENTS}/${request.id}`,
+    request
+  );
 }

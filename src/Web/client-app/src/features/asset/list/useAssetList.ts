@@ -79,7 +79,7 @@ const useAssetList = () => {
   return {
     hasSortColumn,
     assets,
-    searchTerm: assetQuery.searchTerm,
+    searchTerm: !isDataFetched ? assetQuery.searchTerm : ``,
     handleSort,
     handlePaging,
     handleFilterByStatus,

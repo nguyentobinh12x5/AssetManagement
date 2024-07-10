@@ -14,10 +14,17 @@ const initialState: AssignmentState = {
 };
 
 const assignmentDetailSlice = createSlice({
-  name: 'assetDetail',
+  name: 'assignmentDetail',
   initialState,
   reducers: {
     getAssignmentById: (
+      state: AssignmentState,
+      action: PayloadAction<number>
+    ) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    getAssignmentByIdWhenEdit: (
       state: AssignmentState,
       action: PayloadAction<number>
     ) => {
@@ -44,6 +51,7 @@ const assignmentDetailSlice = createSlice({
 
 export const {
   getAssignmentById,
+  getAssignmentByIdWhenEdit,
   getAssignmentByIdSuccess,
   getAssignmentByIdFailure,
   resetState,

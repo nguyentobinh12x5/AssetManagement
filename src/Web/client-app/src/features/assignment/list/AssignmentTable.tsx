@@ -54,8 +54,8 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
   const { items, pageNumber, totalPages, totalCount } = assignments;
 
   const navigate = useNavigate();
-  const handleEditClick = (assetId: string) => {
-    // Handle navigate(`edit/${assetId}`);
+  const handleEditClick = (assignmentId: string) => {
+    navigate(`edit/${assignmentId}`);
   };
   const [idDelete, setIdDelete] = useState<number | null>(null);
   const [selectedAssignment, setSelectedAssignment] = useState<string | null>(
@@ -144,7 +144,9 @@ const AssignmentTable: React.FC<AssignmentTableProps> = ({
                     onClick={() => {
                       handleEditClick(data.id);
                     }}
-                    disable={false}
+                    disable={
+                      AssignmentState[data.state] !== WATTING_FOR_ACCEPTANCE
+                    }
                   >
                     <PencilFill />
                   </ButtonIcon>

@@ -69,7 +69,7 @@ const useUserList = () => {
   return {
     hasSortColumn,
     users,
-    searchTerm: userQuery.searchTerm,
+    searchTerm: !isDataFetched ? userQuery.searchTerm : ``,
     handleSort,
     handlePaging,
     handleFilterByType,

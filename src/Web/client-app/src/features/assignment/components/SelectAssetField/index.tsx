@@ -7,6 +7,7 @@ import { Button } from "../../../../components";
 import AssetRadioSelectTable from "./AssetRadioSelectTable";
 import SearchBox from "../../../../components/SearchBox/SearchBox";
 import useAssetRadioSelect from "./useAssetRadioSelect";
+import { useAppState } from "../../../../redux/redux-hooks";
 
 type ModalRadioSelectProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -23,6 +24,7 @@ const SelectAssetField: React.FC<ModalRadioSelectProps> = (props) => {
     id: string;
   }>(props);
   const [showModal, setShowModal] = useState(false);
+
   const { label, required, noValidation, apiError } = props;
 
   const validateClass = () => {
@@ -98,7 +100,9 @@ const SelectModal: React.FC<SelectModalProps> = ({
   handleSelect,
 }) => {
   const [value, setValue] = useState();
-  const { handleSearch, searchTerm } = useAssetRadioSelect();
+  const { handleSearch } = useAssetRadioSelect();
+
+  const { searchTerm } = useAppState((state) => state.assets.assetQuery);
 
   const handleSelectValue = () => {
     if (!value) return;

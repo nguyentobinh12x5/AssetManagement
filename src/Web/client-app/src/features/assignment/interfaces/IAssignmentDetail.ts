@@ -1,5 +1,6 @@
 export interface IAssignmentDetail {
-  id: number;
+  id: string;
+  assetId: string;
   assetCode: string;
   assetName: string;
   specification: string;

@@ -21,6 +21,7 @@ public class Assignments : EndpointGroupBase
             .MapGet(GetAssignmentById, "{id}")
             .MapPatch(UpdateMyAssignmentState, "{id}")
             .MapDelete(DeleteAssignment, "{id}")
+            .MapPut(UpdateAssignment, "{id}")
             .MapGet(GetAssignmentsByAssetId, "asset/{assetId}");
     }
 
@@ -55,6 +56,14 @@ public class Assignments : EndpointGroupBase
     public async Task<IResult> DeleteAssignment(ISender sender, int id)
     {
         await sender.Send(new DeleteAssignmentCommand(id));
+        return Results.NoContent();
+    }
+
+    public async Task<IResult> UpdateAssignment(ISender sender, int id, UpdateAssignmentCommand command)
+    {
+        if (id != command.Id) return Results.BadRequest();
+
+        await sender.Send(command);
         return Results.NoContent();
     }
     public async Task<List<AssignmentDto>> GetAssignmentsByAssetId(ISender sender, int assetId)

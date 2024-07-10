@@ -524,6 +524,41 @@
             "description": ""
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Assignments"
+        ],
+        "operationId": "UpdateAssignment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAssignmentCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
       }
     },
     "/api/Assignments/asset/{assetId}": {
@@ -1668,6 +1703,10 @@
           "assignedBy": {
             "type": "string"
           },
+          "assetId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "assignedDate": {
             "type": "string",
             "format": "date-time"
@@ -1690,6 +1729,30 @@
           },
           "state": {
             "$ref": "#/components/schemas/AssignmentState"
+          }
+        }
+      },
+      "UpdateAssignmentCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "assetId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "assignedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "note": {
+            "type": "string"
           }
         }
       },
