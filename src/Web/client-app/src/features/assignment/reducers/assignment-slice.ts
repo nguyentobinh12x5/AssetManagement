@@ -146,7 +146,45 @@ const AssignmentSlice = createSlice({
       isLoading: false,
       error: action.payload,
     }),
-    resetAssetSlice: () => initialState,
+    editAssignment: (
+      state: AssignmentState,
+      action: PayloadAction<ICreateAssignmentCommand>
+    ) => ({
+      ...state,
+      isLoading: true,
+    }),
+    editAssignmentFailure: (
+      state: AssignmentState,
+      action: PayloadAction<string>
+    ) => ({
+      ...state,
+      isLoading: false,
+      error: action.payload,
+    }),
+    editAssignmentSuccess: (
+      state: AssignmentState,
+      action: PayloadAction<IAssignmentDetail>
+    ) => {
+      const editedAssignment: IBriefAssignment = {
+        ...action.payload,
+        id: action.payload.id.toString(),
+      };
+
+      const items =
+        state.assignments?.items.filter(
+          (assignment) => assignment.assetCode !== editedAssignment.assetCode
+        ) ?? [];
+
+      return {
+        ...state,
+        isLoading: false,
+        assignments: {
+          ...state.assignments,
+          items: [editedAssignment, ...items],
+        },
+      };
+    },
+    resetAssignmentSlice: () => initialState,
   },
 });
 
@@ -161,6 +199,10 @@ export const {
   deleteAssginments,
   setDeleteAssignment,
   deleteAssignmentFailure,
+  editAssignment,
+  editAssignmentFailure,
+  editAssignmentSuccess,
+  resetAssignmentSlice,
 } = AssignmentSlice.actions;
 
 export default AssignmentSlice.reducer;

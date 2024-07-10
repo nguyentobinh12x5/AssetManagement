@@ -1,5 +1,5 @@
 import { FormikHelpers } from 'formik';
-import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
+import { useAppDispatch } from '../../../redux/redux-hooks';
 import {
   ICreateAssignmentForm,
   CreateAssignmentScheme,
@@ -7,6 +7,9 @@ import {
 import { ICreateAssignmentCommand } from '../interfaces/ICreateAssignmentCommand';
 import { createAssignment } from '../reducers/assignment-slice';
 import { utcToDateString } from '../../../utils/dateUtils';
+import { useEffect } from 'react';
+import { resetUserSlice } from '../../manager-user/reducers/user-slice';
+import { resetAssetSlice } from '../../asset/reducers/asset-slice';
 
 const useCreateAssignment = () => {
   const dispatch = useAppDispatch();
@@ -39,6 +42,13 @@ const useCreateAssignment = () => {
     dispatch(createAssignment(command));
     actions.setSubmitting(false);
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetUserSlice());
+      dispatch(resetAssetSlice());
+    };
+  }, [dispatch]);
 
   return {
     initialValues,

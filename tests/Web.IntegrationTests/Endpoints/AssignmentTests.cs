@@ -249,8 +249,8 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
-            $"UserId={UsersDataHelper.TestUserId}" +
-            ";UserName=user2@test.com");
+            $"UserId={UsersDataHelper.TestUserId};" +
+            "UserName=user2@test.com");
 
         // Act
         var response = await _httpClient.GetAsync("/api/Assignments?pageNumber=1&pageSize=5&sortColumnName=&sortColumnDirection=Ascending");
@@ -273,8 +273,8 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
-            $"UserId={UsersDataHelper.TestUserId}" +
-            ";UserName=user2@test.com");
+            $"UserId={UsersDataHelper.TestUserId};" +
+            "UserName=user2@test.com");
 
         // Act
         var response = await _httpClient.GetAsync("/api/Assignments?pageNumber=1&pageSize=5&sortColumnName=Asset.Code&sortColumnDirection=");
@@ -297,8 +297,8 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
 
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
-            $"UserId={UsersDataHelper.TestUserId}" +
-            $"&Location={UsersDataHelper.TestLocation}");
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"Location={UsersDataHelper.TestLocation}");
 
         // Act
         var command = new UpdateMyAssignmentStateCommand
@@ -376,5 +376,124 @@ public class AssignmentTests : IClassFixture<TestWebApplicationFactory<Program>>
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         _factory.ResetDatabase();
+    }
+
+    [Fact]
+    public async Task UpdateAssignment_ValidCommand_ShouldReturnNoContent()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName={UsersDataHelper.TestUserName};" +
+            $"Location={UsersDataHelper.TestLocation}");
+
+        var command = new UpdateAssignmentCommand
+        {
+            Id = 1,
+            UserId = UsersDataHelper.TestUserId,
+            AssetId = 2,
+            AssignedDate = DateTime.UtcNow,
+            Note = "Updated note"
+        };
+
+        // Act
+        var response = await _httpClient.PutAsJsonAsync("/api/Assignments/1", command);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        _factory.ResetDatabase();
+    }
+
+    [Fact]
+    public async Task UpdateAssignment_InValidId_ShouldReturnNotFound()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName={UsersDataHelper.TestUserName};" +
+            $"Location={UsersDataHelper.TestLocation}");
+
+        var command = new UpdateAssignmentCommand
+        {
+            Id = 2,
+            UserId = UsersDataHelper.TestUserId,
+            AssetId = 1,
+            AssignedDate = DateTime.UtcNow,
+            Note = "Updated note"
+        };
+
+        //Act
+        var response = await _httpClient.PutAsJsonAsync("/api/Assignments/1", command);
+
+        //Assert 
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateAssignment_InValidAssetId_ShouldReturnNotFound()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName={UsersDataHelper.TestUserName};" +
+            $"Location={UsersDataHelper.TestLocation}");
+
+        var command = new UpdateAssignmentCommand
+        {
+            Id = 1,
+            UserId = UsersDataHelper.TestUserId,
+            AssetId = 10,
+            AssignedDate = DateTime.UtcNow,
+            Note = "Updated note"
+        };
+
+        //Act
+        var response = await _httpClient.PutAsJsonAsync("/api/Assignments/1", command);
+
+        //Assert 
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateAssignment_InValidUserId_ShouldReturnNotFound()
+    {
+        // Arrange
+        await AssetsDataHelper.CreateSampleData(_factory);
+        await UsersDataHelper.CreateSampleData(_factory);
+        await AssignmentsDataHelper.CreateSampleDataAsync(_factory);
+
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("TestScheme",
+            $"UserId={UsersDataHelper.TestUserId};" +
+            $"UserName={UsersDataHelper.TestUserName};" +
+            $"Location={UsersDataHelper.TestLocation}");
+
+        var command = new UpdateAssignmentCommand
+        {
+            Id = 1,
+            UserId = "InvalidUserId",
+            AssetId = 1,
+            AssignedDate = DateTime.UtcNow,
+            Note = "Updated note"
+        };
+
+        var content = new StringContent(JsonSerializer.Serialize(command), Encoding.UTF8, "application/json");
+
+        //Act
+        var response = await _httpClient.PutAsync("/api/Assignments/1", content);
+
+        //Assert 
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }

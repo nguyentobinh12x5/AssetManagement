@@ -10,6 +10,7 @@ public class AssignmentDto
     public string Specification { get; set; } = null!;
     public string AssignedTo { get; set; } = null!;
     public string AssignedBy { get; set; } = null!;
+    public int AssetId { get; set; }
     public DateTime AssignedDate { get; set; } = DateTime.UtcNow;
     public AssignmentState State { get; set; } = AssignmentState.WaitingForAcceptance;
     public string Note { get; set; } = null!;

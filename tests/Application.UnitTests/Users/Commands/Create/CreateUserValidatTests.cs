@@ -76,11 +76,10 @@ namespace AssetManagement.Application.UnitTests.Users.Commands.Create
             Assert.That(result.Errors.Any(e => e.ErrorMessage == "User is under 18. Please select a different date"));
         }
 
-        [Ignore("This test is not working as expected")]
         [Test]
         public void JoinDate_Valid()
         {
-            var command = new CreateUserCommand { DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = new DateTime(2024, 6, 27) };
+            var command = new CreateUserComm_and { DateOfBirth = DateTime.UtcNow.AddYears(-25), JoinDate = new DateTime(2024, 6, 27) };
             var result = validator.TestValidate(command);
             Assert.That(result.IsValid);
         }

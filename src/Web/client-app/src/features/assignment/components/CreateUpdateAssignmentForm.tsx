@@ -30,6 +30,7 @@ const CreateUpdateAssignmentForm: React.FC<Props> = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      enableReinitialize={true}
     >
       {({ dirty, isValid, isSubmitting }) => (
         <Form>

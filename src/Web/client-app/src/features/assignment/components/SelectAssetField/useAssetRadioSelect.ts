@@ -63,11 +63,11 @@ const useAssetRadioSelect = () => {
     );
   }, [dispatch, assetQuery]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetAssetSlice());
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetAssetSlice());
+  //   };
+  // }, [dispatch]);
 
   return {
     hasSortColumn,
