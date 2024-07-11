@@ -4,25 +4,32 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
 {
     public UpdateUserCommandValidator()
     {
-        RuleFor(v => v.Id)
+        RuleFor(x => x.DateOfBirth)
             .NotEmpty()
-            .MaximumLength(256);
+            .WithMessage("Please Select Date of Birth")
+            .Must(BeAtLeast18YearsOld)
+            .WithMessage("User is under 18. Please select a different date");
 
-        RuleFor(v => v.DateOfBirth)
+        RuleFor(x => x.JoinDate)
+            .GreaterThanOrEqualTo(x => x.DateOfBirth.AddYears(18))
+            .WithMessage("User under the age of 18 may not join the company. Please select a different date")
+            .Must(NotBeWeekend)
+            .WithMessage("Joined date is Saturday or Sunday. Please select a different date");
+
+        RuleFor(x => x.JoinDate)
             .NotEmpty()
-            .LessThanOrEqualTo(DateTime.Now).WithMessage("Date of Birth cannot be in the future.");
+            .WithMessage("Please Select Date of Birth")
+            .When(x => x.DateOfBirth == default(DateTime));
+    }
+    private bool BeAtLeast18YearsOld(DateTime dateOfBirth)
+    {
+        return dateOfBirth <= DateTime.Today.AddYears(-18);
+    }
 
-        RuleFor(v => v.JoinDate)
-            .NotEmpty()
-            .LessThanOrEqualTo(DateTime.Now).WithMessage("Join Date cannot be in the future.");
-
-        RuleFor(v => v.Gender)
-            .IsInEnum().WithMessage("Gender must be a valid value.");
-
-        RuleFor(v => v.Type)
-            .NotEmpty()
-            .MaximumLength(256);
-
+    private bool NotBeWeekend(DateTime joinDate)
+    {
+        var dayOfWeek = joinDate.DayOfWeek;
+        return dayOfWeek != DayOfWeek.Saturday && dayOfWeek != DayOfWeek.Sunday;
     }
 
 }

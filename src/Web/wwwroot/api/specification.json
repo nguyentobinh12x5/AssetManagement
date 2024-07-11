@@ -596,41 +596,6 @@
         }
       }
     },
-    "/api/Assignments/asset/{assetId}": {
-      "get": {
-        "tags": [
-          "Assignments"
-        ],
-        "operationId": "GetAssignmentsByAssetId",
-        "parameters": [
-          {
-            "name": "assetId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AssignmentDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Auth/change-password": {
       "post": {
         "tags": [
