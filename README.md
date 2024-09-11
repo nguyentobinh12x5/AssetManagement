@@ -57,3 +57,7 @@ dotnet test --filter "FullyQualifiedName!~AcceptanceTests"
 ## Help
 
 To learn more about the template go to the [project website](https://github.com/jasontaylordev/CleanArchitecture). Here you can find additional guidance, request new features, report a bug, and discuss the template with other users.
+
+## right copy
+
+All right belong to team 1 include Binh, Kien, Trieu, Van, Phuong
