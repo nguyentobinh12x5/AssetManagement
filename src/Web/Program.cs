@@ -16,11 +16,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUi(settings =>
-    {
-        settings.Path = "/api/swagger";
-        settings.DocumentPath = "/api/specification.json";
-    });
+    app.UseSwaggerUI();
 }
 else
 {
