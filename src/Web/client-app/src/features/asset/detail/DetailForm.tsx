@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ConfirmModal from "../../../components/confirmModal/ConfirmModal";
-import ButtonIcon from "../../../components/ButtonIcon";
-import { XCircle } from "react-bootstrap-icons";
 import { getAssetById, resetState } from "../reducers/asset-detail-slice";
 import { RootState } from "../../../redux/store";
 import { Col, Row } from "react-bootstrap";
-import { text } from "stream/consumers";
 import Table from "../../../components/table/Table";
 import IColumnOption from "../../../components/table/interfaces/IColumnOption";
 import { formatDate } from "../../../utils/dateUtils";

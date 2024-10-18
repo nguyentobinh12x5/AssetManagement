@@ -1,4 +1,4 @@
-import { FieldInputProps, useField } from "formik";
+import { useField } from "formik";
 import React, { InputHTMLAttributes, useEffect, useState } from "react";
 import { Col, Modal, Row } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
@@ -7,7 +7,6 @@ import UserRadioSelectTable from "./UserRadioSelectTable";
 import { Button } from "../../../../components";
 import SearchBox from "../../../../components/SearchBox/SearchBox";
 import useUserRadioSelect from "./useUserRadioSelect";
-import { useAppState } from "../../../../redux/redux-hooks";
 
 type ModalRadioSelectProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;

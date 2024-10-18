@@ -7,7 +7,6 @@ import { DEFAULT_MANAGE_ASSET_SORT_COLUMN } from '../constants/asset-sort';
 import { ICreateAssetCommand } from '../interfaces/ICreateAssetCommand';
 import { IAssetDetail } from '../interfaces/IAssetDetail';
 import { IEditAssetCommand } from '../interfaces/IEditAssetCommand';
-import { IEditAssetForm } from '../edit/edit-asset-scheme';
 import { ICheckHistoricalAssignment } from '../interfaces/ICheckHistoricalAssignment';
 
 const defaultAssetQuery: IAssetQuery = {

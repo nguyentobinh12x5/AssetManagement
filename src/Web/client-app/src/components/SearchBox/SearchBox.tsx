@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputGroup, Button, FormControl, FormText } from "react-bootstrap";
+import { InputGroup, Button, FormControl } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 
 interface SearchBoxProps {

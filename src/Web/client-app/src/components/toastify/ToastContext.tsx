@@ -5,7 +5,6 @@ import React, {
   useContext,
   useCallback,
   ReactNode,
-  useEffect,
 } from "react";
 import { setToast } from "./toast-helper";
 

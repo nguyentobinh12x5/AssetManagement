@@ -1,8 +1,8 @@
 import { FormikHelpers } from 'formik';
 import { IEditAssetForm } from './edit-asset-scheme';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppState } from '../../../redux/redux-hooks';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import {
   editAsset,
@@ -17,7 +17,7 @@ const useEditAsset = (assetId: string) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { assets, categories, statuses } = useAppState((state) => ({
+  const { categories, statuses } = useAppState((state) => ({
     assets: state.assets,
     categories: state.assets.categories,
     statuses: state.assets.statuses,

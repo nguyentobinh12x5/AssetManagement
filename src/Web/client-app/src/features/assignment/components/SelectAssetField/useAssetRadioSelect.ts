@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import {
   getAssets,
-  resetAssetSlice,
   setAssetQuery,
 } from '../../../asset/reducers/asset-slice';
 import useAppPaging from '../../../../hooks/paging/useAppPaging';
@@ -11,7 +10,7 @@ import { useAppDispatch, useAppState } from '../../../../redux/redux-hooks';
 
 const useAssetRadioSelect = () => {
   const dispatch = useAppDispatch();
-  const { assets, assetQuery, isDataFetched } = useAppState(
+  const { assets, assetQuery } = useAppState(
     (state) => state.assets
   );
 
