@@ -1,5 +1,27 @@
 ﻿# AssetManagement
+ ![image](https://github.com/user-attachments/assets/72d533b5-68c0-4518-af8f-dca6ae7c5e53)
+The Asset Management System is a web application designed to streamline the management of assets and users within an organization. Built with a focus on security, scalability, and clean architecture principles, this system ensures efficient operations and role-based access control.
+#Features: 
+- Authentication & Authorization
++ Secure user authentication using cookies.
++ Role-based authorization to manage access levels effectively.
+- Asset Management
++ Create and register new assets in the system.
++ Browse and view the list of available or assigned assets.
++ Handle asset returns with a seamless process.
+- User Management
++ Create and manage user profiles efficiently.
++ Enable user deletion with appropriate access permissions.
+- Clean Architecture
++ Implements the Clean Architecture pattern for maintainable and scalable code.
++ Separation of concerns ensures flexibility and ease of testing.
 
+#Technology Stack
+Backend: ASP.NET Core, Entity Framework
+Frontend: React.js, Redux Toolkit
+Database: SQL Server
+Authentication: Cookie-based Authentication
+ 
 ## Prerequisite
 
 Install **.NET Core User Secrets** extension via visual studio code
